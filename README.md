@@ -1,6 +1,6 @@
-# ecommerce
+# E-Commerce
 
-Loja Virtual
+Loja Virtual APPs e WEB (Flutter e Firebase)
 
 ## Getting Started
 

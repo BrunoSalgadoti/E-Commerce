@@ -9,7 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
-.models/db_api/*
+
 
 # IntelliJ related
 *.iml
@@ -43,3 +43,4 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/lib/models/db_api/FirebaseApiWeb.dart

@@ -1,9 +1,11 @@
 import 'package:ecommerce/models/db_api/FirebaseApiWeb.dart';
+import 'package:ecommerce/models/users_manager.dart';
 import 'package:ecommerce/screens/base/base_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:core';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
  final  ThemeData temaPadrao = ThemeData(
     primaryColor: const Color.fromARGB(255, 4, 125, 141),
@@ -40,13 +42,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-      title: 'Loja Virtual BRN-Info_Dev',
+    return Provider(
+      create: (_) => UserManager(),
+      child: MaterialApp(
+        title: 'Loja Virtual BRN-Info_Dev',
 
-      theme: temaPadrao,
+        theme: temaPadrao,
 
-      home: BaseScreen(),
-      debugShowCheckedModeBanner: false,
+        home: BaseScreen(),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

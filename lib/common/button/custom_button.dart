@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BotaoCustomizado extends StatelessWidget {
+class CustomButton extends StatelessWidget {
 
 
   final dynamic texto;
@@ -12,9 +12,9 @@ class BotaoCustomizado extends StatelessWidget {
   final double elevation;
 
 
-  const BotaoCustomizado({super.key,
+  const CustomButton({super.key,
     @required this.texto,
-    this.onPressed,
+    @required this.onPressed,
     this.corTexto = Colors.white,
     this.corBotao = const Color.fromARGB(255, 4, 125, 141),
     this.corShadow = Colors.white24,
