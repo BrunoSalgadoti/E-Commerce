@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "168585183359",
+    "project_id": "lojavirtual-brninfodev",
+    "storage_bucket": "lojavirtual-brninfodev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168585183359:android:9b55316ebcce1c88457f4a",
+        "android_client_info": {
+          "package_name": "br.com.brninfodev.ecommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168585183359-b7nliefjrj00p5ca042630l2to2jl2n0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF7q_eKA2uIqSYt7UUHc0oy0t7STbk8Xs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168585183359-b7nliefjrj00p5ca042630l2to2jl2n0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
