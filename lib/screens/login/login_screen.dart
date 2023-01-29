@@ -92,6 +92,7 @@ class LoginScreen extends StatelessWidget {
                                   ));
                             },
                             onSuccess: () {
+                              debugPrint("Sucesso no login");
                               // TODO: FECHAR TELA DE LOGIN
                             }
                           );
