@@ -17,24 +17,31 @@ import 'package:provider/provider.dart';
     ));
 
 
-Future<void> main() async {
-  runApp(const MyApp());
+ Future<void> main() async {
+   WidgetsFlutterBinding.ensureInitialized();
 
-// Inicializando o Firebase APP e WEB
-  WidgetsFlutterBinding.ensureInitialized();
-
-  if (kIsWeb) {
-    await Firebase.initializeApp( options:
+   if (kIsWeb) {
+     await Firebase.initializeApp( options:
      FirebaseOptions(
-      apiKey: FirebaseApiWeb().ApiKey,
-      appId: FirebaseApiWeb().AppId,
-      messagingSenderId: FirebaseApiWeb().SenderId,
-      projectId: FirebaseApiWeb().ProjectId,
-    ));
-  } else {
-    await Firebase.initializeApp();
-  }
-}
+       apiKey: FirebaseApiWeb().ApiKey,
+       appId: FirebaseApiWeb().AppId,
+       messagingSenderId: FirebaseApiWeb().SenderId,
+       projectId: FirebaseApiWeb().ProjectId,
+     ));
+   } else {
+     await Firebase.initializeApp();
+   }
+
+   runApp(MultiProvider(
+     providers: [
+       ChangeNotifierProvider(
+         create:(_) => UserManager(),
+       )
+     ],
+     child: const MyApp())
+   );    // Inicializando o Firebase APP e WEB
+ }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -42,16 +49,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Provider(
-      create: (_) => UserManager(),
-      child: MaterialApp(
+    return MaterialApp(
         title: 'Loja Virtual BRN-Info_Dev',
 
         theme: temaPadrao,
 
-        home: BaseScreen(),
+        home: const BaseScreen(),
         debugShowCheckedModeBanner: false,
-      ),
-    );
+      );
   }
 }

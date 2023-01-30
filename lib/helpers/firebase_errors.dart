@@ -22,9 +22,6 @@ String getErrorString(String code){
       case 'ERROR_TOO_MANY_REQUESTS':
       case "operation-not-allowed":
         return 'Muitas solicitações. Tente novamente mais tarde.';
-      case "ERROR_INVALID_EMAIL":
-      case "invalid-email":
-        return "Email Inválido";
       case 'ERROR_OPERATION_NOT_ALLOWED':
       case "operation-not-allowed":
         return 'Operação não permitida.';
