@@ -26,91 +26,113 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         title: const Text('Entrar'),
         centerTitle: true,
+        actions: [
+          MaterialButton(
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/signup');
+            },
+            padding: kIsWeb
+                ? const EdgeInsets.only(top: 10, right: 30)
+                : const EdgeInsets.only(top: 10, right: 25),
+            child: const Text(
+                'CRIAR CONTA',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.amber
+            ),
+
+            ),
+
+          ),
+        ],
       ),
       body: Center(
         child: Card(
           margin: kIsWeb
-              ? const EdgeInsets.symmetric(horizontal: 150)
+              ? const EdgeInsets.symmetric(horizontal: 3)
               : const EdgeInsets.symmetric(horizontal: 19),
-          child: Form(
-            key: formKey,
-            child: Consumer<UserManager>(
-              builder: (_, userManager, __) {
-                return ListView(
-                  padding: const EdgeInsets.all(16),
-                  shrinkWrap: true,
-                  children: [
-                    TextFormField(
-                      controller: emailController,
-                      enabled: !userManager.loading,
-                      decoration: const InputDecoration(hintText: 'E-mail'),
-                      keyboardType: TextInputType.emailAddress,
-                      autocorrect: false,
-                      validator: (email) {
-                        if (!emailValid(email!)) {
-                          return 'E-Mail Inválido';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    TextFormField(
-                      controller: passwordController,
-                      enabled: !userManager.loading,
-                      decoration: const InputDecoration(hintText: 'Senha'),
-                      autocorrect: false,
-                      obscureText: true,
-                      validator: (password) {
-                        if (password!.isEmpty || password.length < 7) {
-                          return 'Senha Inválida';
-                        }
-                        return null;
-                      },
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: MaterialButton(
-                        onPressed: () {},
-                        padding: EdgeInsets.zero,
-                        child: const Text('Esqueci minha Senha!'),
+          child: SizedBox(
+            width: 480,
+            child: Form(
+              key: formKey,
+              child: Consumer<UserManager>(
+                builder: (_, userManager, __) {
+                  return ListView(
+                    padding: const EdgeInsets.all(16),
+                    shrinkWrap: true,
+                    children: [
+                      TextFormField(
+                        controller: emailController,
+                        enabled: !userManager.loading,
+                        decoration: const InputDecoration(hintText: 'E-mail'),
+                        keyboardType: TextInputType.emailAddress,
+                        autocorrect: false,
+                        validator: (email) {
+                          if (!emailValid(email!)) {
+                            return 'E-Mail Inválido';
+                          }
+                          return null;
+                        },
                       ),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    SizedBox(
-                      height: 52,
-                      child: CustomButton(
-                        texto: 'Entrar',
-                          onPressed: userManager.loading ? null : () {
-                            if (formKey.currentState!.validate()) {
-                              userManager.signIn(
-                                  users: Users(
-                                      email: emailController.text,
-                                      password: passwordController.text),
-                                  onFail: (error) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                          content: Text(error,
-                                          style: const TextStyle(fontSize: 18)),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  },
-                                  onSuccess: () {
-                                    debugPrint("Sucesso  no login");
-                                    // TODO: FECHAR TELA DE LOGIN
-                                  }
-                                  );
-                            }
-                          },
-                          ),
-
-                    ),
-                  ],
-                );
-              },
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      TextFormField(
+                        controller: passwordController,
+                        enabled: !userManager.loading,
+                        decoration: const InputDecoration(hintText: 'Senha'),
+                        autocorrect: false,
+                        obscureText: true,
+                        validator: (password) {
+                          if (password!.isEmpty || password.length < 7) {
+                            return 'Senha Inválida';
+                          }
+                          return null;
+                        },
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: MaterialButton(
+                          onPressed: () {},
+                          padding: EdgeInsets.zero,
+                          child: const Text('Esqueci minha Senha!'),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      SizedBox(
+                        height: 52,
+                        child: CustomButton(
+                          texto: 'Entrar',
+                            onPressed: userManager.loading ? null : () {
+                              if (formKey.currentState!.validate()) {
+                                userManager.signIn(
+                                    users: Users(
+                                        email: emailController.text,
+                                        password: passwordController.text),
+                                    onFail: (error) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                            content: Text(error,
+                                            style: const TextStyle(fontSize: 18)),
+                                        backgroundColor: Colors.red,
+                                      ));
+                                    },
+                                    onSuccess: () {
+                                      debugPrint("Sucesso  no login");
+                                      // TODO: FECHAR TELA DE LOGIN
+                                    }
+                                    );
+                              }
+                            },
+                            ),
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
           ),
         ),

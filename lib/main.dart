@@ -1,6 +1,6 @@
-import 'package:ecommerce/models/db_api/FirebaseApiWeb.dart';
+import 'package:ecommerce/helpers/route_generator.dart';
+import 'package:ecommerce/models/db_api/firebase_api_web.dart';
 import 'package:ecommerce/models/users_manager.dart';
-import 'package:ecommerce/screens/base/base_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:core';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,15 +18,16 @@ import 'package:provider/provider.dart';
 
 
  Future<void> main() async {
+   // Inicializando o Firebase APP e WEB
    WidgetsFlutterBinding.ensureInitialized();
 
    if (kIsWeb) {
      await Firebase.initializeApp( options:
      FirebaseOptions(
-       apiKey: FirebaseApiWeb().ApiKey,
-       appId: FirebaseApiWeb().AppId,
-       messagingSenderId: FirebaseApiWeb().SenderId,
-       projectId: FirebaseApiWeb().ProjectId,
+       apiKey: FirebaseApiWeb().apiKey,
+       appId: FirebaseApiWeb().appId,
+       messagingSenderId: FirebaseApiWeb().senderId,
+       projectId: FirebaseApiWeb().projectId,
      ));
    } else {
      await Firebase.initializeApp();
@@ -39,7 +40,7 @@ import 'package:provider/provider.dart';
        )
      ],
      child: const MyApp())
-   );    // Inicializando o Firebase APP e WEB
+   );
  }
 
 
@@ -54,7 +55,10 @@ class MyApp extends StatelessWidget {
 
         theme: temaPadrao,
 
-        home: const BaseScreen(),
+      initialRoute: "/base",
+      onGenerateRoute: RouteGenerator.generateRoute,
+
+        //home: const BaseScreen(),
         debugShowCheckedModeBanner: false,
       );
   }

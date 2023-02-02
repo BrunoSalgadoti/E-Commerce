@@ -23,7 +23,7 @@ class _BaseScreenState extends State<BaseScreen> {
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
         children: [
-           LoginScreen(),  //TEMPORÁRIO
+           const LoginScreen(),  //TEMPORÁRIO
           Scaffold(
             drawer: const CustomDrawer(),
             appBar: AppBar(

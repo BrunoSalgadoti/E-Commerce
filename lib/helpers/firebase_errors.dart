@@ -9,6 +9,7 @@ String getErrorString(String code){
       case "account-exists-with-different-credential":
         return 'E-mail já está sendo utilizado em outra conta.';
       case 'ERROR_INVALID_CREDENTIAL':
+      case 'invalid_credential':
         return 'Seu e-mail é inválido.';
       case "ERROR_WRONG_PASSWORD":
       case "wrong-password":
@@ -20,7 +21,7 @@ String getErrorString(String code){
       case "user-disabled":
         return 'Este usuário foi desabilitado.';
       case 'ERROR_TOO_MANY_REQUESTS':
-      case "operation-not-allowed":
+      case "too_many_requests":
         return 'Muitas solicitações. Tente novamente mais tarde.';
       case 'ERROR_OPERATION_NOT_ALLOWED':
       case "operation-not-allowed":
