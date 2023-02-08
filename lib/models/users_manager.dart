@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 class UserManager with ChangeNotifier{
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  User? user;
+  Users? users;
 
   bool _loading = false;
   bool get loading => _loading;
@@ -22,7 +22,7 @@ class UserManager with ChangeNotifier{
       final UserCredential result = await _auth.signInWithEmailAndPassword(
           email: users.email, password: users.password);
 
-      user = result.user!;
+      await _loadCurrentUser(user: result.user);
 
       onSuccess();
     } on FirebaseAuthException catch(error){
@@ -31,15 +31,18 @@ class UserManager with ChangeNotifier{
     loading = false;
   }
 
-  Future<void> singUp({required Users users, required Function onFail, required Function onSucess}) async {
+  Future<void> singUp({required Users users, required Function onFail, required Function onSuccess}) async {
     loading = true;
     try {
       final UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: users.email, password: users.password);
 
-      user = result.user;
+      users.id = result.user!.uid;
+      this.users = users;
 
-      onSucess();
+      await users.saveData();
+
+      onSuccess();
     } on FirebaseAuthException catch (error) {
       onFail(getErrorString(error.code));
     }
@@ -51,10 +54,13 @@ class UserManager with ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> _loadCurrentUser() async {
-    final User currentUser =  _auth.currentUser!;
-      user = currentUser;
-      debugPrint('Printe de teste de usuário = ${user!.uid}');
-      notifyListeners();
+  Future<void> _loadCurrentUser({User? user}) async {
+     final User currentUser = user ?? _auth.currentUser!;
+         if(currentUser != null) {
+           final DocumentSnapshot docUsers = await firestore.collection('users')
+               .doc(currentUser.uid).get();
+           users = Users.fromDocument(docUsers);
+           notifyListeners();
+         }
     }
   }

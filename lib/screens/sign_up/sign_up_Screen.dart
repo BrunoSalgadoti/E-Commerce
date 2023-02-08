@@ -129,7 +129,7 @@ class SignUpScreen extends StatelessWidget {
                                   backgroundColor: Colors.red,
                                 ));
                               },
-                              onSucess: () {
+                              onSuccess: () {
                             debugPrint('Sucesso ao cadastrar');
                             //TODO: POP
                               });
