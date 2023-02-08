@@ -31,6 +31,21 @@ class UserManager with ChangeNotifier{
     loading = false;
   }
 
+  Future<void> singUp({required Users users, required Function onFail, required Function onSucess}) async {
+    loading = true;
+    try {
+      final UserCredential result = await _auth.createUserWithEmailAndPassword(
+          email: users.email, password: users.password);
+
+      user = result.user;
+
+      onSucess();
+    } on FirebaseAuthException catch (error) {
+      onFail(getErrorString(error.code));
+    }
+    loading = false;
+  }
+
   set loading(bool value){
     _loading = value;
     notifyListeners();

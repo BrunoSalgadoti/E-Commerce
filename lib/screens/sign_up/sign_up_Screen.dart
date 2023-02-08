@@ -1,8 +1,17 @@
 import 'package:ecommerce/common/button/custom_button.dart';
+import 'package:ecommerce/helpers/validators.dart';
+import 'package:ecommerce/models/users.dart';
+import 'package:ecommerce/models/users_manager.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  SignUpScreen({Key? key}) : super(key: key);
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  late final Users users = Users(password: '', email: '', userName: '');
 
   @override
   Widget build(BuildContext context) {
@@ -11,47 +20,129 @@ class SignUpScreen extends StatelessWidget {
         title: const Text('Criar Conta'),
         centerTitle: true,
       ),
-
-        body: Center(
-          child: Card(
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            child: ListView(
-              padding: const EdgeInsets.all(16),
-              shrinkWrap: true,
-              children: [
-                TextFormField(
-                  decoration: const InputDecoration(hintText: 'Nome Completo'),
-                  keyboardType: TextInputType.text,
-                ),
-                const SizedBox(height: 16,),
-                TextFormField(
-                  decoration: const InputDecoration(hintText: 'E-mail'),
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                const SizedBox(height: 16,),
-                TextFormField(
-                  decoration: const InputDecoration(hintText: 'Senha'),
-                  keyboardType: TextInputType.text,
-                  obscureText: true,
-                ),
-                const SizedBox(height: 16,),
-                TextFormField(
-                  decoration: const InputDecoration(hintText: 'Confirme a Senha'),
-                  keyboardType: TextInputType.text,
-                  obscureText: true,
-                ),
-                const SizedBox(height: 16,),
-                SizedBox(
-                  height: 52,
-                  child: CustomButton(
-                    texto: 'Criar Conta',
-                    onPressed: () {  },
+      body: Center(
+        child: Card(
+          margin: kIsWeb
+              ? const EdgeInsets.symmetric(horizontal: 3)
+              : const EdgeInsets.symmetric(horizontal: 19),
+          child: SizedBox(
+            width: 500,
+            child: Form(
+              key: formKey,
+              child: ListView(
+                padding: const EdgeInsets.all(16),
+                shrinkWrap: true,
+                children: [
+                  TextFormField(
+                    decoration: const InputDecoration(hintText: 'Nome Completo'),
+                    keyboardType: TextInputType.text,
+                    validator: (nome) {
+                      if (nome!.isEmpty) {
+                        return 'Campo obrigatório!';
+                      } else if (nome.trim().split(' ').length <= 1) {
+                        return 'Preencha seu nome completo!';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onSaved: (name) => users.userName = name,
                   ),
-                )
-              ],
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(hintText: 'E-mail'),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (email) {
+                      if (email!.isEmpty) {
+                        return 'Campo Obrigatório';
+                      } else if (!emailValid(email)) {
+                        return 'E-mail inválido';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onSaved: (email) => users.email = email!,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(hintText: 'Senha'),
+                    keyboardType: TextInputType.text,
+                    obscureText: true,
+                    validator: (password) {
+                      if (password!.isEmpty) {
+                        return 'Campo obrigatório';
+                      } else if (password.length < 7) {
+                        return 'Senha deve conter no mínimo 7 caracteres';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onSaved: (password) => users.password = password!,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(hintText: 'Repita a Senha'),
+                    keyboardType: TextInputType.text,
+                    obscureText: true,
+                    validator: (password) {
+                      if (password!.isEmpty) {
+                        return 'Campo obrigatório';
+                      } else if (password.length < 7) {
+                        return 'Senha deve conter no mínimo 7 caracteres';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onSaved: (password) => users.confirmPassword = password,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  SizedBox(
+                    height: 52,
+                    child: CustomButton(
+                      texto: 'Criar Conta',
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          formKey.currentState!.save();
+
+                          if (users.password != users.confirmPassword) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                                  content: Text('Confirmação de Senha não confere!!',
+                                  style: TextStyle(fontSize: 18)),
+                              backgroundColor: Colors.red,
+                            ));
+                            return;
+                          }
+                          context.read<UserManager>().singUp(users: users,
+                              onFail: (error){
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                       content: Text('Falha ao cadastrar $error',
+                                      style: const TextStyle(fontSize: 18)),
+                                  backgroundColor: Colors.red,
+                                ));
+                              },
+                              onSucess: () {
+                            debugPrint('Sucesso ao cadastrar');
+                            //TODO: POP
+                              });
+                        }
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
+      ),
     );
   }
 }

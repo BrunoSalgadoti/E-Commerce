@@ -71,8 +71,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: (email) {
                           if (!emailValid(email!)) {
                             return 'E-Mail Inválido';
+                          } else {
+                            return null;
                           }
-                          return null;
                         },
                       ),
                       const SizedBox(
@@ -87,8 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: (password) {
                           if (password!.isEmpty || password.length < 7) {
                             return 'Senha Inválida';
+                          } else {
+                            return null;
                           }
-                          return null;
                         },
                       ),
                       Align(

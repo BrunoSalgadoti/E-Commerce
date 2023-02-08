@@ -16,7 +16,7 @@ class RouteGenerator {
 
       case '/signup' :
         return MaterialPageRoute(
-          builder:(_) => const SignUpScreen(),
+          builder:(_) => SignUpScreen(),
         );
 
         //TODO: Detalhes de anúncios
