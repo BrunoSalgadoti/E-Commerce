@@ -37,6 +37,7 @@ import 'package:provider/provider.dart';
      providers: [
        ChangeNotifierProvider(
          create:(_) => UserManager(),
+         lazy: false,
        )
      ],
      child: const MyApp())

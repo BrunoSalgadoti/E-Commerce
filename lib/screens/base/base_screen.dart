@@ -23,11 +23,28 @@ class _BaseScreenState extends State<BaseScreen> {
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
         children: [
-           const LoginScreen(),  //TEMPORÁRIO
           Scaffold(
             drawer: const CustomDrawer(),
             appBar: AppBar(
               title: const Text('Home'),
+            ),
+          ),
+          Scaffold(
+            drawer: const CustomDrawer(),
+            appBar: AppBar(
+              title: const Text('Home2'),
+            ),
+          ),
+          Scaffold(
+            drawer: const CustomDrawer(),
+            appBar: AppBar(
+              title: const Text('Home3'),
+            ),
+          ),
+          Scaffold(
+            drawer: const CustomDrawer(),
+            appBar: AppBar(
+              title: const Text('Home4'),
             ),
           ),
           Container(color: Colors.red,),
