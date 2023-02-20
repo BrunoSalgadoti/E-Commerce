@@ -1,6 +1,7 @@
 import 'package:ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:ecommerce/models/page_manager.dart';
 import 'package:ecommerce/screens/login/login_screen.dart';
+import 'package:ecommerce/screens/products/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,12 +30,7 @@ class _BaseScreenState extends State<BaseScreen> {
               title: const Text('Home'),
             ),
           ),
-          Scaffold(
-            drawer: const CustomDrawer(),
-            appBar: AppBar(
-              title: const Text('Home2'),
-            ),
-          ),
+          const ProductsScreen(),
           Scaffold(
             drawer: const CustomDrawer(),
             appBar: AppBar(

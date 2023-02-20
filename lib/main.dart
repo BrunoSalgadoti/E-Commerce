@@ -1,5 +1,6 @@
 import 'package:ecommerce/helpers/route_generator.dart';
 import 'package:ecommerce/models/db_api/firebase_api_web.dart';
+import 'package:ecommerce/models/product_manager.dart';
 import 'package:ecommerce/models/users_manager.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:core';
@@ -37,6 +38,10 @@ import 'package:provider/provider.dart';
      providers: [
        ChangeNotifierProvider(
          create:(_) => UserManager(),
+         lazy: false,
+       ),
+       ChangeNotifierProvider(
+         create: (_) => ProductManager(),
          lazy: false,
        )
      ],

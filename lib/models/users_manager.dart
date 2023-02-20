@@ -3,6 +3,8 @@ import 'package:ecommerce/helpers/firebase_errors.dart';
 import 'package:ecommerce/models/users.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class UserManager with ChangeNotifier{
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -62,12 +64,17 @@ class UserManager with ChangeNotifier{
   }
 
   Future<void> _loadCurrentUser({User? user}) async {
-     final User currentUser = user ?? _auth.currentUser!;
-         if(currentUser != null) {
-           final DocumentSnapshot docUsers = await firestore.collection('users')
-               .doc(currentUser.uid).get();
-           users = Users.fromDocument(docUsers);
-           notifyListeners();
-         }
+     try {
+       final User currentUser = user ?? _auth.currentUser!;
+       if (currentUser != null) {
+         final DocumentSnapshot docUsers = await firestore.collection('users')
+             .doc(currentUser.uid).get();
+         users = Users.fromDocument(docUsers);
+         notifyListeners();
+       }
+     } catch (noUser){
+       //TODO: Animação Bem-Vindo
+       StackTrace.empty;
+     }
     }
   }
