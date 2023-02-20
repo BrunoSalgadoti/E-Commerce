@@ -6,35 +6,43 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
-class UserManager with ChangeNotifier{
+class UserManager with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   Users? users;
 
   bool _loading = false;
+
   bool get loading => _loading;
+
   bool get isLoggedIn => users != null;
 
-   UserManager(){
+  UserManager() {
     _loadCurrentUser();
   }
 
-  Future<void> signIn({required Users users, required Function onFail, required Function onSuccess}) async {
+  Future<void> signIn(
+      {required Users users,
+      required Function onFail,
+      required Function onSuccess}) async {
     loading = true;
-    try{
+    try {
       final UserCredential result = await _auth.signInWithEmailAndPassword(
           email: users.email, password: users.password);
 
       await _loadCurrentUser(user: result.user);
 
       onSuccess();
-    } on FirebaseAuthException catch(error){
+    } on FirebaseAuthException catch (error) {
       onFail(getErrorString(error.code));
     }
     loading = false;
   }
 
-  Future<void> singUp({required Users users, required Function onFail, required Function onSuccess}) async {
+  Future<void> singUp(
+      {required Users users,
+      required Function onFail,
+      required Function onSuccess}) async {
     loading = true;
     try {
       final UserCredential result = await _auth.createUserWithEmailAndPassword(
@@ -53,28 +61,28 @@ class UserManager with ChangeNotifier{
   }
 
   void signOut() {
-     _auth.signOut();
-     users = null;
-     notifyListeners();
+    _auth.signOut();
+    users = null;
+    notifyListeners();
   }
 
-  set loading(bool value){
+  set loading(bool value) {
     _loading = value;
     notifyListeners();
   }
 
   Future<void> _loadCurrentUser({User? user}) async {
-     try {
-       final User currentUser = user ?? _auth.currentUser!;
-       if (currentUser != null) {
-         final DocumentSnapshot docUsers = await firestore.collection('users')
-             .doc(currentUser.uid).get();
-         users = Users.fromDocument(docUsers);
-         notifyListeners();
-       }
-     } catch (noUser){
-       //TODO: Animação Bem-Vindo
-       StackTrace.empty;
-     }
+    try {
+      final User currentUser = user ?? _auth.currentUser!;
+      if (currentUser != null) {
+        final DocumentSnapshot docUsers =
+            await firestore.collection('users').doc(currentUser.uid).get();
+        users = Users.fromDocument(docUsers);
+        notifyListeners();
+      }
+    } catch (noUser) {
+      //TODO: Animação Bem-Vindo
+      StackTrace.empty;
     }
   }
+}
