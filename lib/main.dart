@@ -64,7 +64,6 @@ class MyApp extends StatelessWidget {
       initialRoute: "/base",
       onGenerateRoute: RouteGenerator.generateRoute,
 
-        //home: const BaseScreen(),
         debugShowCheckedModeBanner: false,
       );
   }

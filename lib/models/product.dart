@@ -6,12 +6,11 @@ class Product {
     id = document.id;
     name = document['name'] as String;
     description = document['description'] as String;
-    images = List<String>.from(document.get('images') as List<dynamic>);
+    images = List<String>.from(document.get('images'));
   }
 
   String? id;
-  String? name;
+  String name = '';
   String? description;
   List<String>? images;
-
 }
