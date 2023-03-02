@@ -1,4 +1,5 @@
 import 'package:ecommerce/common/button/custom_button.dart';
+import 'package:ecommerce/models/cart_manager.dart';
 import 'package:ecommerce/models/users_manager.dart';
 import 'package:ecommerce/screens/products/components/products_widget.dart';
 import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
@@ -105,7 +106,8 @@ class ProductDetailsScreen extends StatelessWidget {
                           onPressed: product.selectedDetails != null
                               ? () {
                                   if (userManager.isLoggedIn) {
-                                    // TODO: Adicionar ao carrinho
+                                    context.read<CartManager>().addToCart(product);
+                                    Navigator.pushNamed(context, '/cart');
                                   } else {
                                     Navigator.pushNamed(context, '/login');
                                   }

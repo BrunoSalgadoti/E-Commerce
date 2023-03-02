@@ -1,4 +1,5 @@
 import 'package:ecommerce/helpers/route_generator.dart';
+import 'package:ecommerce/models/cart_manager.dart';
 import 'package:ecommerce/models/db_api/firebase_api_web.dart';
 import 'package:ecommerce/models/product_manager.dart';
 import 'package:ecommerce/models/users_manager.dart';
@@ -43,7 +44,13 @@ import 'package:provider/provider.dart';
        ChangeNotifierProvider(
          create: (_) => ProductManager(),
          lazy: false,
-       )
+       ),
+       ProxyProvider<UserManager, CartManager>(
+         create: (_) => CartManager(),
+         update: (_, userManager, cartManager) =>
+             CartManager()..updateUser(userManager),
+         lazy: false,
+       ),
      ],
      child: const MyApp())
    );

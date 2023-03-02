@@ -1,5 +1,5 @@
-import 'package:ecommerce/common/button/custom_button.dart';
 import 'package:ecommerce/helpers/validators.dart';
+import 'package:ecommerce/common/button/custom_button.dart';
 import 'package:ecommerce/models/users.dart';
 import 'package:ecommerce/models/users_manager.dart';
 import 'package:flutter/foundation.dart';
@@ -11,7 +11,7 @@ class SignUpScreen extends StatelessWidget {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  late final Users users = Users(password: '', email: '', userName: '');
+  final Users users = Users(password: '', email: '', userName: '');
 
   @override
   Widget build(BuildContext context) {

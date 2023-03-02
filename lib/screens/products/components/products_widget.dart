@@ -41,14 +41,14 @@ class ProductsWidget extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
               color: color,
               child: Text(
-                details.size,
+                details.size!,
                 style: const TextStyle(color: Colors.white),
               ),
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Text(
-                'R\$ ${details.price.toStringAsFixed(2)}',
+                'R\$ ${details.price!.toStringAsFixed(2)}',
                 style: TextStyle(
                   color: color,
                 ),

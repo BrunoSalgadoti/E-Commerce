@@ -81,7 +81,6 @@ class UserManager with ChangeNotifier {
         notifyListeners();
       }
     } catch (noUser) {
-      //TODO: Animação Bem-Vindo
       StackTrace.empty;
     }
   }

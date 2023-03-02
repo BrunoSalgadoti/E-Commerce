@@ -6,8 +6,8 @@ class DetailsProducts {
         stock =  map['stock'] as int;
   }
 
-  String size = '';
-  num price = 0.0;
+  String? size;
+  num? price;
   int stock = 0;
 
   bool get hasStock => stock > 0;

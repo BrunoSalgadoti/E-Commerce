@@ -7,8 +7,8 @@ class Users {
 
   Users.fromDocument(DocumentSnapshot document){
     id = document.id;
-    userName = document.get('name');
-    email = document.get('email');
+    userName = document.get('name') as String;
+    email = document.get('email') as String;
   }
 
   String? id;
@@ -21,6 +21,9 @@ class Users {
 
   DocumentReference get firestoreRef =>
   FirebaseFirestore.instance.doc('users/$id');
+
+  CollectionReference get cartReference => 
+  firestoreRef.collection('cart');
 
   Future<void> saveData() async {
     await firestoreRef.set(toMap());

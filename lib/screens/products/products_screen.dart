@@ -1,5 +1,6 @@
 import 'package:ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:ecommerce/models/product_manager.dart';
+import 'package:ecommerce/models/users_manager.dart';
 import 'package:ecommerce/screens/products/components/product_list_tile.dart';
 import 'package:ecommerce/screens/products/components/search_dialog.dart';
 import 'package:flutter/material.dart';
@@ -87,6 +88,24 @@ class ProductsScreen extends StatelessWidget {
               });
         },
       ),
+      floatingActionButton: Consumer<UserManager>(
+        builder: (_, userManager, __) {
+          return FloatingActionButton(
+            backgroundColor: Colors.white,
+            foregroundColor: Theme.of(context).primaryColor,
+            onPressed: () {
+              if (userManager.isLoggedIn) {
+                Navigator.pushNamed(context, '/cart');
+              } else {
+                Navigator.pushNamed(context, '/login');
+              }
+            },
+            child: userManager.isLoggedIn
+                ? const Icon(Icons.shopping_cart)
+                : const Icon(Icons.account_circle),
+          );
+        }
+        ),
     );
   }
 }
