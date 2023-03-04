@@ -45,7 +45,7 @@ import 'package:provider/provider.dart';
          create: (_) => ProductManager(),
          lazy: false,
        ),
-       ProxyProvider<UserManager, CartManager>(
+       ChangeNotifierProxyProvider<UserManager, CartManager>(
          create: (_) => CartManager(),
          update: (_, userManager, cartManager) =>
              CartManager()..updateUser(userManager),
@@ -55,7 +55,6 @@ import 'package:provider/provider.dart';
      child: const MyApp())
    );
  }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

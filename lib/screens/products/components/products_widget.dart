@@ -29,34 +29,34 @@ class ProductsWidget extends StatelessWidget {
         }
       },
       child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: color
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              color: color,
-              child: Text(
-                details.size!,
-                style: const TextStyle(color: Colors.white),
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: color
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Text(
-                'R\$ ${details.price!.toStringAsFixed(2)}',
-                style: TextStyle(
-                  color: color,
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
+            child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children:  [
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    color: color,
+                    child: Text(
+                      details.size!,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Text(
+                      'R\$ ${details.price!.toStringAsFixed(2)}',
+                      style: TextStyle(
+                        color: color,
+                      ),
+                    ),
+                  ),
+                ]
+            ),
+          )
     );
   }
 }

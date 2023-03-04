@@ -4,8 +4,7 @@ import 'package:provider/provider.dart';
 
 class CustomButton extends StatelessWidget {
 
-
-  final dynamic texto;
+  final String texto;
   final VoidCallback? onPressed;
   final Color corTexto;
   final Color corBotao;
@@ -13,20 +12,17 @@ class CustomButton extends StatelessWidget {
   final Color corShadow;
   final double fontSize;
   final double elevation;
-  // final dynamic circularIndicator;
 
-
-  const CustomButton({super.key,
-    @required this.texto,
-    @required this.onPressed,
+  const CustomButton({Key? key,
+    required this.texto,
+    required this.onPressed,
     this.corTexto = Colors.white,
     this.corBotao = const Color.fromARGB(255, 4, 125, 141,),
     this.corBotaoDesativado =  const Color.fromRGBO(4, 125, 141, 0.4),
     this.corShadow = Colors.white24,
     this.fontSize = 18,
     this.elevation = 08,
-    // this.circularIndicator = const CircularProgressIndicator()
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
