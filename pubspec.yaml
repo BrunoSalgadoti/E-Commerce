@@ -42,6 +42,8 @@ dependencies:
   firebase_core: ^2.4.1
   provider: ^6.0.5
   fan_carousel_image_slider: ^0.1.2
+  staggered_grid_view_flutter: ^0.0.4
+  transparent_image: ^2.0.1
 
 dev_dependencies:
   flutter_test:

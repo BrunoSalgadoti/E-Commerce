@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>  [
-                  // TODO: Implementação da variável no gerenciamento
+                  //TODO: Implementação da variável no gerenciamento
                    Text('Loja:\n${userManager.users?.storeName ?? 'BRN Info_Dev'}',
                     style: const TextStyle(
                         fontSize: 34,
