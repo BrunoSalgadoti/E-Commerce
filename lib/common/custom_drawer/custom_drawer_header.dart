@@ -1,3 +1,4 @@
+import 'package:ecommerce/models/page_manager.dart';
 import 'package:ecommerce/models/users_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +37,7 @@ import 'package:provider/provider.dart';
                     onTap: () {
                       if(userManager.isLoggedIn){
                         userManager.signOut();
+                        context.read<PageManager>().setPage(0);
                       }else {
                         Navigator.pushNamed(context, '/login');
                       }

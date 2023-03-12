@@ -78,10 +78,19 @@ class UserManager with ChangeNotifier {
         final DocumentSnapshot docUsers =
             await firestore.collection('users').doc(currentUser.uid).get();
         users = Users.fromDocument(docUsers);
+
+        final docAdmin = await firestore.collection('admins')
+            .doc(users?.id).get();
+        if(docAdmin.exists) {
+          users?.admin = true;
+        }
+
         notifyListeners();
       }
     } catch (noUser) {
       StackTrace.empty;
     }
   }
+
+  bool get adminEnable => users != null && users!.admin;
 }

@@ -1,6 +1,8 @@
 import 'package:ecommerce/common/custom_drawer/custom_drawer_header.dart';
 import 'package:ecommerce/common/custom_drawer/drawer_title.dart';
+import 'package:ecommerce/models/users_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({Key? key}) : super(key: key);
@@ -23,29 +25,52 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
           ListView(
-            children: const [
-              CustomDrawerHeader(),
-              Divider(),
-              DrawerTitle(
+            children: [
+              const CustomDrawerHeader(),
+              const Divider(),
+              const DrawerTitle(
                 iconData: Icons.home,
                 title: "Início",
                 page: 0,
               ),
-              DrawerTitle(
+              const DrawerTitle(
                 iconData: Icons.list,
                 title: "Produtos",
                 page: 1,
               ),
-              DrawerTitle(
+              const DrawerTitle(
                 iconData: Icons.playlist_add_check,
                 title: "Meus Pedidos",
                 page: 2,
               ),
-              DrawerTitle(
+              const DrawerTitle(
                 iconData: Icons.location_on,
                 title: "Lojas",
                 page: 3,
               ),
+              Consumer<UserManager>(
+                  builder: (_, userManager, __) {
+                    if(userManager.adminEnable) {
+                      return Column(
+                        children: const [
+                          Divider(),
+                          DrawerTitle(
+                            iconData: Icons.supervised_user_circle,
+                            title: 'Usuários',
+                            page: 4,
+                          ),
+                          DrawerTitle(
+                            iconData: Icons.task_alt,
+                            title: 'Pedidos',
+                            page: 5,
+                          )
+                        ],
+                      );
+                    }else {
+                      return Container();
+                    }
+                  },
+              )
             ],
           ),
         ],

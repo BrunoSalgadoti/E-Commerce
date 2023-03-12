@@ -3,8 +3,7 @@ import 'package:ecommerce/models/product.dart';
 import 'package:flutter/cupertino.dart';
 
 class ProductManager extends ChangeNotifier {
-
-  ProductManager(){
+  ProductManager() {
     _loadAllProducts();
   }
 
@@ -14,7 +13,8 @@ class ProductManager extends ChangeNotifier {
   String _search = '';
 
   String get search => _search;
-  set search(String value){
+
+  set search(String value) {
     _search = value;
     notifyListeners();
   }
@@ -22,27 +22,30 @@ class ProductManager extends ChangeNotifier {
   List<Product> get filteredProducts {
     final List<Product> filteredProducts = [];
 
-    if(search.isEmpty){
+    if (search.isEmpty) {
       filteredProducts.addAll(allProducts);
     } else {
-      filteredProducts.addAll(allProducts.where(
-              (p) => p.name.toLowerCase().contains(search.toLowerCase()))
-      );
+      filteredProducts.addAll(allProducts
+          .where((p) => p.name.toLowerCase().contains(search.toLowerCase())));
     }
     return filteredProducts;
   }
 
-  Future<void> _loadAllProducts() async{
+  Future<void> _loadAllProducts() async {
     final QuerySnapshot snapProducts =
-    await firestore.collection('products').get();
+        await firestore.collection('products').get();
 
-    allProducts = snapProducts.docs.map(
-            (d) => Product.fromDocument(d)).toList();
+    allProducts =
+        snapProducts.docs.map((d) => Product.fromDocument(d)).toList();
 
     notifyListeners();
   }
 
-  Product findProductById(String id) {
+  Product? findProductById(String id) {
+    try {
       return allProducts.firstWhere((p) => p.id == id);
+    } catch (error) {
+      return null;
+    }
   }
 }
