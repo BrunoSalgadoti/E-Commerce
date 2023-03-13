@@ -15,7 +15,7 @@ class AdminUsersManager extends ChangeNotifier {
   void _listenToUsers() {
     final faker = Faker();
 
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 1000; i++)  {
       users.add(Users(
         userName: faker.person.name(),
         email: faker.internet.email(),

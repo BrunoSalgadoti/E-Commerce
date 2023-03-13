@@ -87,6 +87,5 @@ class UserManager with ChangeNotifier {
       StackTrace.empty;
     }
   }
-
   bool get adminEnable => users != null && users!.admin;
 }

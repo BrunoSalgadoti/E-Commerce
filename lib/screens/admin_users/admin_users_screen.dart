@@ -20,7 +20,7 @@ class AdminUsersScreen extends StatelessWidget {
             itemBuilder: (_, index) {
               return Slidable(
                   key: const ValueKey(0),
-                  startActionPane:  const ActionPane(
+                  startActionPane: const ActionPane(
                     motion: ScrollMotion(),
                     children: [
                       SlidableAction(
@@ -54,8 +54,7 @@ class AdminUsersScreen extends StatelessWidget {
                       children: <Widget>[
                         const CircleAvatar(
                           backgroundImage: NetworkImage(
-                              "https://placeimg.com/200/200/people"
-                          ),
+                              "https://placeimg.com/200/200/people"),
                         ),
                         Container(
                             height: 40,
@@ -68,12 +67,8 @@ class AdminUsersScreen extends StatelessWidget {
                             ))
                       ],
                     ),
-                    title: Text(
-                        adminUsersManager.users[index].userName!
-                    ),
-                    subtitle: Text(
-                        adminUsersManager.users[index].email
-                    ),
+                    title: Text(adminUsersManager.users[index].userName!),
+                    subtitle: Text(adminUsersManager.users[index].email),
                   ));
             },
             indexedHeight: (index) => 80.0,
