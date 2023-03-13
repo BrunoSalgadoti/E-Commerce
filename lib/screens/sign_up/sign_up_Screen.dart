@@ -48,7 +48,7 @@ class SignUpScreen extends StatelessWidget {
                             return null;
                           }
                         },
-                        onSaved: (name) => users.userName = name,
+                        onSaved: (name) => users.userName = name!,
                       ),
                       const SizedBox(
                         height: 16,

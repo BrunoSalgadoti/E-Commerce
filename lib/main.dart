@@ -1,6 +1,8 @@
 import 'package:ecommerce/helpers/route_generator.dart';
+import 'package:ecommerce/models/admin_users_manager.dart';
 import 'package:ecommerce/models/cart_manager.dart';
 import 'package:ecommerce/models/db_api/firebase_api_web.dart';
+import 'package:ecommerce/models/home_manager.dart';
 import 'package:ecommerce/models/product_manager.dart';
 import 'package:ecommerce/models/users_manager.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -45,10 +47,20 @@ import 'package:provider/provider.dart';
          create: (_) => ProductManager(),
          lazy: false,
        ),
+       ChangeNotifierProvider(
+         create: (_) => HomeManager(),
+         lazy: false,
+       ),
        ChangeNotifierProxyProvider<UserManager, CartManager>(
          create: (_) => CartManager(),
          update: (_, userManager, cartManager) =>
              CartManager()..updateUser(userManager),
+         lazy: false,
+       ),
+       ChangeNotifierProxyProvider<UserManager, AdminUsersManager>(
+         create: (_) => AdminUsersManager(),
+         update: (_, userManager, adminUsersManager) =>
+         AdminUsersManager()..updateUser(userManager),
          lazy: false,
        ),
      ],

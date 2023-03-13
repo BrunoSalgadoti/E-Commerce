@@ -21,14 +21,12 @@ class UserManager with ChangeNotifier {
     _loadCurrentUser();
   }
 
-  Future<void> signIn(
-      {required Users users,
-      required Function onFail,
+  Future<void> signIn({required Users users, required Function onFail,
       required Function onSuccess}) async {
     loading = true;
     try {
       final UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: users.email, password: users.password);
+          email: users.email, password: users.password!);
 
       await _loadCurrentUser(user: result.user);
 
@@ -39,14 +37,12 @@ class UserManager with ChangeNotifier {
     loading = false;
   }
 
-  Future<void> singUp(
-      {required Users users,
-      required Function onFail,
+  Future<void> singUp({required Users users, required Function onFail,
       required Function onSuccess}) async {
     loading = true;
     try {
       final UserCredential result = await _auth.createUserWithEmailAndPassword(
-          email: users.email, password: users.password);
+          email: users.email, password: users.password!);
 
       users.id = result.user!.uid;
       this.users = users;
@@ -78,10 +74,19 @@ class UserManager with ChangeNotifier {
         final DocumentSnapshot docUsers =
             await firestore.collection('users').doc(currentUser.uid).get();
         users = Users.fromDocument(docUsers);
+
+        final docAdmin =
+            await firestore.collection('admins').doc(users?.id).get();
+        if (docAdmin.exists) {
+          users?.admin = true;
+        }
+
         notifyListeners();
       }
     } catch (noUser) {
       StackTrace.empty;
     }
   }
+
+  bool get adminEnable => users != null && users!.admin;
 }

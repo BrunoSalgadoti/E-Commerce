@@ -37,7 +37,7 @@ class RouteGenerator {
     case '/base' :
       default:
       return MaterialPageRoute(
-        builder:(_) => const BaseScreen(),
+        builder:(_) => BaseScreen(),
       );
     }
   }
