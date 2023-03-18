@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 class UserManager with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   Users? users;
 
   bool _loading = false;
@@ -16,6 +17,8 @@ class UserManager with ChangeNotifier {
   bool get loading => _loading;
 
   bool get isLoggedIn => users != null;
+
+  bool get adminEnable => users != null && users!.admin;
 
   UserManager() {
     _loadCurrentUser();
@@ -70,7 +73,7 @@ class UserManager with ChangeNotifier {
   Future<void> _loadCurrentUser({User? user}) async {
     try {
       final User currentUser = user ?? _auth.currentUser!;
-      if (currentUser != null) {
+      if (currentUser.uid.isNotEmpty) {
         final DocumentSnapshot docUsers =
             await firestore.collection('users').doc(currentUser.uid).get();
         users = Users.fromDocument(docUsers);
@@ -80,12 +83,10 @@ class UserManager with ChangeNotifier {
         if (docAdmin.exists) {
           users?.admin = true;
         }
-
         notifyListeners();
       }
     } catch (noUser) {
       StackTrace.empty;
     }
   }
-  bool get adminEnable => users != null && users!.admin;
 }

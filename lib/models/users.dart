@@ -1,13 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Users {
-  Users(
-      {required this.email,
-      this.password,
-      this.userName,
-      this.confirmPassword,
-      this.id,
-      this.storeName});
+  Users({required this.email, this.password,this.userName,
+    this.confirmPassword, this.id, this.storeName});
 
   Users.fromDocument(DocumentSnapshot document) {
     id = document.id;
@@ -22,6 +17,7 @@ class Users {
   String? password;
   String? confirmPassword;
 
+  bool favourite = false;
   bool admin = false;
 
   DocumentReference get firestoreRef =>

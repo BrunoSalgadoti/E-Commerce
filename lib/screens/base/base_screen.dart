@@ -12,7 +12,6 @@ class BaseScreen extends StatelessWidget {
 
   final PageController pageController = PageController();
 
-
   @override
   Widget build(BuildContext context) {
     return Provider(
@@ -39,9 +38,9 @@ class BaseScreen extends StatelessWidget {
               ),
              if(userManager.adminEnable)
                ...[
-                  AdminUsersScreen(),
+                   const AdminUsersScreen(),
                  Scaffold(
-                   drawer:  const CustomDrawer(),
+                   drawer:   const CustomDrawer(),
                    appBar: AppBar(
                      title:  const Text('Pedidos'),
                    ),
