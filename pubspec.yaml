@@ -46,7 +46,6 @@ dependencies:
   transparent_image: ^2.0.1
   alphabet_list_scroll_view_fix: ^2.0.2
   flutter_slidable: ^2.0.0
-  faker: ^2.1.0
   url_launcher: ^6.1.10
 
 dev_dependencies:

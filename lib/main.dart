@@ -1,5 +1,6 @@
 import 'package:ecommerce/helpers/route_generator.dart';
 import 'package:ecommerce/models/admin_users_manager.dart';
+import 'package:ecommerce/models/admin_users_search.dart';
 import 'package:ecommerce/models/cart_manager.dart';
 import 'package:ecommerce/models/db_api/firebase_api_web.dart';
 import 'package:ecommerce/models/home_manager.dart';
@@ -49,6 +50,10 @@ import 'package:provider/provider.dart';
        ),
        ChangeNotifierProvider(
          create: (_) => HomeManager(),
+         lazy: false,
+       ),
+       ChangeNotifierProvider(
+         create: (_) => AdminUsersSearch(),
          lazy: false,
        ),
        ChangeNotifierProxyProvider<UserManager, CartManager>(

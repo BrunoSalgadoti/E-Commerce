@@ -56,7 +56,7 @@ class CustomDrawer extends StatelessWidget {
                           Divider(),
                           DrawerTitle(
                             iconData: Icons.supervised_user_circle,
-                            title: 'Usuários',
+                            title: 'Clientes',
                             page: 4,
                           ),
                           DrawerTitle(

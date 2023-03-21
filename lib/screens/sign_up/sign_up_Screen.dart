@@ -36,7 +36,9 @@ class SignUpScreen extends StatelessWidget {
                     shrinkWrap: true,
                     children: [
                       TextFormField(
-                        decoration: const InputDecoration(hintText: 'Nome Completo'),
+                        decoration: const InputDecoration(
+                            hintText: 'Nome Completo'
+                        ),
                         enabled: !userManager.loading,
                         keyboardType: TextInputType.text,
                         validator: (nome) {
@@ -54,7 +56,9 @@ class SignUpScreen extends StatelessWidget {
                         height: 16,
                       ),
                       TextFormField(
-                        decoration: const InputDecoration(hintText: 'E-mail'),
+                        decoration: const InputDecoration(
+                            hintText: 'E-mail'
+                        ),
                         enabled: !userManager.loading,
                         keyboardType: TextInputType.emailAddress,
                         validator: (email) {
@@ -72,7 +76,9 @@ class SignUpScreen extends StatelessWidget {
                         height: 16,
                       ),
                       TextFormField(
-                        decoration: const InputDecoration(hintText: 'Senha'),
+                        decoration: const InputDecoration(
+                            hintText: 'Senha'
+                        ),
                         enabled: !userManager.loading,
                         keyboardType: TextInputType.text,
                         obscureText: true,
@@ -91,7 +97,9 @@ class SignUpScreen extends StatelessWidget {
                         height: 16,
                       ),
                       TextFormField(
-                        decoration: const InputDecoration(hintText: 'Repita a Senha'),
+                        decoration: const InputDecoration(
+                            hintText: 'Repita a Senha'
+                        ),
                         enabled: !userManager.loading,
                         keyboardType: TextInputType.text,
                         obscureText: true,
@@ -120,7 +128,8 @@ class SignUpScreen extends StatelessWidget {
                               if (users.password != users.confirmPassword) {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(const SnackBar(
-                                      content: Text('Confirmação de Senha não confere!!',
+                                      content: Text(
+                                          'Confirmação de Senha não confere!!',
                                       style: TextStyle(fontSize: 18)),
                                   backgroundColor: Colors.red,
                                 ));
@@ -130,8 +139,11 @@ class SignUpScreen extends StatelessWidget {
                                   onFail: (error){
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
-                                          content: Text('Falha ao cadastrar $error',
-                                          style: const TextStyle(fontSize: 18)),
+                                          content: Text(
+                                              'Falha ao cadastrar $error',
+                                          style: const TextStyle(
+                                              fontSize: 18
+                                          )),
                                       backgroundColor: Colors.red,
                                     ));
                                   },
