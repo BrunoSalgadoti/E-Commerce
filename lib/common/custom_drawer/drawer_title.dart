@@ -41,5 +41,4 @@ class DrawerTitle extends StatelessWidget {
       ),
     );
   }
-
 }
