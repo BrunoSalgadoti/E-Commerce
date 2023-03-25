@@ -37,5 +37,4 @@ class Users {
       'favourite': favourite = false
     };
   }
-
 }

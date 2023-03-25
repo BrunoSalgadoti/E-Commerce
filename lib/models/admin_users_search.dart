@@ -82,6 +82,25 @@ class AdminUsersSearch extends ChangeNotifier {
     launchUrl(emailLaunchUri);
   }
 
+
+  Future<void> _favoringUser(String? id) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .update({
+      'favourite': true,
+    });
+  }
+
+  Future<void> _disfavoringUser(String? id) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .update({
+      'favourite': false,
+    });
+  }
+
   void filterList() {
     final List<Users> users = [];
     users.addAll(filteredUsers);
@@ -102,7 +121,7 @@ class AdminUsersSearch extends ChangeNotifier {
                   backgroundColor: Colors.red,
                   icon: Icons.star,
                   onPressed: (context) {
-
+                    _disfavoringUser(user.id);
                   },
                 ),
               ],
@@ -116,7 +135,9 @@ class AdminUsersSearch extends ChangeNotifier {
                   backgroundColor: Colors.cyanAccent,
                   icon: Icons.email,
                   onPressed: (context) {
-                    _sendEmail(user.email, user.userName!);
+                    _sendEmail(
+                        user.email,
+                        user.userName!);
                   },
                 ),
               ],
@@ -141,10 +162,14 @@ class AdminUsersSearch extends ChangeNotifier {
               ),
               title: Text(user.userName!,
                   style: const TextStyle(
-                      fontWeight: FontWeight.w800, color: Colors.white)),
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white
+                  )),
               subtitle: Text(
                 user.email,
-                style: const TextStyle(fontSize: 16, color: Colors.white),
+                style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.white),
               ),
             ),
           ),
@@ -164,7 +189,7 @@ class AdminUsersSearch extends ChangeNotifier {
                 backgroundColor: Colors.green,
                 icon: Icons.star,
                 onPressed: (context) {
-                  user.favourite = true;
+                  _favoringUser(user.id);
                 },
               ),
             ],
