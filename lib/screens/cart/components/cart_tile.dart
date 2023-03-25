@@ -1,4 +1,6 @@
 import 'package:ecommerce/common/button/custom_icon_button.dart';
+import 'package:ecommerce/common/button/custom_text_button.dart';
+import 'package:ecommerce/common/show_alert_dialog.dart';
 import 'package:ecommerce/models/cart_product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -83,10 +85,14 @@ class CartTile extends StatelessWidget {
                     children: [
                       CustomIconButton(
                         iconData: cartProduct.quantity! > cartProduct.unitQuantity
-                            ? Icons.not_interested : Icons.add,
-                        onTap: cartProduct.increment,
+                            ? Icons.not_interested
+                            : Icons.add,
+                        onTap: cartProduct.quantity! > cartProduct.unitQuantity
+                            ? () {}
+                            : cartProduct.increment,
                         color: cartProduct.quantity! > cartProduct.unitQuantity
-                            ? Colors.red : Theme.of(context).primaryColor,
+                            ? Colors.red
+                            : Theme.of(context).primaryColor,
                       ),
                       Text(
                         '${cartProduct.quantity}',
@@ -98,7 +104,44 @@ class CartTile extends StatelessWidget {
                         iconData: cartProduct.quantity! == 1
                             ? Icons.delete
                             : Icons.remove,
-                        onTap: cartProduct.decrement,
+                        onTap: cartProduct.quantity! <= 1
+                        ? () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return ShowAlertDialog(
+                                    titleText: 'Confirmação de Exclusão',
+                                    bodyText: 'Deseja realmente deletar\n '
+                                        '${cartProduct.product!.name}'
+                                        '${cartProduct.size} do carrinho?',
+                                    actions: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          CustomTextButton(
+                                              text: 'Sim',
+                                              color: Colors.red,
+                                              onPressed: () {
+                                                cartProduct.decrement();
+                                                Navigator.of(context).pop();
+                                              }
+                                          ),
+                                          CustomTextButton(
+                                              text: 'NÃO',
+                                            fontSize: 18,
+                                            color: Colors.green,
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                          )
+                                        ],
+                                      )
+                                    ]
+                                );
+                              }
+                          );
+                        }
+                        : cartProduct.decrement,
                         color: cartProduct.quantity! > 1
                             ? Theme.of(context).primaryColor
                             : Colors.red,
@@ -107,7 +150,7 @@ class CartTile extends StatelessWidget {
                     );
                   }
                 ),
-              )
+              ),
             ],
           ),
         ),

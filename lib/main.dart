@@ -23,7 +23,6 @@ import 'package:provider/provider.dart';
 
 
  Future<void> main() async {
-   // Inicializando o Firebase APP e WEB
    WidgetsFlutterBinding.ensureInitialized();
 
    if (kIsWeb) {

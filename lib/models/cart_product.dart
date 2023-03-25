@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce/models/details_products.dart';
 import 'package:ecommerce/models/product.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CartProduct extends ChangeNotifier{
 

@@ -1,6 +1,6 @@
 import 'package:alphabet_list_scroll_view_fix/alphabet_list_scroll_view.dart';
+import 'package:ecommerce/common/search_dialog.dart';
 import 'package:ecommerce/models/admin_users_search.dart';
-import 'package:ecommerce/screens/admin_users/components/search_dialog_users.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,8 +28,9 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                     onTap: () async {
                       final search = await showDialog<String>(
                           context: context,
-                          builder: (_) => SearchDialogUsers(
-                              initialText: adminUsersSearch.search
+                          builder: (_) => SearchDialog(
+                              initialText: adminUsersSearch.search,
+                            hintText: 'Pesquisar Cliente',
                           ));
                       if (search != null) {
                         adminUsersSearch.search = search;
@@ -59,8 +60,9 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                       onPressed: () async {
                         final search = await showDialog<String>(
                             context: context,
-                            builder: (_) => SearchDialogUsers(
-                                initialText: adminUsersSearch.search
+                            builder: (_) => SearchDialog(
+                                initialText: adminUsersSearch.search,
+                              hintText: 'Pesquisar Cliente',
                             ));
                         if (search != null) {
                           adminUsersSearch.search = search;
@@ -80,7 +82,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
         ),
         body: Consumer<AdminUsersSearch>(
           builder: (_, adminUsersSearch, __) {
-            int itemCount = adminUsersSearch.filteredUsers.length;
+            //int itemCount = adminUsersSearch.filteredUsers.length;
             return AlphabetListScrollView(
               strList: adminUsersSearch.names,
               normalTextStyle: const TextStyle(color: Colors.white),
@@ -90,7 +92,6 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
               ),
               showPreview: true,
               itemBuilder: (context, index) {
-                itemCount;
                 return adminUsersSearch.normalList[index];
               },
               indexedHeight: (i) {
@@ -102,7 +103,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                     widgetList: adminUsersSearch.favouriteList,
                     icon: const Icon(Icons.star),
                     indexedHeaderHeight: (index) {
-                      return 80;
+                      return 70;
                     }),
               ],
             );

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SearchDialog extends StatelessWidget {
-  const SearchDialog({Key? key , required this.initialText}) : super(key: key);
+  const SearchDialog({Key? key , required this.initialText, required this.hintText}) : super(key: key);
 
   final String initialText;
+  final String hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class SearchDialog extends StatelessWidget {
                   textInputAction: TextInputAction.search,
                   autofocus: true,
                   decoration: InputDecoration(
-                    hintText: 'Pesquise o produto desejado',
+                    hintText: hintText,
                   border: InputBorder.none,
                   contentPadding: const EdgeInsets.symmetric(vertical: 15),
                   prefixIcon: IconButton(

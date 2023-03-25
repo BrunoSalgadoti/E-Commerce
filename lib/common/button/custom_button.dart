@@ -3,15 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CustomButton extends StatelessWidget {
-  final String texto;
-  final VoidCallback? onPressed;
-  final Color corTexto;
-  final Color corBotao;
-  final Color corBotaoDesativado;
-  final Color corShadow;
-  final double fontSize;
-  final double elevation;
-
   const CustomButton({
     Key? key,
     required this.texto,
@@ -23,6 +14,15 @@ class CustomButton extends StatelessWidget {
     this.fontSize = 18,
     this.elevation = 08,
   }) : super(key: key);
+
+  final String texto;
+  final VoidCallback? onPressed;
+  final Color corTexto;
+  final Color corBotao;
+  final Color corBotaoDesativado;
+  final Color corShadow;
+  final double fontSize;
+  final double elevation;
 
   @override
   Widget build(BuildContext context) {

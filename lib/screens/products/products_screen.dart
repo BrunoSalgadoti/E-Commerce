@@ -2,7 +2,7 @@ import 'package:ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:ecommerce/models/product_manager.dart';
 import 'package:ecommerce/models/users_manager.dart';
 import 'package:ecommerce/screens/products/components/product_list_tile.dart';
-import 'package:ecommerce/screens/products/components/search_dialog.dart';
+import 'package:ecommerce/common/search_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +25,8 @@ class ProductsScreen extends StatelessWidget {
                       onTap: () async {
                         final search = await showDialog<String>(context: context,
                             builder: (_) =>  SearchDialog(
-                                initialText: productManager.search
+                                initialText: productManager.search,
+                              hintText: 'Pesquise o produto desejado',
                             ));
                         if (search != null) {
                           productManager.search = search;
@@ -59,7 +60,8 @@ class ProductsScreen extends StatelessWidget {
                       final search = await showDialog<String>(
                           context: context,
                           builder: (_) => SearchDialog(
-                            initialText: productManager.search
+                            initialText: productManager.search,
+                            hintText: 'Pesquise o produto desejado',
                           ));
                       if (search != null) {
                         productManager.search = search;

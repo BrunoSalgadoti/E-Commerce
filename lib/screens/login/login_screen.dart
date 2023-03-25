@@ -41,9 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
               fontWeight: FontWeight.bold,
               color: Colors.amber
             ),
-
             ),
-
           ),
         ],
       ),
@@ -113,7 +111,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 userManager.signIn(
                                     users: Users(
                                         email: emailController.text,
-                                        password: passwordController.text),
+                                        password: passwordController.text,
+                                    ),
                                     onFail: (error) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
