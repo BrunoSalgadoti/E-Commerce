@@ -16,7 +16,7 @@ class DrawerTitle extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        context.read<PageManager>().setPage(page!);
+          context.read<PageManager>().setPage(page!);
       },
       child: SizedBox(
         height: 60,
