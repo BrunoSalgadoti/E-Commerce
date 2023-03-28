@@ -16,9 +16,9 @@ class CartProduct extends ChangeNotifier{
   Product? product;
 
   CartProduct.fromProduct(this.product) {
-    productId = product!.id;
+    productId = product?.id;
     quantity = 1;
-    size = product!.selectedDetails?.size;
+    size = product?.selectedDetails?.size;
   }
 
   CartProduct.fromDocument(DocumentSnapshot document) {

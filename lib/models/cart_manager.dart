@@ -27,7 +27,6 @@ class CartManager extends ChangeNotifier {
     items = cartSnap.docs
         .map((d) => CartProduct.fromDocument(d)..addListener(_onItemUpdate))
         .toList();
-    notifyListeners();
   }
 
   void addToCart(Product product) {
@@ -43,7 +42,6 @@ class CartManager extends ChangeNotifier {
           .then((doc) => cartProduct.id = doc.id);
       _onItemUpdate();
     }
-    notifyListeners();
   }
 
   void removeOfCart(CartProduct cartProduct) {

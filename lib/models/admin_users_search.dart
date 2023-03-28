@@ -16,9 +16,9 @@ class AdminUsersSearch extends ChangeNotifier {
   bool userFilteredSendEmail = false;
   String _search = '';
 
-  List<Users> allUsers = [];
-  List<Widget> favouriteList = [];
-  List<Widget> normalList = [];
+  late List<Users> allUsers;
+  late List<Widget> favouriteList;
+  late List<Widget> normalList;
 
   List<String> get names => allUsers.map((e) => e.userName!).toList();
   List<String> get emails => allUsers.map((e) => e.email).toList();
@@ -30,7 +30,7 @@ class AdminUsersSearch extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Users> get filteredUsers {
+  List<Users> get filteredUsers  {
     final List<Users> filteredUsers = [];
 
     _loadAllUsers();
@@ -82,9 +82,8 @@ class AdminUsersSearch extends ChangeNotifier {
     launchUrl(emailLaunchUri);
   }
 
-
   Future<void> _favoringUser(String? id) async {
-    await FirebaseFirestore.instance
+    await firestore
         .collection('users')
         .doc(id)
         .update({
@@ -93,7 +92,7 @@ class AdminUsersSearch extends ChangeNotifier {
   }
 
   Future<void> _disfavoringUser(String? id) async {
-    await FirebaseFirestore.instance
+    await firestore
         .collection('users')
         .doc(id)
         .update({
@@ -160,7 +159,8 @@ class AdminUsersSearch extends ChangeNotifier {
                       ))
                 ],
               ),
-              title: Text(user.userName!,
+              title: Text(
+                  user.userName!,
                   style: const TextStyle(
                       fontWeight: FontWeight.w800,
                       color: Colors.white
@@ -214,31 +214,31 @@ class AdminUsersSearch extends ChangeNotifier {
                                              'o E-mail!',
                                 actions: [
                                   Row(
-                                    mainAxisAlignment:  MainAxisAlignment.spaceBetween ,
-                                    children: [
-                                      CustomTextButton(
-                                        text: 'Este Contato',
-                                        onPressed: (){
-                                          _sendEmail(user.email, user.userName);
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                      CustomTextButton(
-                                        text: 'Todos os contatos!',
-                                        onPressed: (){
-                                          _sendEmail(null, null);
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                      CustomTextButton(
-                                          text: 'Cancelar',
-                                          color: Colors.red,
-                                          onPressed: () {
+                                      mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        CustomTextButton(
+                                          text: 'Este Contato',
+                                          onPressed: (){
+                                            _sendEmail(user.email, user.userName);
                                             Navigator.of(context).pop();
-                                          }
-                                      ),
-                                    ],
-                                  )
+                                          },
+                                        ),
+                                          CustomTextButton(
+                                            text: 'Todos contatos!',
+                                            onPressed: (){
+                                              _sendEmail(null, null);
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        CustomTextButton(
+                                            text: 'Cancelar',
+                                            color: Colors.red,
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            }
+                                        ),
+                                      ],
+                                    ),
                                 ],
                               );
                             });

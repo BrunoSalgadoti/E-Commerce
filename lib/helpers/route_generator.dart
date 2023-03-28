@@ -1,6 +1,7 @@
 import 'package:ecommerce/models/product.dart';
 import 'package:ecommerce/screens/base/base_screen.dart';
 import 'package:ecommerce/screens/cart/cart_creen.dart';
+import 'package:ecommerce/screens/edit_product/edit_product_screen.dart';
 import 'package:ecommerce/screens/login/login_screen.dart';
 import 'package:ecommerce/screens/product_details/product_details_screen.dart';
 import 'package:ecommerce/screens/sign_up/sign_up_Screen.dart';
@@ -31,6 +32,13 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder:(_) => ProductDetailsScreen(
               product: settings.arguments as Product
+          ),
+        );
+
+      case '/edit_product' :
+        return MaterialPageRoute(
+          builder:(_) => EditProductScreen(
+            product: settings.arguments as Product,
           ),
         );
 

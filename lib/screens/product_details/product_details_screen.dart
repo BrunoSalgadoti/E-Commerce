@@ -1,8 +1,8 @@
 import 'package:ecommerce/common/button/custom_button.dart';
+import 'package:ecommerce/common/show_fan_carousel.dart';
 import 'package:ecommerce/models/cart_manager.dart';
 import 'package:ecommerce/models/users_manager.dart';
 import 'package:ecommerce/screens/products/components/products_widget.dart';
-import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
 import 'package:ecommerce/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,20 +23,31 @@ class ProductDetailsScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text(product!.name),
             centerTitle: true,
+            actions: [
+              Consumer<UserManager>(
+                builder: (_, userManager, __) {
+                  if(userManager.adminEnable) {
+                    return IconButton(
+                        icon: const Icon(Icons.edit),
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                              context,
+                              '/edit_product',
+                            arguments: product
+                          );
+                        },
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              )
+            ],
           ),
           body: ListView(children: [
-            FanCarouselImageSlider(
+            ShowFanCarousel(
               imagesLink: product!.images!,
               isAssets: false,
-              autoPlay: false,
-              initalPageIndex: 0,
-              sliderHeight: 320,
-              slideViewportFraction: 0.8,
-              sliderWidth: double.maxFinite,
-              imageRadius: 10,
-              imageFitMode: BoxFit.fill,
-              indicatorActiveColor: primaryColor,
-              expandImageWidth: double.maxFinite,
             ),
             Padding(
               padding: const EdgeInsets.all(16),

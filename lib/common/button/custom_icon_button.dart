@@ -5,12 +5,14 @@ class CustomIconButton extends StatelessWidget {
       {Key? key,
         required this.iconData,
         required this.onTap,
-        this.color
+        this.color,
+        this.size
       }) : super(key: key);
 
   final IconData iconData;
   final VoidCallback? onTap;
   final Color? color;
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +23,9 @@ class CustomIconButton extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(10),
             child: Icon(
+              size: size,
               iconData,
               color: color,
             ),

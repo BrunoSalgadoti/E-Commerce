@@ -1,22 +1,19 @@
 import 'package:alphabet_list_scroll_view_fix/alphabet_list_scroll_view.dart';
+import 'package:ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:ecommerce/common/search_dialog.dart';
 import 'package:ecommerce/models/admin_users_search.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AdminUsersScreen extends StatefulWidget {
-  const AdminUsersScreen({Key? key}) : super(key: key);
+class AdminUsersScreen extends StatelessWidget {
+  const AdminUsersScreen({Key? key, this.initialText}) : super(key: key);
 
-  @override
-  State<AdminUsersScreen> createState() => _AdminUsersScreenState();
-}
-
-class _AdminUsersScreenState extends State<AdminUsersScreen> {
-  String? initialText;
+  final String? initialText;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const CustomDrawer(),
         appBar: AppBar(
           title: Consumer<AdminUsersSearch>(
             builder: (_, adminUsersSearch, __) {
@@ -82,7 +79,6 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
         ),
         body: Consumer<AdminUsersSearch>(
           builder: (_, adminUsersSearch, __) {
-            //int itemCount = adminUsersSearch.filteredUsers.length;
             return AlphabetListScrollView(
               strList: adminUsersSearch.names,
               normalTextStyle: const TextStyle(color: Colors.white),
