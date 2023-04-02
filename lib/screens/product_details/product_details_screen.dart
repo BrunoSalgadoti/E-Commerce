@@ -1,9 +1,9 @@
 import 'package:ecommerce/common/button/custom_button.dart';
-import 'package:ecommerce/common/show_fan_carousel.dart';
 import 'package:ecommerce/models/cart_manager.dart';
 import 'package:ecommerce/models/users_manager.dart';
 import 'package:ecommerce/screens/products/components/products_widget.dart';
 import 'package:ecommerce/models/product.dart';
+import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,16 +26,13 @@ class ProductDetailsScreen extends StatelessWidget {
             actions: [
               Consumer<UserManager>(
                 builder: (_, userManager, __) {
-                  if(userManager.adminEnable) {
+                  if (userManager.adminEnable) {
                     return IconButton(
-                        icon: const Icon(Icons.edit),
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(
-                              context,
-                              '/edit_product',
-                            arguments: product
-                          );
-                        },
+                      icon: const Icon(Icons.edit),
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/edit_product',
+                            arguments: product);
+                      },
                     );
                   } else {
                     return Container();
@@ -45,9 +42,20 @@ class ProductDetailsScreen extends StatelessWidget {
             ],
           ),
           body: ListView(children: [
-            ShowFanCarousel(
-              imagesLink: product!.images!,
+            FanCarouselImageSlider(
+              imagesLink: product!.images!.map((url) {
+                return NetworkImage(url).url;
+              }).toList(),
               isAssets: false,
+              autoPlay: false,
+              initalPageIndex: 0,
+              sliderHeight: 400,
+              slideViewportFraction: 0.8,
+              sliderWidth: double.maxFinite,
+              imageRadius: 10,
+              imageFitMode: BoxFit.cover,
+              indicatorActiveColor: primaryColor,
+              expandImageWidth: double.maxFinite,
             ),
             Padding(
               padding: const EdgeInsets.all(16),
@@ -117,7 +125,9 @@ class ProductDetailsScreen extends StatelessWidget {
                           onPressed: product.selectedDetails != null
                               ? () {
                                   if (userManager.isLoggedIn) {
-                                    context.read<CartManager>().addToCart(product);
+                                    context
+                                        .read<CartManager>()
+                                        .addToCart(product);
                                     Navigator.pushNamed(context, '/cart');
                                   } else {
                                     Navigator.pushNamed(context, '/login');
@@ -131,9 +141,9 @@ class ProductDetailsScreen extends StatelessWidget {
                     const SizedBox(
                       height: 44,
                       child: CustomButton(
-                        corBotaoDesativado: Color.fromARGB(140, 129, 129, 129) ,
-                          texto: 'Produto fora de estoque!',
-                          onPressed: null,
+                        corBotaoDesativado: Color.fromARGB(140, 129, 129, 129),
+                        texto: 'Produto fora de estoque!',
+                        onPressed: null,
                       ),
                     )
                 ],

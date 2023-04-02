@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ShowAlertDialog extends StatelessWidget {
-   ShowAlertDialog({Key? key,
+   const ShowAlertDialog({Key? key,
      required this.titleText,
      required this.bodyText,
      required this.actions,
@@ -9,7 +9,7 @@ class ShowAlertDialog extends StatelessWidget {
 
   final String titleText;
   final String bodyText;
-  List<Widget> actions;
+  final List<Widget> actions;
 
   @override
   Widget build(BuildContext context) {

@@ -16,7 +16,7 @@ class EditProductScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          ImagesForm(product: product,),
+          ImagesForm(product: product),
         ],
       ),
     );
