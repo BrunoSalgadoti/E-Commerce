@@ -127,11 +127,19 @@ class SignUpScreen extends StatelessWidget {
 
                               if (users.password != users.confirmPassword) {
                                 ScaffoldMessenger.of(context)
-                                    .showSnackBar(const SnackBar(
-                                      content: Text(
-                                          'Confirmação de Senha não confere!!',
+                                    .showSnackBar( SnackBar(
+                                      content: const Text(
+                                          'Confirmação de Senha não confere!!'
+                                              'Tente Redigitar a Senha e a '
+                                              'confirmação da Senha',
                                       style: TextStyle(fontSize: 18)),
                                   backgroundColor: Colors.red,
+                                  duration: const Duration(seconds: 5),
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(10)),
+                                  margin: const EdgeInsets.all(15),
                                 ));
                                 return;
                               }
@@ -145,6 +153,13 @@ class SignUpScreen extends StatelessWidget {
                                               fontSize: 18
                                           )),
                                       backgroundColor: Colors.red,
+                                      duration: const Duration(seconds: 5),
+                                      behavior: SnackBarBehavior.floating,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(10)
+                                      ),
+                                      margin: const EdgeInsets.all(15),
                                     ));
                                   },
                                   onSuccess: () {

@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>ecommerce</string>
+	<string>Loja Virtual</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -47,5 +47,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>Necessário acesso a galeria para buscar imagem</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Necessário acesso a câmera para adicionar imagem</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Necessário acesso a câmera para adicionar imagem</string>
 </dict>
 </plist>
