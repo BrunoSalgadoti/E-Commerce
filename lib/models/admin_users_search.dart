@@ -20,8 +20,10 @@ class AdminUsersSearch extends ChangeNotifier {
   late List<Widget> favouriteList;
   late List<Widget> normalList;
 
-  List<String> get names => allUsers.map((e) => e.userName!).toList();
-  List<String> get emails => allUsers.map((e) => e.email).toList();
+  List<String> get names =>
+      allUsers.map((e) => e.userName!.toUpperCase()).toList();
+  List<String> get emails =>
+      allUsers.map((e) => e.email).toList();
 
   String get search => _search;
 

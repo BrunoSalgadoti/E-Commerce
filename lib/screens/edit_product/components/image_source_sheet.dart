@@ -1,13 +1,13 @@
 import 'dart:io';
-
+import 'dart:async';
 import 'package:ecommerce/common/button/custom_text_button.dart';
-import 'package:ecommerce/common/show_alert_dialog.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
+
+// ignore: must_be_immutable
 class ImageSourceSheet extends StatelessWidget {
   ImageSourceSheet({
     Key? key,
@@ -17,6 +17,7 @@ class ImageSourceSheet extends StatelessWidget {
   }) : super(key: key);
 
   final ImagePicker picker = ImagePicker();
+
   final Function(File)? onImageSelected;
   final Function(List<File>) onImageSelectedList;
 
@@ -24,8 +25,8 @@ class ImageSourceSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> editImage(String path) async {
-      if (path.isNotEmpty) {
+    Future<void> editImage(String? path) async {
+      if (path != null) {
         final croppedFile = await ImageCropper().cropImage(
           sourcePath: path,
           compressFormat: ImageCompressFormat.jpg,
@@ -84,35 +85,7 @@ class ImageSourceSheet extends StatelessWidget {
       editImage(photo!.path);
     }
 
-    Future<void> imgWeb() async {
-      //TODO: construir o método
-    }
-
-    if (kIsWeb) {
-      return ShowAlertDialog(
-          titleText: 'Selecionar foto para o item:',
-          bodyText: 'Escolher Fotos!',
-          actions: [
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-              CustomTextButton(
-                text: 'Carregar...',
-                onPressed: () {
-                  imgWeb();
-                  Navigator.of(context).pop();
-                },
-              ),
-              CustomTextButton(
-                text: 'Cancelar',
-                color: Colors.red,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ])
-          ]);
-    } else if (Platform.isAndroid) {
+    if (Platform.isAndroid) {
       return BottomSheet(
         builder: (_) => Column(
           mainAxisSize: MainAxisSize.min,
@@ -177,35 +150,35 @@ class ImageSourceSheet extends StatelessWidget {
         ],
       );
     } else {
-      return ShowAlertDialog(
-          titleText: 'Selecionar foto para o item:',
-          bodyText: 'Escolha a origem da foto!',
-          actions: [
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-              CustomTextButton(
-                text: 'Câmera',
-                onPressed: () {
-                  imgCamera();
-                  Navigator.of(context).pop();
-                },
-              ),
-              CustomTextButton(
-                text: 'Galeria!',
-                onPressed: () {
-                  imgGallery();
-                  Navigator.of(context).pop();
-                },
-              ),
-              CustomTextButton(
-                text: 'Cancelar',
-                color: Colors.red,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ])
-          ]);
+      return AlertDialog(
+        title: const Text('Selecionar foto para o item:'),
+        content: const Text('Escolher Fotos!'),
+        actions: [
+          CustomTextButton(
+            onPressed: () {
+              imgCamera();
+            },
+            text: 'Câmera',
+            fontSize: 18,
+          ),
+          const Divider(
+            height: 5,
+          ),
+          CustomTextButton(
+            onPressed: () {
+              imgGallery();
+            },
+            text: 'Galeria',
+            fontSize: 18,
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancelar'),
+          )
+        ],
+      );
     }
   }
 }

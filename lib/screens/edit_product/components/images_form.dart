@@ -1,11 +1,14 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:ecommerce/models/product.dart';
 import 'package:ecommerce/screens/edit_product/components/image_source_sheet.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter/material.dart';
+import 'package:ecommerce/screens/edit_product/components/image_source_web.dart';
+
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:universal_html/html.dart' as html;
 
 class ImagesForm extends StatelessWidget {
   const ImagesForm({
@@ -34,14 +37,32 @@ class ImagesForm extends StatelessWidget {
           Navigator.of(context).pop();
         }
 
-        Widget imagesSourceSheet() {
-          return imageSourceSheet?.local == 'gallery'
-              ? ImageSourceSheet(
-                  onImageSelectedList: onImageSelectedList,
-                )
-              : ImageSourceSheet(
-                  onImageSelected: onImageSelected,
-                  onImageSelectedList: onImageSelectedList);
+        void onImageSelectedWeb(List<html.File> files) async {
+          for (html.File file in files) {
+            html.FileReader reader = html.FileReader();
+            reader.readAsDataUrl(file);
+            reader.onLoadEnd.listen((event) {
+              state.value!.add(reader.result.toString());
+              state.didChange(state.value);
+            });
+          }
+          Navigator.of(context).pop();
+        }
+
+        Widget buildImageSourceSheet() {
+          if (kIsWeb) {
+            return ImageSourceWeb(
+              onImageSelectedWeb: onImageSelectedWeb,
+            );
+          } else if (imageSourceSheet?.local == 'gallery') {
+            return ImageSourceSheet(
+              onImageSelectedList: onImageSelectedList,
+            );
+          } else {
+            return ImageSourceSheet(
+                onImageSelected: onImageSelected,
+                onImageSelectedList: onImageSelectedList);
+          }
         }
 
         return CarouselSlider(
@@ -61,9 +82,9 @@ class ImagesForm extends StatelessWidget {
                     image,
                     fit: BoxFit.cover,
                   )
-                else
+                else if (image is File)
                   Image.file(
-                    image as File,
+                    image,
                     fit: BoxFit.cover,
                   ),
                 Align(
@@ -96,7 +117,7 @@ class ImagesForm extends StatelessWidget {
                           onPressed: () {
                             showDialog(
                                 context: context,
-                                builder: (_) => imagesSourceSheet());
+                                builder: (_) => buildImageSourceSheet());
                           }),
                     )
                   : Material(
@@ -111,15 +132,15 @@ class ImagesForm extends StatelessWidget {
                             if (Platform.isAndroid) {
                               showModalBottomSheet(
                                   context: context,
-                                  builder: (_) => imagesSourceSheet());
+                                  builder: (_) => buildImageSourceSheet());
                             } else if (Platform.isIOS) {
                               showCupertinoModalPopup(
                                   context: context,
-                                  builder: (_) => imagesSourceSheet());
+                                  builder: (_) => buildImageSourceSheet());
                             } else {
                               showDialog(
                                   context: context,
-                                  builder: (_) => imagesSourceSheet());
+                                  builder: (_) => buildImageSourceSheet());
                             }
                           })),
             ),
