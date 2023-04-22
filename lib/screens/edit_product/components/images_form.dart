@@ -22,12 +22,12 @@ class ImagesForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormField<List<dynamic>>(
-      initialValue: List.from(product!.images!),
+      initialValue: product!.images,
       validator: (images) {
-        if(images!.isEmpty) {
+        if (images!.isEmpty) {
           return 'Isira ao menos uma imagem!';
         }
-          return null;
+        return null;
       },
       builder: (state) {
         void onImageSelected(File file) {
@@ -152,7 +152,7 @@ class ImagesForm extends StatelessWidget {
                               })),
                 ),
             ),
-            if(state.hasError)
+            if (state.hasError)
               Container(
                 margin: const EdgeInsets.only(top: 16, left: 16),
                 alignment: Alignment.centerLeft,
@@ -162,7 +162,6 @@ class ImagesForm extends StatelessWidget {
                     color: Colors.red,
                     fontSize: 13,
                   ),
-
                 ),
               )
           ],

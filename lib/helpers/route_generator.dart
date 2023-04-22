@@ -8,7 +8,7 @@ import 'package:ecommerce/screens/sign_up/sign_up_Screen.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
-
+  
   static Route<dynamic>? generateRoute(RouteSettings settings){
 
     switch( settings.name ){
@@ -38,7 +38,9 @@ class RouteGenerator {
       case '/edit_product' :
         return MaterialPageRoute(
           builder:(_) => EditProductScreen(
-            product: settings.arguments as Product,
+           product: settings.arguments != null
+                ? settings.arguments as Product
+                : Product(name: '').clone()
           ),
         );
 

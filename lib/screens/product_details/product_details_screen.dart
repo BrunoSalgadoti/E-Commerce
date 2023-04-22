@@ -8,7 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  const ProductDetailsScreen({Key? key, this.product}) : super(key: key);
+  const ProductDetailsScreen({
+    Key? key,
+    this.product
+  }) : super(key: key);
 
   final Product? product;
 
@@ -38,7 +41,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     return Container();
                   }
                 },
-              )
+              ),
             ],
           ),
           body: ListView(children: [
@@ -71,14 +74,11 @@ class ProductDetailsScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 8),
                     child: Text(
                       'A partir de: ',
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.grey[600]
-                      ),
+                      style: TextStyle(fontSize: 15, color: Colors.grey[600]),
                     ),
                   ),
                   Text(
-                    'R\$ ${product?.basePrice.toStringAsFixed(2)}',
+                    'R\$ ${product!.basePrice.toStringAsFixed(2)}',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -109,7 +109,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     spacing: 8,
                     runSpacing: 8,
                     alignment: WrapAlignment.spaceEvenly,
-                    children: product!.itemProducts.map((d) {
+                    children: product!.itemProducts!.map((d) {
                       return ProductsWidget(details: d);
                     }).toList(),
                   ),
@@ -144,7 +144,6 @@ class ProductDetailsScreen extends StatelessWidget {
                     const SizedBox(
                       height: 44,
                       child: CustomButton(
-                        corBotaoDesativado: Color.fromARGB(140, 129, 129, 129),
                         texto: 'Produto fora de estoque!',
                         onPressed: null,
                       ),

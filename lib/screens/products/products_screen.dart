@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductsScreen extends StatelessWidget {
-  const ProductsScreen({Key? key}) : super(key: key);
+  const ProductsScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,34 +21,32 @@ class ProductsScreen extends StatelessWidget {
             if (productManager.search.isEmpty) {
               return const Text('Produtos');
             } else {
-              return LayoutBuilder(
-                  builder: (_, constraints){
-                    return GestureDetector(
-                      onTap: () async {
-                        final search = await showDialog<String>(context: context,
-                            builder: (_) =>  SearchDialog(
-                                initialText: productManager.search,
+              return LayoutBuilder(builder: (_, constraints) {
+                return GestureDetector(
+                  onTap: () async {
+                    final search = await showDialog<String>(
+                        context: context,
+                        builder: (_) => SearchDialog(
+                              initialText: productManager.search,
                               hintText: 'Pesquise o produto desejado',
                             ));
-                        if (search != null) {
-                          productManager.search = search;
-                        }
-                      },
-                      child: Container(
-                        color: const Color.fromARGB(16, 255, 255, 255),
-                        width: constraints.biggest.width,
-                          child: Text(
-                              productManager.search,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 23,
-                              fontWeight: FontWeight.bold
-                            ),
-                          )
-                      ) ,
-                    );
-                  }
-              );
+                    if (search != null) {
+                      productManager.search = search;
+                    }
+                  },
+                  child: Container(
+                      color: const Color.fromARGB(16, 255, 255, 255),
+                      width: constraints.biggest.width,
+                      child: Text(
+                        productManager.search,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold
+                        ),
+                      )),
+                );
+              });
             }
           },
         ),
@@ -60,9 +60,9 @@ class ProductsScreen extends StatelessWidget {
                       final search = await showDialog<String>(
                           context: context,
                           builder: (_) => SearchDialog(
-                            initialText: productManager.search,
-                            hintText: 'Pesquise o produto desejado',
-                          ));
+                                initialText: productManager.search,
+                                hintText: 'Pesquise o produto desejado',
+                              ));
                       if (search != null) {
                         productManager.search = search;
                       }
@@ -74,6 +74,20 @@ class ProductsScreen extends StatelessWidget {
                       productManager.search = '';
                     },
                     icon: const Icon(Icons.close));
+              }
+            },
+          ),
+          Consumer<UserManager>(
+            builder: (_, userManager, __) {
+              if (userManager.adminEnable) {
+                return IconButton(
+                  icon: const Icon(Icons.add),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/edit_product');
+                  },
+                );
+              } else {
+                return Container();
               }
             },
           )
@@ -90,24 +104,23 @@ class ProductsScreen extends StatelessWidget {
               });
         },
       ),
-      floatingActionButton: Consumer<UserManager>(
-        builder: (_, userManager, __) {
-          return FloatingActionButton(
-            backgroundColor: Colors.white,
-            foregroundColor: Theme.of(context).primaryColor,
-            onPressed: () {
-              if (userManager.isLoggedIn) {
-                Navigator.pushNamed(context, '/cart');
-              } else {
-                Navigator.pushNamed(context, '/login');
-              }
-            },
-            child: userManager.isLoggedIn
-                ? const Icon(Icons.shopping_cart)
-                : const Icon(Icons.account_circle),
-          );
-        }
-        ),
+      floatingActionButton:
+          Consumer<UserManager>(builder: (_, userManager, __) {
+            return FloatingActionButton(
+              backgroundColor: Colors.white,
+              foregroundColor: Theme.of(context).primaryColor,
+              onPressed: () {
+                if (userManager.isLoggedIn) {
+                  Navigator.pushNamed(context, '/cart');
+                } else {
+                  Navigator.pushNamed(context, '/login');
+                }
+              },
+              child: userManager.isLoggedIn
+                  ? const Icon(Icons.shopping_cart)
+                  : const Icon(Icons.account_circle),
+        );
+      }),
     );
   }
 }

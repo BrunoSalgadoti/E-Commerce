@@ -1,19 +1,34 @@
 import 'dart:async';
 import 'package:universal_html/html.dart' as html;
-
 import 'package:flutter/material.dart';
 
-class ImageSourceWeb extends StatelessWidget {
-  ImageSourceWeb({Key? key,
+class ImageSourceWeb extends StatefulWidget {
+  const ImageSourceWeb({
+    Key? key,
     this.onImageSelectedWeb,
-    this.oneWebFile
   }) : super(key: key);
 
   final Function(List<html.File>)? onImageSelectedWeb;
 
-  List<html.File> _files = [];
+  @override
+  State<ImageSourceWeb> createState() => _ImageSourceWebState();
+}
 
-  String? oneWebFile;
+class _ImageSourceWebState extends State<ImageSourceWeb> {
+  List<html.File> _files = [];
+  bool _mounted = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _mounted = true;
+  }
+
+  @override
+  void dispose() {
+    _mounted = false;
+    super.dispose();
+  }
 
   Future<void> pickFiles() async {
     final completer = Completer<List<html.File>>();
@@ -30,15 +45,14 @@ class ImageSourceWeb extends StatelessWidget {
   }
 
   Future<void> pickImages() async {
-    bool mounted = true;
     try {
       await pickFiles();
-      if (mounted && _files.isNotEmpty) {
+      if (_mounted && _files.isNotEmpty) {
         final List<html.File> files = List.from(_files);
-        onImageSelectedWeb?.call(files);
+        widget.onImageSelectedWeb?.call(files);
       }
-    } finally {
-      mounted = false;
+    } catch (error) {
+      return;
     }
   }
 

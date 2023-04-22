@@ -15,12 +15,12 @@ class SizesForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormField<List<DetailsProducts>>(
-        initialValue: List.from(product!.itemProducts),
+        initialValue: product!.itemProducts,
         validator: (itemProducts) {
-          if(itemProducts!.isEmpty) {
+          if (itemProducts!.isEmpty) {
             return 'Insira um Item';
           }
-            return null;
+          return null;
         },
         builder: (state) {
           return Column(
@@ -31,48 +31,46 @@ class SizesForm extends StatelessWidget {
                     child: Text(
                       'Adicionar Item',
                       style:
-                          TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500
-                          ),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                   ),
                   CustomIconButton(
                       iconData: Icons.add,
                       onTap: () {
-                        state.value?.add(DetailsProducts());
+                        state.value?.add(DetailsProducts(stock: 0));
                         state.didChange(state.value);
-                      }
-                  ),
+                      }),
                 ],
               ),
               Column(
                 children: state.value!.map((size) {
                   return EditItemSize(
                     key: ObjectKey(size),
-                      detailsProducts: size,
+                    detailsProducts: size,
                     onRemove: () {
-                        state.value!.remove(size);
-                        state.didChange(state.value);
+                      state.value!.remove(size);
+                      state.didChange(state.value);
                     },
                     onMoveUp: size != state.value!.first
                         ? () {
-                        final index = state.value!.indexOf(size);
-                        state.value!.remove(size);
-                        state.value!.insert(index-1, size);
-                        state.didChange(state.value);}
+                            final index = state.value!.indexOf(size);
+                            state.value!.remove(size);
+                            state.value!.insert(index - 1, size);
+                            state.didChange(state.value);
+                          }
                         : null,
                     onMoveDown: size != state.value!.last
                         ? () {
-                      final index = state.value!.indexOf(size);
-                      state.value!.remove(size);
-                      state.value!.insert(index+1, size);
-                      state.didChange(state.value);}
+                            final index = state.value!.indexOf(size);
+                            state.value!.remove(size);
+                            state.value!.insert(index + 1, size);
+                            state.didChange(state.value);
+                          }
                         : null,
                   );
                 }).toList(),
               ),
-              if(state.hasError)
+              if (state.hasError)
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
