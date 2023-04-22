@@ -1,5 +1,7 @@
 class DetailsProducts {
 
+  DetailsProducts();
+
   DetailsProducts.fromMap(Map<String, dynamic> map) {
         size = map['size'] as String;
         price = map['price'] as num;

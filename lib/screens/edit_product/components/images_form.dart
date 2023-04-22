@@ -1,12 +1,11 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:ecommerce/models/product.dart';
 import 'package:ecommerce/screens/edit_product/components/image_source_sheet.dart';
 import 'package:ecommerce/screens/edit_product/components/image_source_web.dart';
-
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:universal_html/html.dart' as html;
 
@@ -24,6 +23,12 @@ class ImagesForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormField<List<dynamic>>(
       initialValue: List.from(product!.images!),
+      validator: (images) {
+        if(images!.isEmpty) {
+          return 'Isira ao menos uma imagem!';
+        }
+          return null;
+      },
       builder: (state) {
         void onImageSelected(File file) {
           state.value!.add(file);
@@ -65,85 +70,102 @@ class ImagesForm extends StatelessWidget {
           }
         }
 
-        return CarouselSlider(
-          options: CarouselOptions(
-            initialPage: 0,
-            enableInfiniteScroll: state.value!.isEmpty ? false : true,
-            height: 400,
-            enlargeCenterPage: true,
-            disableCenter: true,
-          ),
-          items: state.value!.map<Widget>((image) {
-            return Stack(
-              fit: StackFit.expand,
-              children: <Widget>[
-                if (image is String)
-                  Image.network(
-                    image,
-                    fit: BoxFit.cover,
-                  )
-                else if (image is File)
-                  Image.file(
-                    image,
-                    fit: BoxFit.cover,
-                  ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.delete,
-                      size: 40,
-                      color: Colors.red,
-                    ),
-                    onPressed: () {
-                      state.value!.remove(image);
-                      state.didChange(state.value);
-                    },
-                  ),
-                )
-              ],
-            );
-          }).toList()
-            ..add(
-              kIsWeb
-                  ? Container(
-                      color: Colors.grey[100],
+        return Column(
+          children: [
+            CarouselSlider(
+              options: CarouselOptions(
+                initialPage: 0,
+                enableInfiniteScroll: state.value!.isEmpty ? false : true,
+                height: 400,
+                enlargeCenterPage: true,
+                disableCenter: true,
+              ),
+              items: state.value!.map<Widget>((image) {
+                return Stack(
+                  fit: StackFit.expand,
+                  children: <Widget>[
+                    if (image is String)
+                      Image.network(
+                        image,
+                        fit: BoxFit.cover,
+                      )
+                    else if (image is File)
+                      Image.file(
+                        image,
+                        fit: BoxFit.cover,
+                      ),
+                    Align(
+                      alignment: Alignment.topRight,
                       child: IconButton(
-                          icon: Icon(
-                            Icons.add_a_photo,
-                            size: 60,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (_) => buildImageSourceSheet());
-                          }),
+                        icon: const Icon(
+                          Icons.delete,
+                          size: 40,
+                          color: Colors.red,
+                        ),
+                        onPressed: () {
+                          state.value!.remove(image);
+                          state.didChange(state.value);
+                        },
+                      ),
                     )
-                  : Material(
-                      color: Colors.grey[100],
-                      child: IconButton(
-                          icon: Icon(
-                            Icons.add_a_photo,
-                            size: 60,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          onPressed: () {
-                            if (Platform.isAndroid) {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (_) => buildImageSourceSheet());
-                            } else if (Platform.isIOS) {
-                              showCupertinoModalPopup(
-                                  context: context,
-                                  builder: (_) => buildImageSourceSheet());
-                            } else {
-                              showDialog(
-                                  context: context,
-                                  builder: (_) => buildImageSourceSheet());
-                            }
-                          })),
+                  ],
+                );
+              }).toList()
+                ..add(
+                  kIsWeb
+                      ? Container(
+                          color: Colors.grey[100],
+                          child: IconButton(
+                              icon: Icon(
+                                Icons.add_a_photo,
+                                size: 60,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => buildImageSourceSheet());
+                              }),
+                        )
+                      : Material(
+                          color: Colors.grey[100],
+                          child: IconButton(
+                              icon: Icon(
+                                Icons.add_a_photo,
+                                size: 60,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              onPressed: () {
+                                if (Platform.isAndroid) {
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (_) => buildImageSourceSheet());
+                                } else if (Platform.isIOS) {
+                                  showCupertinoModalPopup(
+                                      context: context,
+                                      builder: (_) => buildImageSourceSheet());
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) => buildImageSourceSheet());
+                                }
+                              })),
+                ),
             ),
+            if(state.hasError)
+              Container(
+                margin: const EdgeInsets.only(top: 16, left: 16),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  state.errorText!,
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 13,
+                  ),
+
+                ),
+              )
+          ],
         );
       },
     );

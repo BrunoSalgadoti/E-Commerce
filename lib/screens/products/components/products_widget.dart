@@ -48,7 +48,7 @@ class ProductsWidget extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: Text(
-                      'R\$ ${details.price!.toStringAsFixed(2)}',
+                      'R\$ ${details.price?.toStringAsFixed(2)}',
                       style: TextStyle(
                         color: color,
                       ),

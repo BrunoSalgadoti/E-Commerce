@@ -34,9 +34,7 @@ class ImageSourceSheet extends StatelessWidget {
           uiSettings: [
             AndroidUiSettings(
                 toolbarTitle: 'Editar Imagem',
-                toolbarColor: Theme
-                    .of(context)
-                    .primaryColor,
+                toolbarColor: Theme.of(context).primaryColor,
                 toolbarWidgetColor: Colors.white,
                 initAspectRatio: CropAspectRatioPreset.original,
                 lockAspectRatio: false),
@@ -44,19 +42,6 @@ class ImageSourceSheet extends StatelessWidget {
               title: 'Editar Imagem',
               cancelButtonTitle: 'Cancelar',
               doneButtonTitle: 'Concluir',
-            ),
-            WebUiSettings(
-              context: context,
-              presentStyle: CropperPresentStyle.dialog,
-              boundary: const CroppieBoundary(
-                width: 520,
-                height: 520,
-              ),
-              viewPort: const CroppieViewPort(
-                  width: 480, height: 480, type: 'circle'),
-              enableExif: true,
-              enableZoom: true,
-              showZoomer: true,
             ),
           ],
         );

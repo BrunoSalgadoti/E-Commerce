@@ -71,11 +71,14 @@ class ProductDetailsScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 8),
                     child: Text(
                       'A partir de: ',
-                      style: TextStyle(fontSize: 15, color: Colors.grey[600]),
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey[600]
+                      ),
                     ),
                   ),
                   Text(
-                    'R\$ 19.99',
+                    'R\$ ${product?.basePrice.toStringAsFixed(2)}',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,

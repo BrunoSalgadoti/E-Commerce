@@ -4,7 +4,7 @@ class CustomIconButton extends StatelessWidget {
   const CustomIconButton(
       {Key? key,
         required this.iconData,
-        required this.onTap,
+        this.onTap,
         this.color,
         this.size
       }) : super(key: key);
@@ -27,7 +27,7 @@ class CustomIconButton extends StatelessWidget {
             child: Icon(
               size: size,
               iconData,
-              color: color,
+              color: onTap != null ? color : Colors.grey[400],
             ),
           ),
         ),
