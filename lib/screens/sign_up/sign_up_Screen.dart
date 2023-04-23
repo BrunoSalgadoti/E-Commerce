@@ -117,9 +117,7 @@ class SignUpScreen extends StatelessWidget {
                       const SizedBox(
                         height: 16,
                       ),
-                      SizedBox(
-                        height: 52,
-                        child: CustomButton(
+                     CustomButton(
                           texto: 'Criar Conta',
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
@@ -168,7 +166,6 @@ class SignUpScreen extends StatelessWidget {
                             }
                           },
                         ),
-                      )
                     ],
                   );
                 }
