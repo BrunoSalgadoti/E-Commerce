@@ -26,7 +26,7 @@ class ProductManager extends ChangeNotifier {
       filteredProducts.addAll(allProducts);
     } else {
       filteredProducts.addAll(allProducts
-          .where((p) => p.name.toLowerCase().contains(search.toLowerCase())));
+          .where((p) => p.name!.toLowerCase().contains(search.toLowerCase())));
     }
     return filteredProducts;
   }
@@ -47,5 +47,11 @@ class ProductManager extends ChangeNotifier {
     } catch (error) {
       return null;
     }
+  }
+
+  void update(Product product) {
+    allProducts.removeWhere((p) => p.id == product.id);
+    allProducts.add(product);
+    notifyListeners();
   }
 }

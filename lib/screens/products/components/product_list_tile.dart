@@ -2,9 +2,9 @@ import 'package:ecommerce/models/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductListTile extends StatelessWidget {
-  const ProductListTile({Key? key, required this.product}) : super(key: key);
+  const ProductListTile({Key? key, this.product}) : super(key: key);
 
-  final Product product;
+  final Product? product;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class ProductListTile extends StatelessWidget {
             children: [
               AspectRatio(
                 aspectRatio: 1,
-                child: Image.network(product.images!.first),
+                child: Image.network(product!.images!.first),
               ),
               const SizedBox(
                 width: 16,
@@ -31,7 +31,7 @@ class ProductListTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    product.name,
+                    product!.name!,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w800,
@@ -48,7 +48,7 @@ class ProductListTile extends StatelessWidget {
                     ),
                   ),
                   Text(
-                   'R\$ ${product.basePrice.toStringAsFixed(2)}',
+                   'R\$ ${product!.basePrice.toStringAsFixed(2)}',
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w800,

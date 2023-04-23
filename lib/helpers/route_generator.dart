@@ -40,7 +40,7 @@ class RouteGenerator {
           builder:(_) => EditProductScreen(
            product: settings.arguments != null
                 ? settings.arguments as Product
-                : Product(name: '').clone()
+                : Product().clone()
           ),
         );
 

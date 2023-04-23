@@ -24,7 +24,7 @@ class ProductDetailsScreen extends StatelessWidget {
       child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            title: Text(product!.name),
+            title: Text(product!.name!),
             centerTitle: true,
             actions: [
               Consumer<UserManager>(
@@ -66,7 +66,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    product!.name,
+                    product!.name!,
                     style: const TextStyle(
                         fontSize: 22, fontWeight: FontWeight.w600),
                   ),
@@ -119,9 +119,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   if (product!.hasStock)
                     Consumer2<UserManager, Product>(
                         builder: (_, userManager, product, __) {
-                      return SizedBox(
-                        height: 44,
-                        child: CustomButton(
+                      return CustomButton(
                           texto: userManager.isLoggedIn
                               ? 'Adicionar ao Carrinho'
                               : 'Entre para Comprar',
@@ -137,7 +135,6 @@ class ProductDetailsScreen extends StatelessWidget {
                                   }
                                 }
                               : null,
-                        ),
                       );
                     }),
                   if (!product!.hasStock)

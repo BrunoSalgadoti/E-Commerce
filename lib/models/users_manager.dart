@@ -13,11 +13,13 @@ class UserManager with ChangeNotifier {
   Users? users;
 
   bool _loading = false;
-
   bool get loading => _loading;
+  set loading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
 
   bool get isLoggedIn => users != null;
-
   bool get adminEnable => users != null && users!.admin;
 
   UserManager() {
@@ -62,11 +64,6 @@ class UserManager with ChangeNotifier {
   void signOut() {
     _auth.signOut();
     users = null;
-    notifyListeners();
-  }
-
-  set loading(bool value) {
-    _loading = value;
     notifyListeners();
   }
 

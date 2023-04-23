@@ -1,3 +1,4 @@
+import 'package:ecommerce/models/product.dart';
 import 'package:ecommerce/models/users_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,29 +27,32 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-            disabledBackgroundColor: corBotaoDesativado,
-            backgroundColor: corBotao,
-            shadowColor: corShadow,
-            elevation: elevation,
-            padding: const EdgeInsets.fromLTRB(32, 10, 32, 10),
-            shape:
-                RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(7)
-                )),
-        child: Consumer<UserManager>(
-          builder: (_, userManager, __) {
-            return userManager.loading
-                ? const CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation(Colors.white),
-                  )
-                : Text(
-                    texto,
-                    style: TextStyle(color: corTexto, fontSize: fontSize),
-                  );
-          },
-        ));
+    return SizedBox(
+      height: 48,
+      child: ElevatedButton(
+          onPressed: onPressed,
+          style: ElevatedButton.styleFrom(
+              disabledBackgroundColor: corBotaoDesativado,
+              backgroundColor: corBotao,
+              shadowColor: corShadow,
+              elevation: elevation,
+              padding: const EdgeInsets.fromLTRB(32, 10, 32, 10),
+              shape:
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(7)
+                  )),
+          child: Consumer2<UserManager, Product>(
+            builder: (_, userManager, product, __) {
+              return userManager.loading || product.loading
+              ? const CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation(Colors.white),
+                    )
+                  : Text(
+                      texto,
+                      style: TextStyle(color: corTexto, fontSize: fontSize),
+                    );
+            },
+          )),
+    );
   }
 }

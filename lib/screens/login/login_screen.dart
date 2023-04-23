@@ -102,9 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(
                         height: 16,
                       ),
-                      SizedBox(
-                        height: 52,
-                        child: CustomButton(
+                      CustomButton(
                           texto: 'Entrar',
                             onPressed: userManager.loading ? null : () {
                               if (formKey.currentState!.validate()) {
@@ -128,7 +126,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               }
                             },
                             ),
-                      ),
                     ],
                   );
                 },

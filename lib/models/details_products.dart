@@ -21,6 +21,14 @@ class DetailsProducts {
     );
   }
 
+  Map<String, dynamic> toMap() {
+    return {
+      'size': size,
+      'price': price,
+      'stock': stock,
+    };
+  }
+
   @override
   String toString() {
     return 'DetailsProducts{size: $size, price: $price, stock: $stock}';

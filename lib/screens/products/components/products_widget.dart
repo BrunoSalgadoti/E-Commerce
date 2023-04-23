@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductsWidget extends StatelessWidget {
-  const ProductsWidget({Key? key, required this.details}) : super(key: key);
+  const ProductsWidget({Key? key, this.details}) : super(key: key);
 
-  final DetailsProducts details;
+  final DetailsProducts? details;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class ProductsWidget extends StatelessWidget {
     final selected = details == product.selectedDetails;
 
     Color color;
-    if(!details.hasStock) {
+    if(!details!.hasStock) {
       color = Colors.red.withAlpha(70);
     }else if(selected) {
       color = Theme.of(context).primaryColor;
@@ -24,7 +24,7 @@ class ProductsWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        if(details.hasStock) {
+        if(details!.hasStock) {
           product.selectedDetails = details;
         }
       },
@@ -41,14 +41,14 @@ class ProductsWidget extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                     color: color,
                     child: Text(
-                      details.size!,
+                      details!.size!,
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: Text(
-                      'R\$ ${details.price?.toStringAsFixed(2)}',
+                      'R\$ ${details!.price?.toStringAsFixed(2)}',
                       style: TextStyle(
                         color: color,
                       ),
