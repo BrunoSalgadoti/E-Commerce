@@ -11,14 +11,14 @@ class ImageSourceSheet extends StatelessWidget {
   ImageSourceSheet({
     Key? key,
     this.onImageSelected,
-    this.onImageSelectedList,
+    required this.onImageSelectedList,
     this.local,
   }) : super(key: key);
 
   final ImagePicker picker = ImagePicker();
 
   final Function(File)? onImageSelected;
-  final Function(List<File>)? onImageSelectedList;
+  final Function(List<File>) onImageSelectedList;
 
   String? local = '';
 
@@ -60,7 +60,7 @@ class ImageSourceSheet extends StatelessWidget {
         File file = files.first;
         editImage(file.path);
       } else {
-        onImageSelectedList?.call(files);
+        onImageSelectedList(files);
       }
     }
 

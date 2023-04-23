@@ -22,13 +22,14 @@ class ImagesForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormField<List<dynamic>>(
-      initialValue: product!.images,
+      initialValue: List.from(product!.images as Iterable),
       validator: (images) {
         if (images!.isEmpty) {
           return 'Isira ao menos uma imagem!';
         }
         return null;
       },
+      onSaved: (images) => product?.newImages = images,
       builder: (state) {
         void onImageSelected(File file) {
           state.value!.add(file);
@@ -66,7 +67,8 @@ class ImagesForm extends StatelessWidget {
           } else {
             return ImageSourceSheet(
                 onImageSelected: onImageSelected,
-                onImageSelectedList: onImageSelectedList);
+                onImageSelectedList: onImageSelectedList
+                );
           }
         }
 

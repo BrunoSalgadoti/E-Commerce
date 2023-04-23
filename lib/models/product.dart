@@ -28,8 +28,10 @@ class Product extends ChangeNotifier {
   String? id;
   String name = '';
   String? description;
-  List<dynamic>? images;
+  List<String>? images;
   List<DetailsProducts>? itemProducts;
+
+  List<dynamic>? newImages;
 
   DetailsProducts? _selectedDetails;
 
