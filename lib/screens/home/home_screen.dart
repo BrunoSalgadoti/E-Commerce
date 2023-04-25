@@ -17,67 +17,98 @@ class HomeScreen extends StatelessWidget {
         children: [
           Container(
             decoration: const BoxDecoration(
-                gradient: LinearGradient(
-              colors: [
-                Color.fromARGB(156, 141, 101, 0),
-                Color.fromARGB(239, 255, 255, 255),
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            )),
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(156, 141, 101, 0),
+                  Color.fromARGB(239, 255, 255, 255),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
           ),
-          Consumer<UserManager>(builder: (_, userManager, __) {
-            return CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  snap: true,
-                  floating: true,
-                  elevation: 4,
-                  backgroundColor: Colors.transparent,
-                  flexibleSpace: const FlexibleSpaceBar(
-                    title: Text('BRN Info_Dev'),
-                    centerTitle: true,
-                  ),
-                  actions: [
-                    IconButton(
-
-                      onPressed: () {
-                        if (userManager.isLoggedIn) {
-                          Navigator.pushNamed(context, '/cart');
-                        } else {
-                          Navigator.pushNamed(context, '/login');
-                        }
-                      },
-                      icon: userManager.isLoggedIn
-                          ? const Icon(Icons.shopping_cart)
-                          : const Icon(Icons.account_circle),
-                      color: Colors.white,
-                    ),
-                  ],
+          CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                snap: true,
+                floating: true,
+                elevation: 4,
+                backgroundColor: Colors.transparent,
+                flexibleSpace: const FlexibleSpaceBar(
+                  title: Text('BRN Info_Dev'),
+                  centerTitle: true,
                 ),
-                 Consumer<HomeManager>(
-                     builder: (_, homeManager, __) {
-                       final List<Widget> children = homeManager.sections
-                           .map<Widget>((section) {
-                             switch (section.type) {
-                               case 'List':
-                                 return SectionList(section: section);
-                                 case 'Staggered':
-                                   return SectionStaggered(section: section);
-                                   default:
-                                     return Container();
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      if (context.read<UserManager>().isLoggedIn) {
+                        Navigator.pushNamed(context, '/cart');
+                      } else {
+                        Navigator.pushNamed(context, '/login');
+                      }
+                    },
+                    icon: Consumer<UserManager>(
+                      builder: (_, userManager, __) {
+                        return userManager.isLoggedIn
+                            ? const Icon(Icons.shopping_cart)
+                            : const Icon(Icons.account_circle);
+                      },
+                    ),
+                    color: Colors.white,
+                  ),
+                  Consumer2<UserManager, HomeManager>(
+                    builder: (_, userManager, homeManager, __) {
+                      if (userManager.adminEnable) {
+                        return homeManager.editing
+                            ? PopupMenuButton(
+                                onSelected: (e) {
+                                  if (e == 'Salvar') {
+                                    homeManager.saveEditing();
+                                  } else {
+                                    homeManager.discardEditing();
+                                  }
+                                },
+                                itemBuilder: (_) {
+                                  return ['Salvar', 'Descartar'].map((e) {
+                                    return PopupMenuItem(
+                                      value: e,
+                                      child: Text(e),
+                                    );
+                                  }).toList();
+                                },
+                              )
+                            : IconButton(
+                                icon: const Icon(Icons.edit),
+                                onPressed: homeManager.enterEditing,
+                              );
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
+                  ),
+                ],
+              ),
+              Consumer<HomeManager>(
+                builder: (_, homeManager, __) {
+                  final List<Widget> children =
+                      homeManager.sections.map<Widget>((section) {
+                    switch (section.type) {
+                      case 'List':
+                        return SectionList(section: section);
+                      case 'Staggered':
+                        return SectionStaggered(section: section);
+                      default:
+                        return Container();
                     }
-                       }
-                       ).toList();
+                  }).toList();
 
-                       return SliverList(
-                         delegate: SliverChildListDelegate(children),
-                       );
-                     }
-                 )
-              ],
-            );
-          })
+                  return SliverList(
+                    delegate: SliverChildListDelegate(children),
+                  );
+                },
+              )
+            ],
+          )
         ],
       ),
     );
