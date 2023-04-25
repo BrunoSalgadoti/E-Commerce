@@ -48,8 +48,8 @@ class _ImageSourceWebState extends State<ImageSourceWeb> {
     try {
       await pickFiles();
       if (_mounted && _files.isNotEmpty) {
-        final List<html.File> files = List.from(_files);
-        widget.onImageSelectedWeb?.call(files);
+        final List<html.File> files = _files;
+        widget.onImageSelectedWeb!(files);
       }
     } catch (error) {
       return;

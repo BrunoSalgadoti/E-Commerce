@@ -43,12 +43,12 @@ class ImagesForm extends StatelessWidget {
           Navigator.of(context).pop();
         }
 
-        void onImageSelectedWeb(List<html.File> files) async {
+        void onImageSelectedWeb(List<html.File> files) {
           for (html.File file in files) {
             html.FileReader reader = html.FileReader();
             reader.readAsDataUrl(file);
             reader.onLoadEnd.listen((event) {
-              state.value!.add(reader.result.toString());
+              state.value!.add(reader.result);
               state.didChange(state.value);
             });
           }

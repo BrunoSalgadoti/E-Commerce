@@ -1,11 +1,12 @@
+import 'dart:async';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce/models/details_products.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter/foundation.dart' show kIsWeb, ChangeNotifier;
+import 'dart:convert';
+import 'dart:typed_data';
 
 class Product extends ChangeNotifier {
   Product({
@@ -20,7 +21,9 @@ class Product extends ChangeNotifier {
   }
 
   bool _loading = false;
+
   bool get loading => _loading;
+
   set loading(bool value) {
     _loading = value;
     notifyListeners();
@@ -40,6 +43,7 @@ class Product extends ChangeNotifier {
   final FirebaseStorage storage = FirebaseStorage.instance;
 
   DocumentReference get firestoreRef => firestore.doc('products/$id');
+
   Reference get storageRef => storage.ref().child('products').child(id!);
 
   String? id;
@@ -50,7 +54,9 @@ class Product extends ChangeNotifier {
   List<DetailsProducts>? itemProducts;
 
   DetailsProducts? _selectedDetails;
+
   DetailsProducts? get selectedDetails => _selectedDetails;
+
   set selectedDetails(DetailsProducts? value) {
     _selectedDetails = value;
     notifyListeners();
@@ -111,11 +117,22 @@ class Product extends ChangeNotifier {
       if (images!.contains(newImage)) {
         updateImages.add(newImage as String);
       } else {
-        final UploadTask task =
-            storageRef.child(const Uuid().v1()).putFile(newImage as File);
-        final TaskSnapshot snapshot = await task.whenComplete(() {});
-        final String url = await snapshot.ref.getDownloadURL();
-        updateImages.add(url);
+        if (kIsWeb) {
+          final List<int> bytes = base64.decode(newImage.split(',').last);
+          final Uint8List uint8ListBytes = Uint8List.fromList(bytes);
+          final metadata = SettableMetadata(contentType: 'image/jpeg');
+          final task =
+              storageRef.child(const Uuid().v4()).putData(uint8ListBytes, metadata);
+          final snapshot = await task.whenComplete(() {});
+          final url = await snapshot.ref.getDownloadURL();
+          updateImages.add(url);
+        } else {
+          final UploadTask task =
+              storageRef.child(const Uuid().v4()).putFile(newImage as File);
+          final TaskSnapshot snapshot = await task.whenComplete(() {});
+          final String url = await snapshot.ref.getDownloadURL();
+          updateImages.add(url);
+        }
       }
     }
 
@@ -126,10 +143,9 @@ class Product extends ChangeNotifier {
           await ref.delete();
         }
       } catch (error) {
-        debugPrint('Falha ao deletar $image');
+        return;
       }
     }
-
     await firestoreRef.update({'images': updateImages});
     images = updateImages;
 

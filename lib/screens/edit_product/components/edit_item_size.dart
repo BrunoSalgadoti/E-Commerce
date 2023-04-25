@@ -52,7 +52,7 @@ class EditItemSize extends StatelessWidget {
               }
               return null;
             },
-            onChanged: (stock) => detailsProducts?.stock = int.tryParse(stock)!,
+            onChanged: (stock) => detailsProducts?.stock = int.tryParse(stock) ?? 0,
             keyboardType: TextInputType.number,
           ),
         ),
@@ -72,7 +72,7 @@ class EditItemSize extends StatelessWidget {
               }
               return null;
             },
-            onChanged: (price) => detailsProducts?.price = num.tryParse(price)!,
+            onChanged: (price) => detailsProducts?.price = num.tryParse(price) ?? 0,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
           ),
         ),

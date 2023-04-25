@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-// ignore: must_be_immutable
 class ImageSourceSheet extends StatelessWidget {
   ImageSourceSheet({
     Key? key,

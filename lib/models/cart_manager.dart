@@ -7,10 +7,9 @@ import 'package:flutter/foundation.dart';
 
 class CartManager extends ChangeNotifier {
   List<CartProduct> items = [];
-
   Users? users;
-
   num productsPrice = 0.0;
+  bool _disposed = false; // adicionando variável para verificar se foi descartado
 
   void updateUser(UserManager userManager) {
     users = userManager.users;
@@ -51,27 +50,29 @@ class CartManager extends ChangeNotifier {
     notifyListeners();
   }
 
-    void _onItemUpdate() {
+  void _onItemUpdate() {
+    if (_disposed) { // lançando exceção caso o objeto já tenha sido descartado
+      throw Exception('CartManager foi usado após ser descartado.');
+    }
     productsPrice = 0.0;
 
-      for (int i = 0; i < items.length; i++ ) {
-        final cartProduct = items[i];
+    for (int i = 0; i < items.length; i++) {
+      final cartProduct = items[i];
 
-        if (cartProduct.quantity == 0) {
-          removeOfCart(cartProduct);
-          i--;
-          continue;
-        }
-        productsPrice += cartProduct.totalPrice;
-
-        _updateCartProduct(cartProduct);
+      if (cartProduct.quantity == 0) {
+        removeOfCart(cartProduct);
+        i--;
+        continue;
       }
-      notifyListeners();
+      productsPrice += cartProduct.totalPrice;
+
+      _updateCartProduct(cartProduct);
+    }
+    notifyListeners();
   }
 
-
   void _updateCartProduct(CartProduct cartProduct) {
-    if(cartProduct.id != null) {
+    if (cartProduct.id != null) {
       users!.cartReference
           .doc(cartProduct.id)
           .update(cartProduct.toCartItemMap());
@@ -79,9 +80,15 @@ class CartManager extends ChangeNotifier {
   }
 
   bool get isCartValid {
-    for(final cartProduct in items) {
-      if(!cartProduct.hasStock) return false;
+    for (final cartProduct in items) {
+      if (!cartProduct.hasStock) return false;
     }
     return true;
+  }
+
+  @override
+  void dispose() {
+    _disposed = true; // marcando como descartado
+    super.dispose();
   }
 }
