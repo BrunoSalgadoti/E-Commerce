@@ -2,45 +2,57 @@
   "project_info": {
     "project_number": "168585183359",
     "project_id": "lojavirtual-brninfodev",
-    "storage_bucket": "lojavirtual-brninfodev.appspot.com"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:168585183359:android:9b55316ebcce1c88457f4a",
-        "android_client_info": {
-          "package_name": "br.com.brninfodev.ecommerce"
-        }
-      },
-      "oauth_client": [
+    "storage_bucket": "lojavirtual-brninfodev.appspot.com",
+    "firebase_storage": {
+      "rules_version": "2",
+      "rules": [
         {
-          "client_id": "168585183359-b7nliefjrj00p5ca042630l2to2jl2n0.apps.googleusercontent.com",
-          "client_type": 3
+          "allow": true,
+          "origin": [
+            "*"
+          ],
+          "read": true
         }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBF7q_eKA2uIqSYt7UUHc0oy0t7STbk8Xs"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "168585183359-b7nliefjrj00p5ca042630l2to2jl2n0.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "168585183359-3jvoqr4fapvsniisod6t8m5nocoag17j.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "br.com.brninfodev.ecommerce"
+      ]
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:168585183359:android:9b55316ebcce1c88457f4a",
+          "android_client_info": {
+            "package_name": "br.com.brninfodev.ecommerce"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "168585183359-b7nliefjrj00p5ca042630l2to2jl2n0.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyBF7q_eKA2uIqSYt7UUHc0oy0t7STbk8Xs"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "168585183359-b7nliefjrj00p5ca042630l2to2jl2n0.apps.googleusercontent.com",
+                "client_type": 3
+              },
+              {
+                "client_id": "168585183359-3jvoqr4fapvsniisod6t8m5nocoag17j.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "br.com.brninfodev.ecommerce"
+                }
               }
-            }
-          ]
+            ]
+          }
         }
       }
-    }
-  ],
-  "configuration_version": "1"
+    ],
+    "configuration_version": "2"
+  }
 }
