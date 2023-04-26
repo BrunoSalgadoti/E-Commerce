@@ -7,6 +7,7 @@ import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
 class ProductDetailsScreen extends StatelessWidget {
   const ProductDetailsScreen({
     Key? key,

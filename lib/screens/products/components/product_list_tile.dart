@@ -1,4 +1,5 @@
 import 'package:ecommerce/models/product.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ProductListTile extends StatelessWidget {
@@ -21,7 +22,7 @@ class ProductListTile extends StatelessWidget {
             children: [
               AspectRatio(
                 aspectRatio: 1,
-                child: Image.network(product!.images!.first),
+                child: Image(image: NetworkImage(product!.images!.first)),
               ),
               const SizedBox(
                 width: 16,
