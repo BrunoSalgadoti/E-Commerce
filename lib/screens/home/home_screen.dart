@@ -1,6 +1,7 @@
 import 'package:ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:ecommerce/models/home_manager.dart';
 import 'package:ecommerce/models/users_manager.dart';
+import 'package:ecommerce/screens/home/components/add_section_widget.dart';
 import 'package:ecommerce/screens/home/components/section_list.dart';
 import 'package:ecommerce/screens/home/components/section_staggered.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,8 @@ class HomeScreen extends StatelessWidget {
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromARGB(156, 141, 101, 0),
-                  Color.fromARGB(239, 255, 255, 255),
+                  Color.fromARGB(156, 162, 22, 22),
+                  Color.fromARGB(239, 255, 137, 137),
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -101,7 +102,10 @@ class HomeScreen extends StatelessWidget {
                         return Container();
                     }
                   }).toList();
-
+                  
+                  if(homeManager.editing) {
+                    children.add(AddSectionWidget(homeManager: homeManager,));
+                  }
                   return SliverList(
                     delegate: SliverChildListDelegate(children) ,
                   );
