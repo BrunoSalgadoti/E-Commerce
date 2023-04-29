@@ -49,3 +49,4 @@ app.*.map.json
 /firefirebase/
 /.firebase/*
 /.github/*
+/android/

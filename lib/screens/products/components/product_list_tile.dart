@@ -1,9 +1,10 @@
 import 'package:ecommerce/models/product.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ProductListTile extends StatelessWidget {
-  const ProductListTile({Key? key, this.product}) : super(key: key);
+  const ProductListTile({Key? key,
+    this.product
+  }) : super(key: key);
 
   final Product? product;
 

@@ -67,7 +67,7 @@ class ImagesForm extends StatelessWidget {
           } else {
             return ImageSourceSheet(
                 onImageSelected: onImageSelected,
-                onImageSelectedList: onImageSelectedList
+              onImageSelectedList: onImageSelectedList,
                 );
           }
         }

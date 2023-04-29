@@ -19,7 +19,8 @@ class ProductsScreen extends StatelessWidget {
             if (productManager.search.isEmpty) {
               return const Text('Produtos');
             } else {
-              return LayoutBuilder(builder: (_, constraints) {
+              return LayoutBuilder(
+                  builder: (_, constraints) {
                 return GestureDetector(
                   onTap: () async {
                     final search = await showDialog<String>(
@@ -103,7 +104,8 @@ class ProductsScreen extends StatelessWidget {
         },
       ),
       floatingActionButton:
-          Consumer<UserManager>(builder: (_, userManager, __) {
+          Consumer<UserManager>(
+              builder: (_, userManager, __) {
             return FloatingActionButton(
               backgroundColor: Colors.white,
               foregroundColor: Theme.of(context).primaryColor,

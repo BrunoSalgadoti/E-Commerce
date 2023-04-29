@@ -17,7 +17,7 @@ class ImageSourceSheet extends StatelessWidget {
   final ImagePicker picker = ImagePicker();
 
   final Function(File)? onImageSelected;
-  final Function(List<File>) onImageSelectedList;
+  final Function(List<File>)? onImageSelectedList;
 
   String? local = '';
 
@@ -59,7 +59,7 @@ class ImageSourceSheet extends StatelessWidget {
         File file = files.first;
         editImage(file.path);
       } else {
-        onImageSelectedList(files);
+        onImageSelectedList!(files);
       }
     }
 
@@ -108,7 +108,7 @@ class ImageSourceSheet extends StatelessWidget {
         ),
         onClosing: () {},
       );
-    } else {
+    } else if (Platform.isIOS){
       return CupertinoActionSheet(
         title: const Text('Selecionar a foto para o item:'),
         message: const Text('Escolha a origem da foto!'),
@@ -130,6 +130,20 @@ class ImageSourceSheet extends StatelessWidget {
               imgGallery();
             },
           ),
+        ],
+      );
+    } else {
+      return AlertDialog(
+        title: const Text('Plataforma Não suportada'),
+        content: const Text('Este App não é compatível com esse plataforma\n'
+            'plataformas compatíveis: Ios / Android / Web'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancelar'),
+          )
         ],
       );
     }
