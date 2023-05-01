@@ -1,35 +1,143 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce/models/section_item.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart' show kIsWeb, ChangeNotifier;
+import 'package:uuid/uuid.dart';
 
-class Section extends ChangeNotifier{
-
-  String? name;
-  String? type;
-  List<SectionItem>? items;
-
-  Section({this.name, this.type, this.items}){
-   items = items ?? [];
+class Section extends ChangeNotifier {
+  Section({this.id, this.name, this.type, this.items}) {
+    items = items ?? [];
+    originalItems = List.from(items!);
   }
 
   Section.fromDocument(DocumentSnapshot document) {
+    id = document.id;
     name = document.get('name') as String;
     type = document.get('type') as String;
-    items = (document.get('items') as List).map(
-            (i) => SectionItem.fromMap(i as Map<String, dynamic>)).toList();
+    items = (document.get('items') as List)
+        .map((i) => SectionItem.fromMap(i as Map<String, dynamic>))
+        .toList();
   }
 
-  void addItem(SectionItem item){
+  String? id;
+  String? name;
+  String? type;
+  List<SectionItem>? items;
+  List<SectionItem>? originalItems;
+
+  String? _error;
+
+  String? get error => _error;
+
+  set error(String? value) {
+    _error = value;
+    notifyListeners();
+  }
+
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseStorage storage = FirebaseStorage.instance;
+
+  DocumentReference get firestoreRef => firestore.doc('home/$id');
+
+  Reference get storageRef => storage.ref().child('home/$id');
+
+  void addItem(SectionItem item) {
     items!.add(item);
     notifyListeners();
   }
 
+  void removeItem(SectionItem item) {
+    items!.remove(item);
+    notifyListeners();
+  }
+
+  Future<void> save(int position) async {
+    final Map<String, dynamic> data = {
+      'name': name,
+      'type': type,
+      'position': position
+    };
+
+    if (id == null) {
+      final doc = await firestore.collection('home').add(data);
+      id = doc.id;
+    } else {
+      await firestoreRef.update(data);
+    }
+
+    for (final item in items!) {
+      if (kIsWeb) {
+        final base64String = item.image.split(',').last;
+        if (base64String is String &&
+            base64String.isNotEmpty &&
+            base64String.length % 4 == 0) {
+          final List<int> bytes = base64.decode(base64String);
+          final Uint8List uint8ListBytes = Uint8List.fromList(bytes);
+          final metadata = SettableMetadata(contentType: 'image/jpeg');
+          final task = storageRef
+              .child(const Uuid().v4())
+              .putData(uint8ListBytes, metadata);
+          final snapshot = await task.whenComplete(() {});
+          final url = await snapshot.ref.getDownloadURL();
+          item.image = url;
+        }
+      } else if (item.image is File) {
+        final UploadTask task =
+            storageRef.child(const Uuid().v4()).putFile(item.image as File);
+        final TaskSnapshot snapshot = await task.whenComplete(() {});
+        final String url = await snapshot.ref.getDownloadURL();
+        item.image = url;
+      }
+    }
+
+    for (final original in originalItems!) {
+      try {
+        if (!items!.contains(original)) {
+          final ref = storage.refFromURL(original.image);
+          await ref.delete();
+        }
+        // ignore: empty_catches
+      } catch (error) {}
+    }
+
+    final Map<String, dynamic> itemsData = {
+      'items': items?.map((e) => e.toMap()).toList(),
+    };
+    await firestoreRef.update(itemsData);
+  }
+
+  Future<void> delete() async {
+    await firestoreRef.delete();
+    for (final item in items!) {
+      try {
+        final ref = storage.refFromURL(item.image as String);
+        await ref.delete();
+        // ignore: empty_catches
+      } catch (error) {}
+    }
+  }
+
+  bool valid() {
+    if (name == null || name!.isEmpty) {
+      error = 'Título Inválido';
+    } else if (items!.isEmpty) {
+      error = 'Insira ao menos uma imagem';
+    } else {
+      error = null;
+    }
+    return error == null;
+  }
+
   Section clone() {
     return Section(
-      name: name,
-      type: type,
-      items: items?.map((e) => e.clone()).toList()
-    );
+        id: id,
+        name: name,
+        type: type,
+        items: items?.map((e) => e.clone()).toList());
   }
 
   @override

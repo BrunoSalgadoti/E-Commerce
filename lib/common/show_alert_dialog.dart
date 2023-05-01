@@ -5,11 +5,13 @@ class ShowAlertDialog extends StatelessWidget {
      required this.titleText,
      required this.bodyText,
      required this.actions,
+     this.content,
   }) : super(key: key);
 
   final String titleText;
   final String bodyText;
   final List<Widget> actions;
+  final Widget? content;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class ShowAlertDialog extends StatelessWidget {
               titleText,
               textAlign: TextAlign.center,
             ),
-            content: SingleChildScrollView(
+             content: content ?? SingleChildScrollView(
               child: ListBody(
                 children:  <Widget>[
                   Text(

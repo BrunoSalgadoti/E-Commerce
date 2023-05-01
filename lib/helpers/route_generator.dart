@@ -4,6 +4,7 @@ import 'package:ecommerce/screens/cart/cart_creen.dart';
 import 'package:ecommerce/screens/edit_product/edit_product_screen.dart';
 import 'package:ecommerce/screens/login/login_screen.dart';
 import 'package:ecommerce/screens/product_details/product_details_screen.dart';
+import 'package:ecommerce/screens/select_product/selected_product_screen.dart';
 import 'package:ecommerce/screens/sign_up/sign_up_Screen.dart';
 import 'package:flutter/material.dart';
 
@@ -42,6 +43,11 @@ class RouteGenerator {
                 ? settings.arguments as Product
                 : Product().clone()
           ),
+        );
+
+      case '/select_product' :
+        return MaterialPageRoute(
+          builder:(_) => const SelectProductScreen(),
         );
 
     case '/base' :

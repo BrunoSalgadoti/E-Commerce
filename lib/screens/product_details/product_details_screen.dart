@@ -4,6 +4,7 @@ import 'package:ecommerce/models/users_manager.dart';
 import 'package:ecommerce/screens/products/components/products_widget.dart';
 import 'package:ecommerce/models/product.dart';
 import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -51,7 +52,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 return NetworkImage(url).url;
               }).toList(),
               isAssets: false,
-              autoPlay: false,
+              autoPlay: kIsWeb ? true : false,
               initalPageIndex: 0,
               sliderHeight: 400,
               slideViewportFraction: 0.8,
