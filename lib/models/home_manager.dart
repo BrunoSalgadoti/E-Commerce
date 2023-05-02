@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 class HomeManager extends ChangeNotifier {
   HomeManager() {
-    _loadSections();
+     _loadSections();
   }
 
   final List<Section> _sections = [];
@@ -18,7 +18,7 @@ class HomeManager extends ChangeNotifier {
   Future<void> _loadSections() async {
     firestore.collection('home').orderBy('position').snapshots()
         .listen((snapshot) {
-      _sections.clear();
+       _sections.clear();
       for (final DocumentSnapshot document in snapshot.docs) {
         _sections.add(Section.fromDocument(document));
       }
@@ -61,7 +61,7 @@ class HomeManager extends ChangeNotifier {
 
     int position = 0;
     for(final section in _editingSections){
-      await section.save(position);
+      await section.saveSection(position);
       position++;
     }
 

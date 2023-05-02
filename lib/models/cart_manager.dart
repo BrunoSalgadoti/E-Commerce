@@ -16,7 +16,7 @@ class CartManager extends ChangeNotifier {
     items.clear();
 
     if (users != null) {
-      _loadCartItems();
+        _loadCartItems();
     }
   }
 

@@ -4,15 +4,14 @@ import 'package:ecommerce/models/product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CartProduct extends ChangeNotifier{
-
+class CartProduct extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   String? id;
   String? productId;
   int? quantity;
   String? size;
-  
+
   Product? product;
 
   CartProduct.fromProduct(this.product) {
@@ -27,27 +26,27 @@ class CartProduct extends ChangeNotifier{
     quantity = document.get('quantity') as int;
     size = document.get('size') as String;
 
-      firestore.doc('products/$productId').get().then(
-              (doc) {
-                product = Product.fromDocument(doc);
-                notifyListeners();
-              }
-      );
+    firestore.doc('products/$productId').get().then((doc) {
+      product = Product.fromDocument(doc);
+    });
+
+    notifyListeners();
   }
 
   DetailsProducts? get detailsProducts {
-    if(product == null) return null;
+    if (product == null) return null;
     return product?.findSize(size!);
   }
+
   num get unitPrice {
-    if(product == null) return 0;
+    if (product == null) return 0;
     return detailsProducts?.price ?? 0;
   }
 
   num get totalPrice => unitPrice * quantity!;
 
   int get unitQuantity {
-    if(product == null) return 0;
+    if (product == null) return 0;
     return detailsProducts?.stock ?? 0;
   }
 
@@ -70,17 +69,16 @@ class CartProduct extends ChangeNotifier{
     notifyListeners();
   }
 
-  void decrement(){
-      dynamic count = quantity;
-      count--;
-      quantity = count;
-      notifyListeners();
+  void decrement() {
+    dynamic count = quantity;
+    count--;
+    quantity = count;
+    notifyListeners();
   }
 
   bool get hasStock {
     final size = detailsProducts;
-    if(size == null) return false;
+    if (size == null) return false;
     return size.stock >= quantity!;
   }
-
 }
