@@ -21,7 +21,7 @@ class SectionItem {
   Map<String, dynamic> toMap(){
     return {
       'image': image,
-      'product': product
+      'product': product,
     };
   }
 

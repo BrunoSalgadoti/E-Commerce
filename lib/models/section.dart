@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce/models/section_item.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart' show kIsWeb, ChangeNotifier;
+import 'package:flutter/foundation.dart'
+    show ChangeNotifier, kDebugMode, kIsWeb;
 import 'package:uuid/uuid.dart';
 
 class Section extends ChangeNotifier {
@@ -15,12 +17,16 @@ class Section extends ChangeNotifier {
   }
 
   Section.fromDocument(DocumentSnapshot document) {
-    id = document.id;
-    name = document.get('name') as String;
-    type = document.get('type') as String;
-    items = (document.get('items') as List)
-        .map((i) => SectionItem.fromMap(i as Map<String, dynamic>))
-        .toList();
+    try {
+      id = document.id;
+      name = document['name'] as String;
+      type = document['type'] as String;
+      items = (document['items'] as List<dynamic>)
+          .map((i) => SectionItem.fromMap(i as Map<String, dynamic>))
+          .toList();
+    } catch (await) {
+      return;
+    }
   }
 
   String? id;
@@ -43,7 +49,7 @@ class Section extends ChangeNotifier {
 
   DocumentReference get firestoreRef => firestore.doc('home/$id');
 
-  Reference get storageRef => storage.ref().child('home/$id');
+  Reference get storageRef => storage.ref().child('home').child(id!);
 
   void addItem(SectionItem item) {
     items!.add(item);
@@ -55,7 +61,7 @@ class Section extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> save(int position) async {
+  Future<void> saveSection(int position) async {
     final Map<String, dynamic> data = {
       'name': name,
       'type': type,
@@ -72,18 +78,28 @@ class Section extends ChangeNotifier {
     for (final item in items!) {
       if (kIsWeb) {
         final base64String = item.image.split(',').last;
+        const String validCharacters =
+            'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';
+        final trimmedString =
+            base64String.replaceAll(RegExp('[^$validCharacters]'), '');
         if (base64String is String &&
             base64String.isNotEmpty &&
             base64String.length % 4 == 0) {
-          final List<int> bytes = base64.decode(base64String);
-          final Uint8List uint8ListBytes = Uint8List.fromList(bytes);
-          final metadata = SettableMetadata(contentType: 'image/jpeg');
-          final task = storageRef
-              .child(const Uuid().v4())
-              .putData(uint8ListBytes, metadata);
-          final snapshot = await task.whenComplete(() {});
-          final url = await snapshot.ref.getDownloadURL();
-          item.image = url;
+          try {
+            final List<int> bytes = base64.decode(trimmedString);
+            final Uint8List uint8ListBytes = Uint8List.fromList(bytes);
+            final metadata = SettableMetadata(contentType: 'image/jpeg');
+            final task = storageRef
+                .child(const Uuid().v4())
+                .putData(uint8ListBytes, metadata);
+            final snapshot = await task.whenComplete(() {});
+            final url = await snapshot.ref.getDownloadURL();
+            item.image = url;
+          } catch (e) {
+            if (kDebugMode) {
+              print('Erro ao decodificar o base64String: $e');
+            }
+          }
         }
       } else if (item.image is File) {
         final UploadTask task =
@@ -97,7 +113,7 @@ class Section extends ChangeNotifier {
     for (final original in originalItems!) {
       try {
         if (!items!.contains(original)) {
-          final ref = storage.refFromURL(original.image);
+          final ref = storage.refFromURL(original.image as String);
           await ref.delete();
         }
         // ignore: empty_catches
