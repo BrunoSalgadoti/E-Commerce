@@ -6,16 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
 
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -35,12 +30,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 ? const EdgeInsets.only(top: 10, right: 30)
                 : const EdgeInsets.only(top: 10, right: 25),
             child: const Text(
-                'CRIAR CONTA',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: Colors.amber
-            ),
+              'CRIAR CONTA',
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.amber),
             ),
           ),
         ],
@@ -103,29 +97,31 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 16,
                       ),
                       CustomButton(
-                          texto: 'Entrar',
-                            onPressed: userManager.loading ? null : () {
-                              if (formKey.currentState!.validate()) {
-                                userManager.signIn(
-                                    users: Users(
+                        texto: 'Entrar',
+                        onPressed: userManager.loading
+                            ? null
+                            : () {
+                                if (formKey.currentState!.validate()) {
+                                  userManager.signIn(
+                                      users: Users(
                                         email: emailController.text,
                                         password: passwordController.text,
-                                    ),
-                                    onFail: (error) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                            content: Text(error,
-                                            style: const TextStyle(fontSize: 18)),
-                                        backgroundColor: Colors.red,
-                                      ));
-                                    },
-                                    onSuccess: () {
-                                      Navigator.of(context).pop();
-                                    }
-                                    );
-                              }
-                            },
-                            ),
+                                      ),
+                                      onFail: (error) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(error,
+                                              style: const TextStyle(
+                                                  fontSize: 18)),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      },
+                                      onSuccess: () {
+                                        Navigator.of(context).pop();
+                                      });
+                                }
+                              },
+                      ),
                     ],
                   );
                 },

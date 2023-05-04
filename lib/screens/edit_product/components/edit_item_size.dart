@@ -72,7 +72,8 @@ class EditItemSize extends StatelessWidget {
               }
               return null;
             },
-            onChanged: (price) => detailsProducts?.price = num.tryParse(price) ?? 0,
+            onChanged: (price) => detailsProducts?.price =
+                num.tryParse(price) ?? 0,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
           ),
         ),

@@ -24,12 +24,6 @@ class _ImageSourceWebState extends State<ImageSourceWeb> {
     _mounted = true;
   }
 
-  @override
-  void dispose() {
-    _mounted = false;
-    super.dispose();
-  }
-
   Future<void> pickFiles() async {
     final completer = Completer<List<html.File>>();
     final html.FileUploadInputElement input = html.FileUploadInputElement()
@@ -54,6 +48,12 @@ class _ImageSourceWebState extends State<ImageSourceWeb> {
     } catch (error) {
       return;
     }
+  }
+
+  @override
+  void dispose() {
+    _mounted = false;
+    super.dispose();
   }
 
   @override

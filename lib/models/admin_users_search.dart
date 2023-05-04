@@ -22,6 +22,7 @@ class AdminUsersSearch extends ChangeNotifier {
 
   List<String> get names =>
       allUsers.map((e) => e.userName!.toUpperCase()).toList();
+
   List<String> get emails =>
       allUsers.map((e) => e.email).toList();
 
@@ -32,7 +33,7 @@ class AdminUsersSearch extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Users> get filteredUsers  {
+  List<Users> get filteredUsers {
     final List<Users> filteredUsers = [];
 
     _loadAllUsers();
@@ -43,10 +44,11 @@ class AdminUsersSearch extends ChangeNotifier {
       allUsers = filteredUsers;
     } else {
       userFilteredSendEmail = true;
-      filteredUsers.addAll(allUsers.where((u) => u.userName!
-          .toString()
-          .toLowerCase()
-          .contains(search.toString().toLowerCase())));
+      filteredUsers.addAll(allUsers.where((u) =>
+          u.userName!
+              .toString()
+              .toLowerCase()
+              .contains(search.toString().toLowerCase())));
       allUsers = filteredUsers;
     }
     return filteredUsers;
@@ -67,7 +69,7 @@ class AdminUsersSearch extends ChangeNotifier {
     String? encodeQueryParameters(Map<String, String> params) {
       return params.entries
           .map((MapEntry<String, String> e) =>
-              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+      '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
           .join('&');
     }
 
@@ -148,7 +150,7 @@ class AdminUsersSearch extends ChangeNotifier {
                 children: const <Widget>[
                   CircleAvatar(
                     backgroundImage:
-                        NetworkImage("https://placeimg.com/200/200/people"),
+                    NetworkImage("https://placeimg.com/200/200/people"),
                   ),
                   SizedBox(
                       height: 40,
@@ -179,89 +181,90 @@ class AdminUsersSearch extends ChangeNotifier {
       }
     }
     for (var user in users) {
-      normalList.add(
-        Slidable(
-          startActionPane: ActionPane(
-            motion: const DrawerMotion(),
-            extentRatio: 0.25,
-            children: [
-              SlidableAction(
-                flex: 2,
-                label: 'Favorito',
-                backgroundColor: Colors.green,
-                icon: Icons.star,
-                onPressed: (context) {
-                  _favoringUser(user.id);
-                },
-              ),
-            ],
-          ),
-          endActionPane: ActionPane(
-            motion: const DrawerMotion(),
-            extentRatio: 0.25,
-            children: [
-              SlidableAction(
-                  label: 'Enviar',
-                  backgroundColor: Colors.cyanAccent,
-                  icon: Icons.email,
+        normalList.add(
+          Slidable(
+            startActionPane: ActionPane(
+              motion: const DrawerMotion(),
+              extentRatio: 0.25,
+              children: [
+                SlidableAction(
+                  flex: 2,
+                  label: 'Favorito',
+                  backgroundColor: Colors.green,
+                  icon: Icons.star,
                   onPressed: (context) {
-                    userFilteredSendEmail == true
-                        ? _sendEmail(user.email, user.userName)
-                        : showDialog<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return ShowAlertDialog(
-                                  titleText: 'Enviar E-mail',
-                                  bodyText: 'Escolha para quem deseja enviar\n '
-                                             'o E-mail!',
-                                actions: [
-                                  Row(
-                                      mainAxisAlignment:  MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        CustomTextButton(
-                                          text: 'Este Contato',
-                                          onPressed: (){
-                                            _sendEmail(user.email, user.userName);
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                          CustomTextButton(
-                                            text: 'Todos contatos!',
-                                            onPressed: (){
-                                              _sendEmail(null, null);
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                        CustomTextButton(
-                                            text: 'Cancelar',
-                                            color: Colors.red,
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            }
-                                        ),
-                                      ],
+                    _favoringUser(user.id);
+                  },
+                ),
+              ],
+            ),
+            endActionPane: ActionPane(
+              motion: const DrawerMotion(),
+              extentRatio: 0.25,
+              children: [
+                SlidableAction(
+                    label: 'Enviar',
+                    backgroundColor: Colors.cyanAccent,
+                    icon: Icons.email,
+                    onPressed: (context) {
+                      userFilteredSendEmail == true
+                          ? _sendEmail(user.email, user.userName)
+                          : showDialog<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ShowAlertDialog(
+                              titleText: 'Enviar E-mail',
+                              bodyText: 'Escolha para quem deseja enviar\n '
+                                  'o E-mail!',
+                              actions: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment
+                                      .spaceBetween,
+                                  children: [
+                                    CustomTextButton(
+                                      text: 'Este Contato',
+                                      onPressed: () {
+                                        _sendEmail(user.email, user.userName);
+                                        Navigator.of(context).pop();
+                                      },
                                     ),
-                                ],
-                              );
-                            });
-                  }),
-            ],
-          ),
-          child: ListTile(
-            leading: const CircleAvatar(
-              backgroundImage:
-                  NetworkImage("https://placeimg.com/200/200/people"),
+                                    CustomTextButton(
+                                      text: 'Todos contatos!',
+                                      onPressed: () {
+                                        _sendEmail(null, null);
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    CustomTextButton(
+                                        text: 'Cancelar',
+                                        color: Colors.red,
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        }
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            );
+                          });
+                    }),
+              ],
             ),
-            title: Text(user.userName!,
-                style: const TextStyle(
-                    fontWeight: FontWeight.w800, color: Colors.white)),
-            subtitle: Text(
-              user.email,
-              style: const TextStyle(fontSize: 16, color: Colors.white),
+            child: ListTile(
+              leading: const CircleAvatar(
+                backgroundImage:
+                NetworkImage("https://placeimg.com/200/200/people"),
+              ),
+              title: Text(user.userName!,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w800, color: Colors.white)),
+              subtitle: Text(
+                user.email,
+                style: const TextStyle(fontSize: 16, color: Colors.white),
+              ),
             ),
           ),
-        ),
-      );
+        );
+      }
     }
   }
-}

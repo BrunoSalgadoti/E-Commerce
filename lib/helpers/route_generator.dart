@@ -1,4 +1,5 @@
 import 'package:ecommerce/models/product.dart';
+import 'package:ecommerce/screens/address/address_screen.dart';
 import 'package:ecommerce/screens/base/base_screen.dart';
 import 'package:ecommerce/screens/cart/cart_creen.dart';
 import 'package:ecommerce/screens/edit_product/edit_product_screen.dart';
@@ -16,7 +17,7 @@ class RouteGenerator {
 
       case '/login' :
         return MaterialPageRoute(
-          builder:(_) => const LoginScreen(),
+          builder:(_) => LoginScreen(),
         );
 
       case '/signup' :
@@ -48,6 +49,11 @@ class RouteGenerator {
       case '/select_product' :
         return MaterialPageRoute(
           builder:(_) => const SelectProductScreen(),
+        );
+
+      case '/address_screen' :
+        return MaterialPageRoute(
+          builder:(_) => const AddressScreen(),
         );
 
     case '/base' :

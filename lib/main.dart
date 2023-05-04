@@ -10,7 +10,8 @@ import 'dart:core';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ecommerce/models/db_api//firebase_options.dart';
+
+import 'services/db_api/firebase_options.dart';
 
  final  ThemeData temaPadrao = ThemeData(
     primaryColor: const Color.fromARGB(255, 4, 125, 141),
@@ -38,6 +39,7 @@ import 'package:ecommerce/models/db_api//firebase_options.dart';
        ),
        ChangeNotifierProvider(
          create:(_) => Product(),
+         lazy: false,
        ),
        ChangeNotifierProvider(
          create: (_) => ProductManager(),

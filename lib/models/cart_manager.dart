@@ -1,22 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce/models/address.dart';
 import 'package:ecommerce/models/cart_product.dart';
 import 'package:ecommerce/models/product.dart';
 import 'package:ecommerce/models/users.dart';
 import 'package:ecommerce/models/users_manager.dart';
+import 'package:ecommerce/services/cepaberto_service.dart';
 import 'package:flutter/foundation.dart';
 
 class CartManager extends ChangeNotifier {
   List<CartProduct> items = [];
   Users? users;
+  Address? address;
   num productsPrice = 0.0;
-  bool _disposed = false; // adicionando variável para verificar se foi descartado
 
   void updateUser(UserManager userManager) {
     users = userManager.users;
     items.clear();
 
     if (users != null) {
-        _loadCartItems();
+      _loadCartItems();
     }
   }
 
@@ -51,9 +53,6 @@ class CartManager extends ChangeNotifier {
   }
 
   void _onItemUpdate() {
-    if (_disposed) { // lançando exceção caso o objeto já tenha sido descartado
-      throw Exception('CartManager foi usado após ser descartado.');
-    }
     productsPrice = 0.0;
 
     for (int i = 0; i < items.length; i++) {
@@ -65,7 +64,6 @@ class CartManager extends ChangeNotifier {
         continue;
       }
       productsPrice += cartProduct.totalPrice;
-
       _updateCartProduct(cartProduct);
     }
     notifyListeners();
@@ -86,9 +84,25 @@ class CartManager extends ChangeNotifier {
     return true;
   }
 
-  @override
-  void dispose() {
-    _disposed = true; // marcando como descartado
-    super.dispose();
+  Future<void> getAddress(String cep) async {
+    final cepAAbertoService = CepAbertoService();
+
+    try {
+      final cepAbertoAddress =
+          await cepAAbertoService.getAddressFromZipCode(cep);
+
+      address = Address(
+        street: cepAbertoAddress.logradouro,
+        district: cepAbertoAddress.bairro,
+        zipCode: cepAbertoAddress.cep,
+        city: cepAbertoAddress.cidade!.nome,
+        state: cepAbertoAddress.estado!.sigla,
+        lat: cepAbertoAddress.latitude,
+        long: cepAbertoAddress.longitude,
+      );
+      notifyListeners();
+    } catch (error) {
+      debugPrint(error.toString());
+    }
   }
 }

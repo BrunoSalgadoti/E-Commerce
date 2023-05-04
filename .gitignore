@@ -43,10 +43,13 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-/lib/models/db_api/firebase_options.dart
+/lib/services/db_api/firebase_options.dart
 /firebase/
 /firebase.json
 /firefirebase/
 /.firebase/*
 /.github/*
 /android/
+/lib/services/*
+/lib/services/cepaberto_service.dart
+/ios/firebase_app_id_file.json
