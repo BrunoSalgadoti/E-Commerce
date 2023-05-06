@@ -1,3 +1,4 @@
+import 'package:ecommerce/models/cart_manager.dart';
 import 'package:ecommerce/models/product.dart';
 import 'package:ecommerce/models/users_manager.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,12 @@ class CustomButton extends StatelessWidget {
     required this.texto,
     required this.onPressed,
     this.corTexto = Colors.white,
-    this.corBotao = const Color.fromARGB(255, 4, 125, 141,),
+    this.corBotao = const Color.fromARGB(
+      255,
+      4,
+      125,
+      141,
+    ),
     this.corBotaoDesativado = const Color.fromRGBO(4, 125, 141, 0.4),
     this.corShadow = Colors.white24,
     this.fontSize = 18,
@@ -37,14 +43,14 @@ class CustomButton extends StatelessWidget {
               shadowColor: corShadow,
               elevation: elevation,
               padding: const EdgeInsets.fromLTRB(32, 10, 32, 10),
-              shape:
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7)
-                  )),
-          child: Consumer2<UserManager, Product>(
-            builder: (_, userManager, product, __) {
-              return userManager.loading || product.loading
-              ? const CircularProgressIndicator(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(7))),
+          child: Consumer3<UserManager, Product, CartManager>(
+            builder: (_, userManager, product, cartManager, __) {
+              return userManager.loading ||
+                      product.loading ||
+                      cartManager.loading
+                  ? const CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation(Colors.white),
                     )
                   : Text(

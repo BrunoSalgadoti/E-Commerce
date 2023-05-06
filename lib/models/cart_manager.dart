@@ -15,6 +15,15 @@ class CartManager extends ChangeNotifier {
   Address? address;
   num productsPrice = 0.0;
 
+  bool _loading = false;
+
+  bool get loading => _loading;
+
+  set loading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
   void updateUser(UserManager userManager) {
     users = userManager.users;
     items.clear();
@@ -87,53 +96,63 @@ class CartManager extends ChangeNotifier {
   }
 
   Future<void> getAddress(String cep) async {
-    if(kIsWeb) {
+    if (kIsWeb) {
+      loading = true;
       final viaCepService = ViaCepService();
 
       try {
-        final viaCepAddress =
-        await viaCepService.getAddressFromZipCode(cep);
+        final viaCepAddress = await viaCepService.getAddressFromZipCode(cep);
 
         // Obter a localização atual
         final position = await LocationService.getCurrentLocation();
         final latitude = position.latitude;
         final longitude = position.longitude;
 
-        address = Address(
-          zipCode: viaCepAddress.cep,
-          city: viaCepAddress.cidade,
-          state: viaCepAddress.estado,
-          street: viaCepAddress.logradouro,
-          district: viaCepAddress.bairro,
-          lat: latitude,
-          long: longitude,
-        );
-        notifyListeners();
+        if (viaCepAddress != null) {
+          address = Address(
+            zipCode: viaCepAddress.cep,
+            city: viaCepAddress.cidade,
+            state: viaCepAddress.estado,
+            street: viaCepAddress.logradouro,
+            district: viaCepAddress.bairro,
+            lat: latitude,
+            long: longitude,
+          );
+          loading = false;
+          notifyListeners();
+        }
       } catch (error) {
         debugPrint(error.toString());
       }
-
     } else {
+      loading = true;
       final cepAAbertoService = CepAbertoService();
 
       try {
         final cepAbertoAddress =
-        await cepAAbertoService.getAddressFromZipCode(cep);
+            await cepAAbertoService.getAddressFromZipCode(cep);
 
-        address = Address(
-          street: cepAbertoAddress.logradouro,
-          district: cepAbertoAddress.bairro,
-          zipCode: cepAbertoAddress.cep,
-          city: cepAbertoAddress.cidade!.nome,
-          state: cepAbertoAddress.estado!.sigla,
-          lat: cepAbertoAddress.latitude,
-          long: cepAbertoAddress.longitude,
-        );
-        notifyListeners();
+        if (cepAbertoAddress != null) {
+          address = Address(
+            street: cepAbertoAddress.logradouro,
+            district: cepAbertoAddress.bairro,
+            zipCode: cepAbertoAddress.cep,
+            city: cepAbertoAddress.cidade!.nome,
+            state: cepAbertoAddress.estado!.sigla,
+            lat: cepAbertoAddress.latitude,
+            long: cepAbertoAddress.longitude,
+          );
+          loading = false;
+          notifyListeners();
+        }
       } catch (error) {
         debugPrint(error.toString());
       }
     }
-
   }
+
+    void removeAddress() {
+      address = null;
+      notifyListeners();
+    }
 }
