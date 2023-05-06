@@ -19,5 +19,5 @@ class Address {
   String? state;
 
   double? lat;
-  String? long;
+  dynamic long;
 }

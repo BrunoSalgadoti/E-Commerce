@@ -4,7 +4,9 @@ import 'package:ecommerce/models/cart_product.dart';
 import 'package:ecommerce/models/product.dart';
 import 'package:ecommerce/models/users.dart';
 import 'package:ecommerce/models/users_manager.dart';
+import 'package:ecommerce/models/viacep_adress.dart';
 import 'package:ecommerce/services/cepaberto_service.dart';
+import 'package:ecommerce/services/viacep_service.dart';
 import 'package:flutter/foundation.dart';
 
 class CartManager extends ChangeNotifier {
@@ -85,24 +87,53 @@ class CartManager extends ChangeNotifier {
   }
 
   Future<void> getAddress(String cep) async {
-    final cepAAbertoService = CepAbertoService();
+    if(kIsWeb) {
+      final viaCepService = ViaCepService();
 
-    try {
-      final cepAbertoAddress =
-          await cepAAbertoService.getAddressFromZipCode(cep);
+      try {
+        final viaCepAddress =
+        await viaCepService.getAddressFromZipCode(cep);
 
-      address = Address(
-        street: cepAbertoAddress.logradouro,
-        district: cepAbertoAddress.bairro,
-        zipCode: cepAbertoAddress.cep,
-        city: cepAbertoAddress.cidade!.nome,
-        state: cepAbertoAddress.estado!.sigla,
-        lat: cepAbertoAddress.latitude,
-        long: cepAbertoAddress.longitude,
-      );
-      notifyListeners();
-    } catch (error) {
-      debugPrint(error.toString());
+        // Obter a localização atual
+        final position = await LocationService.getCurrentLocation();
+        final latitude = position.latitude;
+        final longitude = position.longitude;
+
+        address = Address(
+          zipCode: viaCepAddress.cep,
+          city: viaCepAddress.cidade,
+          state: viaCepAddress.estado,
+          street: viaCepAddress.logradouro,
+          district: viaCepAddress.bairro,
+          lat: latitude,
+          long: longitude,
+        );
+        notifyListeners();
+      } catch (error) {
+        debugPrint(error.toString());
+      }
+
+    } else {
+      final cepAAbertoService = CepAbertoService();
+
+      try {
+        final cepAbertoAddress =
+        await cepAAbertoService.getAddressFromZipCode(cep);
+
+        address = Address(
+          street: cepAbertoAddress.logradouro,
+          district: cepAbertoAddress.bairro,
+          zipCode: cepAbertoAddress.cep,
+          city: cepAbertoAddress.cidade!.nome,
+          state: cepAbertoAddress.estado!.sigla,
+          lat: cepAbertoAddress.latitude,
+          long: cepAbertoAddress.longitude,
+        );
+        notifyListeners();
+      } catch (error) {
+        debugPrint(error.toString());
+      }
     }
+
   }
 }
