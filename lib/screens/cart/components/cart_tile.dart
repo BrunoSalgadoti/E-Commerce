@@ -8,10 +8,14 @@ import 'package:provider/provider.dart';
 class CartTile extends StatelessWidget {
    const CartTile({Key? key, required this.cartProduct}) : super(key: key);
 
-  final CartProduct cartProduct;
+  final CartProduct? cartProduct;
 
   @override
   Widget build(BuildContext context) {
+    if (cartProduct == null || cartProduct!.product == null) {
+      // Tratar o caso em que cartProduct é nulo
+      return Container();
+    }
     return ChangeNotifierProvider.value(
       value: cartProduct,
       child: Card(
@@ -23,7 +27,7 @@ class CartTile extends StatelessWidget {
               SizedBox(
                 height: 80,
                 width: 80,
-                child: Image.network(cartProduct.product!.images!.first),
+                child: Image.network(cartProduct!.product!.images!.first),
               ),
               Expanded(
                   child: Padding(
@@ -32,7 +36,7 @@ class CartTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          cartProduct.product!.name!,
+                          cartProduct!.product!.name!,
                           style: const TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w500
@@ -41,7 +45,7 @@ class CartTile extends StatelessWidget {
                         Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            'Tamanho: ${cartProduct.size}',
+                            'Tamanho: ${cartProduct!.size}',
                             style: const TextStyle(
                                 fontWeight: FontWeight.w300
                             ),

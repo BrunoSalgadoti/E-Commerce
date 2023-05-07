@@ -58,9 +58,6 @@ dependencies:
   brasil_fields: ^1.9.1
   geolocator: ^9.0.2
 
-
-
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

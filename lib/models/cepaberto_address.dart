@@ -1,7 +1,7 @@
 class CepAbertoAddress {
   final double? altitude;
   final double? latitude;
-  final String? longitude;
+  final double? longitude;
   final String cep;
   final String? logradouro;
   final String? bairro;
@@ -11,7 +11,7 @@ class CepAbertoAddress {
   CepAbertoAddress.fromMap(Map<String, dynamic> map)
       : altitude = map['altitude'] as double? ?? 0.0,
         latitude = double.tryParse(map['latitude'] as String? ?? ''),
-        longitude = map['longitude'] as String? ?? '',
+        longitude = double.tryParse(map['longitude'] as String? ?? ''),
         cep = map['cep'] as String,
         logradouro = map['logradouro'] as String? ?? '',
         bairro = map['bairro'] as String? ?? '',

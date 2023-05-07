@@ -16,9 +16,9 @@ class AdminUsersSearch extends ChangeNotifier {
   bool userFilteredSendEmail = false;
   String _search = '';
 
-  late List<Users> allUsers;
-  late List<Widget> favouriteList;
-  late List<Widget> normalList;
+  List<Users> allUsers = [];
+  List<Widget> favouriteList = [];
+  List<Widget> normalList = [];
 
   List<String> get names =>
       allUsers.map((e) => e.userName!.toUpperCase()).toList();

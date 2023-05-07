@@ -1,7 +1,9 @@
 import 'package:ecommerce/common/button/custom_button.dart';
 import 'package:ecommerce/models/address.dart';
+import 'package:ecommerce/models/cart_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class AddressInputField extends StatelessWidget {
   const AddressInputField({super.key, required this.address});
@@ -10,10 +12,12 @@ class AddressInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartManager = context.watch<CartManager>();
+
     String? emptyValidator(String? text) =>
         text!.isEmpty ? 'Campo Obrigatório' : null;
 
-    if (address.zipCode != null) {
+    if (address.zipCode != null && cartManager.deliveryPrice == null) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -48,6 +52,7 @@ class AddressInputField extends StatelessWidget {
               ),
               const SizedBox(width: 16),
               Expanded(
+                flex: 3,
                   child: TextFormField(
                 initialValue: address.complement,
                 decoration: const InputDecoration(
@@ -118,10 +123,43 @@ class AddressInputField extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          CustomButton(texto: 'Calcular Frete', onPressed: () {}),
+          CustomButton(
+              texto: 'Calcular Frete',
+              onPressed: !cartManager.loading ? () async {
+                if (Form.of(context).validate()) {
+                  Form.of(context).save();
+                  try {
+                    await context.read<CartManager>().setAddress(address);
+                  } catch (error) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('$error'),
+                        backgroundColor: Colors.red,
+                        duration: const Duration(milliseconds: 4500),
+                      ),
+                    );
+                  }
+                }
+              } : null
+          ),
         ],
       );
+    } else if (address.zipCode != null) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 10, top: 05),
+        child: Text(
+          '${address.street}, ${address.number}\n'
+          '${address.district}\n'
+          '${address.city} - ${address.state}\n'
+          '\n${address.complement ?? '' }',
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+    } else {
+      return Container();
     }
-    return Container();
   }
 }

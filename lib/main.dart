@@ -39,11 +39,9 @@ import 'services/db_api/firebase_options.dart';
        ),
        ChangeNotifierProvider(
          create:(_) => Product(),
-         lazy: false,
        ),
        ChangeNotifierProvider(
          create: (_) => ProductManager(),
-         lazy: false,
        ),
        ChangeNotifierProvider(
          create: (_) => HomeManager(),
@@ -51,19 +49,16 @@ import 'services/db_api/firebase_options.dart';
        ),
        ChangeNotifierProvider(
          create: (_) => AdminUsersSearch(),
-         lazy: false,
        ),
        ChangeNotifierProxyProvider<UserManager, CartManager>(
          create: (_) => CartManager(),
          update: (_, userManager, cartManager) =>
              CartManager()..updateUser(userManager),
-         lazy: false,
        ),
        ChangeNotifierProxyProvider<UserManager, AdminUsersManager>(
          create: (_) => AdminUsersManager(),
          update: (_, userManager, adminUsersManager) =>
          AdminUsersManager()..updateUser(userManager),
-         lazy: false,
        ),
      ],
      child: const MyApp())
