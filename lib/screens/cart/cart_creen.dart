@@ -1,3 +1,4 @@
+import 'package:ecommerce/common/empty_indicator.dart';
 import 'package:ecommerce/common/price_card.dart';
 import 'package:ecommerce/models/cart_manager.dart';
 import 'package:ecommerce/screens/cart/components/cart_tile.dart';
@@ -17,6 +18,14 @@ class CartScreen extends StatelessWidget {
 
       body: Consumer<CartManager>(
         builder: (_, cartManager, __) {
+
+          if(cartManager.items.isEmpty){
+            return const EmptyIndicator(
+              title: 'Nenhum item no carrinho!',
+              iconData: Icons.remove_shopping_cart,
+            );
+          }
+
           return ListView(
             children: [
               Column(
@@ -29,7 +38,6 @@ class CartScreen extends StatelessWidget {
                 onPressed: cartManager.isCartValid
                     ? () {
                   Navigator.pushNamed(context, '/address_screen');
-
                 } : null
               ),
             ],
