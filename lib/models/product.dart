@@ -67,6 +67,7 @@ class Product extends ChangeNotifier {
     for (final item in itemProducts!) {
       stock += item.stock;
     }
+    notifyListeners();
     return stock;
   }
 
@@ -121,8 +122,9 @@ class Product extends ChangeNotifier {
           final List<int> bytes = base64.decode(newImage.split(',').last);
           final Uint8List uint8ListBytes = Uint8List.fromList(bytes);
           final metadata = SettableMetadata(contentType: 'image/jpeg');
-          final task =
-              storageRef.child(const Uuid().v4()).putData(uint8ListBytes, metadata);
+          final task = storageRef
+              .child(const Uuid().v4())
+              .putData(uint8ListBytes, metadata);
           final snapshot = await task.whenComplete(() {});
           final url = await snapshot.ref.getDownloadURL();
           updateImages.add(url);

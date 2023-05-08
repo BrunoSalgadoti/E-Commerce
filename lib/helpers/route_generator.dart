@@ -2,6 +2,7 @@ import 'package:ecommerce/models/product.dart';
 import 'package:ecommerce/screens/address/address_screen.dart';
 import 'package:ecommerce/screens/base/base_screen.dart';
 import 'package:ecommerce/screens/cart/cart_creen.dart';
+import 'package:ecommerce/screens/checkout/checkout_screen.dart';
 import 'package:ecommerce/screens/edit_product/edit_product_screen.dart';
 import 'package:ecommerce/screens/login/login_screen.dart';
 import 'package:ecommerce/screens/product_details/product_details_screen.dart';
@@ -51,15 +52,20 @@ class RouteGenerator {
           builder:(_) => const SelectProductScreen(),
         );
 
-      case '/address_screen' :
+      case '/address' :
         return MaterialPageRoute(
           builder:(_) => const AddressScreen(),
+        );
+
+      case '/checkout' :
+        return MaterialPageRoute(
+          builder:(_) => const CheckoutScreen(),
         );
 
     case '/base' :
       default:
       return MaterialPageRoute(
-        builder:(_) => BaseScreen(),
+        builder:(_) => const BaseScreen(),
       );
     }
   }
