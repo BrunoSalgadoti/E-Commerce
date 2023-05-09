@@ -67,7 +67,6 @@ class Product extends ChangeNotifier {
     for (final item in itemProducts!) {
       stock += item.stock;
     }
-    notifyListeners();
     return stock;
   }
 

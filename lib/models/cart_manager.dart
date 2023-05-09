@@ -59,7 +59,6 @@ class CartManager extends ChangeNotifier {
       address = users!.address;
       notifyListeners();
     }
-
   }
 
   void addToCart(Product product) {
@@ -81,6 +80,14 @@ class CartManager extends ChangeNotifier {
     items.removeWhere((p) => p.id == cartProduct.id);
     users!.cartReference.doc(cartProduct.id).delete();
     cartProduct.removeListener(_onItemUpdate);
+    notifyListeners();
+  }
+
+  void clear() {
+    for(final cartProduct in items) {
+      users!.cartReference.doc(cartProduct.id).delete();
+    }
+    items.clear();
     notifyListeners();
   }
 
@@ -107,6 +114,7 @@ class CartManager extends ChangeNotifier {
           .doc(cartProduct.id)
           .update(cartProduct.toCartItemMap());
     }
+    notifyListeners();
   }
 
   bool get isCartValid {

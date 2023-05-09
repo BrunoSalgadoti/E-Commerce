@@ -29,12 +29,13 @@ class RouteGenerator {
       case '/cart' :
         return MaterialPageRoute(
           builder:(_) => const CartScreen(),
+          settings: settings
         );
         
       case '/product' :
         return MaterialPageRoute(
           builder:(_) => ProductDetailsScreen(
-              product: settings.arguments as Product
+              product: settings.arguments as Product,
           ),
         );
 
@@ -66,6 +67,7 @@ class RouteGenerator {
       default:
       return MaterialPageRoute(
         builder:(_) => const BaseScreen(),
+          settings: settings
       );
     }
   }
