@@ -97,7 +97,7 @@ class ItemTile extends StatelessWidget {
                   )
                 : Image.file(
                     item!.image as File,
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                   )));
   }
 }
