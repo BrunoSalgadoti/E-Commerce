@@ -19,7 +19,7 @@ class OrdersScreen extends StatelessWidget {
       ),
       body: Consumer<OrdersManager>(
         builder: (_, ordersManager, __){
-          if(ordersManager.users == null) {
+          if(ordersManager.users!.id == null) {
             return const LoginCard();
           }
           if(ordersManager.orders.isEmpty) {

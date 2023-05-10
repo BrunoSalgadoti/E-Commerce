@@ -21,7 +21,7 @@ class OrdersManager extends ChangeNotifier {
     orders.clear();
 
     _subscription?.cancel();
-    if (users != null) {
+    if (users.id != null) {
       _listenToOrders();
     }
   }
@@ -29,7 +29,7 @@ class OrdersManager extends ChangeNotifier {
   void _listenToOrders() {
     _subscription = firestore
         .collection('orders')
-        .where('user', isEqualTo: users?.id)
+        .where('user', isEqualTo: users!.id)
         .snapshots()
         .listen((events) {
       orders.clear();
@@ -39,8 +39,6 @@ class OrdersManager extends ChangeNotifier {
       notifyListeners();
     });
   }
-
-
 
   @override
   void dispose() {
