@@ -3,6 +3,7 @@ import 'package:ecommerce/models/page_manager.dart';
 import 'package:ecommerce/models/users_manager.dart';
 import 'package:ecommerce/screens/admin_users/admin_users_screen.dart';
 import 'package:ecommerce/screens/home/home_screen.dart';
+import 'package:ecommerce/screens/orders/orders_screen.dart';
 import 'package:ecommerce/screens/products/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,12 +31,7 @@ class _BaseScreenState extends State<BaseScreen> {
             children: [
               const HomeScreen(),
               const ProductsScreen(),
-              Scaffold(
-                drawer: const CustomDrawer(),
-                appBar: AppBar(
-                  title: const Text('Home3'),
-                ),
-              ),
+              const OrdersScreen(),
               Scaffold(
                 drawer: const CustomDrawer(),
                 appBar: AppBar(

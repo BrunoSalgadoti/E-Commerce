@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 class EditProductScreen extends StatelessWidget {
   EditProductScreen({super.key, Product? product})
-      : product = product != null ? product.clone() : Product();
+      : product = product != null ? product.cloneProduct() : Product();
 
   final Product? product;
 
@@ -110,7 +110,7 @@ class EditProductScreen extends StatelessWidget {
                                     formKey.currentState!.save();
                                     await product.saveProduct();
 
-                                    productManager.update(product);
+                                    productManager.updateProducts(product);
                                     backScreen;
                                   }
                                 });

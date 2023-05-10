@@ -29,7 +29,7 @@ class Product extends ChangeNotifier {
     notifyListeners();
   }
 
-  Product.fromDocument(DocumentSnapshot document) {
+    Product.fromDocument(DocumentSnapshot document) {
     id = document.id;
     name = document['name'] as String;
     description = document['description'] as String;
@@ -76,9 +76,9 @@ class Product extends ChangeNotifier {
 
   num get basePrice {
     num lowest = double.infinity;
-    for (final size in itemProducts!) {
-      if (size.price! < lowest && size.hasStock) {
-        lowest = size.price!;
+    for (final details in itemProducts!) {
+      if (details.price! < lowest && details.hasStock) {
+        lowest = details.price!;
       }
     }
     return lowest;
@@ -153,7 +153,7 @@ class Product extends ChangeNotifier {
     loading = false;
   }
 
-  Product clone() {
+  Product cloneProduct() {
     return Product(
         id: id,
         name: name,

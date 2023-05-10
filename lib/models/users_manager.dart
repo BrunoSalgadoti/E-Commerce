@@ -6,27 +6,32 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
-class UserManager with ChangeNotifier {
+class UserManager extends ChangeNotifier {
+  UserManager() {
+    _loadCurrentUser();
+  }
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Users? users;
 
   bool _loading = false;
+
   bool get loading => _loading;
+
   set loading(bool value) {
     _loading = value;
     notifyListeners();
   }
 
   bool get isLoggedIn => users != null;
+
   bool get adminEnable => users != null && users!.admin;
 
-  UserManager() {
-    _loadCurrentUser();
-  }
-
-  Future<void> signIn({required Users users, required Function onFail,
+  Future<void> signIn(
+      {required Users users,
+      required Function onFail,
       required Function onSuccess}) async {
     loading = true;
     try {
@@ -42,7 +47,9 @@ class UserManager with ChangeNotifier {
     loading = false;
   }
 
-  Future<void> singUp({required Users users, required Function onFail,
+  Future<void> singUp(
+      {required Users users,
+      required Function onFail,
       required Function onSuccess}) async {
     loading = true;
     try {

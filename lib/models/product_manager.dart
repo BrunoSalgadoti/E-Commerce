@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce/models/product.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,10 +7,12 @@ import 'package:flutter/foundation.dart';
 
 class ProductManager extends ChangeNotifier {
   ProductManager() {
-    _loadAllProducts();
+    _listenToProducts();
   }
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  StreamSubscription? _subscription;
 
   List<Product> allProducts = [];
   String _search = '';
@@ -32,14 +36,17 @@ class ProductManager extends ChangeNotifier {
     return filteredProducts;
   }
 
-  Future<void> _loadAllProducts() async {
-    final QuerySnapshot snapProducts =
-        await firestore.collection('products').get();
-
-    allProducts =
-        snapProducts.docs.map((d) => Product.fromDocument(d)).toList();
-
-    notifyListeners();
+  void _listenToProducts() {
+    _subscription = firestore
+        .collection('products')
+        .snapshots()
+        .listen((event) {
+      allProducts.clear();
+      for (final product in event.docs) {
+        allProducts.add(Product.fromDocument(product));
+      }
+      notifyListeners();
+    });
   }
 
   Product? findProductById(String id) {
@@ -50,9 +57,15 @@ class ProductManager extends ChangeNotifier {
     }
   }
 
-  void update(Product product) {
+  void updateProducts(Product product) {
     allProducts.removeWhere((p) => p.id == product.id);
     allProducts.add(product);
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _subscription?.cancel();
   }
 }

@@ -25,6 +25,7 @@ class CheckoutManager extends ChangeNotifier {
 
   Future<void> checkout(
       {required Function onStockFail, required Function onSuccess}) async {
+
     loading = true;
 
     try {
@@ -46,7 +47,7 @@ class CheckoutManager extends ChangeNotifier {
 
     cartManager!.clear();
 
-    onSuccess();
+    onSuccess(order);
     loading = false;
   }
 

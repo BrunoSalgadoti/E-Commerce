@@ -74,15 +74,29 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
-                    child: Text(
+                    child: product!.hasStock ?
+                    Text(
                       'A partir de: ',
                       style: TextStyle(fontSize: 15, color: Colors.grey[600]),
-                    ),
+                    )
+                     : Text(
+                        'Aguadando reposição de estoque... ',
+                        style: TextStyle(fontSize: 15, color: Colors.grey[600]),
+                      )
                   ),
+                  product!.hasStock ?
                   Text(
                     'R\$ ${product!.basePrice.toStringAsFixed(2)}',
                     style: TextStyle(
                       fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: primaryColor,
+                    ),
+                  )
+                  : Text(
+                    'Fora de estoque',
+                    style: TextStyle(
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: primaryColor,
                     ),

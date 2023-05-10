@@ -10,12 +10,7 @@ class CustomButton extends StatelessWidget {
     required this.texto,
     required this.onPressed,
     this.corTexto = Colors.white,
-    this.corBotao = const Color.fromARGB(
-      255,
-      4,
-      125,
-      141,
-    ),
+    this.corBotao = const Color.fromARGB(255, 4, 125, 141,),
     this.corBotaoDesativado = const Color.fromRGBO(4, 125, 141, 0.4),
     this.corShadow = Colors.white24,
     this.fontSize = 18,

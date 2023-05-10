@@ -9,6 +9,7 @@ class CheckoutScreen extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProxyProvider<CartManager, CheckoutManager>(
@@ -65,8 +66,12 @@ class CheckoutScreen extends StatelessWidget {
                         ));
                         Navigator.popUntil(
                             context, (route) => route.settings.name == '/cart');
-                      }, onSuccess: () {
-                        Navigator.pushReplacementNamed(context, '/base');
+                      }, onSuccess: (order) {
+                        Navigator.popUntil(
+                        context, (route) => route.settings.name == '/base');
+                        Navigator.pushNamed(context, '/sales_confirmation',
+                        arguments: order
+                        );
                       });
                     },
                   )

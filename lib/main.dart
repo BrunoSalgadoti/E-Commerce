@@ -3,8 +3,10 @@ import 'package:ecommerce/models/admin_users_manager.dart';
 import 'package:ecommerce/models/admin_users_search.dart';
 import 'package:ecommerce/models/cart_manager.dart';
 import 'package:ecommerce/models/home_manager.dart';
+import 'package:ecommerce/models/orders_manager.dart';
 import 'package:ecommerce/models/product.dart';
 import 'package:ecommerce/models/product_manager.dart';
+import 'package:ecommerce/models/users.dart';
 import 'package:ecommerce/models/users_manager.dart';
 import 'dart:core';
 import 'package:firebase_core/firebase_core.dart';
@@ -53,12 +55,18 @@ import 'services/db_api/firebase_options.dart';
        ChangeNotifierProxyProvider<UserManager, CartManager>(
          create: (_) => CartManager(),
          update: (_, userManager, cartManager) =>
-             CartManager()..updateUser(userManager),
+             cartManager!..updateUser(userManager),
+       ),
+       ChangeNotifierProxyProvider<UserManager, OrdersManager>(
+         create: (_) => OrdersManager(),
+         lazy: false,
+         update: (_, userManager, ordersManager) =>
+         ordersManager!..updateUser(userManager.users ?? Users(email: '')),
        ),
        ChangeNotifierProxyProvider<UserManager, AdminUsersManager>(
          create: (_) => AdminUsersManager(),
          update: (_, userManager, adminUsersManager) =>
-         AdminUsersManager()..updateUser(userManager),
+         adminUsersManager!..updateUser(userManager),
        ),
      ],
      child: const MyApp())
