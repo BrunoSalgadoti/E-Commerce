@@ -2,11 +2,9 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce/models/order_client.dart';
-import 'package:ecommerce/models/users.dart';
 import 'package:flutter/cupertino.dart';
 
-class OrdersManager extends ChangeNotifier {
-  Users? users;
+class AdminOrdersManager extends ChangeNotifier {
 
   List<OrderClient> orders = [];
 
@@ -14,22 +12,18 @@ class OrdersManager extends ChangeNotifier {
 
   StreamSubscription? _subscription;
 
-  void updateUser(Users users) {
-    this.users = users;
+  void updateAdmin({required bool adminEnable}) {
     orders.clear();
 
     _subscription?.cancel();
-    if (users.id != null) {
+    if (adminEnable) {
       _listenToOrders();
     }
   }
 
   void _listenToOrders() {
     _subscription = firestore
-        .collection('orders')
-        .where('user', isEqualTo: users!.id)
-        .snapshots()
-        .listen((events) {
+        .collection('orders').snapshots().listen((events) {
       orders.clear();
       for (final document in events.docs) {
         orders.add(OrderClient.fromDocument(document));

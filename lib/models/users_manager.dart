@@ -4,7 +4,6 @@ import 'package:ecommerce/models/users.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 
 class UserManager extends ChangeNotifier {
   UserManager() {
@@ -28,6 +27,12 @@ class UserManager extends ChangeNotifier {
   bool get isLoggedIn => users != null;
 
   bool get adminEnable => users != null && users!.admin;
+
+  Image? image = Image.asset(
+    'assets/logo/storageLogo.png',
+    width: 15,
+    height: 15,
+  );
 
   Future<void> signIn(
       {required Users users,

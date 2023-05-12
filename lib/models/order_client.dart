@@ -3,12 +3,15 @@ import 'package:ecommerce/models/address.dart';
 import 'package:ecommerce/models/cart_manager.dart';
 import 'package:ecommerce/models/cart_product.dart';
 
+enum Status { canceled, preparing, transporting, delivered}
+
 class OrderClient {
   OrderClient.fromCartManager(CartManager cartManager) {
     items = List.from(cartManager.items);
     price = cartManager.totalPrice;
     userId = cartManager.users?.id;
     address = cartManager.address;
+    status = Status.preparing;
   }
 
   OrderClient.fromDocument(DocumentSnapshot doc){
@@ -20,7 +23,8 @@ class OrderClient {
 
     price = doc['price'] as num;
     userId = doc['user'] as String;
-    //date = doc['date'] as Timestamp;
+    date = doc['date'] as Timestamp;
+    status = Status.values[doc['status'] as int ];
     address = Address.fromMap(doc['address'] as Map<String, dynamic>);
   }
 
@@ -31,8 +35,9 @@ class OrderClient {
       'items' : items?.map((e) => e.toOrderItemMap()).toList(),
       'price' : price,
       'user' : userId,
-      'address' : address!.toMap()
-
+      'address' : address!.toMap(),
+      'status' : status!.index,
+      'date' : Timestamp.now(),
     });
   }
 
@@ -44,6 +49,8 @@ class OrderClient {
   String? userId;
 
   Address? address;
+
+  Status? status;
 
   Timestamp? date;
 

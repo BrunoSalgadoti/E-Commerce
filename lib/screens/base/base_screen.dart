@@ -1,6 +1,7 @@
 import 'package:ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:ecommerce/models/page_manager.dart';
 import 'package:ecommerce/models/users_manager.dart';
+import 'package:ecommerce/screens/admin_orders/admin_orders_screen.dart';
 import 'package:ecommerce/screens/admin_users/admin_users_screen.dart';
 import 'package:ecommerce/screens/home/home_screen.dart';
 import 'package:ecommerce/screens/orders/orders_screen.dart';
@@ -40,13 +41,8 @@ class _BaseScreenState extends State<BaseScreen> {
               ),
              if(userManager.adminEnable)
                ...[
-                   const AdminUsersScreen(),
-                 Scaffold(
-                   drawer:   const CustomDrawer(),
-                   appBar: AppBar(
-                     title:  const Text('Pedidos'),
-                   ),
-                 ),
+                 const AdminUsersScreen(),
+                 const AdminOrdersScreen(),
                ]
             ],
           );

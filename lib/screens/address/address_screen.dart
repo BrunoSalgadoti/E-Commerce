@@ -17,7 +17,8 @@ class AddressScreen extends StatelessWidget {
       body: ListView(
         children: [
           const AddressCard(),
-          Consumer<CartManager>(builder: (_, cartManager, __) {
+          Consumer<CartManager>(
+              builder: (_, cartManager, __) {
             return PriceCard(
               buttonText: 'Continuar para Pagamento',
               onPressed: cartManager.isAddressValid ? () {

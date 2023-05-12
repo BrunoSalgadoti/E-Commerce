@@ -8,7 +8,6 @@ class Users {
       this.userName,
       this.confirmPassword,
       this.id,
-      this.storeName,
       this.favourite});
 
 
@@ -28,7 +27,6 @@ class Users {
 
   String? id;
   String? userName;
-  String? storeName;
   String email = '';
   String? password;
   String? confirmPassword;

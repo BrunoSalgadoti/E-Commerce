@@ -20,6 +20,11 @@ class SalesConfirmationScreen extends StatelessWidget {
           child: ListView(
             shrinkWrap: true,
             children: [
+              Image.asset(
+                  'assets/images/shoppingHappy.gif',
+                width: 150,
+                height: 150,
+              ),
               Padding(
                   padding: const EdgeInsets.all(16),
                 child: Column(
@@ -46,7 +51,7 @@ class SalesConfirmationScreen extends StatelessWidget {
                 children: orderClient!.items!.map((e) {
                   return OrderProductTile(e);
                 }).toList(),
-              )
+              ),
             ],
           ),
         ),

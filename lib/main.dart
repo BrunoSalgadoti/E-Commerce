@@ -1,4 +1,5 @@
 import 'package:ecommerce/helpers/route_generator.dart';
+import 'package:ecommerce/models/admin_orders_manager.dart';
 import 'package:ecommerce/models/admin_users_manager.dart';
 import 'package:ecommerce/models/admin_users_search.dart';
 import 'package:ecommerce/models/cart_manager.dart';
@@ -67,6 +68,13 @@ import 'services/db_api/firebase_options.dart';
          create: (_) => AdminUsersManager(),
          update: (_, userManager, adminUsersManager) =>
          adminUsersManager!..updateUser(userManager),
+       ),
+       ChangeNotifierProxyProvider<UserManager, AdminOrdersManager>(
+         create: (_) => AdminOrdersManager(),
+         update: (_, userManager, adminOrdersManager) =>
+         adminOrdersManager!..updateAdmin(
+             adminEnable: userManager.adminEnable
+         ),
        ),
      ],
      child: const MyApp())

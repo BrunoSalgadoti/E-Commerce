@@ -20,9 +20,12 @@ class CartScreen extends StatelessWidget {
         builder: (_, cartManager, __) {
 
           if(cartManager.items.isEmpty){
-            return const EmptyIndicator(
-              title: 'Nenhum item no carrinho!',
-              iconData: Icons.remove_shopping_cart,
+            return const Center(
+              child: EmptyIndicator(
+                title: 'Nenhum item no carrinho!',
+                iconData: null,
+                image: 'assets/images/goShopping.gif',
+              ),
             );
           }
 

@@ -78,6 +78,7 @@ class PriceCard extends StatelessWidget {
             ),
             CustomButton(
                 texto: buttonText,
+                fontSize: 12,
                 onPressed: onPressed
             )
           ],
