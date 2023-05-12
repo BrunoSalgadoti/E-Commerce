@@ -4,6 +4,7 @@ import 'package:ecommerce/models/users_manager.dart';
 import 'package:ecommerce/screens/home/components/add_section_widget.dart';
 import 'package:ecommerce/screens/home/components/section_list.dart';
 import 'package:ecommerce/screens/home/components/section_staggered.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +31,9 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 22, 0, 0),
+            padding: kIsWeb
+                ? const EdgeInsets.all(0)
+                : const EdgeInsets.fromLTRB(0, 22, 0, 0),
             child: CustomScrollView(
               slivers: [
                 SliverAppBar(
