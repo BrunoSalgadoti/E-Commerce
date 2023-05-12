@@ -9,25 +9,40 @@ class CustomDrawerHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.fromLTRB(32, 24, 16, 8),
-        height: 180,
-        child: Consumer<UserManager>(builder: (_, userManager, __) {
+        padding: const EdgeInsets.fromLTRB(25, 15, 40, 8),
+        height: 240,
+        child: Consumer<UserManager>
+          (builder: (_, userManager, __) {
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               //TODO: Implementação da variável no gerenciamento
-              Text(
-                'Loja:\n${userManager.users?.storeName ?? 'BRN Info_Dev'}',
+             if (userManager.image != null)
+               ...[
+                   const Text(
+                   'Loja Virtual:',
+                   style:
+                   TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                 ),
+                  Image.asset(
+                    'assets/logo/storageLogo.png',
+                    height: 130,
+                    fit: BoxFit.fill,
+                  )
+                 ]
+             else
+               const Text(
+                'Loja Virtual:\n BRN Info_Dev',
                 style:
-                    const TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
+                    TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
               ),
               Text(
-                'Bem-Vindo, ${userManager.users?.userName ?? ''}',
+                'Bem-Vindo(a)! ${userManager.users?.userName ?? ''}',
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
               ),
               GestureDetector(
                 onTap: () {
