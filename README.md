@@ -2,7 +2,7 @@
 
 <img src="assets/images/brnInfoDev.png" alt="Em Construção" style="width: 300px; height: 200px;">
 
-[![Flutter](https://img.shields.io/badge/Flutter-3.10.4-stable-blue)](https://flutter.dev/)
+[![Flutter](https://img.shields.io/badge/Flutter-3.10.4-blue)](https://flutter.dev/)
 [![Firebase](https://img.shields.io/badge/Firebase-12.3.1-yellow)](https://firebase.google.com/)
 
 **BRN Info_Dev Loja Virtual**
