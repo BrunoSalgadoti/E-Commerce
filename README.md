@@ -1,6 +1,6 @@
 # BRN E-commerce
 
-<img src="![Logomarca BRN](assets/images/brnInfoDev.png)" alt="Em Construção" style="width: 300px; height: 200px;">
+<img src="assets/images/brnInfoDev.png" alt="Em Construção" style="width: 300px; height: 200px;">
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.0-blue)](https://flutter.dev/)
 [![Firebase](https://img.shields.io/badge/Firebase-9.0-yellow)](https://firebase.google.com/)
@@ -12,7 +12,7 @@ Este projeto é um ponto de partida para um aplicativo Flutter de uma loja virtu
 funcionalidades de compra, integração com o Firebase como backend e várias outras características
 avançadas.
 
-<img src="![Em Construção](assets/images/emConstrucaoGitHub.png)" alt="Em Construção" style="width: 300px; height: 200px;">
+<img src="assets/images/emConstrucaoGitHub.png" alt="Em Construção" style="width: 300px; height: 200px;">
 
 ## Funcionalidades Principais
 
