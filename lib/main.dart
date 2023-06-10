@@ -46,7 +46,7 @@ Future<void> main() async {
         create: (_) => HomeManager(),
         lazy: false,
       ),
-      ChangeNotifierProvider (
+      ChangeNotifierProvider(
         create: (_) => AdminUsersSearch(),
       ),
       ChangeNotifierProxyProvider<UserManager, CartManager>(
