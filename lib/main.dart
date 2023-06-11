@@ -9,6 +9,7 @@ import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
+import 'package:brn_ecommerce/services/db_api/firebase_options.dart';
 import 'dart:core';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -27,9 +28,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   //Configurado com o FlutterFire CLI
-  await Firebase.initializeApp();
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(MultiProvider(providers: [
       ChangeNotifierProvider(
