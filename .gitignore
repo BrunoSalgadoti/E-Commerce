@@ -50,3 +50,7 @@ app.*.map.json
 /lib/services/db_api/
 /ios/
 /android/
+/firebase/
+/lib/services/db_api/firebase_options.dart
+/firebase.json
+/.firebaserc

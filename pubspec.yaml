@@ -52,7 +52,7 @@ dependencies:
   image_cropper: ^4.0.1
   path_provider: ^2.0.15
   uuid: ^3.0.7
-  dio: ^5.2.0+1
+  dio: ^5.2.1
   brasil_fields: ^1.13.1
   geolocator: ^9.0.2
   sliding_up_panel: ^2.0.0+1
