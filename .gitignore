@@ -54,3 +54,4 @@ app.*.map.json
 /lib/services/db_api/firebase_options.dart
 /firebase.json
 /.firebaserc
+/.firebase/hosting.YnVpbGRcd2Vi.cache

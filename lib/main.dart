@@ -33,46 +33,45 @@ Future<void> main() async {
   );
 
   runApp(MultiProvider(providers: [
-      ChangeNotifierProvider(
-        create: (_) => UserManager(),
-        lazy: false,
-      ),
-      ChangeNotifierProvider(
-        create: (_) => Product(),
-      ),
-      ChangeNotifierProvider(
-        create: (_) => ProductManager(),
-      ),
-      ChangeNotifierProvider(
-        create: (_) => HomeManager(),
-        lazy: false,
-      ),
-      ChangeNotifierProvider(
-        create: (_) => AdminUsersSearch(),
-      ),
-      ChangeNotifierProxyProvider<UserManager, CartManager>(
-        create: (_) => CartManager(),
-        update: (_, userManager, cartManager) =>
-            cartManager!..updateUser(userManager),
-      ),
-      ChangeNotifierProxyProvider<UserManager, OrdersManager>(
-        create: (_) => OrdersManager(),
-        lazy: false,
-        update: (_, userManager, ordersManager) =>
-            ordersManager!..updateUser(userManager.users ?? Users(email: '')),
-      ),
-      ChangeNotifierProxyProvider<UserManager, AdminUsersManager>(
-        create: (_) => AdminUsersManager(),
-        update: (_, userManager, adminUsersManager) =>
-            adminUsersManager!..updateUser(userManager),
-      ),
-      ChangeNotifierProxyProvider<UserManager, AdminOrdersManager>(
-        create: (_) => AdminOrdersManager(),
-        update: (_, userManager, adminOrdersManager) => adminOrdersManager!
-          ..updateAdmin(adminEnable: userManager.adminEnable),
-      ),
-    ],
-      child: const MyApp()));
+        ChangeNotifierProvider(
+          create: (_) => UserManager(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Product(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ProductManager(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => HomeManager(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AdminUsersSearch(),
+        ),
+        ChangeNotifierProxyProvider<UserManager, CartManager>(
+          create: (_) => CartManager(),
+          update: (_, userManager, cartManager) =>
+              cartManager!..updateUser(userManager),
+        ),
+        ChangeNotifierProxyProvider<UserManager, OrdersManager>(
+          create: (_) => OrdersManager(),
+          lazy: false,
+          update: (_, userManager, ordersManager) =>
+              ordersManager!..updateUser(userManager.users ?? Users(email: '')),
+        ),
+        ChangeNotifierProxyProvider<UserManager, AdminUsersManager>(
+          create: (_) => AdminUsersManager(),
+          update: (_, userManager, adminUsersManager) =>
+              adminUsersManager!..updateUser(userManager),
+        ),
+        ChangeNotifierProxyProvider<UserManager, AdminOrdersManager>(
+          create: (_) => AdminOrdersManager(),
+          update: (_, userManager, adminOrdersManager) => adminOrdersManager!
+            ..updateAdmin(adminEnable: userManager.adminEnable),
+        ),
+      ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
