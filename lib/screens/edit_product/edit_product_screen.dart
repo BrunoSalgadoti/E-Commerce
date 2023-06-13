@@ -8,6 +8,8 @@ import 'package:brn_ecommerce/screens/edit_product/components/images_form.dart';
 import 'package:brn_ecommerce/screens/edit_product/components/sizes_form.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:markdown_editable_textinput/format_markdown.dart';
+import 'package:markdown_editable_textinput/markdown_text_input.dart';
 
 class EditProductScreen extends StatelessWidget {
   EditProductScreen({super.key, Product? product})
@@ -20,7 +22,8 @@ class EditProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
-    late final backScreen = Navigator.of(context).pop();
+    TextEditingController controller = TextEditingController();
+    backScreen() => Navigator.of(context).pop();
 
     return ChangeNotifierProvider.value(
       value: product,
@@ -86,90 +89,105 @@ class EditProductScreen extends StatelessWidget {
             children: [
               ImagesForm(product: product),
               Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    TextFormField(
-                      initialValue: product?.name,
-                      decoration: const InputDecoration(
-                          hintText: 'Título', border: InputBorder.none),
-                      style: const TextStyle(
-                          fontSize: 22, fontWeight: FontWeight.w600),
-                      validator: (name) {
-                        if (name!.length < 6) {
-                          return 'Título muito curto';
-                        }
-                        return null;
-                      },
-                      onSaved: (name) => product?.name = name!,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Text(
-                        'A partir de: ',
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 15,
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TextFormField(
+                          initialValue: product?.name,
+                          decoration: const InputDecoration(
+                              hintText: 'Título', border: InputBorder.none),
+                          style: const TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.w600),
+                          validator: (name) {
+                            if (name!.length < 6) {
+                              return 'Título muito curto';
+                            }
+                            return null;
+                          },
+                          onSaved: (name) => product?.name = name!,
                         ),
-                      ),
-                    ),
-                    Text(
-                      'R\$ ...',
-                      style: TextStyle(
-                        color: primaryColor,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 16),
-                      child: Text(
-                        'Descrição',
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    TextFormField(
-                      initialValue: product?.description,
-                      style: const TextStyle(fontSize: 16),
-                      decoration: const InputDecoration(
-                        hintText: 'Descrição',
-                        border: InputBorder.none,
-                      ),
-                      maxLines: null,
-                      validator: (desc) {
-                        if (desc!.length < 10) {
-                          return 'Descrição muito curta';
-                        }
-                        return null;
-                      },
-                      onSaved: (description) =>
-                          product?.description = description!,
-                    ),
-                    SizesForm(product: product),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Consumer2<Product, ProductManager>(
-                        builder: (_, product, productManager, __) {
-                      return CustomButton(
-                          text: 'Salvar',
-                          onPressed: product.loading
-                              ? null
-                              : () async {
-                                  if (formKey.currentState!.validate()) {
-                                    formKey.currentState!.save();
-                                    await product.saveProduct();
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Text(
+                            'A partir de: ',
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          'R\$ ...',
+                          style: TextStyle(
+                            color: primaryColor,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Text(
+                            'Descrição',
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            MarkdownTextInput(
+                              (description) =>
+                                  product?.description = description,
+                              product!.description ?? '',
+                              label: 'Descrição',
+                              maxLines: null,
+                              actions: MarkdownType.values,
+                              controller: controller,
+                              textStyle: const TextStyle(fontSize: 16),
+                              validators: (description) {
+                                if (description!.trim().isEmpty) {
+                                  return 'A descrição é obrigatória';
+                                }
+                                if (description.length < 10) {
+                                  return 'A descrição deve ter no mínimo 10 '
+                                      'caracteres';
+                                }
+                                return null;
+                              },
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                controller.clear();
+                              },
+                              child: const Text('Limpar'),
+                            ),
+                            SizesForm(product: product),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Consumer2<Product, ProductManager>(
+                                builder: (_, product, productManager, __) {
+                              return CustomButton(
+                                  text: 'Salvar',
+                                  onPressed: product.loading
+                                      ? null
+                                      : () async {
+                                          if (formKey.currentState!
+                                              .validate()) {
+                                            formKey.currentState!.save();
+                                            await product.saveProduct();
 
-                                    productManager.updateProducts(product);
-                                    backScreen;
-                                  }
-                                });
-                    })
-                  ],
-                ),
-              )
+                                            productManager
+                                                .updateProducts(product);
+                                            backScreen();
+                                          }
+                                        });
+                            })
+                          ],
+                        ),
+                      ]))
             ],
           ),
         ),

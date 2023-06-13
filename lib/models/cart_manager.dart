@@ -164,11 +164,11 @@ class CartManager extends ChangeNotifier {
             await cepAbertoService.getAddressFromZipCode(cep);
 
         address = Address(
-          street: cepAbertoAddress.streetAddress,
-          district: cepAbertoAddress.district,
           zipCode: cepAbertoAddress.cep,
           city: cepAbertoAddress.city!.cityName,
           state: cepAbertoAddress.state!.code,
+          street: cepAbertoAddress.streetAddress,
+          district: cepAbertoAddress.district,
           lat: cepAbertoAddress.latitude,
           long: cepAbertoAddress.longitude,
         );

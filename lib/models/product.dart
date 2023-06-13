@@ -34,7 +34,7 @@ class Product extends ChangeNotifier {
     id = document.id;
     name = document['name'] as String;
     description = document['description'] as String;
-    images = List<String>.from(document.get('images') as List<dynamic>);
+    images = List<String>.from(document['images'] as List<dynamic>);
     deleted = (document['deleted'] ?? false) as bool;
     itemProducts = (document['details'] as List<dynamic>)
         .map((d) => DetailsProducts.fromMap(d as Map<String, dynamic>))
@@ -107,7 +107,6 @@ class Product extends ChangeNotifier {
       'description': description,
       'details': exportDetailsList(),
       'deleted': deleted,
-      'images': images,
     };
 
     if (id == null) {
@@ -143,13 +142,13 @@ class Product extends ChangeNotifier {
     }
 
     for (final image in images!) {
-      if (!newImages!.contains(image) && image.contains('firebase')) {
-        try {
+      try {
+        if (!newImages!.contains(image) && image.contains('firebase')) {
           final ref = storage.refFromURL(image);
           await ref.delete();
-        } catch (error) {
-          return;
         }
+      } catch (error) {
+        return;
       }
     }
 

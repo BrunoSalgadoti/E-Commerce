@@ -76,6 +76,7 @@ class ImagesForm extends StatelessWidget {
             CarouselSlider(
               options: CarouselOptions(
                 initialPage: 0,
+                padEnds: true,
                 enableInfiniteScroll: state.value!.isEmpty ? false : true,
                 height: 400,
                 enlargeCenterPage: true,

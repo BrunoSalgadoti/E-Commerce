@@ -24,7 +24,7 @@ class OrderProductTile extends StatelessWidget {
             SizedBox(
               height: 60,
               width: 60,
-              child: Image.network(cartProduct?.product?.images?.first ?? ''),
+              child: Image.network(cartProduct!.product!.images!.first),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -45,8 +45,8 @@ class OrderProductTile extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'R\$ ${(cartProduct?.fixedPrice
-                        ?? cartProduct?.unitPrice ?? 0).toStringAsFixed(2)}',
+                    'R\$ ${(cartProduct?.fixedPrice ?? cartProduct?.unitPrice ??
+                        0).toStringAsFixed(2)}',
                     style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 14,

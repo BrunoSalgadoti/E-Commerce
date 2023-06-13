@@ -6,6 +6,7 @@ import 'package:brn_ecommerce/screens/products/components/products_widget.dart';
 import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
@@ -118,9 +119,9 @@ class ProductDetailsScreen extends StatelessWidget {
                           TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Text(
-                    product!.description!,
-                    style: const TextStyle(fontSize: 16),
+                  MarkdownBody(
+                    data: product?.description ?? '',
+                    shrinkWrap: true,
                   ),
                   const Padding(
                     padding: EdgeInsets.only(top: 16, bottom: 8),

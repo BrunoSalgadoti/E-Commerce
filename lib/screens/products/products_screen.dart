@@ -1,4 +1,5 @@
 import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/common/empty_indicator.dart';
 import 'package:brn_ecommerce/common/search_dialog.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
@@ -94,6 +95,15 @@ class ProductsScreen extends StatelessWidget {
       body: Consumer<ProductManager>(
         builder: (_, productManager, __) {
           final filteredProducts = productManager.filteredProducts;
+          if (productManager.filteredProducts.isEmpty) {
+            return const EmptyIndicator(
+              title: 'Nenhum produto encontrado!\n'
+                  'Esperando o Gerente inserir os seus\n'
+                  'Produtos disponívesis!',
+              image: 'assets/images/await.gif',
+              iconData: null,
+            );
+          }
           return ListView.builder(
               itemCount: filteredProducts.length,
               itemBuilder: (_, index) {
@@ -103,22 +113,23 @@ class ProductsScreen extends StatelessWidget {
         },
       ),
       floatingActionButton:
-          Consumer<UserManager>(builder: (_, userManager, __) {
-              return FloatingActionButton(
-                backgroundColor: Colors.white,
-                foregroundColor: Theme.of(context).primaryColor,
-                onPressed: () {
-                  if (userManager.isLoggedIn) {
-                    Navigator.pushNamed(context, '/cart');
-                  } else {
-                    Navigator.pushNamed(context, '/login');
-                  }
-                },
-                child: userManager.isLoggedIn
-                    ? const Icon(Icons.shopping_cart)
-                    : const Icon(Icons.account_circle),
-              );
-         }),
+          Consumer<UserManager>(
+              builder: (_, userManager, __) {
+                return FloatingActionButton(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Theme.of(context).primaryColor,
+                  onPressed: () {
+                    if (userManager.isLoggedIn) {
+                      Navigator.pushNamed(context, '/cart');
+                    } else {
+                      Navigator.pushNamed(context, '/login');
+                    }
+                  },
+                  child: userManager.isLoggedIn
+                      ? const Icon(Icons.shopping_cart)
+                      : const Icon(Icons.account_circle),
+                );
+      }),
     );
   }
 }
