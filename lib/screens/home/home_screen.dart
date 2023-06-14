@@ -115,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       );
                     }
-                    final List<Widget> emptyPage = [HomeEmptyPage()];
+                    final List<Widget> emptyPage = [const HomeEmptyPage()];
                     final List<Widget> children =
                         homeManager.sections.map<Widget>((section) {
                       switch (section.type) {
