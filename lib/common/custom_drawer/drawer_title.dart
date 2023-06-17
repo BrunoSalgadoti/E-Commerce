@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DrawerTitle extends StatelessWidget {
-  const DrawerTitle({super.key, this.iconData, this.title, this.page});
+  const DrawerTitle(
+      {super.key, this.iconData, this.title, this.page, this.onTap});
 
   final IconData? iconData;
   final String? title;
   final int? page;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {

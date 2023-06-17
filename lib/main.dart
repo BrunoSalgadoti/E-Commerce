@@ -1,12 +1,12 @@
 import 'dart:io';
 
+import 'package:brn_ecommerce/helpers/themes/themes.dart';
 import 'package:brn_ecommerce/helpers/app_providers.dart';
 import 'package:brn_ecommerce/helpers/route_generator.dart';
 import 'package:brn_ecommerce/services/db_api/firebase_options.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:brn_ecommerce/helpers/themes.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,19 +30,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Loja Virtual BRN-Info_Dev',
-      theme: _getThemeData(),
+      theme: _getThemeData(context),
       onGenerateRoute: RouteGenerator.generateRoute,
       debugShowCheckedModeBanner: false,
     );
   }
 
-  ThemeData _getThemeData() {
+  ThemeData _getThemeData(BuildContext context) {
+    final themes = Themes();
+
     if (kIsWeb) {
-      return themeWeb;
+      return themes.themeWeb;
     } else if (Platform.isAndroid) {
-      return themeAndroid;
+      return themes.themeAndroid;
     } else if (Platform.isIOS) {
-      return themeiOS;
+      return themes.themeIos;
     } else {
       // Fallback theme
       return ThemeData.light();

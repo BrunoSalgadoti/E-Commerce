@@ -8,6 +8,7 @@ import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
+import 'package:brn_ecommerce/models/who_we_are_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -29,6 +30,9 @@ class AppProviders extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ProductManager(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => WhoWeAreManager(),
         ),
         ChangeNotifierProvider(
           create: (_) => HomeManager(),

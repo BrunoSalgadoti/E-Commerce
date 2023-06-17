@@ -2,7 +2,7 @@ import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/models/home_manager.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/screens/home/components/add_section_widget.dart';
-import 'package:brn_ecommerce/screens/home/components/home_empty_page.dart';
+import 'package:brn_ecommerce/screens/who_we_are/who_we_are_screen.dart';
 import 'package:brn_ecommerce/screens/home/components/section_header.dart';
 import 'package:brn_ecommerce/screens/home/components/section_list.dart';
 import 'package:brn_ecommerce/screens/home/components/section_staggered.dart';
@@ -115,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       );
                     }
-                    final List<Widget> emptyPage = [const HomeEmptyPage()];
+                    final List<Widget> emptyPage = [const WhoWeAreScreen()];
                     final List<Widget> children =
                         homeManager.sections.map<Widget>((section) {
                       switch (section.type) {
@@ -135,11 +135,10 @@ class HomeScreen extends StatelessWidget {
                     }
                     return children.isEmpty
                         ? SliverList(
-                        delegate: SliverChildListDelegate(emptyPage)
-                    )
-                        :  SliverList(
-                      delegate: SliverChildListDelegate(children),
-                    );
+                            delegate: SliverChildListDelegate(emptyPage))
+                        : SliverList(
+                            delegate: SliverChildListDelegate(children),
+                          );
                   },
                 )
               ],
