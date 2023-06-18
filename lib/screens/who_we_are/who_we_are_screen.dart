@@ -31,7 +31,6 @@ class WhoWeAreScreenState extends State<WhoWeAreScreen> {
 
   @override
   void dispose() {
-    _controller.close();
     super.dispose();
   }
 
@@ -39,8 +38,8 @@ class WhoWeAreScreenState extends State<WhoWeAreScreen> {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.max,
         children: [
           ...[const TopDescriptionWidget()],

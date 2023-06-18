@@ -40,22 +40,39 @@ class _TopDescriptionWidgetState extends State<TopDescriptionWidget> {
       return Center(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.max,
               children: [
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.only(bottom: 80),
               child: FutureBuilder<void>(
                 future: Future.delayed(const Duration(seconds: 1)),
                 builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Text('Carregando...');
                   } else {
-                    return MarkdownBody(
-                      data: whoWeAreManager.topDescription ??
-                          'Parabéns! Você adquiriu um produto '
-                              'com a qualidade BRN Info_Dev',
-                      shrinkWrap: true,
+                    return Align(
+                      alignment: Alignment.center,
+                      child: Column(
+                        children: [
+                          Container(
+                            color: const Color.fromARGB(155, 132, 178, 239),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: MarkdownBody(
+                                data: whoWeAreManager.topDescription ??
+                                    'Parabéns! Você adquiriu um produto '
+                                        'com a qualidade BRN Info_Dev',
+                                styleSheet: MarkdownStyleSheet(
+                                  p: const TextStyle(color: Colors.white),
+                                  pPadding: const EdgeInsets.all(4),
+                                ),
+                                shrinkWrap: true,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     );
                   }
                 },
@@ -65,12 +82,21 @@ class _TopDescriptionWidgetState extends State<TopDescriptionWidget> {
               Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                 child: MarkdownTextInput(
-                  (customText) =>
-                      whoWeAreManager.topDescription = customText,
+                  (customText) => whoWeAreManager.topDescription = customText,
                   whoWeAreManager.topDescription ?? adminCustomText,
                   label: 'Apresentação: Quem somos?',
                   maxLines: null,
-                  actions: MarkdownType.values,
+                  actions: const [
+                    MarkdownType.bold,
+                    MarkdownType.italic,
+                    MarkdownType.title,
+                    MarkdownType.separator,
+                    MarkdownType.strikethrough,
+                    MarkdownType.code,
+                    MarkdownType.link,
+                    MarkdownType.list,
+                    MarkdownType.blockquote
+                  ],
                   controller: controllerText,
                   textStyle: const TextStyle(fontSize: 16),
                 ),

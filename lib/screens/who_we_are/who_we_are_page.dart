@@ -8,18 +8,18 @@ class WhoWeArePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(100, 100, 100, 100),
       drawer: const CustomDrawer(),
       appBar: AppBar(
-        elevation: 2,
-        backgroundColor: Colors.indigoAccent,
-        title: const Text('Quem Somo?'),
+        backgroundColor: Theme.of(context).primaryColor,
+        title: const Text('Quem Somos?'),
         centerTitle: true,
       ),
-      body: ListView(children: const [
+      body: ListView(shrinkWrap: true, children: const [
         Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.max,
             children: [WhoWeAreScreen()]),
       ]),
       // bottomNavigationBar: const FooterDescriptionWidget(),

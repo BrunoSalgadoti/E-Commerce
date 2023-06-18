@@ -44,7 +44,7 @@ class _FooterDescriptionWidgetState extends State<FooterDescriptionWidget> {
       return Center(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.max,
               children: [
             if (userManager.adminEnable)
@@ -56,29 +56,21 @@ class _FooterDescriptionWidgetState extends State<FooterDescriptionWidget> {
                   whoWeAreManager.footerDescription ?? adminCustomText,
                   label: 'Dados da Loja: Endereço, CNPJ, tel ...',
                   maxLines: null,
-                  actions: MarkdownType.values,
+                  actions: const [
+                    MarkdownType.bold,
+                    MarkdownType.italic,
+                    MarkdownType.title,
+                    MarkdownType.separator,
+                    MarkdownType.strikethrough,
+                    MarkdownType.code,
+                    MarkdownType.link,
+                    MarkdownType.list,
+                    MarkdownType.blockquote
+                  ],
                   controller: controllerText,
                   textStyle: const TextStyle(fontSize: 16),
                 ),
               ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: FutureBuilder<void>(
-                future: Future.delayed(const Duration(seconds: 1)),
-                builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Text('Carregando...');
-                  } else {
-                    return MarkdownBody(
-                      data: whoWeAreManager.footerDescription ??
-                          'Parabéns! Você adquiriu um produto com a '
-                              'qualidade BRN Info_Dev',
-                      shrinkWrap: true,
-                    );
-                  }
-                },
-              ),
-            ),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -99,7 +91,42 @@ class _FooterDescriptionWidgetState extends State<FooterDescriptionWidget> {
                     },
                   ),
               ],
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 80),
+              child: FutureBuilder<void>(
+                future: Future.delayed(const Duration(seconds: 1)),
+                builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Text('Carregando...');
+                  } else {
+                    return Align(
+                      alignment: Alignment.center,
+                      child: Column(
+                        children: [
+                          Container(
+                            color: const Color.fromARGB(155, 132, 178, 239),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: MarkdownBody(
+                                data: whoWeAreManager.footerDescription ??
+                                    'Parabéns! Você adquiriu um produto '
+                                        'com a qualidade BRN Info_Dev',
+                                styleSheet: MarkdownStyleSheet(
+                                  p: const TextStyle(color: Colors.white),
+                                  pPadding: const EdgeInsets.all(4),
+                                ),
+                                shrinkWrap: true,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
           ]));
     });
   }
