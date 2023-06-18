@@ -6,6 +6,7 @@ import 'package:brn_ecommerce/screens/admin_users/admin_users_screen.dart';
 import 'package:brn_ecommerce/screens/home/home_screen.dart';
 import 'package:brn_ecommerce/screens/orders/orders_screen.dart';
 import 'package:brn_ecommerce/screens/products/products_screen.dart';
+import 'package:brn_ecommerce/screens/who_we_are/who_we_are_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,9 +38,10 @@ class _BaseScreenState extends State<BaseScreen> {
               Scaffold(
                 drawer: const CustomDrawer(),
                 appBar: AppBar(
-                  title: const Text('Home4'),
+                  title: const Text('Home3'),
                 ),
               ),
+              const WhoWeArePage(),
               if (userManager.adminEnable) ...[
                 const AdminUsersScreen(),
                 const AdminOrdersScreen(),

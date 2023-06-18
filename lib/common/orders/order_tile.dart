@@ -1,6 +1,6 @@
 import 'package:brn_ecommerce/common/button/custom_text_button.dart';
-import 'package:brn_ecommerce/common/orders/export_address_dialog.dart';
-import 'package:brn_ecommerce/common/orders/order_product_tile.dart';
+import 'package:brn_ecommerce/common/orders/components/export_address_dialog.dart';
+import 'package:brn_ecommerce/common/orders/components/order_product_tile.dart';
 import 'package:brn_ecommerce/common/show_alert_dialog.dart';
 import 'package:brn_ecommerce/models/order_client.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +77,7 @@ class OrderTile extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
-                            color: primaryColor,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -196,7 +196,7 @@ class OrderTile extends StatelessWidget {
                             CustomTextButton(
                               text: 'Endereço',
                               icon: null,
-                              color: primaryColor,
+                              color: Theme.of(context).primaryColor,
                               onPressed: () {
                                 showDialog(
                                   context: context,
@@ -208,7 +208,7 @@ class OrderTile extends StatelessWidget {
                           ],
                         )
                       ],
-                    ),
+                    )
                   ],
                 ),
               )

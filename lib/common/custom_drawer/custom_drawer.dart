@@ -1,7 +1,9 @@
-import 'package:brn_ecommerce/common/custom_drawer/custom_drawer_header.dart';
-import 'package:brn_ecommerce/common/custom_drawer/drawer_title.dart';
+import 'package:brn_ecommerce/common/custom_drawer/components/custom_drawer_header.dart';
+import 'package:brn_ecommerce/common/custom_drawer/components/drawer_title.dart';
+import 'package:brn_ecommerce/common/custom_drawer/components/setting_drawer.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -48,67 +50,30 @@ class CustomDrawer extends StatelessWidget {
                 title: "Lojas",
                 page: 3,
               ),
+              const DrawerTitle(
+                iconData: FontAwesomeIcons.peopleGroup,
+                title: "Quem Somos?",
+                page: 4,
+              ),
               Consumer<UserManager>(
                 builder: (_, userManager, __) {
                   if (userManager.adminEnable) {
-                    return Column(
+                    return const Column(
                       children: [
-                        const Divider(),
-                        const DrawerTitle(
+                        Divider(),
+                        DrawerTitle(
                           iconData: Icons.supervised_user_circle,
                           title: 'Clientes',
-                          page: 4,
-                        ),
-                        const DrawerTitle(
-                          iconData: Icons.task_alt,
-                          title: 'Pedidos',
                           page: 5,
                         ),
-                        PopupMenuButton<String>(
-                          itemBuilder: (BuildContext context) =>
-                              <PopupMenuEntry<String>>[
-                            const PopupMenuItem<String>(
-                              //TODO: settings
-                              value: 'Opção1',
-                              child: Text(
-                                'Opção 1',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'Opção 2',
-                              child: Text('Opção 2'),
-                            ),
-                            // AAdd other menu options as needed
-                          ],
-                          onSelected: (String value) {
-                            if (value == 'Opção 1') {}
-                          },
-                          // Add the conditions for the other selected options
-                          child: const SizedBox(
-                            height: 60,
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 32),
-                                  child: Icon(
-                                    Icons.settings,
-                                    size: 33,
-                                    color: Colors.green,
-                                  ),
-                                ),
-                                SizedBox(width: 4),
-                                Text(
-                                  'Configurações',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.green,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                        DrawerTitle(
+                          iconData: Icons.task_alt,
+                          title: 'Pedidos',
+                          page: 6,
                         ),
+                        ...[
+                          SettingsDrawer()
+                        ]
                       ],
                     );
                   } else {

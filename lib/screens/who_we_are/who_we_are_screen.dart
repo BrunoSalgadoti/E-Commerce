@@ -46,7 +46,7 @@ class WhoWeAreScreenState extends State<WhoWeAreScreen> {
           ...[const TopDescriptionWidget()],
           Padding(
             padding:
-                const EdgeInsets.only(top: 16, left: 25, right: 25, bottom: 16),
+                const EdgeInsets.only(top: 16, left: 30, right: 30, bottom: 16),
             child: Center(
               // Embed do vídeo do YouTube
               child: YoutubePlayer(controller: _controller),
