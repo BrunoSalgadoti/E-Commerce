@@ -43,7 +43,6 @@ class SalesConfirmationScreen extends StatelessWidget {
                       'R\$ ${orderClient?.price!.toStringAsFixed(2)}',
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: Colors.black,
                       ),
                     ),
                   ],

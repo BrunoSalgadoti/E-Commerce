@@ -35,7 +35,6 @@ class OrderTile extends StatelessWidget {
                   Text('R\$ ${orderClient!.price!.toStringAsFixed(2)}',
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: Colors.black,
                         fontSize: 14,
                       )),
                 ],
@@ -110,7 +109,8 @@ class OrderTile extends StatelessWidget {
                                                   onPressed: () {
                                                     orderClient?.cancel();
                                                     Navigator.of(context).pop();
-                                                  }),
+                                                  },
+                                                  ),
                                               CustomTextButton(
                                                 text: 'NÃO',
                                                 icon: null,
@@ -133,7 +133,6 @@ class OrderTile extends StatelessWidget {
                                 CustomTextButton(
                                   text: null,
                                   icon: const Icon(Icons.arrow_back),
-                                  color: Colors.black,
                                   onPressed: orderClient?.back,
                                 ),
                               ],
@@ -145,7 +144,6 @@ class OrderTile extends StatelessWidget {
                                 CustomTextButton(
                                   text: null,
                                   icon: const Icon(Icons.arrow_forward),
-                                  color: Colors.black,
                                   onPressed: orderClient!.status ==
                                               Status.transporting ||
                                           orderClient!.status ==
@@ -173,7 +171,7 @@ class OrderTile extends StatelessWidget {
                                                               ?.advance!();
                                                           Navigator.of(context)
                                                               .pop();
-                                                        }),
+                                                        },),
                                                     CustomTextButton(
                                                       text: 'NÃO',
                                                       icon: null,
@@ -201,7 +199,7 @@ class OrderTile extends StatelessWidget {
                                 showDialog(
                                   context: context,
                                   builder: (_) => ExportAddressDialog(
-                                      orderClient?.address, orderClient),
+                                      orderClient?.address, orderClient,),
                                 );
                               },
                             ),

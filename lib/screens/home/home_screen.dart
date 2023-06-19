@@ -28,8 +28,8 @@ class HomeScreen extends StatelessWidget {
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromARGB(156, 162, 22, 22),
-                  Color.fromARGB(239, 255, 137, 137),
+                  Color.fromARGB(255, 68, 63, 31),
+                  Color.fromARGB(255, 250, 240, 164),
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -71,7 +71,6 @@ class HomeScreen extends StatelessWidget {
                               : const Icon(Icons.account_circle);
                         },
                       ),
-                      color: Colors.white,
                     ),
                     Consumer2<UserManager, HomeManager>(
                       builder: (_, userManager, homeManager, __) {

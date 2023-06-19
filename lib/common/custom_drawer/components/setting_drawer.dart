@@ -12,7 +12,6 @@ class SettingsDrawer extends StatelessWidget {
           value: 'Opção1',
           child: Text(
             'Opção_1',
-            style: TextStyle(color: Colors.black),
           ),
         ),
         const PopupMenuItem<String>(
@@ -34,7 +33,6 @@ class SettingsDrawer extends StatelessWidget {
               child: Icon(
                 Icons.settings,
                 size: 33,
-                color: Colors.green,
               ),
             ),
             SizedBox(width: 4),
@@ -42,7 +40,6 @@ class SettingsDrawer extends StatelessWidget {
               'Configurações',
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.green,
               ),
             ),
           ],

@@ -40,7 +40,7 @@ class _TopDescriptionWidgetState extends State<TopDescriptionWidget> {
       return Center(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
             Padding(
@@ -95,7 +95,7 @@ class _TopDescriptionWidgetState extends State<TopDescriptionWidget> {
                     MarkdownType.code,
                     MarkdownType.link,
                     MarkdownType.list,
-                    MarkdownType.blockquote
+                    MarkdownType.blockquote,
                   ],
                   controller: controllerText,
                   textStyle: const TextStyle(fontSize: 16),

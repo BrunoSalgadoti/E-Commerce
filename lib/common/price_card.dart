@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PriceCard extends StatelessWidget {
-  const PriceCard({Key? key, required this.buttonText, required this.onPressed})
+  const PriceCard({Key? key, required this.buttonText, required this.onPressed,})
       : super(key: key);
 
   final String buttonText;
@@ -75,7 +75,7 @@ class PriceCard extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            CustomButton(text: buttonText, fontSize: 15, onPressed: onPressed)
+            CustomButton(text: buttonText, fontSize: 15, onPressed: onPressed,)
           ],
         ),
       ),

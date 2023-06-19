@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
 
 class WebFactoryColors {
-  Color? primaryColor = const Color.fromARGB(255, 96, 136, 159);
-  Color? scaffoldBackgroundColor = const Color.fromARGB(255, 88, 115, 124);
-  Color? appBarBackgroundColor = const Color.fromARGB(255, 23, 56, 68);
-  Color? titleMediumColor = const Color.fromARGB(255, 9, 9, 9);
-  Color? iconColor = const Color.fromARGB(255, 9, 9, 9);
-  Color? bodyLargeColor = const Color.fromARGB(255, 0, 0, 0);
-  Color? labelStyleColor = const Color.fromARGB(255, 9, 9, 9);
-  Color? focusedBorderColor = const Color.fromARGB(255, 96, 227, 216);
-  Color? disabledBorderColor = const Color.fromARGB(255, 121, 121, 121);
-  Color? errorStyleColor = const Color.fromARGB(255, 255, 2, 2);
-  Color? buttonColor = const Color.fromARGB(255, 0, 102, 255);
+  const WebFactoryColors({
+    Key? key,
+    this.primaryColor = const Color.fromARGB(255, 96, 136, 159),
+    this.scaffoldBackgroundColor = const Color.fromARGB(255, 88, 115, 124),
+    this.appBarBackgroundColor = const Color.fromARGB(255, 23, 56, 68),
+    this.titleMediumColor = const Color.fromARGB(255, 9, 9, 9),
+    this.iconColor = const Color.fromARGB(255, 255, 255, 255),
+    this.bodyLargeColor = const Color.fromARGB(255, 0, 0, 0),
+    this.labelStyleColor = const Color.fromARGB(255, 9, 9, 9),
+    this.focusedBorderColor = const Color.fromARGB(255, 162, 225, 225),
+    this.disabledBorderColor = const Color.fromARGB(0, 121, 121, 121),
+    this.errorStyleColor = const Color.fromARGB(255, 255, 2, 2),
+    this.buttonColor = const Color.fromARGB(255, 23, 56, 68),
+    this.disabledButtonColor = const Color.fromARGB(255, 112, 107, 107),
+  });
+
+  final Color primaryColor;
+  final Color scaffoldBackgroundColor;
+  final Color appBarBackgroundColor;
+  final Color titleMediumColor;
+  final Color iconColor;
+  final Color bodyLargeColor;
+  final Color labelStyleColor;
+  final Color focusedBorderColor;
+  final Color disabledBorderColor;
+  final Color errorStyleColor;
+  final Color buttonColor;
+  final Color disabledButtonColor;
 }

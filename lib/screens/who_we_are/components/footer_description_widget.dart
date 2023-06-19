@@ -44,7 +44,7 @@ class _FooterDescriptionWidgetState extends State<FooterDescriptionWidget> {
       return Center(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
             if (userManager.adminEnable)
@@ -65,7 +65,7 @@ class _FooterDescriptionWidgetState extends State<FooterDescriptionWidget> {
                     MarkdownType.code,
                     MarkdownType.link,
                     MarkdownType.list,
-                    MarkdownType.blockquote
+                    MarkdownType.blockquote,
                   ],
                   controller: controllerText,
                   textStyle: const TextStyle(fontSize: 16),

@@ -4,9 +4,9 @@ import 'factory_colors/ios_factory_colos.dart';
 import 'factory_colors/web_factory_colors.dart';
 
 class Themes with ChangeNotifier {
-  AndroidFactoryColors androidFactoryColors = AndroidFactoryColors();
-  IosFactoryColors iosFactoryColors = IosFactoryColors();
-  WebFactoryColors webFactoryColors = WebFactoryColors();
+  AndroidFactoryColors androidFactoryColors = const AndroidFactoryColors();
+  IosFactoryColors iosFactoryColors = const IosFactoryColors();
+  WebFactoryColors webFactoryColors = const WebFactoryColors();
 
   late ThemeData themeAndroid;
   late ThemeData themeIos;
@@ -42,12 +42,12 @@ class Themes with ChangeNotifier {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: androidFactoryColors.focusedBorderColor!,
+            color: androidFactoryColors.focusedBorderColor,
           ),
         ),
         disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: androidFactoryColors.disabledBorderColor!,
+            color: androidFactoryColors.disabledBorderColor,
           ),
         ),
         errorStyle: TextStyle(
@@ -56,6 +56,7 @@ class Themes with ChangeNotifier {
       ),
       buttonTheme: ButtonThemeData(
         buttonColor: androidFactoryColors.buttonColor,
+        disabledColor: androidFactoryColors.disabledButtonColor,
         textTheme: ButtonTextTheme.primary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       ),
@@ -86,12 +87,12 @@ class Themes with ChangeNotifier {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: iosFactoryColors.focusedBorderColor!,
+            color: iosFactoryColors.focusedBorderColor,
           ),
         ),
         disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: iosFactoryColors.disabledBorderColor!,
+            color: iosFactoryColors.disabledBorderColor,
           ),
         ),
         errorStyle: TextStyle(
@@ -100,6 +101,7 @@ class Themes with ChangeNotifier {
       ),
       buttonTheme: ButtonThemeData(
         buttonColor: iosFactoryColors.buttonColor,
+        disabledColor: iosFactoryColors.disabledButtonColor,
         textTheme: ButtonTextTheme.primary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       ),
@@ -130,12 +132,12 @@ class Themes with ChangeNotifier {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: webFactoryColors.focusedBorderColor!,
+            color: webFactoryColors.focusedBorderColor,
           ),
         ),
         disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: webFactoryColors.disabledBorderColor!,
+            color: webFactoryColors.disabledBorderColor,
           ),
         ),
         errorStyle: TextStyle(
@@ -144,6 +146,7 @@ class Themes with ChangeNotifier {
       ),
       buttonTheme: ButtonThemeData(
         buttonColor: webFactoryColors.buttonColor,
+        disabledColor: webFactoryColors.disabledButtonColor,
         textTheme: ButtonTextTheme.primary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       ),

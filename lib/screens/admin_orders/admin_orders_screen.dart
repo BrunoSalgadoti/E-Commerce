@@ -9,7 +9,9 @@ import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class AdminOrdersScreen extends StatefulWidget {
-  const AdminOrdersScreen({Key? key}) : super(key: key);
+  const AdminOrdersScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<AdminOrdersScreen> createState() => _AdminOrdersScreenState();

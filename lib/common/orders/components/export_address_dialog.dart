@@ -9,7 +9,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 
 class ExportAddressDialog extends StatelessWidget {
-  ExportAddressDialog(this.address, this.orderClient, {Key? key})
+  ExportAddressDialog(this.address, this.orderClient,
+      {Key? key,})
       : super(key: key);
 
   final Address? address;
@@ -21,13 +22,11 @@ class ExportAddressDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShowAlertDialog(
       titleText: 'Endereço de Entrega',
-      titleColor: Colors.black,
       titleSize: 19,
       content: Screenshot(
         controller: screenshotController,
         child: Container(
           padding: const EdgeInsets.all(8),
-          color: Colors.white,
           width: 270,
           child: Text(
               'Pedido: ${orderClient!.formattedId}\n'

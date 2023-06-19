@@ -128,26 +128,27 @@ class AddressInputField extends StatelessWidget {
           const SizedBox(height: 8),
           Consumer<CartManager>(builder: (_, cartManager, __) {
             return CustomButton(
-                text: 'Calcular Frete',
-                onPressed: !cartManager.loading
-                    ? () async {
-                        if (Form.of(context).validate()) {
-                          Form.of(context).save();
-                          try {
-                            await cartManager.saveAuxDelivery(delivery);
-                            await cartManager.setAddress(address);
-                          } catch (error) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('$error'),
-                                backgroundColor: Colors.red,
-                                duration: const Duration(milliseconds: 4500),
-                              ),
-                            );
-                          }
+              text: 'Calcular Frete',
+              onPressed: !cartManager.loading
+                  ? () async {
+                      if (Form.of(context).validate()) {
+                        Form.of(context).save();
+                        try {
+                          await cartManager.saveAuxDelivery(delivery);
+                          await cartManager.setAddress(address);
+                        } catch (error) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('$error'),
+                              backgroundColor: Colors.red,
+                              duration: const Duration(milliseconds: 4500),
+                            ),
+                          );
                         }
                       }
-                    : null);
+                    }
+                  : null,
+            );
           })
         ],
       );

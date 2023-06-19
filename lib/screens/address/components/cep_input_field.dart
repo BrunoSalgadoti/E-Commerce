@@ -8,7 +8,10 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class CepInputField extends StatefulWidget {
-  const CepInputField({super.key, required this.address});
+  const CepInputField({
+    super.key,
+    required this.address,
+  });
 
   final Address address;
 
@@ -55,24 +58,25 @@ class _CepInputFieldState extends State<CepInputField> {
             height: 7,
           ),
           CustomButton(
-              text: 'Buscar CEP',
-              onPressed: !cartManager.loading
-                  ? () async {
-                      if (Form.of(context).validate()) {
-                        try {
-                          await cartManager.getAddress(cepController.text);
-                        } catch (error) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('$error'),
-                              backgroundColor: Colors.red,
-                              duration: const Duration(milliseconds: 4500),
-                            ),
-                          );
-                        }
+            text: 'Buscar CEP',
+            onPressed: !cartManager.loading
+                ? () async {
+                    if (Form.of(context).validate()) {
+                      try {
+                        await cartManager.getAddress(cepController.text);
+                      } catch (error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('$error'),
+                            backgroundColor: Colors.red,
+                            duration: const Duration(milliseconds: 4500),
+                          ),
+                        );
                       }
                     }
-                  : null)
+                  }
+                : null,
+          )
         ],
       );
     } else {

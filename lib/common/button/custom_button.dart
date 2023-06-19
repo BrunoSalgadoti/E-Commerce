@@ -9,9 +9,9 @@ class CustomButton extends StatelessWidget {
     Key? key,
     required this.text,
     required this.onPressed,
-    this.textColor = Colors.white,
-    this.buttonColor = const Color.fromARGB(255, 4, 125, 141),
-    this.buttonDisabledColor = const Color.fromRGBO(4, 125, 141, 0.4),
+    this.textColor,
+    this.buttonColor,
+    this.buttonDisabledColor,
     this.shadowColor = Colors.white24,
     this.fontSize = 18,
     this.elevation = 08,
@@ -19,9 +19,9 @@ class CustomButton extends StatelessWidget {
 
   final String text;
   final VoidCallback? onPressed;
-  final Color textColor;
-  final Color buttonColor;
-  final Color buttonDisabledColor;
+  final Color? textColor;
+  final Color? buttonColor;
+  final Color? buttonDisabledColor;
   final Color shadowColor;
   final double fontSize;
   final double elevation;
@@ -43,15 +43,15 @@ class CustomButton extends StatelessWidget {
           child: Consumer3<UserManager, Product, CartManager>(
             builder: (_, userManager, product, cartManager, __) {
               return userManager.loading ||
-                      product.loading ||
-                      cartManager.loading
+                  product.loading ||
+                  cartManager.loading
                   ? const CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation(Colors.white),
-                    )
+                valueColor: AlwaysStoppedAnimation(Colors.white),
+              )
                   : Text(
-                      text,
-                      style: TextStyle(color: textColor, fontSize: fontSize),
-                    );
+                text,
+                style: TextStyle(color: textColor, fontSize: fontSize),
+              );
             },
           )),
     );

@@ -237,12 +237,13 @@ class AdminUsersSearch extends ChangeNotifier {
                                           },
                                         ),
                                         CustomTextButton(
-                                            text: 'Cancelar',
-                                            icon: null,
-                                            color: Colors.red,
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            }),
+                                          text: 'Cancelar',
+                                          icon: null,
+                                          color: Colors.red,
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
                                       ],
                                     ),
                                   ],
