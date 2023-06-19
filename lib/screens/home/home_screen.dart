@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/helpers/themes/factory_colors/another_colors.dart';
 import 'package:brn_ecommerce/models/home_manager.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/screens/home/components/add_section_widget.dart';
@@ -24,18 +26,44 @@ class HomeScreen extends StatelessWidget {
       drawer: const CustomDrawer(),
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 68, 63, 31),
-                  Color.fromARGB(255, 250, 240, 164),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-            ),
-          ),
+          kIsWeb
+              ? Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        const AnotherColors().homeGradientColor1Web,
+                        const AnotherColors().homeGradientColor2Web,
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                  ),
+                )
+              : (Platform.isAndroid
+                  ? Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            const AnotherColors().homeGradientColor1Android,
+                            const AnotherColors().homeGradientColor2Android,
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                    )
+                  : Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            const AnotherColors().homeGradientColor1Ios,
+                            const AnotherColors().homeGradientColor2Ios,
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                    )),
           Padding(
             padding: kIsWeb
                 ? const EdgeInsets.all(0)
