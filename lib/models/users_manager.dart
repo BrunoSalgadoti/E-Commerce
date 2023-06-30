@@ -57,6 +57,7 @@ class UserManager extends ChangeNotifier {
       required Function onFail,
       required Function onSuccess}) async {
     loading = true;
+    
     try {
       final UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: users.email, password: users.password!);

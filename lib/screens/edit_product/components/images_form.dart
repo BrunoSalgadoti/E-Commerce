@@ -116,42 +116,42 @@ class ImagesForm extends StatelessWidget {
                 ..add(
                   kIsWeb
                       ? Container(
-                          color: Colors.grey[100],
-                          child: IconButton(
-                              icon: Icon(
-                                Icons.add_a_photo,
-                                size: 60,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => buildImageSourceSheet());
-                              }),
-                        )
+                    color: Colors.grey[100],
+                    child: IconButton(
+                        icon: Icon(
+                          Icons.add_a_photo,
+                          size: 60,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) => buildImageSourceSheet());
+                        }),
+                  )
                       : Material(
-                          color: Colors.grey[100],
-                          child: IconButton(
-                              icon: Icon(
-                                Icons.add_a_photo,
-                                size: 60,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              onPressed: () {
-                                if (Platform.isAndroid) {
-                                  showModalBottomSheet(
-                                      context: context,
-                                      builder: (_) => buildImageSourceSheet());
-                                } else if (Platform.isIOS) {
-                                  showCupertinoModalPopup(
-                                      context: context,
-                                      builder: (_) => buildImageSourceSheet());
-                                } else {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) => buildImageSourceSheet());
-                                }
-                              })),
+                      color: Colors.grey[100],
+                      child: IconButton(
+                          icon: Icon(
+                            Icons.add_a_photo,
+                            size: 60,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          onPressed: () {
+                            if (Platform.isAndroid) {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (_) => buildImageSourceSheet());
+                            } else if (Platform.isIOS) {
+                              showCupertinoModalPopup(
+                                  context: context,
+                                  builder: (_) => buildImageSourceSheet());
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => buildImageSourceSheet());
+                            }
+                          })),
                 ),
             ),
             if (state.hasError)

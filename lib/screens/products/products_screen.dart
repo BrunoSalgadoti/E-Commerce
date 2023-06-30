@@ -99,7 +99,7 @@ class ProductsScreen extends StatelessWidget {
             return const EmptyIndicator(
               title: 'Nenhum produto encontrado!\n'
                   'Esperando o Gerente inserir os seus\n'
-                  'Produtos disponívesis!',
+                  'Produtos disponíveis!',
               image: 'assets/images/await.gif',
               iconData: null,
             );

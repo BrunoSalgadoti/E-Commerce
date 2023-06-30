@@ -2,6 +2,7 @@ import 'package:brn_ecommerce/common/button/custom_button.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
+import 'package:brn_ecommerce/screens/products/components/colors_widget.dart';
 import 'package:brn_ecommerce/screens/products/components/products_widget.dart';
 import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -131,12 +132,32 @@ class ProductDetailsScreen extends StatelessWidget {
                           TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Wrap(
+                 Wrap(
                     spacing: 8,
                     runSpacing: 8,
                     alignment: WrapAlignment.spaceEvenly,
                     children: product!.itemProducts!.map((d) {
                       return ProductsWidget(details: d);
+                    }).toList(),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 16, bottom: 8),
+                    child: Text(
+                      'Cores disponíveis',
+                      style:
+                      TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    alignment: WrapAlignment.spaceEvenly,
+                    children: product!.itemProducts!.expand((details) {
+                      return details.colorProducts!.map((colorProduct) {
+                        return ColorsWidget(
+                          colorsProducts: colorProduct,
+                        );
+                      }).toList();
                     }).toList(),
                   ),
                   const SizedBox(

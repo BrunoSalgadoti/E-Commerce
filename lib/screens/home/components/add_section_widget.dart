@@ -19,7 +19,6 @@ class AddSectionWidget extends StatelessWidget {
           onPressed: () {
             homeManager.addSection(Section(type: 'List'));
           },
-          buttonColor: Colors.transparent,
         )),
         const SizedBox(
           width: 20,
@@ -30,7 +29,6 @@ class AddSectionWidget extends StatelessWidget {
           onPressed: () {
             homeManager.addSection(Section(type: 'Staggered'));
           },
-          buttonColor: Colors.transparent,
         )),
       ],
     );

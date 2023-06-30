@@ -33,7 +33,7 @@ class SectionHeader extends StatelessWidget {
                   decoration: const InputDecoration(
                     hintText: 'Adicionar Título',
                     hintStyle: TextStyle(
-                      color: Colors.white,
+                      color: Colors.white38,
                     ),
                     isDense: true,
                     border: InputBorder.none,

@@ -6,7 +6,7 @@ class WebFactoryColors {
     this.primaryColor = const Color.fromARGB(255, 96, 136, 159),
     this.scaffoldBackgroundColor = const Color.fromARGB(255, 88, 115, 124),
     this.appBarBackgroundColor = const Color.fromARGB(255, 23, 56, 68),
-    this.titleMediumColor = const Color.fromARGB(255, 9, 9, 9),
+    this.titleMediumColor = const Color.fromARGB(255, 253, 253, 253),
     this.iconColor = const Color.fromARGB(255, 255, 255, 255),
     this.bodyLargeColor = const Color.fromARGB(255, 0, 0, 0),
     this.labelStyleColor = const Color.fromARGB(255, 9, 9, 9),
@@ -15,6 +15,8 @@ class WebFactoryColors {
     this.errorStyleColor = const Color.fromARGB(255, 255, 2, 2),
     this.buttonColor = const Color.fromARGB(255, 23, 56, 68),
     this.disabledButtonColor = const Color.fromARGB(255, 112, 107, 107),
+    this.cardColor = const Color.fromARGB(255, 255, 255, 255),
+    this.cardShadowColor = const Color.fromARGB(255, 112, 107, 107),
   });
 
   final Color primaryColor;
@@ -29,4 +31,6 @@ class WebFactoryColors {
   final Color errorStyleColor;
   final Color buttonColor;
   final Color disabledButtonColor;
+  final Color cardColor;
+  final Color cardShadowColor;
 }

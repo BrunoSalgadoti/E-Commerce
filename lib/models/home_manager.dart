@@ -85,9 +85,13 @@ class HomeManager extends ChangeNotifier {
   Future<void> saveEditing() async {
     bool valid = true;
     for (final section in _editingSections) {
-      if (!section.valid()) valid = false;
+      if (!section.valid()) {
+        valid = false;
+        notifyListeners();
+      }
     }
     if (!valid) return;
+
 
     loading = true;
     notifyListeners();

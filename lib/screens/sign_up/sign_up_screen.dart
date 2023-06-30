@@ -11,7 +11,11 @@ class SignUpScreen extends StatelessWidget {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  final Users users = Users(password: '', email: '', userName: '');
+  final Users users = Users(
+    password: '',
+    email: '',
+    userName: '',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -29,21 +33,22 @@ class SignUpScreen extends StatelessWidget {
             width: 500,
             child: Form(
               key: formKey,
-              child: Consumer<UserManager>(
-                  builder: (_, userManager, __) {
+              child: Consumer<UserManager>(builder: (_, userManager, __) {
                 return ListView(
                   padding: const EdgeInsets.all(16),
                   shrinkWrap: true,
                   children: [
                     TextFormField(
-                      decoration:
-                          const InputDecoration(hintText: 'Nome Completo'),
+                      decoration: const InputDecoration(
+                          labelText: 'Nome Completo',
+                          hintText: 'Preencha com seu nome completo',
+                          hintStyle: TextStyle(color: Colors.black38)),
                       enabled: !userManager.loading,
                       keyboardType: TextInputType.text,
-                      validator: (nome) {
-                        if (nome!.isEmpty) {
+                      validator: (name) {
+                        if (name!.isEmpty) {
                           return 'Campo obrigatório!';
-                        } else if (nome.trim().split(' ').length <= 1) {
+                        } else if (name.trim().split(' ').length <= 1) {
                           return 'Preencha seu nome completo!';
                         } else {
                           return null;
@@ -55,7 +60,10 @@ class SignUpScreen extends StatelessWidget {
                       height: 16,
                     ),
                     TextFormField(
-                      decoration: const InputDecoration(hintText: 'E-mail'),
+                      decoration: const InputDecoration(
+                          labelText: 'E-mail',
+                          hintText: 'E-mail',
+                          hintStyle: TextStyle(color: Colors.black38)),
                       enabled: !userManager.loading,
                       keyboardType: TextInputType.emailAddress,
                       validator: (email) {
@@ -73,7 +81,29 @@ class SignUpScreen extends StatelessWidget {
                       height: 16,
                     ),
                     TextFormField(
-                      decoration: const InputDecoration(hintText: 'Senha'),
+                      decoration: const InputDecoration(
+                          labelText: 'Telefone (Opcional)',
+                          hintText: '(00) 00000-0000',
+                          hintStyle: TextStyle(color: Colors.black38)),
+                      enabled: !userManager.loading,
+                      keyboardType: TextInputType.number,
+                      validator: (phone) {
+                        if (phone!.isNotEmpty && phone.length < 11) {
+                          return 'Confira o número digitado!';
+                        } else {
+                          return null;
+                        }
+                      },
+                      onSaved: (phone) => users.phoneNumber = phone!,
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                          labelText: 'Senha',
+                          hintText: '*******',
+                          hintStyle: TextStyle(color: Colors.black38)),
                       enabled: !userManager.loading,
                       keyboardType: TextInputType.text,
                       obscureText: true,
@@ -92,8 +122,10 @@ class SignUpScreen extends StatelessWidget {
                       height: 16,
                     ),
                     TextFormField(
-                      decoration:
-                          const InputDecoration(hintText: 'Repita a Senha'),
+                      decoration: const InputDecoration(
+                          labelText: 'Repita a Senha',
+                          hintText: 'Repita a Senha',
+                          hintStyle: TextStyle(color: Colors.black38)),
                       enabled: !userManager.loading,
                       keyboardType: TextInputType.text,
                       obscureText: true,
@@ -118,19 +150,18 @@ class SignUpScreen extends StatelessWidget {
                           formKey.currentState!.save();
 
                           if (users.password != users.confirmPassword) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: const Text(
-                                      'Confirmação de Senha não confere!!'
-                                      'Tente Redigitar a Senha e a '
-                                      'confirmação da Senha',
-                                      style: TextStyle(fontSize: 18)),
-                                  backgroundColor: Colors.red,
-                                  duration: const Duration(seconds: 5),
-                                  behavior: SnackBarBehavior.floating,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  margin: const EdgeInsets.all(15),
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: const Text(
+                                  'Confirmação de Senha não confere!!'
+                                  'Tente Redigitar a Senha e a '
+                                  'confirmação da Senha',
+                                  style: TextStyle(fontSize: 18)),
+                              backgroundColor: Colors.red,
+                              duration: const Duration(seconds: 5),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              margin: const EdgeInsets.all(15),
                             ));
                             return;
                           }
@@ -139,17 +170,15 @@ class SignUpScreen extends StatelessWidget {
                               onFail: (error) {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(
-                                      content: Text(
-                                          'Falha ao cadastrar $error',
+                                      content: Text('Falha ao cadastrar $error',
                                           style: const TextStyle(fontSize: 18)),
                                       backgroundColor: Colors.red,
                                       duration: const Duration(seconds: 5),
                                       behavior: SnackBarBehavior.floating,
                                       shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(10)),
+                                          borderRadius: BorderRadius.circular(10)),
                                       margin: const EdgeInsets.all(15),
-                                ));
+                                    ));
                               },
                               onSuccess: () {
                                 Navigator.of(context).pop();

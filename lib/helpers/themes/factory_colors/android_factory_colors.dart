@@ -15,6 +15,8 @@ class AndroidFactoryColors {
     this.errorStyleColor = const Color.fromARGB(255, 255, 2, 2),
     this.buttonColor = const Color.fromARGB(255, 252, 225, 151),
     this.disabledButtonColor = const Color.fromARGB(255, 112, 107, 107),
+    this.cardColor = const Color.fromARGB(255, 255, 255, 255),
+    this.cardShadowColor = const Color.fromARGB(255, 112, 107, 107),
   });
 
   final Color primaryColor;
@@ -29,4 +31,6 @@ class AndroidFactoryColors {
   final Color errorStyleColor;
   final Color buttonColor;
   final Color disabledButtonColor;
+  final Color cardColor;
+  final Color cardShadowColor;
 }

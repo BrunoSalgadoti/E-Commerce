@@ -6,6 +6,7 @@ class Users {
       {required this.email,
       this.password,
       this.userName,
+        this.phoneNumber,
       this.confirmPassword,
       this.id,
       this.favourite});
@@ -15,6 +16,7 @@ class Users {
     userName = document.get('name') as String;
     email = document.get('email') as String;
     favourite = document.get('favourite') as bool;
+    phoneNumber = document.get('phone') as String;
 
     Map<String, dynamic> dataMap = document.data() as Map<String, dynamic>;
 
@@ -29,6 +31,7 @@ class Users {
   String email = '';
   String? password;
   String? confirmPassword;
+  String? phoneNumber;
 
   bool? favourite;
   bool admin = false;
@@ -49,6 +52,7 @@ class Users {
       'name': userName,
       'email': email,
       'favourite': favourite = false,
+      'phone': phoneNumber,
       if (address != null) 'address': address!.toMap(),
     };
   }

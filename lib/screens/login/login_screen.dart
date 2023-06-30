@@ -37,6 +37,12 @@ class LoginScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(16),
                     shrinkWrap: true,
                     children: [
+                      const Text(
+                        'Entar com E-mail e Senha:',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 5),
                       TextFormField(
                         controller: emailController,
                         enabled: !userManager.loading,
@@ -83,11 +89,11 @@ class LoginScreen extends StatelessWidget {
                             Navigator.pushReplacementNamed(context, '/signup');
                           },
                           child: const Text(
-                            'CRIAR   CONTA',
+                            'Não tem conta? Cadastre-se!',
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.amber),
+                                color: Color.fromARGB(255, 178, 165, 0)),
                           ),
                         ),
                       ),
@@ -107,9 +113,8 @@ class LoginScreen extends StatelessWidget {
                                       ),
                                       onFail: (error) {
                                         ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                            SnackBar(
-                                              content: Text(error,
+                                            .showSnackBar(SnackBar(
+                                             content: Text(error,
                                               style: const TextStyle(
                                                   fontSize: 18)),
                                           backgroundColor: Colors.red,
@@ -121,6 +126,22 @@ class LoginScreen extends StatelessWidget {
                                 }
                               },
                       ),
+                      const Divider(
+                        indent: 2,
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Text(
+                        'Ou entre com sua conta:',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 5),
+                      CustomButton(
+                        text: '',
+                        onPressed: () {},
+                      )
                     ],
                   );
                 },

@@ -60,6 +60,10 @@ class Themes with ChangeNotifier {
         textTheme: ButtonTextTheme.primary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       ),
+      cardTheme: CardTheme(
+        color: androidFactoryColors.cardColor,
+        shadowColor: androidFactoryColors.cardShadowColor,
+      ),
     );
 
     themeIos = ThemeData(
@@ -105,6 +109,10 @@ class Themes with ChangeNotifier {
         textTheme: ButtonTextTheme.primary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       ),
+      cardTheme: CardTheme(
+        color: iosFactoryColors.cardColor,
+        shadowColor: iosFactoryColors.cardShadowColor,
+      ),
     );
 
     themeWeb = ThemeData(
@@ -149,6 +157,10 @@ class Themes with ChangeNotifier {
         disabledColor: webFactoryColors.disabledButtonColor,
         textTheme: ButtonTextTheme.primary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+      ),
+      cardTheme: CardTheme(
+        color: webFactoryColors.cardColor,
+        shadowColor: webFactoryColors.cardShadowColor,
       ),
     );
   }

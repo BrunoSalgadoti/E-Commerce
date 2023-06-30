@@ -22,48 +22,43 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color getGradientColorFirst([BuildContext? context]) {
+      if (kIsWeb) {
+        return const AnotherColors().homeGradientColor1Web;
+      } else if (Platform.isAndroid) {
+        return const AnotherColors().homeGradientColor1Android;
+      } else if (Platform.isIOS) {
+        return const AnotherColors().homeGradientColor1Ios;
+      } else {
+        return Colors.blue;
+      }
+    }
+
+    Color getGradientColorSecond([BuildContext? context]) {
+      if (kIsWeb) {
+        return const AnotherColors().homeGradientColor2Web;
+      } else if (Platform.isAndroid) {
+        return const AnotherColors().homeGradientColor2Android;
+      } else if (Platform.isIOS) {
+        return const AnotherColors().homeGradientColor2Ios;
+      } else {
+        return Colors.lightBlueAccent;
+      }
+    }
+
     return Scaffold(
       drawer: const CustomDrawer(),
       body: Stack(
         children: [
-          kIsWeb
-              ? Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        const AnotherColors().homeGradientColor1Web,
-                        const AnotherColors().homeGradientColor2Web,
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                  ),
-                )
-              : (Platform.isAndroid
-                  ? Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            const AnotherColors().homeGradientColor1Android,
-                            const AnotherColors().homeGradientColor2Android,
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                      ),
-                    )
-                  : Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            const AnotherColors().homeGradientColor1Ios,
-                            const AnotherColors().homeGradientColor2Ios,
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                      ),
-                    )),
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [getGradientColorFirst(), getGradientColorSecond()],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+          ),
           Padding(
             padding: kIsWeb
                 ? const EdgeInsets.all(0)

@@ -48,7 +48,16 @@ class WhoWeAreScreenState extends State<WhoWeAreScreen> {
                 const EdgeInsets.only(top: 16, left: 30, right: 30, bottom: 16),
             child: Center(
               // Embed do vídeo do YouTube
-              child: YoutubePlayer(controller: _controller),
+              child: FutureBuilder<void>(
+                future: Future.delayed(const Duration(seconds: 2)),
+                builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Text('Carregando...');
+                  } else {
+                    return YoutubePlayer(controller: _controller);
+                  }
+                },
+              ),
             ),
           ),
           ...[const FooterDescriptionWidget()]
