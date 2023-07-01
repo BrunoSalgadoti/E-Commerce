@@ -17,7 +17,8 @@ class ColorsWidget extends StatelessWidget {
     final selected = colorsProducts == detailsProducts.selectedColors;
 
     Color color;
-    if (!colorsProducts!.hasAmount) {
+    if (!colorsProducts!.hasAmount ||
+        colorsProducts!.realColor == colorsProducts!.realColor!.withAlpha(0)) {
       color = Colors.red.withAlpha(70);
     } else if (selected) {
       color = Theme.of(context).primaryColor;
@@ -55,7 +56,7 @@ class ColorsWidget extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: colorsProducts!.realColor!.withAlpha(255),
+                    color: colorsProducts?.realColor,
                   ),
                   width: 45,
                   height: 20,

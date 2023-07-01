@@ -23,6 +23,8 @@ class EditColorsState extends State<EditColors> {
   Color _selectedColor = Colors.transparent;
 
   void _showColorPicker() {
+    Color initialColor = widget.colorsProducts?.realColor ?? Colors.transparent;
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -30,15 +32,20 @@ class EditColorsState extends State<EditColors> {
           title: const Text('Selecione uma cor'),
           content: SingleChildScrollView(
             child: ColorPicker(
-              pickerColor: _selectedColor,
+              pickerColor: initialColor,
               onColorChanged: (color) {
                 setState(() {
                   _selectedColor = color;
                   widget.onColorChanged?.call(color);
+                  widget.colorsProducts?.realColor = color;
                   widget.colorsProducts?.color = getHexColor(color);
                 });
               },
-              showLabel: true,
+              labelTypes: const [
+                ColorLabelType.rgb,
+                ColorLabelType.hsv,
+                ColorLabelType.hsl
+              ],
               pickerAreaHeightPercent: 0.8,
             ),
           ),
@@ -71,12 +78,11 @@ class EditColorsState extends State<EditColors> {
                 border: Border.all(color: Colors.black),
               ),
               child: Container(
-                color: _selectedColor,
+                color: widget.colorsProducts?.realColor ?? _selectedColor,
               ),
             ),
           ),
         ),
-
         const SizedBox(width: 20),
         Expanded(
           flex: 80,
@@ -89,13 +95,14 @@ class EditColorsState extends State<EditColors> {
                 isDense: true,
               ),
               validator: (amount) {
-                if (int.tryParse(amount!) == null || int.tryParse(amount)! <= 0) {
+                if (int.tryParse(amount!) == null ||
+                    int.tryParse(amount)! <= 0) {
                   return 'Inválido';
                 }
                 return null;
               },
               onChanged: (amount) =>
-              widget.colorsProducts?.amount = int.tryParse(amount) ?? 0,
+                  widget.colorsProducts?.amount = int.tryParse(amount) ?? 0,
               keyboardType: TextInputType.number,
             ),
           ),
@@ -111,10 +118,8 @@ class EditColorsState extends State<EditColors> {
   }
 
   String getHexColor(Color color) {
-    String hexColor = '#${color.value.toRadixString(16)
-        .padLeft(8, '0')
-        .substring(2)
-        .toUpperCase()}';
+    String hexColor =
+        '#${color.value.toRadixString(16).padLeft(8, '0').substring(2).toUpperCase()}';
     return hexColor;
-}
   }
+}

@@ -42,9 +42,13 @@ class DetailsProducts extends ChangeNotifier{
     notifyListeners();
   }
 
-
-  List<Map<String, dynamic>>? exportColorsList() {
-    return colorProducts!.map((colors) => colors.toMap()).toList();
+  Map<String, dynamic> toMap() {
+    return {
+      'size': size,
+      'price': price,
+      'stock': stock,
+      'colors': colorProducts!.map((colors) => colors.toMap()).toList(),
+    };
   }
 
   DetailsProducts clone() {
@@ -56,14 +60,22 @@ class DetailsProducts extends ChangeNotifier{
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'size': size,
-      'price': price,
-      'stock': stock,
-      'colors': exportColorsList(),
-    };
-  }
+  // void saveColorChanges() {
+  //   if (colorProducts != null) {
+  //     bool isColorSelected = false;
+  //
+  //     for (final colors in colorProducts!) {
+  //       if (colors.color != colors.realColor && colors.isColorSelected) {
+  //         colors.isColorSelected = true;
+  //         isColorSelected = true;
+  //       }
+  //     }
+  //
+  //     if (!isColorSelected) {
+  //       throw Exception('Selecione pelo menos uma cor.');
+  //     }
+  //   }
+  // }
 
   @override
   String toString() {
