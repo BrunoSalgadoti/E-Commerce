@@ -56,12 +56,35 @@ class Product extends ChangeNotifier {
   List<dynamic>? newImages;
   List<DetailsProducts>? itemProducts;
 
+
   DetailsProducts? _selectedDetails;
 
   DetailsProducts? get selectedDetails => _selectedDetails;
 
   set selectedDetails(DetailsProducts? value) {
     _selectedDetails = value;
+    notifyListeners();
+  }
+
+  String? _selectedSize;
+
+  String? get selectedSize {
+    return _selectedSize;
+  }
+
+  set selectedSize(String? value) {
+    _selectedSize = value;
+    notifyListeners();
+  }
+
+  List<String>? _selectedColors;
+
+  List<String>? get selectedColors {
+    return _selectedColors;
+  }
+
+  set selectedColors(List<String>? value) {
+    _selectedColors = value;
     notifyListeners();
   }
 

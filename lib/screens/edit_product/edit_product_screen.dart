@@ -2,7 +2,6 @@ import 'package:brn_ecommerce/common/button/custom_button.dart';
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/button/custom_text_button.dart';
 import 'package:brn_ecommerce/common/show_alert_dialog.dart';
-import 'package:brn_ecommerce/models/details_products.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:brn_ecommerce/screens/edit_product/components/images_form.dart';
@@ -173,24 +172,46 @@ class EditProductScreen extends StatelessWidget {
                           ),
                           SizesForm(product: product),
                           const SizedBox(height: 20),
-                          Consumer3<Product, ProductManager, DetailsProducts>(
-                            builder: (_, product, productManager,
-                                detailsProducts, __) {
+                          Consumer2<Product, ProductManager>(
+                            builder: (_, product, productManager, __) {
                               return CustomButton(
-                                text: 'Salvar',
-                                onPressed: product.loading
-                                    ? null
-                                    : () async {
-                                        if (formKey.currentState!.validate()) {
-                                          formKey.currentState!.save();
-                                          await product.saveProduct();
-
-                                          productManager
-                                              .updateProducts(product);
-                                          backScreen();
-                                        }
-                                      },
-                              );
+                                  text: 'Salvar',
+                                  onPressed: product.loading
+                                      ? null
+                                      : () async {
+                                          if (formKey.currentState!
+                                              .validate()) {
+                                            formKey.currentState!.save();
+                                            try {
+                                              await product.saveProduct();
+                                              productManager
+                                                  .updateProducts(product);
+                                              backScreen();
+                                            } catch (error) {
+                                              product.loading = false;
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(SnackBar(
+                                                    content: const Text(
+                                                    'Erro ao salvar/editar o Produto\n'
+                                                    'Revise os campos e tente novamente!a\n'
+                                                    '\nSE O ERRO PERCISTIR CONTATE O SUPORTE',
+                                                    style: TextStyle(
+                                                        fontSize: 18)),
+                                                backgroundColor: Colors.red,
+                                                duration:
+                                                    const Duration(seconds: 6),
+                                                behavior:
+                                                    SnackBarBehavior.floating,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                margin:
+                                                    const EdgeInsets.all(15),
+                                              ));
+                                            }
+                                          }
+                                        });
                             },
                           ),
                         ],

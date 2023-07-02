@@ -34,13 +34,13 @@ class DetailsProducts extends ChangeNotifier{
     _selectedColors = value;
     notifyListeners();
   }
-
-  Size? _selectedSize;
-  Size? get selectedSize => _selectedSize;
-  set selectedSize(Size? value) {
-    _selectedSize = value;
-    notifyListeners();
-  }
+  //
+  // Size? _selectedSize;
+  // Size? get selectedSize => _selectedSize;
+  // set selectedSize(Size? value) {
+  //   _selectedSize = value;
+  //   notifyListeners();
+  // }
 
   Map<String, dynamic> toMap() {
     return {
@@ -60,26 +60,9 @@ class DetailsProducts extends ChangeNotifier{
     );
   }
 
-  // void saveColorChanges() {
-  //   if (colorProducts != null) {
-  //     bool isColorSelected = false;
-  //
-  //     for (final colors in colorProducts!) {
-  //       if (colors.color != colors.realColor && colors.isColorSelected) {
-  //         colors.isColorSelected = true;
-  //         isColorSelected = true;
-  //       }
-  //     }
-  //
-  //     if (!isColorSelected) {
-  //       throw Exception('Selecione pelo menos uma cor.');
-  //     }
-  //   }
-  // }
-
   @override
   String toString() {
     return 'DetailsProducts{size: $size, colorProducts: $colorProducts, '
-        'price: $price, stock: $stock, _selectedColors: $_selectedColors}';
+        'price: $price, stock: $stock}';
   }
 }

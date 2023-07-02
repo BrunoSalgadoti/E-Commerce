@@ -97,9 +97,7 @@ class ProductsScreen extends StatelessWidget {
           final filteredProducts = productManager.filteredProducts;
           if (productManager.filteredProducts.isEmpty) {
             return const EmptyIndicator(
-              title: 'Nenhum produto encontrado!\n'
-                  'Esperando o Gerente inserir os seus\n'
-                  'Produtos disponíveis!',
+              title: 'Carregando Produtos...',
               image: 'assets/images/await.gif',
               iconData: null,
             );
@@ -113,22 +111,21 @@ class ProductsScreen extends StatelessWidget {
         },
       ),
       floatingActionButton:
-          Consumer<UserManager>(
-              builder: (_, userManager, __) {
-                return FloatingActionButton(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Theme.of(context).primaryColor,
-                  onPressed: () {
-                    if (userManager.isLoggedIn) {
-                      Navigator.pushNamed(context, '/cart');
-                    } else {
-                      Navigator.pushNamed(context, '/login');
-                    }
-                  },
-                  child: userManager.isLoggedIn
-                      ? const Icon(Icons.shopping_cart)
-                      : const Icon(Icons.account_circle),
-                );
+          Consumer<UserManager>(builder: (_, userManager, __) {
+        return FloatingActionButton(
+          backgroundColor: Colors.white,
+          foregroundColor: Theme.of(context).primaryColor,
+          onPressed: () {
+            if (userManager.isLoggedIn) {
+              Navigator.pushNamed(context, '/cart');
+            } else {
+              Navigator.pushNamed(context, '/login');
+            }
+          },
+          child: userManager.isLoggedIn
+              ? const Icon(Icons.shopping_cart)
+              : const Icon(Icons.account_circle),
+        );
       }),
     );
   }

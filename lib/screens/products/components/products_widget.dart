@@ -4,9 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductsWidget extends StatelessWidget {
-  const ProductsWidget({Key? key, this.details}) : super(key: key);
+  const ProductsWidget({
+    Key? key,
+    this.details,
+    this.onTap,
+    this.isSelected = false,
+    this.onSizeSelected,
+  }) : super(key: key);
 
   final DetailsProducts? details;
+  final VoidCallback? onTap;
+  final bool isSelected;
+  final Function(int)? onSizeSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +32,22 @@ class ProductsWidget extends StatelessWidget {
     }
 
     return GestureDetector(
-        onTap: () {
-          if (details!.hasStock) {
-            product.selectedDetails = details;
+      onTap: () {
+        if (details!.hasStock) {
+          product.selectedDetails = details;
+          if (onSizeSelected != null) {
+            final sizeIndex = product.itemProducts!.indexOf(details!);
+            onSizeSelected!(sizeIndex);
           }
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: color),
-          ),
-          child: Row(mainAxisSize: MainAxisSize.min, children: [
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: color),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
             Container(
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
               color: color,
@@ -50,7 +65,10 @@ class ProductsWidget extends StatelessWidget {
                 ),
               ),
             ),
-          ]),
-        ));
+          ],
+        ),
+      ),
+    );
   }
 }
+

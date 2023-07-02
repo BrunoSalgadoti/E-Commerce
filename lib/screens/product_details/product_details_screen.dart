@@ -10,37 +10,61 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
-  const ProductDetailsScreen({Key? key, this.product}) : super(key: key);
+class ProductDetailsScreen extends StatefulWidget {
+  const ProductDetailsScreen({Key? key, this.product, this.selectedSizeIndex})
+      : super(key: key);
 
   final Product? product;
+  final int? selectedSizeIndex;
+
+  @override
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+}
+
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  int? selectedSizeIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedSizeIndex = widget.selectedSizeIndex;
+  }
+
+  void updateSelectedSizeIndex(int index) {
+    setState(() {
+      selectedSizeIndex = index;
+      widget.product?.selectedSize = widget.product?.itemProducts?[index].size;
+      widget.product?.selectedColors = null; // Reinicia as cores selecionadas ao alterar o tamanho
+     // widget.product?.notifyListeners();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
 
     return ChangeNotifierProvider.value(
-      value: product,
+      value: widget.product,
       child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            title: Text(product!.name!),
+            title: Text(widget.product!.name!),
             centerTitle: true,
             actions: [
               IconButton(
                   icon: const Icon(Icons.share_outlined),
                   onPressed: () {
                     Navigator.pushNamed(context, '/share_product',
-                        arguments: product);
+                        arguments: widget.product);
                   }),
               Consumer<UserManager>(
                 builder: (_, userManager, __) {
-                  if (userManager.adminEnable && !product!.deleted) {
+                  if (userManager.adminEnable && !widget.product!.deleted) {
                     return IconButton(
                       icon: const Icon(Icons.edit),
                       onPressed: () {
                         Navigator.pushNamed(context, '/edit_product',
-                            arguments: product);
+                            arguments: widget.product);
                       },
                     );
                   } else {
@@ -52,7 +76,7 @@ class ProductDetailsScreen extends StatelessWidget {
           ),
           body: ListView(children: [
             FanCarouselImageSlider(
-              imagesLink: product!.images!.map((url) {
+              imagesLink: widget.product!.images!.map((url) {
                 return NetworkImage(url).url;
               }).toList(),
               isAssets: false,
@@ -74,28 +98,28 @@ class ProductDetailsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    product!.name!,
+                    widget.product!.name!,
                     style: const TextStyle(
                         fontSize: 22, fontWeight: FontWeight.w600),
                   ),
                   Padding(
                       padding: const EdgeInsets.only(top: 8),
-                      child: product!.hasStock
+                      child: widget.product!.hasStock
                           ? Text(
                               'A partir de: ',
                               style: TextStyle(
                                   fontSize: 15, color: Colors.grey[600]),
                             )
                           : Text(
-                              product!.deleted
+                              widget.product!.deleted
                                   ? 'Esgotado...!'
                                   : 'Aguadando reposição de estoque...',
                               style: TextStyle(
                                   fontSize: 15, color: Colors.grey[600]),
                             )),
-                  product!.hasStock
+                  widget.product!.hasStock
                       ? Text(
-                          'R\$ ${product!.basePrice.toStringAsFixed(2)}',
+                          'R\$ ${widget.product!.basePrice.toStringAsFixed(2)}',
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -103,7 +127,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           ),
                         )
                       : Text(
-                          product!.deleted
+                          widget.product!.deleted
                               ? 'Produto não Disponível!'
                               : 'Fora de estoque',
                           style: TextStyle(
@@ -121,7 +145,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   MarkdownBody(
-                    data: product?.description ?? '',
+                    data: widget.product?.description ?? '',
                     shrinkWrap: true,
                   ),
                   const Padding(
@@ -132,12 +156,15 @@ class ProductDetailsScreen extends StatelessWidget {
                           TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                     ),
                   ),
-                 Wrap(
+                  Wrap(
                     spacing: 8,
                     runSpacing: 8,
                     alignment: WrapAlignment.spaceEvenly,
-                    children: product!.itemProducts!.map((d) {
-                      return ProductsWidget(details: d);
+                    children: widget.product!.itemProducts!.map((d) {
+                      return ProductsWidget(
+                        details: d,
+                        onSizeSelected: updateSelectedSizeIndex,
+                      );
                     }).toList(),
                   ),
                   const Padding(
@@ -152,18 +179,22 @@ class ProductDetailsScreen extends StatelessWidget {
                     spacing: 8,
                     runSpacing: 8,
                     alignment: WrapAlignment.spaceEvenly,
-                    children: product!.itemProducts!.expand((details) {
-                      return details.colorProducts!.map((colorProduct) {
-                        return ColorsWidget(
-                          colorsProducts: colorProduct,
-                        );
-                      }).toList();
+                    children: widget.product!.itemProducts![selectedSizeIndex ?? 0].colorProducts!
+                        .asMap() // Converter para Map<int, ColorsProducts>
+                        .entries
+                        .map((entry) {
+                      final index = entry.key;
+                      final colorProduct = entry.value;
+                      return ColorsWidget(
+                        key: ValueKey(index), // Usar o índice como chave única
+                        colorsProducts: colorProduct,
+                      );
                     }).toList(),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  if (product!.hasStock)
+                  if (widget.product!.hasStock)
                     Consumer2<UserManager, Product>(
                         builder: (_, userManager, product, __) {
                       return CustomButton(
@@ -184,11 +215,11 @@ class ProductDetailsScreen extends StatelessWidget {
                             : null,
                       );
                     }),
-                  if (!product!.hasStock)
+                  if (!widget.product!.hasStock)
                     SizedBox(
                       height: 44,
                       child: CustomButton(
-                        text: product!.deleted
+                        text: widget.product!.deleted
                             ? 'Esgotado!'
                             : 'Produto fora de estoque!',
                         onPressed: null,
