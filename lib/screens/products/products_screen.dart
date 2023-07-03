@@ -112,17 +112,17 @@ class ProductsScreen extends StatelessWidget {
       ),
       floatingActionButton:
           Consumer<UserManager>(builder: (_, userManager, __) {
-        return FloatingActionButton(
-          backgroundColor: Colors.white,
-          foregroundColor: Theme.of(context).primaryColor,
-          onPressed: () {
-            if (userManager.isLoggedIn) {
-              Navigator.pushNamed(context, '/cart');
-            } else {
-              Navigator.pushNamed(context, '/login');
-            }
-          },
-          child: userManager.isLoggedIn
+            return FloatingActionButton(
+              backgroundColor: Colors.white,
+              foregroundColor: Theme.of(context).primaryColor,
+              onPressed: () {
+                if (userManager.isLoggedIn) {
+                  Navigator.pushNamed(context, '/cart');
+                } else {
+                  Navigator.pushNamed(context, '/login');
+                }
+              },
+              child: userManager.isLoggedIn
               ? const Icon(Icons.shopping_cart)
               : const Icon(Icons.account_circle),
         );

@@ -14,7 +14,7 @@ class ProductListTile extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(context, '/product', arguments: product);
       },
-      child: Card(
+      child: product!.isValid! ? Card(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         child: Container(
@@ -26,7 +26,7 @@ class ProductListTile extends StatelessWidget {
                 aspectRatio: 1,
                 child: Image(
                   image: NetworkImage(product!.images!.first),
-                  fit: BoxFit.fill,
+                  fit: BoxFit.fitHeight,
                 ),
               ),
               const SizedBox(
@@ -79,7 +79,8 @@ class ProductListTile extends StatelessWidget {
             ],
           ),
         ),
-      ),
+      )
+          : Container(),
     );
   }
 }
