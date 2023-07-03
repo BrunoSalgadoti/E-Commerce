@@ -24,7 +24,7 @@ class ItemTile extends StatelessWidget {
           if (item?.product != null) {
             final product =
                 context.read<ProductManager>().findProductById(item!.product!);
-            if (product != null) {
+            if (product != null && product.isValid!) {
               Navigator.pushNamed(context, '/product', arguments: product);
             }
           }
