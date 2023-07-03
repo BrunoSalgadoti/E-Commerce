@@ -16,18 +16,11 @@ class Product extends ChangeNotifier {
     this.images,
     this.itemProducts,
     this.deleted = false,
+    this.isValid,
+    this.errorMessage,
   }) {
     images = images ?? [];
     itemProducts = itemProducts ?? [];
-  }
-
-  bool _loading = false;
-
-  bool get loading => _loading;
-
-  set loading(bool value) {
-    _loading = value;
-    notifyListeners();
   }
 
   Product.fromDocument(DocumentSnapshot document) {
@@ -36,6 +29,7 @@ class Product extends ChangeNotifier {
     description = document['description'] as String;
     images = List<String>.from(document['images'] as List<dynamic>);
     deleted = (document['deleted'] ?? false) as bool;
+    isValid = (document['isvalid'] ?? true) as bool;
     itemProducts = (document['details'] as List<dynamic>)
         .map((d) => DetailsProducts.fromMap(d as Map<String, dynamic>))
         .toList();
@@ -51,11 +45,21 @@ class Product extends ChangeNotifier {
   String? id;
   String? name;
   String? description;
+  String? errorMessage;
   bool deleted = false;
+  bool? isValid;
   List<String>? images;
   List<dynamic>? newImages;
   List<DetailsProducts>? itemProducts;
 
+  bool _loading = false;
+
+  bool get loading => _loading;
+
+  set loading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
 
   DetailsProducts? _selectedDetails;
 
@@ -130,6 +134,7 @@ class Product extends ChangeNotifier {
       'description': description,
       'details': exportDetailsList(),
       'deleted': deleted,
+      'isvalid': isValid,
     };
 
     if (id == null) {
@@ -200,6 +205,7 @@ class Product extends ChangeNotifier {
       'description': description,
       'details': exportDetailsList(),
       'deleted': deleted,
+      'isvalid': isValid,
     };
     await firestoreRef.update(data);
 
@@ -247,6 +253,45 @@ class Product extends ChangeNotifier {
       images: List.from(images!),
       itemProducts: itemProducts?.map((items) => items.clone()).toList(),
       deleted: deleted,
+      isValid: isValid,
     );
+  }
+
+  Future<void> checkAmountsAndStocksConsistency(
+      String productId, List<DetailsProducts> detailsProducts) async {
+    isValid = true; // Assume inicialmente que é válido
+
+    for (final stock in detailsProducts) {
+      final matchingDetails =
+          detailsProducts.firstWhere((details) => details.size == stock.size);
+
+      final int totalAmount =
+          matchingDetails.colorProducts!.fold(0, (a, b) => a + b.amount);
+
+      if (totalAmount != stock.stock) {
+        isValid = false; // Inconsistency found
+
+        final DocumentReference productRef =
+            FirebaseFirestore.instance.collection('products').doc(productId);
+
+        await productRef.update({'isvalid': false});
+
+        errorMessage = 'A quant. de ESTOQUE está diferente da de Cores!!!\n'
+            'Favor revisar o ESTOQUE e a quat. de CORES equivalentes ao Tamanho!\n'
+            'Tamanho: ${stock.size}, Estoque: ${stock.stock},'
+            ' Total Cores: $totalAmount';
+
+        break;
+      }
+
+      if (!isValid!) {
+        final DocumentReference productRef =
+            FirebaseFirestore.instance.collection('products').doc(productId);
+
+        await productRef.update({'isvalid': true});
+        break;
+      }
+    }
+    notifyListeners();
   }
 }

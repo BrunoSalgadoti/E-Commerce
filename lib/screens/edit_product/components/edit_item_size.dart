@@ -33,7 +33,7 @@ class EditItemSize extends StatelessWidget {
               ),
               validator: (size) {
                 if (size!.isEmpty) {
-                  return 'Inválido';
+                  return 'Valor Inválido';
                 }
                 return null;
               },
@@ -53,7 +53,7 @@ class EditItemSize extends StatelessWidget {
               ),
               validator: (stock) {
                 if (int.tryParse(stock!) == null || int.tryParse(stock)! < 0) {
-                  return 'Inválido';
+                  return 'Valor Inválido';
                 }
                 return null;
               },
@@ -76,7 +76,7 @@ class EditItemSize extends StatelessWidget {
               ),
               validator: (price) {
                 if (num.tryParse(price!) == null) {
-                  return 'Inválido';
+                  return 'Valor Inválido';
                 }
                 return null;
               },

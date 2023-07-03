@@ -45,12 +45,15 @@ class ColorsWidget extends StatelessWidget {
                   color: color,
                   child: colorsProducts!.hasAmount
                       ? const Text(
-                          'Cor:',
-                          style: TextStyle(color: Colors.white),
+                          'Disponível:',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                          ),
                         )
                       : const Text(
-                          'XX:',
-                          style: TextStyle(color: Colors.white),
+                          'Indisponível:',
+                          style: TextStyle(color: Colors.black, fontSize: 9),
                         )),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8),

@@ -34,8 +34,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     setState(() {
       selectedSizeIndex = index;
       widget.product?.selectedSize = widget.product?.itemProducts?[index].size;
-      widget.product?.selectedColors = null; // Reinicia as cores selecionadas ao alterar o tamanho
-     // widget.product?.notifyListeners();
+      widget.product?.selectedColors =
+          null; // Reinicia as cores selecionadas ao alterar o tamanho
     });
   }
 
@@ -170,16 +170,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   const Padding(
                     padding: EdgeInsets.only(top: 16, bottom: 8),
                     child: Text(
-                      'Cores disponíveis',
+                      'Cor(es) do Produto:',
                       style:
-                      TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
                     alignment: WrapAlignment.spaceEvenly,
-                    children: widget.product!.itemProducts![selectedSizeIndex ?? 0].colorProducts!
+                    children: widget.product!
+                        .itemProducts![selectedSizeIndex ?? 0].colorProducts!
                         .asMap() // Converter para Map<int, ColorsProducts>
                         .entries
                         .map((entry) {

@@ -1,14 +1,13 @@
 import 'package:brn_ecommerce/models/colors_products.dart';
 import 'package:flutter/material.dart';
 
-class DetailsProducts extends ChangeNotifier{
+class DetailsProducts extends ChangeNotifier {
   DetailsProducts({
     this.size,
     this.price,
     required this.stock,
     this.colorProducts,
-  })
-  {
+  }) {
     colorProducts = colorProducts ?? [];
   }
 
@@ -29,18 +28,13 @@ class DetailsProducts extends ChangeNotifier{
   bool get hasStock => stock > 0;
 
   ColorsProducts? _selectedColors;
+
   ColorsProducts? get selectedColors => _selectedColors;
+
   set selectedColors(ColorsProducts? value) {
     _selectedColors = value;
     notifyListeners();
   }
-  //
-  // Size? _selectedSize;
-  // Size? get selectedSize => _selectedSize;
-  // set selectedSize(Size? value) {
-  //   _selectedSize = value;
-  //   notifyListeners();
-  // }
 
   Map<String, dynamic> toMap() {
     return {

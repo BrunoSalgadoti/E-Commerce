@@ -6,7 +6,10 @@ import 'package:brn_ecommerce/screens/edit_product/components/edit_item_size.dar
 import 'package:flutter/material.dart';
 
 class SizesForm extends StatelessWidget {
-  const SizesForm({Key? key, this.product}) : super(key: key);
+  const SizesForm({
+    Key? key,
+    this.product
+  }) : super(key: key);
 
   final Product? product;
 
@@ -75,7 +78,10 @@ class SizesForm extends StatelessWidget {
                         }
                             : null,
                       ),
-                      ColorsForm(detailsProducts: size), // Novo FormField aninhado
+                      ColorsForm(detailsProducts: size),// Novo FormField aninhado
+                      const SizedBox(height: 5,),
+                      const Divider(thickness: 2.0,),
+                      const SizedBox(height: 10,),
                     ],
                   );
                 }).toList(),

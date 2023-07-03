@@ -96,8 +96,8 @@ class EditColorsState extends State<EditColors> {
               ),
               validator: (amount) {
                 if (int.tryParse(amount!) == null ||
-                    int.tryParse(amount)! <= 0) {
-                  return 'Inválido';
+                    int.tryParse(amount)! < 0) {
+                  return 'Valor Inválido';
                 }
                 return null;
               },

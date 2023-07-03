@@ -23,7 +23,25 @@ class EditProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
     TextEditingController controller = TextEditingController();
+
     backScreen() => Navigator.of(context).pop();
+    showAlertDialog() => showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ShowAlertDialog(
+            titleText: 'Valores não correspondentes!',
+            bodyText: product!.errorMessage,
+            actions: [
+              CustomTextButton(
+                text: 'Ciente!',
+                icon: null,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
 
     return ChangeNotifierProvider.value(
       value: product,
@@ -182,16 +200,28 @@ class EditProductScreen extends StatelessWidget {
                                           if (formKey.currentState!
                                               .validate()) {
                                             formKey.currentState!.save();
+
                                             try {
                                               await product.saveProduct();
                                               productManager
                                                   .updateProducts(product);
-                                              backScreen();
+
+                                              // Verificar a consistência das quantidades e estoques
+                                              await product
+                                                  .checkAmountsAndStocksConsistency(
+                                                      product.id!,
+                                                      product.itemProducts!);
+                                              if (product.isValid == false) {
+                                                product.loading = false;
+                                                showAlertDialog();
+                                              } else {
+                                                backScreen();
+                                              }
                                             } catch (error) {
                                               product.loading = false;
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(SnackBar(
-                                                    content: const Text(
+                                                content: const Text(
                                                     'Erro ao salvar/editar o Produto\n'
                                                     'Revise os campos e tente novamente!a\n'
                                                     '\nSE O ERRO PERCISTIR CONTATE O SUPORTE',
