@@ -24,6 +24,10 @@ class EditProductScreen extends StatelessWidget {
     final primaryColor = Theme.of(context).primaryColor;
     TextEditingController controller = TextEditingController();
 
+    String errorSaveProductMessage = 'Erro ao salvar/editar o Produto\n'
+        'Revise os campos e tente novamente!a\n'
+        '\nSE O ERRO PERCISTIR CONTATE O SUPORTE';
+
     backScreen() => Navigator.of(context).pop();
     showAlertDialog() => showDialog(
         context: context,
@@ -221,11 +225,9 @@ class EditProductScreen extends StatelessWidget {
                                               product.loading = false;
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(SnackBar(
-                                                content: const Text(
-                                                    'Erro ao salvar/editar o Produto\n'
-                                                    'Revise os campos e tente novamente!a\n'
-                                                    '\nSE O ERRO PERCISTIR CONTATE O SUPORTE',
-                                                    style: TextStyle(
+                                                    content: Text(
+                                                    errorSaveProductMessage,
+                                                    style: const TextStyle(
                                                         fontSize: 18)),
                                                 backgroundColor: Colors.red,
                                                 duration:
