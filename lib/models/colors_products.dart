@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ColorsProducts extends ChangeNotifier{
+class ColorsProducts extends ChangeNotifier {
   ColorsProducts({
     this.color,
     required this.amount,
@@ -17,7 +17,6 @@ class ColorsProducts extends ChangeNotifier{
   String? color;
   int amount = 0;
   Color? realColor;
-  bool isColorSelected = false;
 
   bool get hasAmount => amount > 0;
 
@@ -55,6 +54,6 @@ class ColorsProducts extends ChangeNotifier{
   @override
   String toString() {
     return 'ColorsProducts{color: $color, amount: $amount, '
-        'realColor: $realColor, isColorSelected: $isColorSelected}';
+        'realColor: $realColor}';
   }
 }

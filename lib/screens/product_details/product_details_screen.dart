@@ -1,5 +1,6 @@
 import 'package:brn_ecommerce/common/button/custom_button.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
+import 'package:brn_ecommerce/models/details_products.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/screens/products/components/colors_widget.dart';
@@ -11,8 +12,11 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({Key? key, this.product, this.selectedSizeIndex})
-      : super(key: key);
+  const ProductDetailsScreen({
+    Key? key,
+    this.product,
+    this.selectedSizeIndex,
+  }) : super(key: key);
 
   final Product? product;
   final int? selectedSizeIndex;
@@ -31,18 +35,23 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   void updateSelectedSizeIndex(int index) {
+    clearSelectedColors();
     setState(() {
       selectedSizeIndex = index;
       widget.product?.selectedSize = widget.product?.itemProducts?[index].size;
-      widget.product?.selectedColors =
+      widget.product?.selectedColorsFromSize =
           null; // Reinicia as cores selecionadas ao alterar o tamanho
     });
+  }
+
+  void clearSelectedColors() {
+    final detailsProducts = context.read<DetailsProducts>();
+    detailsProducts.selectedColors = null;
   }
 
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
-
     return ChangeNotifierProvider.value(
       value: widget.product,
       child: Scaffold(
@@ -196,13 +205,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     height: 20,
                   ),
                   if (widget.product!.hasStock)
-                    Consumer2<UserManager, Product>(
-                        builder: (_, userManager, product, __) {
+                    Consumer3<UserManager, Product, DetailsProducts>(builder:
+                        (_, userManager, product, detailsProducts, __) {
                       return CustomButton(
                         text: userManager.isLoggedIn
                             ? 'Adicionar ao Carrinho'
                             : 'Entre para Comprar',
-                        onPressed: product.selectedDetails != null
+                        onPressed: product.selectedDetails != null &&
+                                detailsProducts.selectedColors != null
                             ? () {
                                 if (userManager.isLoggedIn) {
                                   context

@@ -8,13 +8,11 @@ class ProductsWidget extends StatelessWidget {
     Key? key,
     this.details,
     this.onTap,
-    this.isSelected = false,
     this.onSizeSelected,
   }) : super(key: key);
 
   final DetailsProducts? details;
   final VoidCallback? onTap;
-  final bool isSelected;
   final Function(int)? onSizeSelected;
 
   @override
@@ -71,4 +69,3 @@ class ProductsWidget extends StatelessWidget {
     );
   }
 }
-

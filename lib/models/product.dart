@@ -81,14 +81,14 @@ class Product extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<String>? _selectedColors;
+  List<String>? _selectedColorsFromSize;
 
-  List<String>? get selectedColors {
-    return _selectedColors;
+  List<String>? get selectedColorsFromSize {
+    return _selectedColorsFromSize;
   }
 
-  set selectedColors(List<String>? value) {
-    _selectedColors = value;
+  set selectedColorsFromSize(List<String>? value) {
+    _selectedColorsFromSize = value;
     notifyListeners();
   }
 
