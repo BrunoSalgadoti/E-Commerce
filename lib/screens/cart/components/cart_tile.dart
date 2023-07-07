@@ -26,12 +26,12 @@ class CartTile extends StatelessWidget {
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             child: Row(
               children: [
                 SizedBox(
-                  height: 80,
-                  width: 80,
+                  height: 100,
+                  width: 90,
                   child: Image.network(
                     cartProduct!.product!.images!.first,
                     fit: BoxFit.cover,
@@ -49,12 +49,29 @@ class CartTile extends StatelessWidget {
                             fontSize: 14, fontWeight: FontWeight.w500),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        padding: const EdgeInsets.symmetric(vertical: 7),
                         child: Text(
                           'Tamanho: ${cartProduct!.size}',
                           style: const TextStyle(fontWeight: FontWeight.w300),
                         ),
                       ),
+                      Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 2),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Text('Cor: '),
+                              Container(
+                                width: 60,
+                                height: 20,
+                                child: Container(
+                                  color: cartProduct?.realColorFromCart ??
+                                      Colors.transparent,
+                                ),
+                              ),
+                            ],
+                          )),
                       Consumer<CartProduct>(
                         builder: (_, cartProduct, __) {
                           if (cartProduct.hasStock) {
@@ -83,7 +100,7 @@ class CartTile extends StatelessWidget {
                   ),
                 )),
                 Padding(
-                  padding: const EdgeInsets.only(right: 16),
+                  padding: const EdgeInsets.only(right: 4, left: 4),
                   child: Consumer<CartProduct>(builder: (_, cartProduct, __) {
                     return Column(
                       children: [

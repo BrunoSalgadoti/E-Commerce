@@ -31,6 +31,7 @@ class _CepInputFieldState extends State<CepInputField> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          const SizedBox(height: 10),
           TextFormField(
             enabled: !cartManager.loading,
             controller: cepController,
@@ -40,7 +41,7 @@ class _CepInputFieldState extends State<CepInputField> {
                 hintText: '00.000-000',
                 hintStyle: TextStyle(color: Colors.black26)),
             inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
+               FilteringTextInputFormatter.digitsOnly,
               CepInputFormatter(),
             ],
             keyboardType: TextInputType.number,
@@ -54,9 +55,7 @@ class _CepInputFieldState extends State<CepInputField> {
               }
             },
           ),
-          const SizedBox(
-            height: 7,
-          ),
+          const SizedBox(height: 7),
           CustomButton(
             text: 'Buscar CEP',
             onPressed: !cartManager.loading
@@ -80,13 +79,15 @@ class _CepInputFieldState extends State<CepInputField> {
         ],
       );
     } else {
+      final formattedCep = UtilBrasilFields.obterCep(widget.address.zipCode!);
+
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 4),
         child: Row(
           children: [
             Expanded(
               child: Text(
-                'CEP: ${widget.address.zipCode}',
+                'CEP: $formattedCep',
                 style: TextStyle(
                   color: primaryColor,
                   fontSize: 18,

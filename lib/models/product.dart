@@ -18,9 +18,11 @@ class Product extends ChangeNotifier {
     this.deleted = false,
     this.isValid,
     this.errorMessage,
+    this.details,
   }) {
     images = images ?? [];
     itemProducts = itemProducts ?? [];
+    details = details ?? DetailsProducts(stock: 0);
   }
 
   Product.fromDocument(DocumentSnapshot document) {
@@ -61,34 +63,12 @@ class Product extends ChangeNotifier {
     notifyListeners();
   }
 
-  DetailsProducts? _selectedDetails;
+  DetailsProducts? details;
 
-  DetailsProducts? get selectedDetails => _selectedDetails;
+  DetailsProducts? get selectedDetails => details;
 
   set selectedDetails(DetailsProducts? value) {
-    _selectedDetails = value;
-    notifyListeners();
-  }
-
-  String? _selectedSize;
-
-  String? get selectedSize {
-    return _selectedSize;
-  }
-
-  set selectedSize(String? value) {
-    _selectedSize = value;
-    notifyListeners();
-  }
-
-  List<String>? _selectedColorsFromSize;
-
-  List<String>? get selectedColorsFromSize {
-    return _selectedColorsFromSize;
-  }
-
-  set selectedColorsFromSize(List<String>? value) {
-    _selectedColorsFromSize = value;
+    details = value;
     notifyListeners();
   }
 
@@ -101,7 +81,7 @@ class Product extends ChangeNotifier {
   }
 
   bool get hasStock {
-    return totalStock > 0 && !deleted;
+    return totalStock > 0 && !deleted && isValid!;
   }
 
   num get basePrice {

@@ -169,7 +169,7 @@ class AdminUsersSearch extends ChangeNotifier {
                   ),
                   onTap: () {
                     adminOrdersManager.setUserFilter(user);
-                    pageManager.setPage(5);
+                    pageManager.setPage(6);
                   },
                 );
               },
@@ -268,7 +268,7 @@ class AdminUsersSearch extends ChangeNotifier {
                 ),
                 onTap: () {
                   adminOrdersManager.setUserFilter(user);
-                  pageManager.setPage(5);
+                  pageManager.setPage(6);
                 },
               );
             })));

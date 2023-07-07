@@ -25,11 +25,11 @@ class SalesConfirmationScreen extends StatelessWidget {
             children: [
               Image.asset(
                 'assets/images/shoppingHappy.gif',
-                width: 150,
-                height: 150,
+                width: 80,
+                height:80,
               ),
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.only(left: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

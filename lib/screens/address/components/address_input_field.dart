@@ -34,6 +34,7 @@ class AddressInputField extends StatelessWidget {
             validator: emptyValidator,
             onSaved: (s) => address.street = s,
           ),
+          const SizedBox(height: 8),
           Row(
             children: [
               Expanded(
@@ -68,6 +69,7 @@ class AddressInputField extends StatelessWidget {
                   ))
             ],
           ),
+          const SizedBox(height: 8),
           TextFormField(
             initialValue: address.district,
             decoration: const InputDecoration(
@@ -79,6 +81,7 @@ class AddressInputField extends StatelessWidget {
             validator: emptyValidator,
             onSaved: (d) => address.district = d,
           ),
+          const SizedBox(height: 15),
           Row(
             children: [
               Expanded(

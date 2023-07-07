@@ -38,10 +38,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     clearSelectedColors();
     setState(() {
       selectedSizeIndex = index;
-      widget.product?.selectedSize = widget.product?.itemProducts?[index].size;
-      widget.product?.selectedColorsFromSize =
-          null; // Reinicia as cores selecionadas ao alterar o tamanho
     });
+
   }
 
   void clearSelectedColors() {
@@ -115,42 +113,42 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       padding: const EdgeInsets.only(top: 8),
                       child: widget.product!.hasStock
                           ? Text(
-                              'A partir de: ',
-                              style: TextStyle(
-                                  fontSize: 15, color: Colors.grey[600]),
-                            )
+                        'A partir de: ',
+                        style: TextStyle(
+                            fontSize: 15, color: Colors.grey[600]),
+                      )
                           : Text(
-                              widget.product!.deleted
-                                  ? 'Esgotado...!'
-                                  : 'Aguadando reposição de estoque...',
-                              style: TextStyle(
-                                  fontSize: 15, color: Colors.grey[600]),
-                            )),
+                        widget.product!.deleted
+                            ? 'Esgotado...!'
+                            : 'Aguadando reposição de estoque...',
+                        style: TextStyle(
+                            fontSize: 15, color: Colors.grey[600]),
+                      )),
                   widget.product!.hasStock
                       ? Text(
-                          'R\$ ${widget.product!.basePrice.toStringAsFixed(2)}',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: primaryColor,
-                          ),
-                        )
+                    'R\$ ${widget.product!.basePrice.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: primaryColor,
+                    ),
+                  )
                       : Text(
-                          widget.product!.deleted
-                              ? 'Produto não Disponível!'
-                              : 'Fora de estoque',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: primaryColor,
-                          ),
-                        ),
+                    widget.product!.deleted
+                        ? 'Produto não Disponível!'
+                        : 'Fora de estoque',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: primaryColor,
+                    ),
+                  ),
                   const Padding(
                     padding: EdgeInsets.only(top: 16, bottom: 8),
                     child: Text(
                       'Descrição',
                       style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                     ),
                   ),
                   MarkdownBody(
@@ -162,7 +160,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     child: Text(
                       'Tamanhos',
                       style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Wrap(
@@ -181,7 +179,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     child: Text(
                       'Cor(es) do Produto:',
                       style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Wrap(
@@ -212,17 +210,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             ? 'Adicionar ao Carrinho'
                             : 'Entre para Comprar',
                         onPressed: product.selectedDetails != null &&
-                                detailsProducts.selectedColors != null
+                            detailsProducts.selectedColors != null
                             ? () {
-                                if (userManager.isLoggedIn) {
-                                  context
-                                      .read<CartManager>()
-                                      .addToCart(product);
-                                  Navigator.pushNamed(context, '/cart');
-                                } else {
-                                  Navigator.pushNamed(context, '/login');
-                                }
-                              }
+                          if (userManager.isLoggedIn) {
+                            context
+                                .read<CartManager>()
+                                .addToCart(product, detailsProducts);
+                            Navigator.pushNamed(context, '/cart');
+                          } else {
+                            Navigator.pushNamed(context, '/login');
+                          }
+                        }
                             : null,
                       );
                     }),

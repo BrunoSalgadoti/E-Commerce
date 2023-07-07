@@ -7,12 +7,10 @@ class ProductsWidget extends StatelessWidget {
   const ProductsWidget({
     Key? key,
     this.details,
-    this.onTap,
     this.onSizeSelected,
   }) : super(key: key);
 
   final DetailsProducts? details;
-  final VoidCallback? onTap;
   final Function(int)? onSizeSelected;
 
   @override

@@ -75,7 +75,7 @@ class PriceCard extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            CustomButton(text: buttonText, fontSize: 15, onPressed: onPressed,)
+            CustomButton(text: buttonText, fontSize: 14, onPressed: onPressed,)
           ],
         ),
       ),

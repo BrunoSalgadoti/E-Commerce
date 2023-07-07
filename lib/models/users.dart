@@ -6,7 +6,7 @@ class Users {
       {required this.email,
       this.password,
       this.userName,
-        this.phoneNumber,
+      this.phoneNumber,
       this.confirmPassword,
       this.id,
       this.favourite});

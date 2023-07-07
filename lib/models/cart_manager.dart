@@ -1,6 +1,7 @@
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/cart_product.dart';
 import 'package:brn_ecommerce/models/delivery.dart';
+import 'package:brn_ecommerce/models/details_products.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
@@ -63,12 +64,12 @@ class CartManager extends ChangeNotifier {
     }
   }
 
-  void addToCart(Product product) {
+  void addToCart(Product product, DetailsProducts detailsProducts) {
     try {
-      final sameEntity = items.firstWhere((p) => p.stackable(product));
+      final sameEntity = items.firstWhere((p) => p.stackableSize(product));
       sameEntity.increment();
     } catch (newCartProd) {
-      final cartProduct = CartProduct.fromProduct(product);
+      final cartProduct = CartProduct.fromProduct(product, detailsProducts);
       cartProduct.addListener(_onItemUpdate);
       items.add(cartProduct);
       users!.cartReference
@@ -115,6 +116,7 @@ class CartManager extends ChangeNotifier {
       users!.cartReference
           .doc(cartProduct.id)
           .update(cartProduct.toCartItemMap());
+      users!.firestoreRef.update({'favourite': true});
     }
     notifyListeners();
   }
