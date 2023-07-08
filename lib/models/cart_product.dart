@@ -80,7 +80,12 @@ class CartProduct extends ChangeNotifier {
 
   num get totalPrice => unitPrice * quantity!;
 
-  int get unitQuantity {
+  int? get unitQuantityAmount {
+    if (product == null) return 0;
+    return detailsProductsFindValues?.findAmount(amount)?.amount ?? 0;
+  }
+
+  int get unitQuantityStock {
     if (product == null) return 0;
     return detailsProductsFindValues?.stock ?? 0;
   }
@@ -129,6 +134,13 @@ class CartProduct extends ChangeNotifier {
     final size = detailsProductsFindValues;
     if (size == null) return false;
     return size.stock >= quantity!;
+  }
+
+  bool get hasAmount {
+    if (product != null && product!.deleted) return false;
+    final amount = detailsProductsFindValues?.findAmount(this.amount)?.amount;
+    if (amount == null) return false;
+    return amount >= quantity!;
   }
 
   Color _getColorFromString(String color) {

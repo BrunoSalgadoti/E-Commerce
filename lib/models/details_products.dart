@@ -36,21 +36,9 @@ class DetailsProducts extends ChangeNotifier {
     notifyListeners();
   }
 
-  num get totalAmount {
-    num amount = 0;
-    for (final item in colorProducts!) {
-      amount += item.amount;
-    }
-    return amount;
-  }
-
-  bool get hasAmount {
-    return totalAmount > 0;
-  }
-
-  ColorsProducts? findColor(String name) {
+  ColorsProducts? findAmount(int? quantity) {
     try {
-      return colorProducts?.firstWhere((c) => c.color == name);
+      return colorProducts?.firstWhere((a) => a.amount == quantity);
     } catch (error) {
       return null;
     }

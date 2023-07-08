@@ -52,7 +52,9 @@ class CartManager extends ChangeNotifier {
     final QuerySnapshot cartSnap = await users!.cartReference.get();
 
     items = cartSnap.docs
-        .map((d) => CartProduct.fromDocument(d)..addListener(_onItemUpdate))
+        .map((d) =>
+    CartProduct.fromDocument(d)
+      ..addListener(_onItemUpdate))
         .toList();
   }
 
@@ -123,7 +125,7 @@ class CartManager extends ChangeNotifier {
 
   bool get isCartValid {
     for (final cartProduct in items) {
-      if (!cartProduct.hasStock) return false;
+      if (!cartProduct.hasStock || !cartProduct.hasAmount) return false;
     }
     return true;
   }
@@ -163,7 +165,7 @@ class CartManager extends ChangeNotifier {
 
       try {
         final cepAbertoAddress =
-            await cepAbertoService.getAddressFromZipCode(cep);
+        await cepAbertoService.getAddressFromZipCode(cep);
 
         address = Address(
           zipCode: cepAbertoAddress.cep,
@@ -228,7 +230,7 @@ class CartManager extends ChangeNotifier {
     final maximumDeliveryDistance = doc.get('maxKm') as num;
 
     double distanceClient =
-        Geolocator.distanceBetween(latStore, longStore, lat, long);
+    Geolocator.distanceBetween(latStore, longStore, lat, long);
 
     // Converting distance from M to KM
     distanceClient /= 1000.0;
