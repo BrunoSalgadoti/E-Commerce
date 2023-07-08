@@ -107,7 +107,7 @@ class CheckoutManager extends ChangeNotifier {
       if (productsWithoutStock.isNotEmpty) {
         return Future.error('${productsWithoutStock.length} '
             'Estoque modificado antes da finalização da compra!'
-            'Favor Verificar quantidade!');
+            'Favor verificar quantidade disponível!');
       }
 
       for (final product in productsToUpdate) {

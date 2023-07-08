@@ -1,9 +1,11 @@
 import 'package:brn_ecommerce/common/button/custom_text_button.dart';
+import 'package:brn_ecommerce/common/format_timestamp.dart';
 import 'package:brn_ecommerce/common/orders/components/export_address_dialog.dart';
 import 'package:brn_ecommerce/common/orders/components/order_product_tile.dart';
 import 'package:brn_ecommerce/common/show_alert_dialog.dart';
 import 'package:brn_ecommerce/models/order_client.dart';
 import 'package:flutter/material.dart';
+
 
 class OrderTile extends StatelessWidget {
   const OrderTile(this.orderClient, {Key? key, this.showControls = false})
@@ -11,10 +13,12 @@ class OrderTile extends StatelessWidget {
 
   final OrderClient? orderClient;
   final bool showControls;
+  String get formattedDateString => formatTimestamp(orderClient!.date!);
 
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -33,6 +37,11 @@ class OrderTile extends StatelessWidget {
                     ),
                   ),
                   Text('R\$ ${orderClient!.price!.toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      )),
+                  Text(formattedDateString,
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
