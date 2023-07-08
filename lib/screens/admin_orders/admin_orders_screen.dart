@@ -32,7 +32,8 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
       ),
       body: Consumer<AdminOrdersManager>(
         builder: (_, adminOrdersManager, __) {
-          final filteredOrders = adminOrdersManager.filteredOrders;
+          final filteredOrders = adminOrdersManager.filteredOrders.toList()
+            ..sort((a, b) => b.formattedId.compareTo(a.formattedId));
 
           return SlidingUpPanel(
             controller: _panelController,

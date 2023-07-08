@@ -11,6 +11,9 @@ class OrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
+
     return Scaffold(
       drawer: const CustomDrawer(),
       appBar: AppBar(
@@ -19,6 +22,9 @@ class OrdersScreen extends StatelessWidget {
       ),
       body: Consumer<OrdersManager>(
         builder: (_, ordersManager, __) {
+          final sortedOrders = ordersManager.orders.toList()
+            ..sort((a, b) => b.formattedId.compareTo(a.formattedId));
+
           if (ordersManager.users!.id == null) {
             return const LoginCard();
           }
@@ -31,9 +37,9 @@ class OrdersScreen extends StatelessWidget {
             );
           }
           return ListView.builder(
-              itemCount: ordersManager.orders.length,
+              itemCount: sortedOrders.length,
               itemBuilder: (_, index) {
-                return OrderTile(ordersManager.orders.reversed.toList()[index]);
+                return OrderTile(sortedOrders[index]);
               });
         },
       ),
