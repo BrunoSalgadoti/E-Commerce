@@ -58,13 +58,25 @@ class ColorsWidget extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.4),
+                        spreadRadius: 2,
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
                   child: Container(
-                    decoration: BoxDecoration(
-                      color: colorsProducts?.realColor,
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: colorsProducts?.realColor,
+                      ),
+                      width: 45,
+                      height: 20,
                     ),
-                    width: 45,
-                    height: 20,
                   ),
                 ),
               ],

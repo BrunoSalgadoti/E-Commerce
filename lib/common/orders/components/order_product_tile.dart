@@ -60,6 +60,16 @@ class OrderProductTile extends StatelessWidget {
                           Container(
                             width: 60,
                             height: 20,
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 2,
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
                             child: Container(
                               color: cartProduct?.realColorFromCart ??
                                   Colors.transparent,
