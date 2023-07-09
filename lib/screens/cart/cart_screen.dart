@@ -32,8 +32,7 @@ class CartScreen extends StatelessWidget {
               children: cartManager.items
                   .map((cartProduct) => CartTile(
                         cartProduct: cartProduct,
-                      ))
-                  .toList(),
+                      )).toList(),
             ),
             PriceCard(
                 buttonText: 'Continuar para Entrega',

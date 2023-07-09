@@ -56,6 +56,7 @@ class CartManager extends ChangeNotifier {
     CartProduct.fromDocument(d)
       ..addListener(_onItemUpdate))
         .toList();
+    notifyListeners();
   }
 
   Future<void> _loadUserAddress() async {
@@ -88,7 +89,7 @@ class CartManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void clear() {
+  void clearCart() {
     for (final cartProduct in items) {
       users!.cartReference.doc(cartProduct.id).delete();
     }

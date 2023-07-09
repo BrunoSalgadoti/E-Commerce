@@ -1,4 +1,6 @@
 import 'package:brn_ecommerce/models/colors_products.dart';
+import 'package:brn_ecommerce/models/product.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class DetailsProducts extends ChangeNotifier {
@@ -36,12 +38,38 @@ class DetailsProducts extends ChangeNotifier {
     notifyListeners();
   }
 
-  ColorsProducts? findAmount(int? quantity) {
+  ColorsProducts? findAmount(int? quantityAmount) {
     try {
-      return colorProducts?.firstWhere((a) => a.amount == quantity);
+      return colorProducts?.firstWhere((a) => a.amount == quantityAmount);
     } catch (error) {
       return null;
     }
+  }
+
+  bool areAllColorsEmpty(Product? product) {
+    if (product!.itemProducts!.isEmpty) {
+      return true; // Se a lista de tamanhos estiver vazia, retorna verdadeiro
+    }
+
+    for (final details in product.itemProducts!) {
+      if (details.colorProducts!.isEmpty) {
+        return true; // Se a lista de cores estiver vazia, retorna verdadeiro
+      }
+
+      if (details.colorProducts!.any((colors) => colors.color != "")) {
+        return false; // Se encontrar alguma cor não vazia, retorna falso
+      }
+    }
+
+    return true; // Se todas as cores forem vazias, retorna verdadeiro
+  }
+
+  String get totalColors {
+    String color = "";
+    for (final colors in colorProducts!) {
+      color += colors.color!;
+    }
+    return color;
   }
 
   Map<String, dynamic> toMap() {
@@ -60,6 +88,28 @@ class DetailsProducts extends ChangeNotifier {
       stock: stock,
       colorProducts: colorProducts?.map((colors) => colors.clone()).toList(),
     );
+  }
+
+  Future<void> ifTheProductIsDeleted(
+      String? productId, List<DetailsProducts>? itemProducts) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final DocumentReference productRef = firestore.doc('products/$productId');
+
+    final List<Map<String, dynamic>> updatedColorProducts = colorProducts!
+        .map((colors) => {
+              ...colors.toMap(),
+              'amount': 0,
+            })
+        .toList();
+
+    final List<Map<String, dynamic>> updatedDetailsList = itemProducts!
+        .map((details) => {
+              ...details.toMap(),
+              'colors': updatedColorProducts,
+            })
+        .toList();
+
+    await productRef.update({'details': updatedDetailsList});
   }
 
   @override

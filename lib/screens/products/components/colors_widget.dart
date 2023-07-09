@@ -6,10 +6,12 @@ import 'package:provider/provider.dart';
 class ColorsWidget extends StatelessWidget {
   const ColorsWidget({
     Key? key,
-    this.colorsProducts,
+    this.colorsProducts, required this.selectedSizeIndex,
   }) : super(key: key);
 
   final ColorsProducts? colorsProducts;
+  final int? selectedSizeIndex;
+
 
   @override
   Widget build(BuildContext context) {

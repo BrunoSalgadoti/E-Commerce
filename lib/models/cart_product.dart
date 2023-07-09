@@ -8,7 +8,7 @@ class CartProduct extends ChangeNotifier {
     productId = product?.id;
     quantity = 1;
     size = product?.selectedDetails?.size;
-    color = detailsProducts?.selectedColors?.color;
+    color = detailsProducts?.selectedColors?.color ?? '';
     amount = detailsProducts?.selectedColors?.amount;
     realColorFromCart = _getColorFromString(color!);
   }
@@ -18,7 +18,7 @@ class CartProduct extends ChangeNotifier {
     productId = document.get('pid') as String;
     quantity = document.get('quantity') as int;
     size = document.get('size') as String;
-    color = document.get('color') as String?;
+    color = document.get('color') as String? ?? '';
     realColorFromCart = _getColorFromString(color!);
 
     firestore.doc('products/$productId').get().then((doc) {
@@ -80,7 +80,7 @@ class CartProduct extends ChangeNotifier {
 
   num get totalPrice => unitPrice * quantity!;
 
-  int? get unitQuantityAmount {
+  int get unitQuantityAmount {
     if (product == null) return 0;
     return detailsProductsFindValues?.findAmount(amount)?.amount ?? 0;
   }

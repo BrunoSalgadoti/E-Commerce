@@ -189,6 +189,8 @@ class Product extends ChangeNotifier {
     };
     await firestoreRef.update(data);
 
+    await firestoreRef.update({'isvalid': false});
+
     // Deletes all images except the first one if there is more than one image
     if (images!.length > 1) {
       for (int i = 1; i < images!.length; i++) {
@@ -212,6 +214,8 @@ class Product extends ChangeNotifier {
     await firestoreRef.update({
       'images': images,
     });
+
+    await details?.ifTheProductIsDeleted(id, itemProducts);
 
     notifyListeners();
   }

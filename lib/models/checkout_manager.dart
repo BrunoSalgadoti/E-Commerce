@@ -44,7 +44,7 @@ class CheckoutManager extends ChangeNotifier {
 
     await order.saveOrder();
 
-    cartManager!.clear();
+    cartManager!.clearCart();
 
     onSuccess(order);
     loading = false;
@@ -93,7 +93,8 @@ class CheckoutManager extends ChangeNotifier {
 
         final details = product.findSize(cartProduct.size!);
         if (details!.stock - cartProduct.quantity! < 0 ||
-            cartProduct.amount! - cartProduct.quantity! < 0) {
+             cartProduct.amount! - cartProduct.quantity! < 0
+        ) {
           productsWithoutStock.add(product);
         } else {
           details.stock -= cartProduct.quantity!;
