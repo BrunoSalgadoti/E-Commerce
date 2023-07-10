@@ -38,9 +38,13 @@ class DetailsProducts extends ChangeNotifier {
     notifyListeners();
   }
 
-  ColorsProducts? findAmount(int? quantityAmount) {
+  ColorsProducts? findAmountByColor(String? color) {
+    if (color == null || colorProducts == null) {
+      return null;
+    }
+
     try {
-      return colorProducts?.firstWhere((a) => a.amount == quantityAmount);
+      return colorProducts!.firstWhere((a) => a.color == color);
     } catch (error) {
       return null;
     }

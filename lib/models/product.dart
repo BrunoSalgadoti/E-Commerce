@@ -267,13 +267,13 @@ class Product extends ChangeNotifier {
 
         break;
       }
-
-      if (!isValid!) {
+      if (isValid!) {
+        isValid = true;
         final DocumentReference productRef =
             FirebaseFirestore.instance.collection('products').doc(productId);
 
         await productRef.update({'isvalid': true});
-        break;
+        notifyListeners();
       }
     }
     notifyListeners();

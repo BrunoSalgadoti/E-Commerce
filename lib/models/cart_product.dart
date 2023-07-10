@@ -9,7 +9,6 @@ class CartProduct extends ChangeNotifier {
     quantity = 1;
     size = product?.selectedDetails?.size;
     color = detailsProducts?.selectedColors?.color ?? '';
-    amount = detailsProducts?.selectedColors?.amount;
     realColorFromCart = _getColorFromString(color!);
   }
 
@@ -46,7 +45,7 @@ class CartProduct extends ChangeNotifier {
   String? size;
   String? color;
   int? quantity;
-  int? amount;
+
   num? fixedPrice;
   Color? realColorFromCart;
 
@@ -82,7 +81,7 @@ class CartProduct extends ChangeNotifier {
 
   int get unitQuantityAmount {
     if (product == null) return 0;
-    return detailsProductsFindValues?.findAmount(amount)?.amount ?? 0;
+    return detailsProductsFindValues?.findAmountByColor(color)?.amount ?? 0;
   }
 
   int get unitQuantityStock {
@@ -138,7 +137,7 @@ class CartProduct extends ChangeNotifier {
 
   bool get hasAmount {
     if (product != null && product!.deleted) return false;
-    final amount = detailsProductsFindValues?.findAmount(this.amount)?.amount;
+    final amount = detailsProductsFindValues?.findAmountByColor(color)?.amount;
     if (amount == null) return false;
     return amount >= quantity!;
   }

@@ -84,7 +84,7 @@ class CheckoutManager extends ChangeNotifier {
               productsToUpdate.firstWhere((p) => p.id == cartProduct.productId);
         } else {
           final doc =
-          await tx.get(firestore.doc('products/${cartProduct.productId}'));
+              await tx.get(firestore.doc('products/${cartProduct.productId}'));
           product = Product.fromDocument(doc);
         }
 
@@ -93,8 +93,7 @@ class CheckoutManager extends ChangeNotifier {
 
         final details = product.findSize(cartProduct.size!);
         if (details!.stock - cartProduct.quantity! < 0 ||
-             cartProduct.amount! - cartProduct.quantity! < 0
-        ) {
+            cartProduct.unitQuantityAmount - cartProduct.quantity! < 0) {
           productsWithoutStock.add(product);
         } else {
           details.stock -= cartProduct.quantity!;
