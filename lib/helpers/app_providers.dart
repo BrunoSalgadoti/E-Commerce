@@ -54,7 +54,7 @@ class AppProviders extends StatelessWidget {
           create: (_) => OrdersManager(),
           lazy: false,
           update: (_, userManager, ordersManager) =>
-              ordersManager!..updateUser(userManager.users ?? Users(email: '')),
+              ordersManager!..updateUser(userManager.users ?? Users(email: "")),
         ),
         ChangeNotifierProxyProvider<UserManager, AdminUsersManager>(
           create: (_) => AdminUsersManager(),

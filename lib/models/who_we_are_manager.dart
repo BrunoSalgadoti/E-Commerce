@@ -19,20 +19,20 @@ class WhoWeAreManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  String? footerDescription = '';
-  String? topDescription = '';
+  String? footerDescription = "";
+  String? topDescription = "";
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   void _subscribeToDescriptions() {
     firestore
-        .collection('whoweare')
-        .doc('descriptions')
+        .collection("whoweare")
+        .doc("descriptions")
         .snapshots()
         .listen((DocumentSnapshot doc) {
       if (doc.exists) {
-        footerDescription = doc['footerDescription'] as String?;
-        topDescription = doc['topDescription'] as String?;
+        footerDescription = doc["footerDescription"] as String?;
+        topDescription = doc["topDescription"] as String?;
         notifyListeners();
       }
     });
@@ -42,12 +42,12 @@ class WhoWeAreManager extends ChangeNotifier {
     loading = true;
 
     final Map<String, dynamic> data = {
-      'topDescription': topDescription,
-      'footerDescription': footerDescription,
+      "topDescription": topDescription,
+      "footerDescription": footerDescription,
     };
 
     final DocumentReference docRef =
-        firestore.collection('whoweare').doc('descriptions');
+        firestore.collection("whoweare").doc("descriptions");
 
     await docRef.set(data);
 

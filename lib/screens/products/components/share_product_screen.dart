@@ -263,7 +263,7 @@ class ShareProductScreenState extends State<ShareProductScreen> {
                                 fit: BoxFit.fill,
                               ),
                               Image.asset(
-                                'assets/logo/storeLogo.png',
+                                "assets/logo/storeLogo.png",
                                 width: 180,
                                 height: 450,
                                 alignment: Alignment.bottomRight,

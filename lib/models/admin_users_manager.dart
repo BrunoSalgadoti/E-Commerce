@@ -23,7 +23,7 @@ class AdminUsersManager with ChangeNotifier {
 
   Future<void> _listenToUsers() async {
     QuerySnapshot<Map<String, dynamic>> snapshot = await firestore
-        .collection('users')
+        .collection("users")
         .get(const GetOptions(source: Source.cache));
     if (snapshot.metadata.isFromCache) {
       // If data is retrieved from the cache, update the UI...
@@ -34,7 +34,7 @@ class AdminUsersManager with ChangeNotifier {
     // Listen to the stream for real-time updates and update...
     // the UI when necessary
     _subscription =
-        firestore.collection('users').snapshots().listen((snapshot) async {
+        firestore.collection("users").snapshots().listen((snapshot) async {
       userList = snapshot.docs.map((d) => Users.fromDocument(d)).toList();
       notifyListeners();
     });

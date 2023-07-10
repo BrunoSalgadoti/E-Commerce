@@ -51,16 +51,16 @@ class CheckoutManager extends ChangeNotifier {
   }
 
   Future<int> _getOrderId() async {
-    final transactionRef = firestore.doc('aux/orderCounter');
+    final transactionRef = firestore.doc("aux/orderCounter");
 
     try {
       final result = await firestore.runTransaction((tx) async {
         final doc = await tx.get(transactionRef);
-        final orderId = doc.get('current') as int;
-        tx.update(transactionRef, {'current': orderId + 1});
-        return {'orderId': orderId};
+        final orderId = doc.get("current") as int;
+        tx.update(transactionRef, {"current": orderId + 1});
+        return {"orderId": orderId};
       });
-      return result['orderId'] as int;
+      return result["orderId"] as int;
     } catch (error) {
       debugPrint(error.toString());
       return Future.error('Falha ao gerar número do pedido!');
@@ -84,7 +84,7 @@ class CheckoutManager extends ChangeNotifier {
               productsToUpdate.firstWhere((p) => p.id == cartProduct.productId);
         } else {
           final doc =
-              await tx.get(firestore.doc('products/${cartProduct.productId}'));
+              await tx.get(firestore.doc("products/${cartProduct.productId}"));
           product = Product.fromDocument(doc);
         }
 
@@ -111,8 +111,8 @@ class CheckoutManager extends ChangeNotifier {
       }
 
       for (final product in productsToUpdate) {
-        tx.update(firestore.doc('products/${product.id}'),
-            {'details': product.exportDetailsList()});
+        tx.update(firestore.doc("products/${product.id}"),
+            {"details": product.exportDetailsList()});
       }
     });
   }

@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 
 class ViaCepService {
   Future<ViaCepAddress> getAddressFromZipCode(String zipCode) async {
-    final cleanZipCode = zipCode.replaceAll(RegExp('[^0-9]'), '');
+    final cleanZipCode = zipCode.replaceAll(RegExp("[^0-9]"), "");
     final endpoint = "https://viacep.com.br/ws/$cleanZipCode/json/";
 
     final Dio dio = Dio();

@@ -22,7 +22,7 @@ class AddressScreen extends StatelessWidget {
               buttonText: 'Continuar para Pagamento',
               onPressed: cartManager.isAddressValid
                   ? () {
-                      Navigator.pushNamed(context, '/checkout');
+                      Navigator.pushNamed(context, "/checkout");
                     }
                   : null,
             );

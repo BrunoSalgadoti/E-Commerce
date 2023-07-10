@@ -20,7 +20,7 @@ class CartTile extends StatelessWidget {
       value: cartProduct,
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, '/product',
+          Navigator.pushNamed(context, "/product",
               arguments: cartProduct?.product);
         },
         child: Card(

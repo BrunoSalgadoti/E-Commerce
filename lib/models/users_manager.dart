@@ -29,7 +29,7 @@ class UserManager extends ChangeNotifier {
   bool get adminEnable => users != null && users!.admin;
 
   Image? image = Image.asset(
-    'assets/logo/storeLogo.png',
+    "assets/logo/storeLogo.png",
     width: 15,
     height: 15,
   );
@@ -69,11 +69,11 @@ class UserManager extends ChangeNotifier {
 
       // Check if this is the first user to register
       QuerySnapshot adminsQuery =
-          await firestore.collection('admins').limit(1).get();
+          await firestore.collection("admins").limit(1).get();
       if (adminsQuery.docs.isEmpty) {
         // Creates document '{users.id}' in collection 'admins' with user id admin
-        await firestore.collection('admins').doc(users.id).set({
-          'user': users.id,
+        await firestore.collection("admins").doc(users.id).set({
+          "user": users.id,
         });
         users.admin = true; // Set user as administrator on first login
       }
@@ -96,11 +96,11 @@ class UserManager extends ChangeNotifier {
       final User currentUser = user ?? _auth.currentUser!;
       if (currentUser.uid.isNotEmpty) {
         final DocumentSnapshot docUsers =
-            await firestore.collection('users').doc(currentUser.uid).get();
+            await firestore.collection("users").doc(currentUser.uid).get();
         users = Users.fromDocument(docUsers);
 
         final docAdmin =
-            await firestore.collection('admins').doc(users?.id).get();
+            await firestore.collection("admins").doc(users?.id).get();
         if (docAdmin.exists) {
           users?.admin = true;
         }

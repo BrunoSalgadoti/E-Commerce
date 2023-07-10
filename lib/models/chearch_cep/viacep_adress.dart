@@ -39,13 +39,13 @@ class ViaCepAddress {
     return ViaCepAddress(
       longitude: longitude,
       latitude: latitude,
-      cep: map['cep'] as String,
-      streetAddress: map['logradouro'] as String? ?? '',
-      district: map['bairro'] as String? ?? '',
-      city: map['localidade'] as String? ?? '',
-      state: map['uf'] as String? ?? '',
-      ddd: map['ddd'] as String? ?? '',
-      ibge: map['ibge'] as String? ?? '',
+      cep: map["cep"] as String,
+      streetAddress: map["logradouro"] as String? ?? '',
+      district: map["bairro"] as String? ?? '',
+      city: map["localidade"] as String? ?? '',
+      state: map["uf"] as String? ?? '',
+      ddd: map["ddd"] as String? ?? '',
+      ibge: map["ibge"] as String? ?? '',
     );
   }
 

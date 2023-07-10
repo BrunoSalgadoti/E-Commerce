@@ -27,12 +27,12 @@ class Product extends ChangeNotifier {
 
   Product.fromDocument(DocumentSnapshot document) {
     id = document.id;
-    name = document['name'] as String;
-    description = document['description'] as String;
-    images = List<String>.from(document['images'] as List<dynamic>);
-    deleted = (document['deleted'] ?? false) as bool;
-    isValid = (document['isvalid'] ?? true) as bool;
-    itemProducts = (document['details'] as List<dynamic>)
+    name = document["name"] as String;
+    description = document["description"] as String;
+    images = List<String>.from(document["images"] as List<dynamic>);
+    deleted = (document["deleted"] ?? false) as bool;
+    isValid = (document["isvalid"] ?? true) as bool;
+    itemProducts = (document["details"] as List<dynamic>)
         .map((d) => DetailsProducts.fromMap(d as Map<String, dynamic>))
         .toList();
   }
@@ -40,9 +40,9 @@ class Product extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseStorage storage = FirebaseStorage.instance;
 
-  DocumentReference get firestoreRef => firestore.doc('products/$id');
+  DocumentReference get firestoreRef => firestore.doc("products/$id");
 
-  Reference get storageRef => storage.ref().child('products').child(id!);
+  Reference get storageRef => storage.ref().child("products").child(id!);
 
   String? id;
   String? name;
@@ -110,15 +110,15 @@ class Product extends ChangeNotifier {
     loading = true;
 
     final Map<String, dynamic> data = {
-      'name': name,
-      'description': description,
-      'details': exportDetailsList(),
-      'deleted': deleted,
-      'isvalid': isValid,
+      "name": name,
+      "description": description,
+      "details": exportDetailsList(),
+      "deleted": deleted,
+      "isvalid": isValid,
     };
 
     if (id == null) {
-      final doc = await firestore.collection('products').add(data);
+      final doc = await firestore.collection("products").add(data);
       id = doc.id;
     } else {
       await firestoreRef.update(data);
@@ -132,7 +132,7 @@ class Product extends ChangeNotifier {
         if (kIsWeb) {
           final List<int> bytes = base64.decode(newImage.split(',').last);
           final Uint8List uint8ListBytes = Uint8List.fromList(bytes);
-          final metadata = SettableMetadata(contentType: 'image/jpeg');
+          final metadata = SettableMetadata(contentType: "image/jpeg");
           final task = storageRef
               .child(const Uuid().v4())
               .putData(uint8ListBytes, metadata);
@@ -151,7 +151,7 @@ class Product extends ChangeNotifier {
 
     for (final image in images!) {
       try {
-        if (!newImages!.contains(image) && image.contains('firebase')) {
+        if (!newImages!.contains(image) && image.contains("firebase")) {
           final ref = storage.refFromURL(image);
           await ref.delete();
         }
@@ -160,7 +160,7 @@ class Product extends ChangeNotifier {
       }
     }
 
-    await firestoreRef.update({'images': updateImages});
+    await firestoreRef.update({"images": updateImages});
 
     images = updateImages;
 
@@ -173,7 +173,7 @@ class Product extends ChangeNotifier {
 
       for (final details in itemProducts!) {
         final Map<String, dynamic> detailsData = details.toMap();
-        detailsData['stock'] = 0; // Define o estoque como 0
+        detailsData["stock"] = 0; // Define o estoque como 0
         detailsList.add(detailsData);
       }
 
@@ -181,21 +181,21 @@ class Product extends ChangeNotifier {
     }
 
     final Map<String, dynamic> data = {
-      'name': name,
-      'description': description,
-      'details': exportDetailsList(),
-      'deleted': deleted,
-      'isvalid': isValid,
+      "name": name,
+      "description": description,
+      "details": exportDetailsList(),
+      "deleted": deleted,
+      "isvalid": isValid,
     };
     await firestoreRef.update(data);
 
-    await firestoreRef.update({'isvalid': false});
+    await firestoreRef.update({"isvalid": false});
 
     // Deletes all images except the first one if there is more than one image
     if (images!.length > 1) {
       for (int i = 1; i < images!.length; i++) {
         final image = images![i];
-        if (image.contains('firebase')) {
+        if (image.contains("firebase")) {
           try {
             final ref = storage.refFromURL(image);
             await ref.delete();
@@ -212,7 +212,7 @@ class Product extends ChangeNotifier {
 
     // Updates the product in the database with the updated images
     await firestoreRef.update({
-      'images': images,
+      "images": images,
     });
 
     await details?.ifTheProductIsDeleted(id, itemProducts);
@@ -225,7 +225,7 @@ class Product extends ChangeNotifier {
     await deleteProductWithZeroStockOneImage();
 
     // Set the product as deleted
-    await firestoreRef.update({'deleted': true});
+    await firestoreRef.update({"deleted": true});
     notifyListeners();
   }
 
@@ -256,9 +256,9 @@ class Product extends ChangeNotifier {
         isValid = false; // Inconsistency found
 
         final DocumentReference productRef =
-            FirebaseFirestore.instance.collection('products').doc(productId);
+            FirebaseFirestore.instance.collection("products").doc(productId);
 
-        await productRef.update({'isvalid': false});
+        await productRef.update({"isvalid": false});
 
         errorMessage = 'A quant. de ESTOQUE está diferente da de Cores!!!\n'
             'Favor revisar o ESTOQUE e a quat. de CORES equivalentes ao Tamanho!\n'
@@ -270,12 +270,12 @@ class Product extends ChangeNotifier {
       if (isValid!) {
         isValid = true;
         final DocumentReference productRef =
-            FirebaseFirestore.instance.collection('products').doc(productId);
+            FirebaseFirestore.instance.collection("products").doc(productId);
 
-        await productRef.update({'isvalid': true});
+        await productRef.update({"isvalid": true});
         notifyListeners();
       }
-    }
     notifyListeners();
+    }
   }
 }

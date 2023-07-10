@@ -64,11 +64,11 @@ class CheckoutScreen extends StatelessWidget {
                           margin: const EdgeInsets.all(15),
                         ));
                         Navigator.popUntil(
-                            context, (route) => route.settings.name == '/cart');
+                            context, (route) => route.settings.name == "/cart");
                       }, onSuccess: (order) {
                         Navigator.popUntil(
                             context, (route) => route.settings.name == '/');
-                        Navigator.pushNamed(context, '/sales_confirmation',
+                        Navigator.pushNamed(context, "/sales_confirmation",
                             arguments: order);
                       });
                     },

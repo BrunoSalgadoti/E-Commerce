@@ -25,8 +25,8 @@ class OrdersManager extends ChangeNotifier {
 
   void _listenToOrders() {
     _subscription = firestore
-        .collection('orders')
-        .where('user', isEqualTo: users!.id)
+        .collection("orders")
+        .where("user", isEqualTo: users!.id)
         .snapshots()
         .listen((events) {
       orders.clear();

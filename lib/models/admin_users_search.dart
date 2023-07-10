@@ -58,7 +58,7 @@ class AdminUsersSearch extends ChangeNotifier {
   }
 
   Future<void> _loadAllUsers() async {
-    final QuerySnapshot snapUsers = await firestore.collection('users').get();
+    final QuerySnapshot snapUsers = await firestore.collection("users").get();
 
     allUsers = snapUsers.docs.map((d) => Users.fromDocument(d)).toList();
     allUsers.sort((a, b) =>
@@ -73,31 +73,31 @@ class AdminUsersSearch extends ChangeNotifier {
       return params.entries
           .map((MapEntry<String, String> e) =>
               '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
-          .join('&');
+          .join("&");
     }
 
     final Uri emailLaunchUri = Uri(
-        scheme: 'mailto',
+        scheme: "mailto",
         path: userEmail ??
-            emails.toString().replaceAll('[', '').replaceAll(']', ''),
+            emails.toString().replaceAll("[", "").replaceAll("]", ""),
         query: encodeQueryParameters(<String, String>{
-          'subject': 'BRN Info_DEV',
-          'body': userName == null
-              ? 'Olá estimado Cliente,\n Estamos Entrando em contato para:\n'
-              : 'Olá $userName,\n Estamos Entrando em contato para:\n',
+          "subject": "BRN Info_DEV",
+          "body": userName == null
+              ? "Olá estimado Cliente,\n Estamos Entrando em contato para:\n"
+              : "Olá $userName,\n Estamos Entrando em contato para:\n",
         }));
     launchUrl(emailLaunchUri);
   }
 
   Future<void> _favoringUser(String? id) async {
-    await firestore.collection('users').doc(id).update({
-      'favourite': true,
+    await firestore.collection("users").doc(id).update({
+      "favourite": true,
     });
   }
 
   Future<void> _disfavoringUser(String? id) async {
-    await firestore.collection('users').doc(id).update({
-      'favourite': false,
+    await firestore.collection("users").doc(id).update({
+      "favourite": false,
     });
   }
 

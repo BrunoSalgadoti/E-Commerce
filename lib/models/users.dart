@@ -13,16 +13,16 @@ class Users {
 
   Users.fromDocument(DocumentSnapshot document) {
     id = document.id;
-    userName = document.get('name') as String;
-    email = document.get('email') as String;
-    favourite = document.get('favourite') as bool;
-    phoneNumber = document.get('phone') as String;
+    userName = document.get("name") as String;
+    email = document.get("email") as String;
+    favourite = document.get("favourite") as bool;
+    phoneNumber = document.get("phone") as String;
 
     Map<String, dynamic> dataMap = document.data() as Map<String, dynamic>;
 
-    if (dataMap.containsKey('address')) {
+    if (dataMap.containsKey("address")) {
       address =
-          Address.fromMap(document.get('address') as Map<String, dynamic>);
+          Address.fromMap(document.get("address") as Map<String, dynamic>);
     }
   }
 
@@ -39,9 +39,9 @@ class Users {
   Address? address;
 
   DocumentReference get firestoreRef =>
-      FirebaseFirestore.instance.doc('users/$id');
+      FirebaseFirestore.instance.doc("users/$id");
 
-  CollectionReference get cartReference => firestoreRef.collection('cart');
+  CollectionReference get cartReference => firestoreRef.collection("cart");
 
   Future<void> saveData() async {
     await firestoreRef.set(toMap());
@@ -49,11 +49,11 @@ class Users {
 
   Map<String, dynamic> toMap() {
     return {
-      'name': userName,
-      'email': email,
-      'favourite': favourite = false,
-      'phone': phoneNumber,
-      if (address != null) 'address': address!.toMap(),
+      "name": userName,
+      "email": email,
+      "favourite": favourite = false,
+      "phone": phoneNumber,
+      if (address != null) "address": address!.toMap(),
     };
   }
 

@@ -18,13 +18,13 @@ class WhoWeAreScreenState extends State<WhoWeAreScreen> {
     super.initState();
 
     _controller = YoutubePlayerController.fromVideoId(
-      videoId: '5UarsHuiwuQ',
-      autoPlay: true,
+      videoId: "5UarsHuiwuQ",
+      autoPlay: false,
       params: const YoutubePlayerParams(
         showFullscreenButton: true,
         mute: false,
         showControls: true,
-        enableJavaScript: true,
+        enableJavaScript: false,
       ),
     );
   }
@@ -54,7 +54,14 @@ class WhoWeAreScreenState extends State<WhoWeAreScreen> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Text('Carregando...');
                   } else {
-                    return YoutubePlayer(controller: _controller);
+                    return SizedBox(
+                      width: 400,
+                      height: 250,
+                      child: YoutubePlayer(
+                        controller: _controller,
+                        aspectRatio: Checkbox.width,
+                      ),
+                    );
                   }
                 },
               ),

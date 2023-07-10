@@ -35,9 +35,9 @@ class _FooterDescriptionWidgetState extends State<FooterDescriptionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    String adminCustomText = 'Bem Vindo!\n Customize com os dados '
-        'da sua Empresa como CNPJ, Telefone, Endereço, etc...'
-        '\n Clique no ícone da vassoura e comece!';
+    String adminCustomText = "Bem Vindo!\n Customize com os dados "
+        "da sua Empresa como CNPJ, Telefone, Endereço, etc..."
+        "\n Clique no ícone da vassoura e comece!";
 
     return Consumer2<WhoWeAreManager, UserManager>(
         builder: (_, whoWeAreManager, userManager, __) {
@@ -54,7 +54,7 @@ class _FooterDescriptionWidgetState extends State<FooterDescriptionWidget> {
                   (customText) =>
                       whoWeAreManager.footerDescription = customText,
                   whoWeAreManager.footerDescription ?? adminCustomText,
-                  label: 'Dados da Loja: Endereço, CNPJ, tel ...',
+                  label: "Dados da Loja: Endereço, CNPJ, tel ...",
                   maxLines: null,
                   actions: const [
                     MarkdownType.bold,
@@ -110,8 +110,8 @@ class _FooterDescriptionWidgetState extends State<FooterDescriptionWidget> {
                               padding: const EdgeInsets.all(20),
                               child: MarkdownBody(
                                 data: whoWeAreManager.footerDescription ??
-                                    'Parabéns! Você adquiriu um produto '
-                                        'com a qualidade BRN Info_Dev',
+                                    "Parabéns! Você adquiriu um produto "
+                                        "com a qualidade BRN Info_Dev",
                                 styleSheet: MarkdownStyleSheet(
                                   p: const TextStyle(color: Colors.white),
                                   pPadding: const EdgeInsets.all(4),

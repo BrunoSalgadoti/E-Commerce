@@ -14,10 +14,10 @@ class DetailsProducts extends ChangeNotifier {
   }
 
   DetailsProducts.fromMap(Map<String, dynamic> map) {
-    size = map['size'] as String;
-    price = map['price'] as num;
-    stock = map['stock'] as int;
-    colorProducts = (map['colors'] as List<dynamic>)
+    size = map["size"] as String;
+    price = map["price"] as num;
+    stock = map["stock"] as int;
+    colorProducts = (map["colors"] as List<dynamic>)
         .map((d) => ColorsProducts.fromMap(d as Map<String, dynamic>))
         .toList();
   }
@@ -78,10 +78,10 @@ class DetailsProducts extends ChangeNotifier {
 
   Map<String, dynamic> toMap() {
     return {
-      'size': size,
-      'price': price,
-      'stock': stock,
-      'colors': colorProducts!.map((colors) => colors.toMap()).toList(),
+      "size": size,
+      "price": price,
+      "stock": stock,
+      "colors": colorProducts!.map((colors) => colors.toMap()).toList(),
     };
   }
 
@@ -97,23 +97,23 @@ class DetailsProducts extends ChangeNotifier {
   Future<void> ifTheProductIsDeleted(
       String? productId, List<DetailsProducts>? itemProducts) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final DocumentReference productRef = firestore.doc('products/$productId');
+    final DocumentReference productRef = firestore.doc("products/$productId");
 
     final List<Map<String, dynamic>> updatedColorProducts = colorProducts!
         .map((colors) => {
               ...colors.toMap(),
-              'amount': 0,
+              "amount": 0,
             })
         .toList();
 
     final List<Map<String, dynamic>> updatedDetailsList = itemProducts!
         .map((details) => {
               ...details.toMap(),
-              'colors': updatedColorProducts,
+              "colors": updatedColorProducts,
             })
         .toList();
 
-    await productRef.update({'details': updatedDetailsList});
+    await productRef.update({"details": updatedDetailsList});
   }
 
   @override

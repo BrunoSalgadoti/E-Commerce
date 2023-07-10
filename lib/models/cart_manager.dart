@@ -119,7 +119,7 @@ class CartManager extends ChangeNotifier {
       users!.cartReference
           .doc(cartProduct.id)
           .update(cartProduct.toCartItemMap());
-      users!.firestoreRef.update({'favourite': true});
+      users!.firestoreRef.update({"favourite": true});
     }
     notifyListeners();
   }
@@ -188,15 +188,15 @@ class CartManager extends ChangeNotifier {
   Future<void> saveAuxDelivery(Delivery delivery) async {
     loading = true;
 
-    final collectionReference = firestore.collection('aux');
+    final collectionReference = firestore.collection("aux");
     final deliveryMap = delivery.toMap();
 
     // Uses the set method with the merge option to create...
     // or update the document
     await collectionReference
-        .doc('delivery')
+        .doc("delivery")
         .set(deliveryMap, SetOptions(merge: true));
-    await collectionReference.doc('orderCounter').set({'current': 1});
+    await collectionReference.doc("orderCounter").set({"current": 1});
 
     loading = false;
   }
@@ -221,14 +221,14 @@ class CartManager extends ChangeNotifier {
   }
 
   Future<bool> calculateDelivery(double lat, double long) async {
-    final DocumentSnapshot doc = await firestore.doc('aux/delivery').get();
+    final DocumentSnapshot doc = await firestore.doc("aux/delivery").get();
 
-    final latStore = doc.get('lat') as double;
-    final longStore = doc.get('long') as double;
-    final basePriceDelivery = doc.get('basePrice') as num;
-    final kmForDelivery = doc.get('km') as num;
+    final latStore = doc.get("lat") as double;
+    final longStore = doc.get("long") as double;
+    final basePriceDelivery = doc.get("basePrice") as num;
+    final kmForDelivery = doc.get("km") as num;
 
-    final maximumDeliveryDistance = doc.get('maxKm') as num;
+    final maximumDeliveryDistance = doc.get("maxKm") as num;
 
     double distanceClient =
     Geolocator.distanceBetween(latStore, longStore, lat, long);

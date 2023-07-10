@@ -21,7 +21,7 @@ class CartScreen extends StatelessWidget {
             child: EmptyIndicator(
               title: 'Nenhum item no carrinho!',
               iconData: null,
-              image: 'assets/images/goShopping.gif',
+              image: "assets/images/goShopping.gif",
             ),
           );
         }
@@ -38,7 +38,7 @@ class CartScreen extends StatelessWidget {
                 buttonText: 'Continuar para Entrega',
                 onPressed: cartManager.isCartValid
                     ? () {
-                        Navigator.pushNamed(context, '/address');
+                        Navigator.pushNamed(context, "/address");
                       }
                     : null),
           ],

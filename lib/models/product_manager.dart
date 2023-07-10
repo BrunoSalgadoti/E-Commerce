@@ -37,17 +37,17 @@ class ProductManager extends ChangeNotifier {
 
   void _listenToProducts() async {
     _subscription = firestore
-        .collection('products')
-        .where('deleted', isEqualTo: false)
+        .collection("products")
+        .where("deleted", isEqualTo: false)
         .snapshots()
         .listen((event) {
       allProducts.clear();
       for (final product in event.docs) {
         // Make sure the document is complete before creating a Product instance
-        if (product.data().containsKey('name') &&
-            product.data().containsKey('description') &&
-            product.data().containsKey('images') &&
-            product.data().containsKey('details')) {
+        if (product.data().containsKey("name") &&
+            product.data().containsKey("description") &&
+            product.data().containsKey("images") &&
+            product.data().containsKey("details")) {
           allProducts.add(Product.fromDocument(product));
         }
       }

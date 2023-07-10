@@ -25,36 +25,36 @@ class OrderClient {
   OrderClient.fromDocument(DocumentSnapshot doc) {
     orderId = doc.id;
 
-    items = (doc['items'] as List<dynamic>).map((e) {
+    items = (doc["items"] as List<dynamic>).map((e) {
       return CartProduct.fromMap(e as Map<String, dynamic>);
     }).toList();
 
-    price = doc['price'] as num;
-    userId = doc['user'] as String;
-    userName = doc['userName'] as String;
-    date = doc['date'] as Timestamp;
-    status = Status.values[doc['status'] as int];
-    address = Address.fromMap(doc['address'] as Map<String, dynamic>);
+    price = doc["price"] as num;
+    userId = doc["user"] as String;
+    userName = doc["userName"] as String;
+    date = doc["date"] as Timestamp;
+    status = Status.values[doc["status"] as int];
+    address = Address.fromMap(doc["address"] as Map<String, dynamic>);
   }
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   DocumentReference get firestoreRef =>
-      firestore.collection('orders').doc(orderId);
+      firestore.collection("orders").doc(orderId);
 
   void updateFromDocument(DocumentSnapshot doc) {
-    status = Status.values[doc['status'] as int];
+    status = Status.values[doc["status"] as int];
   }
 
   Future<void> saveOrder() async {
-    firestore.collection('orders').doc(orderId).set({
-      'items': items?.map((e) => e.toOrderItemMap()).toList(),
-      'price': price,
-      'user': userId,
-      'userName': userName,
-      'address': address!.toMap(),
-      'status': status!.index,
-      'date': Timestamp.now(),
+    firestore.collection("orders").doc(orderId).set({
+      "items": items?.map((e) => e.toOrderItemMap()).toList(),
+      "price": price,
+      "user": userId,
+      "userName": userName,
+      "address": address!.toMap(),
+      "status": status!.index,
+      "date": Timestamp.now(),
     });
   }
 
@@ -64,7 +64,7 @@ class OrderClient {
             status!.index != Status.returned.index
         ? () {
             status = Status.values[status!.index - 1];
-            firestoreRef.update({'status': status!.index});
+            firestoreRef.update({"status": status!.index});
           }
         : null;
   }
@@ -73,14 +73,14 @@ class OrderClient {
     return status!.index < Status.returned.index
         ? () {
             status = Status.values[status!.index + 1];
-            firestoreRef.update({'status': status!.index});
+            firestoreRef.update({"status": status!.index});
           }
         : null;
   }
 
   void cancel() {
     status = Status.canceled;
-    firestoreRef.update({'status': status!.index});
+    firestoreRef.update({"status": status!.index});
   }
 
   String? orderId;
@@ -94,7 +94,7 @@ class OrderClient {
   Status? status;
   Timestamp? date;
 
-  String get formattedId => '#${orderId?.padLeft(6, '0')}';
+  String get formattedId => "#${orderId?.padLeft(6, "0")}";
 
   String get statusText => getStatusText(status!);
 

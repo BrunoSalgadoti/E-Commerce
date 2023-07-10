@@ -21,20 +21,20 @@ class Delivery {
   num maxKmFromAdmin = 30;
 
   Delivery.fromMap(Map<String, dynamic> map) {
-    basePrice = map['basePrice'] as num;
-    km = map['km'] as num;
-    lat = map['lat'] as double;
-    long = map['long'] as double;
-    maxKm = map['maxKm'] as num;
+    basePrice = map["basePrice"] as num;
+    km = map["km"] as num;
+    lat = map["lat"] as double;
+    long = map["long"] as double;
+    maxKm = map["maxKm"] as num;
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'basePrice': basePriceFromAdmin,
-      'km': kmFromAdmin,
-      'lat': latFromAdmin,
-      'long': longFromAdmin,
-      'maxKm': maxKmFromAdmin,
+      "basePrice": basePriceFromAdmin,
+      "km": kmFromAdmin,
+      "lat": latFromAdmin,
+      "long": longFromAdmin,
+      "maxKm": maxKmFromAdmin,
     };
   }
 }

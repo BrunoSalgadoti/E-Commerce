@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:brn_ecommerce/helpers/themes/themes.dart';
 import 'package:brn_ecommerce/helpers/app_providers.dart';
 import 'package:brn_ecommerce/helpers/route_generator.dart';
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Loja Virtual BRN-Info_Dev',
+      title: "Loja Virtual BRN-Info_Dev",
       theme: _getThemeData(context),
       onGenerateRoute: RouteGenerator.generateRoute,
       debugShowCheckedModeBanner: false,

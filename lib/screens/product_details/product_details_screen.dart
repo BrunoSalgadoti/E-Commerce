@@ -72,7 +72,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               IconButton(
                   icon: const Icon(Icons.share_outlined),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/share_product',
+                    Navigator.pushNamed(context, "/share_product",
                         arguments: widget.product);
                   }),
               Consumer<UserManager>(
@@ -81,7 +81,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     return IconButton(
                       icon: const Icon(Icons.edit),
                       onPressed: () {
-                        Navigator.pushNamed(context, '/edit_product',
+                        Navigator.pushNamed(context, "/edit_product",
                             arguments: widget.product);
                       },
                     );
@@ -246,9 +246,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       context
                                           .read<CartManager>()
                                           .addToCart(product, detailsProducts);
-                                      Navigator.pushNamed(context, '/cart');
+                                      Navigator.pushNamed(context, "/cart");
                                     } else {
-                                      Navigator.pushNamed(context, '/login');
+                                      Navigator.pushNamed(context, "/login");
                                     }
                                   }
                                 : null,

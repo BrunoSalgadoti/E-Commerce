@@ -18,8 +18,8 @@ class HomeManager extends ChangeNotifier {
 
   Future<void> _loadSections() async {
     firestore
-        .collection('home')
-        .orderBy('position')
+        .collection("home")
+        .orderBy("position")
         .snapshots()
         .listen((snapshot) {
       _sections.clear();

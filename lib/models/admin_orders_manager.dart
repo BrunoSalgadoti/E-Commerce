@@ -35,7 +35,7 @@ class AdminOrdersManager extends ChangeNotifier {
   }
 
   void _listenToOrders() {
-    _subscription = firestore.collection('orders').snapshots().listen((events) {
+    _subscription = firestore.collection("orders").snapshots().listen((events) {
       for (final change in events.docChanges) {
         switch (change.type) {
           case DocumentChangeType.added:

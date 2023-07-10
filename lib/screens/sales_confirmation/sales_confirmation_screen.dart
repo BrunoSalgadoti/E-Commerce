@@ -24,7 +24,7 @@ class SalesConfirmationScreen extends StatelessWidget {
             shrinkWrap: true,
             children: [
               Image.asset(
-                'assets/images/shoppingHappy.gif',
+                "assets/images/shoppingHappy.gif",
                 width: 80,
                 height:80,
               ),

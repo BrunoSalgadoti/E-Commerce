@@ -25,7 +25,7 @@ class CustomDrawerHeader extends StatelessWidget {
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     Image.asset(
-                      'assets/logo/storeLogo.png',
+                      "assets/logo/storeLogo.png",
                       height: 130,
                       fit: BoxFit.fill,
                     )
@@ -47,7 +47,7 @@ class CustomDrawerHeader extends StatelessWidget {
                         userManager.signOut();
                         context.read<PageManager>().setPage(0);
                       } else {
-                        Navigator.pushNamed(context, '/login');
+                        Navigator.pushNamed(context, "/login");
                       }
                     },
                     child: Text(

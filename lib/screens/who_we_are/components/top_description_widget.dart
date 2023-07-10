@@ -32,8 +32,8 @@ class _TopDescriptionWidgetState extends State<TopDescriptionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    String? adminCustomText = 'Bem Vindo!\n Customize a sua apresentação'
-        '\n Clique no ícone da vassoura e comece!';
+    String? adminCustomText = "Bem Vindo!\n Customize a sua apresentação"
+        "\n Clique no ícone da vassoura e comece!";
 
     return Consumer2<WhoWeAreManager, UserManager>(
         builder: (_, whoWeAreManager, userManager, __) {
@@ -61,8 +61,8 @@ class _TopDescriptionWidgetState extends State<TopDescriptionWidget> {
                               padding: const EdgeInsets.all(20),
                               child: MarkdownBody(
                                 data: whoWeAreManager.topDescription ??
-                                    'Parabéns! Você adquiriu um produto '
-                                        'com a qualidade BRN Info_Dev',
+                                    "Parabéns! Você adquiriu um produto "
+                                        "com a qualidade BRN Info_Dev",
                                 styleSheet: MarkdownStyleSheet(
                                   p: const TextStyle(color: Colors.white),
                                   pPadding: const EdgeInsets.all(4),

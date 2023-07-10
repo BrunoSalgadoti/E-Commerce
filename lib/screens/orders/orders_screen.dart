@@ -32,7 +32,7 @@ class OrdersScreen extends StatelessWidget {
             return const EmptyIndicator(
               title: 'Nenhuma compra encontrada!\n'
                   'Vamos a compra!',
-              image: 'assets/images/waitingSales.gif',
+              image: "assets/images/waitingSales.gif",
               iconData: null,
             );
           }

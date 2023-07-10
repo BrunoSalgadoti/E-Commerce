@@ -38,7 +38,7 @@ class LoginCard extends StatelessWidget {
               CustomButton(
                 text: 'LOGIN',
                 onPressed: () {
-                  Navigator.pushNamed(context, '/login');
+                  Navigator.pushNamed(context, "/login");
                 },
               )
             ],

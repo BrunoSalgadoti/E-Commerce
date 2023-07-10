@@ -72,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                   backgroundColor: Colors.white.withAlpha(100),
                   flexibleSpace: FlexibleSpaceBar(
                     title: Image.asset(
-                      'assets/logo/storeLogo2.png',
+                      "assets/logo/storeLogo2.png",
                       width: 150,
                       fit: BoxFit.fill,
                     ),
@@ -82,9 +82,9 @@ class HomeScreen extends StatelessWidget {
                     IconButton(
                       onPressed: () {
                         if (context.read<UserManager>().isLoggedIn) {
-                          Navigator.pushNamed(context, '/cart');
+                          Navigator.pushNamed(context, "/cart");
                         } else {
-                          Navigator.pushNamed(context, '/login');
+                          Navigator.pushNamed(context, "/login");
                         }
                       },
                       icon: Consumer<UserManager>(

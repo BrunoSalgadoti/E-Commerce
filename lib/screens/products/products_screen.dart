@@ -82,7 +82,7 @@ class ProductsScreen extends StatelessWidget {
                 return IconButton(
                   icon: const Icon(Icons.add),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/edit_product');
+                    Navigator.pushNamed(context, "/edit_product");
                   },
                 );
               } else {
@@ -98,7 +98,7 @@ class ProductsScreen extends StatelessWidget {
           if (productManager.filteredProducts.isEmpty) {
             return const EmptyIndicator(
               title: 'Carregando Produtos...',
-              image: 'assets/images/await.gif',
+              image: "assets/images/await.gif",
               iconData: null,
             );
           }
@@ -117,9 +117,9 @@ class ProductsScreen extends StatelessWidget {
               foregroundColor: Theme.of(context).primaryColor,
               onPressed: () {
                 if (userManager.isLoggedIn) {
-                  Navigator.pushNamed(context, '/cart');
+                  Navigator.pushNamed(context, "/cart");
                 } else {
-                  Navigator.pushNamed(context, '/login');
+                  Navigator.pushNamed(context, "/login");
                 }
               },
               child: userManager.isLoggedIn

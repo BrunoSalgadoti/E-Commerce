@@ -8,32 +8,32 @@ class CartProduct extends ChangeNotifier {
     productId = product?.id;
     quantity = 1;
     size = product?.selectedDetails?.size;
-    color = detailsProducts?.selectedColors?.color ?? '';
+    color = detailsProducts?.selectedColors?.color ?? "";
     realColorFromCart = _getColorFromString(color!);
   }
 
   CartProduct.fromDocument(DocumentSnapshot document) {
     id = document.id;
-    productId = document.get('pid') as String;
-    quantity = document.get('quantity') as int;
-    size = document.get('size') as String;
-    color = document.get('color') as String? ?? '';
+    productId = document.get("pid") as String;
+    quantity = document.get("quantity") as int;
+    size = document.get("size") as String;
+    color = document.get("color") as String? ?? "";
     realColorFromCart = _getColorFromString(color!);
 
-    firestore.doc('products/$productId').get().then((doc) {
+    firestore.doc("products/$productId").get().then((doc) {
       product = Product.fromDocument(doc);
     });
   }
 
   CartProduct.fromMap(Map<String, dynamic> map) {
-    productId = map['pid'] as String;
-    quantity = map['quantity'] as int;
-    size = map['size'] as String;
-    fixedPrice = map['fixedPrice'] as num;
-    color = map['color'] as String;
+    productId = map["pid"] as String;
+    quantity = map["quantity"] as int;
+    size = map["size"] as String;
+    fixedPrice = map["fixedPrice"] as num;
+    color = map["color"] as String;
     realColorFromCart = _getColorFromString(color!);
 
-    firestore.doc('products/$productId').get().then((doc) {
+    firestore.doc("products/$productId").get().then((doc) {
       product = Product.fromDocument(doc);
     });
   }
@@ -91,20 +91,20 @@ class CartProduct extends ChangeNotifier {
 
   Map<String, dynamic> toCartItemMap() {
     return {
-      'pid': productId,
-      'quantity': quantity,
-      'size': size,
-      'color': color,
+      "pid": productId,
+      "quantity": quantity,
+      "size": size,
+      "color": color,
     };
   }
 
   Map<String, dynamic> toOrderItemMap() {
     return {
-      'pid': productId,
-      'quantity': quantity,
-      'size': size,
-      'color': color,
-      'fixedPrice': fixedPrice ?? unitPrice
+      "pid": productId,
+      "quantity": quantity,
+      "size": size,
+      "color": color,
+      "fixedPrice": fixedPrice ?? unitPrice
     };
   }
 
@@ -143,7 +143,7 @@ class CartProduct extends ChangeNotifier {
   }
 
   Color _getColorFromString(String color) {
-    if (color.length != 7 || color[0] != '#') {
+    if (color.length != 7 || color[0] != "#") {
       // Verificar se a string de cor não tem o tamanho esperado (7 caracteres)
       // ou se não começa com '#'. Nesse caso, retornar uma cor padrão ou null.
       return Colors.transparent; // ou retorne null se preferir

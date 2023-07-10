@@ -8,8 +8,8 @@ class ColorsProducts extends ChangeNotifier {
   });
 
   ColorsProducts.fromMap(Map<String, dynamic> map) {
-    color = map['color'] as String;
-    amount = map['amount'] as int;
+    color = map["color"] as String;
+    amount = map["amount"] as int;
     realColor = _getColorFromString(color!);
     notifyListeners();
   }
@@ -30,13 +30,13 @@ class ColorsProducts extends ChangeNotifier {
 
   Map<String, dynamic> toMap() {
     return {
-      'color': color ?? '',
-      'amount': amount,
+      "color": color ?? "",
+      "amount": amount,
     };
   }
 
   Color _getColorFromString(String color) {
-    if (color.length != 7 || color[0] != '#') {
+    if (color.length != 7 || color[0] != "#") {
       // Verificar se a string de cor não tem o tamanho esperado (7 caracteres)
       // ou se não começa com '#'. Nesse caso, retornar uma cor padrão ou null.
       return Colors.transparent; // ou retorne null se preferir

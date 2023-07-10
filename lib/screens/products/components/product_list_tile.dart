@@ -12,7 +12,7 @@ class ProductListTile extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/product', arguments: product);
+        Navigator.pushNamed(context, "/product", arguments: product);
       },
       child: product!.isValid! ? Card(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
