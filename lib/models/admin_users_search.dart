@@ -143,13 +143,18 @@ class AdminUsersSearch extends ChangeNotifier {
             child: Consumer2<AdminOrdersManager, PageManager>(
               builder: (_, adminOrdersManager, pageManager, __) {
                 return ListTile(
-                  leading: const Stack(
+                  leading: Stack(
                     children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage:
-                            NetworkImage("https://placeimg.com/200/200/people"),
-                      ),
-                      SizedBox(
+                      user.userPhotoURL == "" ||
+                              user.userPhotoURL == null
+                          ? const CircleAvatar(
+                              backgroundImage: AssetImage(
+                                  'assets/images/userWithoutImage.png'))
+                          : CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage("${user.userPhotoURL}"),
+                            ),
+                      const SizedBox(
                           height: 40,
                           width: 40,
                           child: Center(
@@ -164,7 +169,7 @@ class AdminUsersSearch extends ChangeNotifier {
                       style: const TextStyle(
                           fontWeight: FontWeight.w800, color: Colors.white)),
                   subtitle: Text(
-                    user.email,
+                      "${user.email}\nTel.: ${user.phoneNumber ?? ""}",
                     style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   onTap: () {
@@ -239,7 +244,7 @@ class AdminUsersSearch extends ChangeNotifier {
                                         CustomTextButton(
                                           text: 'Cancelar',
                                           icon: null,
-                                          color: Colors.red,
+                                          fontColor: Colors.red,
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
@@ -255,15 +260,19 @@ class AdminUsersSearch extends ChangeNotifier {
             child: Consumer2<AdminOrdersManager, PageManager>(
                 builder: (_, adminOrdersManager, pageManager, __) {
               return ListTile(
-                leading: const CircleAvatar(
-                  backgroundImage:
-                      NetworkImage("https://placeimg.com/200/200/people"),
-                ),
+                leading: user.userPhotoURL == "" ||
+                        user.userPhotoURL == null
+                    ? const CircleAvatar(
+                        backgroundImage:
+                            AssetImage('assets/images/userWithoutImage.png'))
+                    : CircleAvatar(
+                        backgroundImage:
+                            NetworkImage("${user.userPhotoURL}")),
                 title: Text(user.userName!,
                     style: const TextStyle(
                         fontWeight: FontWeight.w800, color: Colors.white)),
                 subtitle: Text(
-                  user.email,
+                  "${user.email}\nTel.: ${user.phoneNumber ?? ""}",
                   style: const TextStyle(fontSize: 16, color: Colors.white),
                 ),
                 onTap: () {

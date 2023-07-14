@@ -48,7 +48,7 @@ class ExportAddressDialog extends StatelessWidget {
       actions: [
         CustomTextButton(
           text: 'Exportar',
-          color: Theme.of(context).primaryColor,
+          fontColor: Theme.of(context).primaryColor,
           icon: null,
           onPressed: () async {
             Navigator.of(context).pop();

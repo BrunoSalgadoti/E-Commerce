@@ -7,7 +7,9 @@ class Assets {
   static const String imagesEmConstrucaoGitHub = 'assets/images/emConstrucaoGitHub.png';
   static const String imagesGoShopping = 'assets/images/goShopping.gif';
   static const String imagesShoppingHappy = 'assets/images/shoppingHappy.gif';
+  static const String imagesUserWithoutImage = 'assets/images/userWithoutImage.png';
   static const String imagesWaitingSales = 'assets/images/waitingSales.gif';
+  static const String logoGoogleLogo = 'assets/logo/googleLogo.png';
   static const String logoStoreLogo = 'assets/logo/storeLogo.png';
   static const String logoStoreLogo2 = 'assets/logo/storeLogo2.png';
 

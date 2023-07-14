@@ -96,7 +96,7 @@ class OrderTile extends StatelessWidget {
                             CustomTextButton(
                               text: 'Cancelar',
                               icon: null,
-                              color: Colors.red,
+                              fontColor: Colors.red,
                               onPressed: () {
                                 orderClient?.status = Status.canceled;
                                 showDialog<Status>(
@@ -114,7 +114,7 @@ class OrderTile extends StatelessWidget {
                                               CustomTextButton(
                                                   text: 'Sim',
                                                   icon: null,
-                                                  color: Colors.red,
+                                                fontColor: Colors.red,
                                                   onPressed: () {
                                                     orderClient?.cancel();
                                                     Navigator.of(context).pop();
@@ -124,7 +124,7 @@ class OrderTile extends StatelessWidget {
                                                 text: 'NÃO',
                                                 icon: null,
                                                 fontSize: 18,
-                                                color: Colors.green,
+                                                fontColor: Colors.green,
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
                                                 },
@@ -174,7 +174,7 @@ class OrderTile extends StatelessWidget {
                                                     CustomTextButton(
                                                         text: 'Sim',
                                                         icon: null,
-                                                        color: Colors.red,
+                                                        fontColor: Colors.red,
                                                         onPressed: () {
                                                           orderClient
                                                               ?.advance!();
@@ -185,7 +185,7 @@ class OrderTile extends StatelessWidget {
                                                       text: 'NÃO',
                                                       icon: null,
                                                       fontSize: 18,
-                                                      color: Colors.green,
+                                                      fontColor: Colors.green,
                                                       onPressed: () {
                                                         Navigator.of(context)
                                                             .pop();
@@ -203,7 +203,7 @@ class OrderTile extends StatelessWidget {
                             CustomTextButton(
                               text: 'Endereço',
                               icon: null,
-                              color: Theme.of(context).primaryColor,
+                              fontColor: Theme.of(context).primaryColor,
                               onPressed: () {
                                 showDialog(
                                   context: context,

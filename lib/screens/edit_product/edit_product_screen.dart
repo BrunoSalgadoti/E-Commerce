@@ -78,7 +78,7 @@ class EditProductScreen extends StatelessWidget {
                                 CustomTextButton(
                                     text: 'Sim',
                                     icon: null,
-                                    color: Colors.red,
+                                    fontColor: Colors.red,
                                     onPressed: () {
                                       context
                                           .read<ProductManager>()
@@ -90,7 +90,7 @@ class EditProductScreen extends StatelessWidget {
                                   text: 'NÃO',
                                   icon: null,
                                   fontSize: 18,
-                                  color: Colors.green,
+                                  fontColor: Colors.green,
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },

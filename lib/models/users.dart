@@ -9,14 +9,17 @@ class Users {
       this.phoneNumber,
       this.confirmPassword,
       this.id,
-      this.favourite});
+      this.favourite,
+      this.userPhotoURL,
+      });
 
   Users.fromDocument(DocumentSnapshot document) {
     id = document.id;
     userName = document.get("name") as String;
     email = document.get("email") as String;
     favourite = document.get("favourite") as bool;
-    phoneNumber = document.get("phone") as String;
+    phoneNumber = document.get("phone") as String? ?? "";
+    userPhotoURL = document.get("userPhoto") as String;
 
     Map<String, dynamic> dataMap = document.data() as Map<String, dynamic>;
 
@@ -28,10 +31,11 @@ class Users {
 
   String? id;
   String? userName;
-  String email = '';
+  String email = "";
   String? password;
   String? confirmPassword;
   String? phoneNumber;
+  String? userPhotoURL = "";
 
   bool? favourite;
   bool admin = false;
@@ -53,6 +57,7 @@ class Users {
       "email": email,
       "favourite": favourite = false,
       "phone": phoneNumber,
+      "userPhoto": userPhotoURL,
       if (address != null) "address": address!.toMap(),
     };
   }

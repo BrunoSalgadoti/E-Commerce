@@ -103,7 +103,7 @@ class ImageSourceSheet extends StatelessWidget {
                 Navigator.of(context).pop();
               },
               text: 'Cancelar',
-              color: Colors.red,
+              fontColor: Colors.red,
               fontSize: 18,
               icon: null,
             ),

@@ -8,6 +8,7 @@ import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 class CustomButton extends StatelessWidget {
@@ -18,7 +19,7 @@ class CustomButton extends StatelessWidget {
     this.textColor,
     this.buttonDisabledColor,
     this.shadowColor = Colors.white24,
-    this.fontSize = 17,
+    this.fontSize = 15,
     this.elevation = 08,
     this.buttonColor,
   }) : super(key: key);
@@ -59,7 +60,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 48,
+        height: 40,
         child: ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
@@ -75,8 +76,9 @@ class CustomButton extends StatelessWidget {
                 return userManager.loading ||
                     product.loading ||
                     cartManager.loading
-                    ? const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation(Colors.white),
+                    ? const SpinKitThreeInOut(
+                  color: Colors.cyan, // Cor das bolinhas
+                  size: 25.0, // Tamanho do indicador
                 )
                     : Text(
                   text,

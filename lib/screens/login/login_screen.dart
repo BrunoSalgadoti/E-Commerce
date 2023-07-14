@@ -1,9 +1,12 @@
 import 'package:brn_ecommerce/common/button/custom_button.dart';
+import 'package:brn_ecommerce/common/button/custom_text_button.dart';
+import 'package:brn_ecommerce/common/button/custom_text_button_styles.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -26,9 +29,9 @@ class LoginScreen extends StatelessWidget {
         child: Card(
           margin: kIsWeb
               ? const EdgeInsets.symmetric(horizontal: 3)
-              : const EdgeInsets.symmetric(horizontal: 19),
+              : const EdgeInsets.symmetric(horizontal: 19, vertical: 19),
           child: SizedBox(
-            width: 480,
+            width: 380,
             child: Form(
               key: formKey,
               child: Consumer<UserManager>(
@@ -57,9 +60,7 @@ class LoginScreen extends StatelessWidget {
                           }
                         },
                       ),
-                      const SizedBox(
-                        height: 16,
-                      ),
+                      const SizedBox(height: 14),
                       TextFormField(
                         controller: passwordController,
                         enabled: !userManager.loading,
@@ -88,17 +89,18 @@ class LoginScreen extends StatelessWidget {
                           onPressed: () {
                             Navigator.pushReplacementNamed(context, "/signup");
                           },
-                          child: const Text(
+                          child: Text(
                             'Não tem conta? Cadastre-se!',
                             style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 178, 165, 0)),
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).primaryColor,
+                            ),
                           ),
                         ),
                       ),
                       const SizedBox(
-                        height: 16,
+                        height: 8,
                       ),
                       CustomButton(
                         text: 'Entrar',
@@ -106,7 +108,7 @@ class LoginScreen extends StatelessWidget {
                             ? null
                             : () {
                                 if (formKey.currentState!.validate()) {
-                                  userManager.signIn(
+                                  userManager.signInWithEmailAndPassword(
                                       users: Users(
                                         email: emailController.text,
                                         password: passwordController.text,
@@ -114,7 +116,7 @@ class LoginScreen extends StatelessWidget {
                                       onFail: (error) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(SnackBar(
-                                             content: Text(error,
+                                          content: Text(error,
                                               style: const TextStyle(
                                                   fontSize: 18)),
                                           backgroundColor: Colors.red,
@@ -128,6 +130,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       const Divider(
                         indent: 2,
+                        thickness: 1.5,
                       ),
                       const SizedBox(
                         height: 5,
@@ -138,9 +141,36 @@ class LoginScreen extends StatelessWidget {
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 5),
-                      CustomButton(
-                        text: '',
-                        onPressed: () {},
+                      SizedBox(
+                        height: 40,
+                        child: CustomTextButton(
+                            icon: const Icon(FontAwesomeIcons.facebook),
+                            text: 'Entrar com Facebook',
+                            onPressed: () {
+                              userManager.loginWithFacebook(
+                                  onFail: (error) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                      content: Text(error,
+                                      style: const TextStyle(fontSize: 18)),
+                                  backgroundColor: Colors.red,
+                                ));
+                              }, onSuccess: () {
+                                Navigator.of(context).pop();
+                              });
+                            },
+                            style: CustomTextButtonStyles.buttonStyleFacebook),
+                      ),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        height: 37,
+                        child: CustomTextButton(
+                            imageAssetsTarget: "assets/logo/googleLogo.png",
+                            text: 'Entrar com Google',
+                            onPressed: () {
+                              userManager.googleLogin();
+                            },
+                            style: CustomTextButtonStyles.buttonStyleGoogle),
                       )
                     ],
                   );

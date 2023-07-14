@@ -199,7 +199,7 @@ class ShareProductScreenState extends State<ShareProductScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             CustomIconButton(
-              iconData: FontAwesomeIcons.squareFacebook,
+              iconData: FontAwesomeIcons.facebook,
               color: const Color(0xFF0075fc),
               onTap: () => share(SocialMedia.facebook),
             ),
