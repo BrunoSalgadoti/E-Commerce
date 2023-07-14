@@ -6,6 +6,7 @@ import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -141,26 +142,33 @@ class LoginScreen extends StatelessWidget {
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 5),
-                      SizedBox(
-                        height: 40,
-                        child: CustomTextButton(
-                            icon: const Icon(FontAwesomeIcons.facebook),
-                            text: '   Entrar com Facebook',
-                            onPressed: () {
-                              userManager.loginWithFacebook(
-                                  onFail: (error) {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                      content: Text(error,
-                                      style: const TextStyle(fontSize: 18)),
-                                  backgroundColor: Colors.red,
-                                ));
-                              }, onSuccess: () {
-                                Navigator.of(context).pop();
-                              });
-                            },
-                            style: CustomTextButtonStyles.buttonStyleFacebook),
-                      ),
+                      userManager.loadingFace
+                          ? SpinKitChasingDots(
+                              color: Theme.of(context).primaryColor,
+                              size: 30.0, // Tamanho do indicador
+                            )
+                          : SizedBox(
+                              height: 40,
+                              child: CustomTextButton(
+                                  icon: const Icon(FontAwesomeIcons.facebook),
+                                  text: '   Entrar com Facebook',
+                                  onPressed: () {
+                                    userManager.loginWithFacebook(
+                                        onFail: (error) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                             content: Text(error,
+                                            style:
+                                                const TextStyle(fontSize: 18)),
+                                        backgroundColor: Colors.red,
+                                      ));
+                                    }, onSuccess: () {
+                                      Navigator.of(context).pop();
+                                    });
+                                  },
+                                  style: CustomTextButtonStyles
+                                      .buttonStyleFacebook),
+                            ),
                       const SizedBox(height: 10),
                       SizedBox(
                         height: 37,

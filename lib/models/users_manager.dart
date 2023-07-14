@@ -1,17 +1,21 @@
 import 'package:brn_ecommerce/helpers/firebase_errors.dart';
 import 'package:brn_ecommerce/models/users.dart';
+import 'package:brn_ecommerce/services/db_api/facebook_app_id_for_web.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class UserManager extends ChangeNotifier {
   UserManager() {
     _loadCurrentUser();
+    _auth.setLanguageCode('pt-BR');
   }
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Users? users;
@@ -22,6 +26,15 @@ class UserManager extends ChangeNotifier {
 
   set loading(bool value) {
     _loading = value;
+    notifyListeners();
+  }
+
+  bool _loadingFace = false;
+
+  bool get loadingFace => _loadingFace;
+
+  set loadingFace(bool value) {
+    _loadingFace = value;
     notifyListeners();
   }
 
@@ -53,62 +66,66 @@ class UserManager extends ChangeNotifier {
     loading = false;
   }
 
-
-// Função que permite atualizar nomes de usuários
-//   void updateUserName() {
-//     String? newUserName = prompt(
-//       'Informe um novo nome de usuário',
-//       userName.innerHTML,
-//     );
-//     if (newUserName != null && newUserName != '') {
-//       userName.innerHTML = newUserName;
-//       showItem(loading);
-//       FirebaseAuth.instance.currentUser!.updateProfile(displayName: newUserName).catchError((error) {
-//         showError('Falha ao atualizar o nome do usuário: ', error);
-//       }).whenComplete(() {
-//         hideItem(loading);
-//       });
-//     } else {
-//       alert('O nome do usuário não pode estar em branco');
-//     }
-//   }
-
   Future<void> loginWithFacebook(
-      {Users? users,
-      required Function? onFail,
-      required Function? onSuccess}) async {
+      {required Function? onFail, required Function? onSuccess}) async {
     try {
-      // Realiza a autenticação pelo Facebook
-      final LoginResult result = await FacebookAuth.instance.login();
-
-      // Obtém o token de acesso do usuário
-      final AccessToken accessToken = result.accessToken!;
-
-      // Converte o token de acesso em uma credencial do Firebase
-      final OAuthCredential credential =
-          FacebookAuthProvider.credential(accessToken.token);
-
-      // Autentica no Firebase usando a credencial do Facebook
-      final UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-
-      // Obtém o usuário autenticado
-      final User? user = userCredential.user;
-
-      // Faça o que desejar com o usuário autenticado, por exemplo, atualizar a UI
-      if (user != null) {
-        this.users = Users(
-            email: user.email ?? "",
-            userName: user.displayName,
-            id: user.uid,
-            phoneNumber: user.phoneNumber ?? "",
-            userPhotoURL: user.photoURL ?? "");
-        notifyListeners();
+      loadingFace = true;
+      // check if is running on Web
+      if (kIsWeb) {
+        await FacebookAuth.i.webAndDesktopInitialize(
+          appId: FacebookAppIdForWeb().facebookAppId,
+          cookie: true,
+          xfbml: true,
+          version: "v17.0",
+        );
       }
 
-      onSuccess!();
-    } on FirebaseAuthException catch (error) {
-      onFail!(getErrorString(error.code));
+      // Realize authentication for the Facebook
+      final LoginResult result = await FacebookAuth.instance.login();
+
+      switch (result.status) {
+        case LoginStatus.success:
+          // Gets the user's access token
+          final AccessToken accessToken = result.accessToken!;
+
+          // Converte o token de acesso em uma credencial do Firebase
+          final OAuthCredential credential =
+              FacebookAuthProvider.credential(accessToken.token);
+
+          // Converts the access token to a Firebase credential
+          final UserCredential userCredential =
+              await FirebaseAuth.instance.signInWithCredential(credential);
+
+          // Get authenticated user
+          final User? user = userCredential.user;
+
+          // Capture user data and save to FirebaseFirestore
+          if (user != null) {
+            users = Users(
+                email: user.email ?? "",
+                userName: user.displayName,
+                id: user.uid,
+                phoneNumber: user.phoneNumber ?? "",
+                userPhotoURL: user.photoURL ?? "");
+            await users?.saveData();
+            loadingFace = false;
+            onSuccess!();
+          }
+          break;
+        case LoginStatus.failed:
+          onFail!("Erro ao Logar com Facebbok! ${result.status}");
+          loadingFace = false;
+          break;
+        case LoginStatus.cancelled:
+          onFail!("Login cancelado pelo Usuário! ${result.status}");
+          loadingFace = false;
+          break;
+        case LoginStatus.operationInProgress:
+          loadingFace = true;
+          break;
+      }
+    } catch (error) {
+      onFail!(error);
     }
   }
 

@@ -74,20 +74,18 @@ class CustomButton extends StatelessWidget {
             child: Consumer3<UserManager, Product, CartManager>(
               builder: (_, userManager, product, cartManager, __) {
                 return userManager.loading ||
-                    product.loading ||
-                    cartManager.loading
-                    ? const SpinKitThreeInOut(
-                  color: Colors.cyan, // Cor das bolinhas
-                  size: 25.0, // Tamanho do indicador
-                )
+                        product.loading ||
+                        cartManager.loading
+                    ? SpinKitThreeInOut(
+                        color: Theme.of(context).primaryColor,
+                        size: 25.0,
+                      )
                     : Text(
-                  text,
-                  style: TextStyle(
-                      color: getTextColor(), fontSize: fontSize),
-                );
+                        text,
+                        style: TextStyle(
+                            color: getTextColor(), fontSize: fontSize),
+                      );
               },
-            )
-        )
-    );
+            )));
   }
 }
