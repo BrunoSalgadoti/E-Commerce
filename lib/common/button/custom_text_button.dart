@@ -35,12 +35,15 @@ class CustomTextButton extends StatelessWidget {
               children: [
                 icon != null
                     ? icon!
-                    : Image.asset(
-                        imageAssetsTarget!,
-                      ),
-                const SizedBox(
-                  width: 20,
-                ),
+                    : imageAssetsTarget != null
+                        ? Image.asset(
+                            imageAssetsTarget!,
+                            width: 28,
+                            height: 28,
+                          )
+                        : const SizedBox(
+                            height: 20,
+                          ),
                 Text(
                   text!,
                   style: TextStyle(

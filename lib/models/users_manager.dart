@@ -53,6 +53,7 @@ class UserManager extends ChangeNotifier {
     loading = false;
   }
 
+
 // Função que permite atualizar nomes de usuários
 //   void updateUserName() {
 //     String? newUserName = prompt(

@@ -79,6 +79,7 @@ class OrderTile extends StatelessWidget {
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
                           'Modificar Status do Pedido:',

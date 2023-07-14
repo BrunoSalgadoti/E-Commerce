@@ -145,7 +145,7 @@ class LoginScreen extends StatelessWidget {
                         height: 40,
                         child: CustomTextButton(
                             icon: const Icon(FontAwesomeIcons.facebook),
-                            text: 'Entrar com Facebook',
+                            text: '   Entrar com Facebook',
                             onPressed: () {
                               userManager.loginWithFacebook(
                                   onFail: (error) {
@@ -166,7 +166,7 @@ class LoginScreen extends StatelessWidget {
                         height: 37,
                         child: CustomTextButton(
                             imageAssetsTarget: "assets/logo/googleLogo.png",
-                            text: 'Entrar com Google',
+                            text: '   Entrar com Google',
                             onPressed: () {
                               userManager.googleLogin();
                             },

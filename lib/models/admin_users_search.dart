@@ -152,7 +152,7 @@ class AdminUsersSearch extends ChangeNotifier {
                                   'assets/images/userWithoutImage.png'))
                           : CircleAvatar(
                               backgroundImage:
-                                  NetworkImage("${user.userPhotoURL}"),
+                                  NetworkImage(user.userPhotoURL!),
                             ),
                       const SizedBox(
                           height: 40,
@@ -267,7 +267,7 @@ class AdminUsersSearch extends ChangeNotifier {
                             AssetImage('assets/images/userWithoutImage.png'))
                     : CircleAvatar(
                         backgroundImage:
-                            NetworkImage("${user.userPhotoURL}")),
+                            NetworkImage(user.userPhotoURL!)),
                 title: Text(user.userName!,
                     style: const TextStyle(
                         fontWeight: FontWeight.w800, color: Colors.white)),
