@@ -21,6 +21,11 @@ class Address {
   double? lat;
   double? long;
 
+  // Função para padronizar o formato do CEP
+  String _formatCep(String cep) {
+    return cep.replaceAll(RegExp(r"[^0-9]"), ""); // Remove todos os caracteres não numéricos
+  }
+
   Address.fromMap(Map<String, dynamic> map) {
     street = map["street"] as String;
     number = map["number"] as String;
@@ -39,11 +44,15 @@ class Address {
       "number": number,
       "complement": complement,
       "district": district,
-      "zipCode": zipCode,
+      "zipCode": _formatCep(zipCode ?? ""), // Salva o CEP padronizado,
       "city": city,
       "state": state,
       "lat": lat,
       "long": long,
     };
+  }
+  // Novo atributo para armazenar o CEP formatado sem hífen
+  String get formattedZipCode {
+    return _formatCep(zipCode ?? "");
   }
 }

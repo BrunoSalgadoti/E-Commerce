@@ -41,8 +41,8 @@ class _CepInputFieldState extends State<CepInputField> {
                 hintText: '00.000-000',
                 hintStyle: TextStyle(color: Colors.black26)),
             inputFormatters: [
-               FilteringTextInputFormatter.digitsOnly,
-              CepInputFormatter(),
+              FilteringTextInputFormatter.digitsOnly,
+              CepInputFormatter()
             ],
             keyboardType: TextInputType.number,
             validator: (cep) {
@@ -79,7 +79,8 @@ class _CepInputFieldState extends State<CepInputField> {
         ],
       );
     } else {
-      final formattedCep = UtilBrasilFields.obterCep(widget.address.zipCode!);
+      final formattedCep =
+          UtilBrasilFields.obterCep(widget.address.formattedZipCode);
 
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 4),
