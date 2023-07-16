@@ -47,8 +47,12 @@ class Users {
 
   CollectionReference get cartReference => firestoreRef.collection("cart");
 
-  Future<void> saveData() async {
-    await firestoreRef.set(toMap());
+  Future<void> saveUserData() async {
+      await firestoreRef.set(toMap());
+  }
+
+  Future<void> updateUserData() async {
+    await firestoreRef.update(toMap());
   }
 
   Map<String, dynamic> toMap() {
@@ -64,6 +68,6 @@ class Users {
 
   void setAddress(Address address) {
     this.address = address;
-    saveData();
+    saveUserData();
   }
 }

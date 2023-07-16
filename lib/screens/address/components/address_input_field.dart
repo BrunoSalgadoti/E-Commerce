@@ -137,7 +137,6 @@ class AddressInputField extends StatelessWidget {
                       if (Form.of(context).validate()) {
                         Form.of(context).save();
                         try {
-                          await cartManager.saveAuxDelivery(delivery);
                           await cartManager.setAddress(address);
                         } catch (error) {
                           ScaffoldMessenger.of(context).showSnackBar(

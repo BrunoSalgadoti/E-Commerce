@@ -157,7 +157,7 @@ class LoginScreen extends StatelessWidget {
                                         onFail: (error) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
-                                             content: Text(error,
+                                             content: Text(error.toString(),
                                             style:
                                                 const TextStyle(fontSize: 18)),
                                         backgroundColor: Colors.red,
