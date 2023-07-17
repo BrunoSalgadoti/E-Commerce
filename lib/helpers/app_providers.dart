@@ -5,6 +5,7 @@ import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/models/details_products.dart';
 import 'package:brn_ecommerce/models/home_manager.dart';
 import 'package:brn_ecommerce/models/orders_manager.dart';
+import 'package:brn_ecommerce/models/policy_and_documents.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:brn_ecommerce/models/users.dart';
@@ -37,6 +38,9 @@ class AppProviders extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => WhoWeAreManager(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PolicyAndDocuments(),
         ),
         ChangeNotifierProvider(
           create: (_) => HomeManager(),

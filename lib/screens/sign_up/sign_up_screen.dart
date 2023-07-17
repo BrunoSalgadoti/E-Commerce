@@ -1,7 +1,9 @@
 import 'package:brn_ecommerce/common/button/custom_button.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
+import 'package:brn_ecommerce/models/policy_and_documents.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
+import 'package:brn_ecommerce/screens/policy_and_documents/policy_and_documents_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +35,8 @@ class SignUpScreen extends StatelessWidget {
             width: 500,
             child: Form(
               key: formKey,
-              child: Consumer<UserManager>(builder: (_, userManager, __) {
+              child: Consumer2<UserManager, PolicyAndDocuments>(
+                  builder: (_, userManager, policyAndDocuments, __) {
                 return ListView(
                   padding: const EdgeInsets.all(16),
                   shrinkWrap: true,
@@ -140,9 +143,8 @@ class SignUpScreen extends StatelessWidget {
                       },
                       onSaved: (password) => users.confirmPassword = password,
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
+                    const SizedBox(height: 16),
+                    ...[const PolicyAndDocumentsScreen()],
                     CustomButton(
                       text: 'Criar Conta',
                       onPressed: () {
@@ -165,20 +167,39 @@ class SignUpScreen extends StatelessWidget {
                             ));
                             return;
                           }
+
+                          if (policyAndDocuments.agreedToPolicyTerms == false ||
+                              policyAndDocuments.agreedToTermsOfService ==
+                                  false) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: const Text(
+                                  'É necessário Concordar com a Política'
+                                  ' de privacidade e nossos '
+                                  'Termos de Serviço',
+                                  style: TextStyle(fontSize: 18)),
+                              backgroundColor: Colors.red,
+                              duration: const Duration(seconds: 5),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              margin: const EdgeInsets.all(15),
+                            ));
+                            return;
+                          }
                           userManager.singUp(
                               users: users,
                               onFail: (error) {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(
-                                      content: Text('Falha ao cadastrar $error',
-                                          style: const TextStyle(fontSize: 18)),
-                                      backgroundColor: Colors.red,
-                                      duration: const Duration(seconds: 5),
-                                      behavior: SnackBarBehavior.floating,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10)),
-                                      margin: const EdgeInsets.all(15),
-                                    ));
+                                  content: Text('Falha ao cadastrar $error',
+                                      style: const TextStyle(fontSize: 18)),
+                                  backgroundColor: Colors.red,
+                                  duration: const Duration(seconds: 5),
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  margin: const EdgeInsets.all(15),
+                                ));
                               },
                               onSuccess: () {
                                 Navigator.of(context).pop();

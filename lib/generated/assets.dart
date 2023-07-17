@@ -2,6 +2,8 @@
 class Assets {
   Assets._();
 
+  static const String docsPrivacyPolicy = 'assets/docs/privacyPolicy.md';
+  static const String docsTermsOfService = 'assets/docs/termsOfService.md';
   static const String imagesAwait = 'assets/images/await.gif';
   static const String imagesBrnInfoDev = 'assets/images/brnInfoDev.png';
   static const String imagesEmConstrucaoGitHub = 'assets/images/emConstrucaoGitHub.png';

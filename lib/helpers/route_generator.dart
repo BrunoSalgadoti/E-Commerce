@@ -6,6 +6,7 @@ import 'package:brn_ecommerce/screens/cart/cart_screen.dart';
 import 'package:brn_ecommerce/screens/checkout/checkout_screen.dart';
 import 'package:brn_ecommerce/screens/edit_product/edit_product_screen.dart';
 import 'package:brn_ecommerce/screens/login/login_screen.dart';
+import 'package:brn_ecommerce/screens/policy_and_documents/components/terms_and_privacy_text_screen.dart';
 import 'package:brn_ecommerce/screens/product_details/product_details_screen.dart';
 import 'package:brn_ecommerce/screens/products/components/share_product_screen.dart';
 import 'package:brn_ecommerce/screens/sales_confirmation/sales_confirmation_screen.dart';
@@ -49,6 +50,12 @@ class RouteGenerator {
       case "/select_product":
         return MaterialPageRoute(
           builder: (_) => const SelectProductScreen(),
+        );
+      case "/privacy_policy":
+        return MaterialPageRoute(
+          builder: (_) => TermsAndPrivacyTextScreen(
+            content: settings.arguments as String,
+          ),
         );
       case "/address":
         return MaterialPageRoute(
