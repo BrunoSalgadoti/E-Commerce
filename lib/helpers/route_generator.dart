@@ -71,7 +71,7 @@ class RouteGenerator {
             settings.arguments as OrderClient,
           ),
         );
-      case "/":
+      case '/':
       default:
         return MaterialPageRoute(
             builder: (_) => const BaseScreen(), settings: settings);

@@ -196,50 +196,61 @@ class CartManager extends ChangeNotifier {
     await collectionReference
         .doc("delivery")
         .set(deliveryMap, SetOptions(merge: true));
-    await collectionReference.doc("orderCounter").set({"current": 1});
+    final transactionRef = collectionReference.doc("orderCounter");
+
+    try {
+      // Check if orderCounter exists in the database
+      final doc = await transactionRef.get();
+      if (!doc.exists) {
+        await transactionRef.set({"current": 1});
+      }
+    } catch (error) {
+      return Future.error(
+          'Falha ao gerar número do pedido!: ${error.toString()}');
+    }
 
     loading = false;
   }
 
-  Future<void> setAddress(Address address) async {
-    loading = true;
-    this.address = address;
 
-    if (await calculateDelivery(address.lat!, address.long!)) {
-      users!.setAddress(address);
-      loading = false;
-    } else {
-      loading = false;
-      return Future.error('Endereço fora do raio de entrega :(');
-    }
-  }
+Future<void> setAddress(Address address) async {
+  loading = true;
+  this.address = address;
 
-  void removeAddress() {
-    address = null;
-    deliveryPrice = null;
-    notifyListeners();
-  }
-
-  Future<bool> calculateDelivery(double lat, double long) async {
-    final DocumentSnapshot doc = await firestore.doc("aux/delivery").get();
-
-    final latStore = doc.get("lat") as double;
-    final longStore = doc.get("long") as double;
-    final basePriceDelivery = doc.get("basePrice") as num;
-    final kmForDelivery = doc.get("km") as num;
-
-    final maximumDeliveryDistance = doc.get("maxKm") as num;
-
-    double distanceClient =
-    Geolocator.distanceBetween(latStore, longStore, lat, long);
-
-    // Converting distance from M to KM
-    distanceClient /= 1000.0;
-
-    if (distanceClient > maximumDeliveryDistance) {
-      return false;
-    }
-    deliveryPrice = basePriceDelivery + distanceClient * kmForDelivery;
-    return true;
+  if (await calculateDelivery(address.lat!, address.long!)) {
+    users!.setAddress(address);
+    loading = false;
+  } else {
+    loading = false;
+    return Future.error('Endereço fora do raio de entrega :(');
   }
 }
+
+void removeAddress() {
+  address = null;
+  deliveryPrice = null;
+  notifyListeners();
+}
+
+Future<bool> calculateDelivery(double lat, double long) async {
+  final DocumentSnapshot doc = await firestore.doc("aux/delivery").get();
+
+  final latStore = doc.get("lat") as double;
+  final longStore = doc.get("long") as double;
+  final basePriceDelivery = doc.get("basePrice") as num;
+  final kmForDelivery = doc.get("km") as num;
+
+  final maximumDeliveryDistance = doc.get("maxKm") as num;
+
+  double distanceClient =
+  Geolocator.distanceBetween(latStore, longStore, lat, long);
+
+  // Converting distance from M to KM
+  distanceClient /= 1000.0;
+
+  if (distanceClient > maximumDeliveryDistance) {
+    return false;
+  }
+  deliveryPrice = basePriceDelivery + distanceClient * kmForDelivery;
+  return true;
+}}

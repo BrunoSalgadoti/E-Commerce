@@ -31,6 +31,7 @@ class WhoWeAreScreenState extends State<WhoWeAreScreen> {
 
   @override
   void dispose() {
+    _controller.stopVideo();
     super.dispose();
   }
 

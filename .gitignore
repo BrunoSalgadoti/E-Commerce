@@ -56,3 +56,4 @@ app.*.map.json
 /.firebaserc
 /.firebase/hosting.YnVpbGRcd2Vi.cache
 /ios/Runner/*
+/docs/ others/

@@ -19,7 +19,7 @@ class Users {
     email = document.get("email") as String;
     favourite = document.get("favourite") as bool;
     phoneNumber = document.get("phone") as String? ?? "";
-    userPhotoURL = document.get("userPhoto") as String;
+    userPhotoURL = document.get("userPhoto") as String? ?? "";
 
     Map<String, dynamic> dataMap = document.data() as Map<String, dynamic>;
 
@@ -61,7 +61,7 @@ class Users {
       "email": email,
       "favourite": favourite = false,
       "phone": phoneNumber,
-      "userPhoto": userPhotoURL,
+      "userPhoto": userPhotoURL ?? "",
       if (address != null) "address": address!.toMap(),
     };
   }

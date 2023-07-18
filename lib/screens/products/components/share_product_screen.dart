@@ -31,6 +31,7 @@ class ShareProductScreenState extends State<ShareProductScreen> {
 
   // URL referring to the host of the website and the...
   // internal page of the shared product
+  //TODO: novo Link dynamic
   final String urlShare = 'https://brninfodev.page.link/products/';
 
   Future<Uint8List?> captureWidgetToImage(GlobalKey repaintBoundaryKey) async {
@@ -194,7 +195,8 @@ class ShareProductScreenState extends State<ShareProductScreen> {
     final primaryColor = Theme.of(context).primaryColor;
 
     Widget buildSocialButtons(BuildContext context) {
-      return Card(
+      return !kIsWeb
+          ? Card(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -225,6 +227,11 @@ class ShareProductScreenState extends State<ShareProductScreen> {
             ),
           ],
         ),
+      )
+          : CustomIconButton(
+        iconData: FontAwesomeIcons.share,
+        color: Theme.of(context).primaryColor,
+        onTap: () {},
       );
     }
 

@@ -62,8 +62,8 @@ class CheckoutManager extends ChangeNotifier {
       });
       return result["orderId"] as int;
     } catch (error) {
-      debugPrint(error.toString());
-      return Future.error('Falha ao gerar número do pedido!');
+      return Future.error(
+          'Falha ao gerar número do pedido!: ${error.toString()}');
     }
   }
 

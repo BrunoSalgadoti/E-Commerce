@@ -139,7 +139,9 @@ class UserManager extends ChangeNotifier {
     }
   }
 
-  void googleLogin() {}
+  void googleLogin() {
+    //TODO: Acesso com o Google
+  }
 
   Future<void> singUp({required Users users,
     required Function onFail,
