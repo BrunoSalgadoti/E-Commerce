@@ -1,5 +1,3 @@
-import 'package:brn_ecommerce/common/button/custom_button.dart';
-import 'package:brn_ecommerce/common/show_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -7,12 +5,14 @@ import 'package:package_info_plus/package_info_plus.dart';
 class VersionManager extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   late PackageInfo _packageInfo;
+  bool compatibleVersion = false;
 
   Future<void> _initPackageInfo() async {
     _packageInfo = await PackageInfo.fromPlatform();
   }
 
-  Future<bool> _checkVersion() async {
+  Future<bool> checkVersion() async {
+    _initPackageInfo();
     try {
       final versionDoc =
           await firestore.collection('versionApp').doc('currentVersion').get();
@@ -27,17 +27,24 @@ class VersionManager extends ChangeNotifier {
         if (appVersion == storedAppVersion &&
             buildNumber == storedBuildNumber) {
           // Version is up-to-date
+          compatibleVersion = true;
+          debugPrint('Versão OK!!!');
           return true;
         } else {
           // Version is outdated
+          compatibleVersion = false;
+          debugPrint('Versão Incompatível...');
           return false;
         }
       } else {
         // Version document doesn't exist, assume it's outdated
-        return false;
+        compatibleVersion = false;
+        debugPrint('Versão não existe...');
+        return true;
       }
     } catch (error) {
-      // Error occurred while checking version, assume it's outdated
+      debugPrint(
+          'No erro! $error'); // Error occurred while checking version, assume it's outdated
       return false;
     }
   }
@@ -56,42 +63,5 @@ class VersionManager extends ChangeNotifier {
         .collection('versionApp')
         .doc('currentVersion')
         .set(versionData);
-  }
-
-  void alertDialog({BuildContext? context}) {
-    final alertDialog = showDialog(
-      context: context!,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return ShowAlertDialog(
-          titleText: 'Atualização Necessária!',
-          bodyText: 'Por favor, para continuar: \n'
-              'é necessário atualizar o aplicativo para a versão mais recente!',
-          actions: [
-            CustomButton(
-              text: 'Atualizar',
-              onPressed: () {
-                Navigator.pop(context);
-                // You can redirect to the app store for updating the app
-                // For Android, use:
-                // launch('https://play.google.com/store/apps/details?id=com.example.app');
-                // For iOS, use:
-                // launch('https://apps.apple.com/app/id<your_app_id>');
-              },
-            )
-          ],
-        );
-      },
-    );
-        alertDialog;
-  }
-
-  Future<void> checkAndHandleVersion() async {
-    if (await _checkVersion()) {
-      // Version is up-to-date, continue with the app
-    } else {
-      // Version is outdated, show an alert or prompt to update the app
-      alertDialog();
-    }
   }
 }

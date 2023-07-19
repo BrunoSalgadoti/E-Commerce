@@ -23,6 +23,9 @@ class _PrivacyPolicyWidgetState extends State<PrivacyPolicyWidget> {
 
   @override
   Widget build(BuildContext context) {
+    goToPage(String arguments) =>
+        Navigator.pushNamed(context, "/privacy_policy", arguments: arguments);
+
     return Row(
       children: [
         Checkbox(
@@ -32,7 +35,7 @@ class _PrivacyPolicyWidgetState extends State<PrivacyPolicyWidget> {
               agreedToPolicyTerms = value ?? false;
               final policyAndDocuments =
                   Provider.of<PolicyAndDocuments>(context, listen: false);
-              policyAndDocuments.agreedToPolicyTerms = agreedToPolicyTerms;
+              policyAndDocuments.setAgreedToPolicyTerms(value!);
             });
           },
         ),
@@ -40,9 +43,7 @@ class _PrivacyPolicyWidgetState extends State<PrivacyPolicyWidget> {
           onTap: () async {
             final privacyPolicyText =
                 await rootBundle.loadString('assets/docs/privacyPolicy.md');
-            // ignore: use_build_context_synchronously
-            Navigator.pushNamed(context, "/privacy_policy",
-                arguments: privacyPolicyText);
+            goToPage(privacyPolicyText);
           },
           child: const Text(
             'Política de Privacidade',

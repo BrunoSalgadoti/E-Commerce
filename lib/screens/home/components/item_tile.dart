@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:brn_ecommerce/common/button/custom_button.dart';
 import 'package:brn_ecommerce/common/show_alert_dialog.dart';
 import 'package:brn_ecommerce/models/home_manager.dart';
@@ -18,6 +19,7 @@ class ItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeManager = context.watch<HomeManager>();
+    backScreen() => Navigator.of(context).pop();
 
     return GestureDetector(
         onTap: () {
@@ -81,8 +83,7 @@ class ItemTile extends StatelessWidget {
                                                 context, '/select_product')
                                             as Product;
                                     item?.product = product.id;
-                                    // ignore: use_build_context_synchronously
-                                    Navigator.of(context).pop();
+                                    backScreen();
                                   }
                                 })
                           ]);

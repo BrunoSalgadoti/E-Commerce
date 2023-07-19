@@ -18,60 +18,44 @@ class RouteGenerator {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case "/login":
-        return MaterialPageRoute(
-          builder: (_) => LoginScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => LoginScreen());
       case "/signup":
-        return MaterialPageRoute(
-          builder: (_) => SignUpScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => SignUpScreen());
       case "/cart":
         return MaterialPageRoute(
             builder: (_) => const CartScreen(), settings: settings);
       case "/product":
         return MaterialPageRoute(
-          builder: (_) => ProductDetailsScreen(
-            product: settings.arguments as Product, //productId: '',
-          ),
-        );
+            builder: (_) => ProductDetailsScreen(
+                  product: settings.arguments as Product,
+                ),
+            settings: settings);
       case "/share_product":
         return MaterialPageRoute(
-          builder: (_) => ShareProductScreen(
-            product: settings.arguments as Product,
-          ),
-        );
+            builder: (_) =>
+                ShareProductScreen(product: settings.arguments as Product));
       case "/edit_product":
         return MaterialPageRoute(
-          builder: (_) => EditProductScreen(
-              product: settings.arguments != null
-                  ? settings.arguments as Product
-                  : Product().cloneProduct()),
-        );
-      case "/select_product":
+            builder: (_) => EditProductScreen(
+                product: settings.arguments != null
+                    ? settings.arguments as Product
+                    : Product().cloneProduct()));
+      case '/select_product':
+        return MaterialPageRoute(builder: (_) => const SelectProductScreen());
+      case '/privacy_policy':
         return MaterialPageRoute(
-          builder: (_) => const SelectProductScreen(),
-        );
-      case "/privacy_policy":
-        return MaterialPageRoute(
-          builder: (_) => TermsAndPrivacyTextScreen(
-            content: settings.arguments as String,
-          ),
-        );
+            builder: (_) => TermsAndPrivacyTextScreen(
+                content: settings.arguments as String));
       case "/address":
-        return MaterialPageRoute(
-          builder: (_) => const AddressScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const AddressScreen());
       case "/checkout":
-        return MaterialPageRoute(
-          builder: (_) => const CheckoutScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const CheckoutScreen());
       case "/sales_confirmation":
         return MaterialPageRoute(
-          builder: (_) => SalesConfirmationScreen(
-            settings.arguments as OrderClient,
-          ),
-        );
-      case '/':
+            builder: (_) => SalesConfirmationScreen(
+                  settings.arguments as OrderClient,
+                ));
+      case "/":
       default:
         return MaterialPageRoute(
             builder: (_) => const BaseScreen(), settings: settings);

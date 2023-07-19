@@ -17,16 +17,14 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     _initAudioPlayer();
     Timer(const Duration(seconds: 6), () {
-      Navigator.pushReplacementNamed(
-        context,
-        "/nowhere");
-
+      Navigator.pushReplacementNamed(context, "/drawer");
     });
   }
 
   Future<void> _initAudioPlayer() async {
     String fileName = "brn.mp3";
-    String filePath = "assets/sounds/$fileName"; // Caminho para o arquivo de áudio local
+    String filePath =
+        "assets/sounds/$fileName"; // Caminho para o arquivo de áudio local
 
     Source source = DeviceFileSource(filePath);
 
@@ -46,14 +44,8 @@ class _SplashScreenState extends State<SplashScreen> {
             duration: const Duration(seconds: 7),
             tween: colorTween,
             child: Container(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   invertColors: true,

@@ -2,16 +2,17 @@ import 'package:brn_ecommerce/models/address.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Users {
-  Users(
-      {required this.email,
-      this.password,
-      this.userName,
-      this.phoneNumber,
-      this.confirmPassword,
-      this.id,
-      this.favourite,
-      this.userPhotoURL,
-      });
+  Users({
+    required this.email,
+    this.password,
+    this.userName,
+    this.phoneNumber,
+    this.confirmPassword,
+    this.id,
+    this.favourite,
+    this.userPhotoURL,
+    this.policyAndTerms,
+  });
 
   Users.fromDocument(DocumentSnapshot document) {
     id = document.id;
@@ -20,6 +21,7 @@ class Users {
     favourite = document.get("favourite") as bool;
     phoneNumber = document.get("phone") as String? ?? "";
     userPhotoURL = document.get("userPhoto") as String? ?? "";
+    policyAndTerms = document.get("policyAndTerms") as bool? ?? false;
 
     Map<String, dynamic> dataMap = document.data() as Map<String, dynamic>;
 
@@ -38,6 +40,7 @@ class Users {
   String? userPhotoURL = "";
 
   bool? favourite;
+  bool? policyAndTerms;
   bool admin = false;
 
   Address? address;
@@ -48,10 +51,10 @@ class Users {
   CollectionReference get cartReference => firestoreRef.collection("cart");
 
   Future<void> saveUserData() async {
-      await firestoreRef.set(toMap());
+    await firestoreRef.set(toMap());
   }
 
-  Future<void> updateUserData() async {
+  Future<void> updateUserData([bool? policyAndTerms]) async {
     await firestoreRef.update(toMap());
   }
 
@@ -62,6 +65,7 @@ class Users {
       "favourite": favourite = false,
       "phone": phoneNumber,
       "userPhoto": userPhotoURL ?? "",
+      "policyAndTerms": policyAndTerms ?? false,
       if (address != null) "address": address!.toMap(),
     };
   }

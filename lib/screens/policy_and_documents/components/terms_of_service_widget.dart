@@ -23,6 +23,9 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
 
   @override
   Widget build(BuildContext context) {
+    goToPage(String arguments) =>
+        Navigator.pushNamed(context, "/privacy_policy", arguments: arguments);
+
     return Row(
       children: [
         Checkbox(
@@ -32,18 +35,15 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
               agreedToTermsOfService = value ?? false;
               final policyAndDocuments =
                   Provider.of<PolicyAndDocuments>(context, listen: false);
-              policyAndDocuments.agreedToTermsOfService =
-                  agreedToTermsOfService;
+              policyAndDocuments.setAgreedToTermsOfService(value!);
             });
           },
         ),
         InkWell(
           onTap: () async {
-            final privacyPolicyText =
+            final termsOfServiceText =
                 await rootBundle.loadString('assets/docs/termsOfService.md');
-            // ignore: use_build_context_synchronously
-            Navigator.pushNamed(context, "/privacy_policy",
-                arguments: privacyPolicyText);
+            goToPage(termsOfServiceText);
           },
           child: const Text(
             'Termos de Serviço',

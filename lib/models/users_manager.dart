@@ -48,9 +48,10 @@ class UserManager extends ChangeNotifier {
     height: 15,
   );
 
-  Future<void> signInWithEmailAndPassword({required Users users,
-    required Function onFail,
-    required Function onSuccess}) async {
+  Future<void> signInWithEmailAndPassword(
+      {required Users users,
+      required Function onFail,
+      required Function onSuccess}) async {
     loading = true;
     try {
       final UserCredential result = await _auth.signInWithEmailAndPassword(
@@ -84,16 +85,16 @@ class UserManager extends ChangeNotifier {
 
       switch (result.status) {
         case LoginStatus.success:
-        // Gets the user's access token
+          // Gets the user's access token
           final AccessToken accessToken = result.accessToken!;
 
           // Converte o token de acesso em uma credencial do Firebase
           final OAuthCredential credential =
-          FacebookAuthProvider.credential(accessToken.token);
+              FacebookAuthProvider.credential(accessToken.token);
 
           // Converts the access token to a Firebase credential
           final UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
+              await FirebaseAuth.instance.signInWithCredential(credential);
 
           // Get authenticated user
           final User? user = userCredential.user;
@@ -101,7 +102,7 @@ class UserManager extends ChangeNotifier {
           if (user != null) {
             // Check if the user document already exists in Firestore
             final DocumentSnapshot userSnapshot =
-            await firestore.collection("users").doc(user.uid).get();
+                await firestore.collection("users").doc(user.uid).get();
 
             // Capture user data and save to FirebaseFirestore
             if (userSnapshot.exists) {
@@ -143,9 +144,10 @@ class UserManager extends ChangeNotifier {
     //TODO: Acesso com o Google
   }
 
-  Future<void> singUp({required Users users,
-    required Function onFail,
-    required Function onSuccess}) async {
+  Future<void> singUp(
+      {required Users users,
+      required Function onFail,
+      required Function onSuccess}) async {
     loading = true;
 
     try {
@@ -153,13 +155,14 @@ class UserManager extends ChangeNotifier {
           email: users.email, password: users.password!);
 
       users.id = result.user!.uid;
+      users.policyAndTerms = true;
       this.users = users;
 
       await users.saveUserData();
 
       // Check if this is the first user to register
       QuerySnapshot adminsQuery =
-      await firestore.collection("admins").limit(1).get();
+          await firestore.collection("admins").limit(1).get();
       if (adminsQuery.docs.isEmpty) {
         // Creates document '{users.id}' in collection 'admins'
         // with user id admin
@@ -187,11 +190,11 @@ class UserManager extends ChangeNotifier {
       final User currentUser = user ?? _auth.currentUser!;
       if (currentUser.uid.isNotEmpty) {
         final DocumentSnapshot docUsers =
-        await firestore.collection("users").doc(currentUser.uid).get();
+            await firestore.collection("users").doc(currentUser.uid).get();
         users = Users.fromDocument(docUsers);
 
         final docAdmin =
-        await firestore.collection("admins").doc(users?.id).get();
+            await firestore.collection("admins").doc(users?.id).get();
         if (docAdmin.exists) {
           users?.admin = true;
         }
