@@ -52,9 +52,7 @@ class CartManager extends ChangeNotifier {
     final QuerySnapshot cartSnap = await users!.cartReference.get();
 
     items = cartSnap.docs
-        .map((d) =>
-    CartProduct.fromDocument(d)
-      ..addListener(_onItemUpdate))
+        .map((d) => CartProduct.fromDocument(d)..addListener(_onItemUpdate))
         .toList();
     notifyListeners();
   }
@@ -166,7 +164,7 @@ class CartManager extends ChangeNotifier {
 
       try {
         final cepAbertoAddress =
-        await cepAbertoService.getAddressFromZipCode(cep);
+            await cepAbertoService.getAddressFromZipCode(cep);
 
         address = Address(
           zipCode: cepAbertoAddress.cep,
@@ -185,72 +183,49 @@ class CartManager extends ChangeNotifier {
     }
   }
 
-  Future<void> saveAuxDelivery(Delivery delivery) async {
+  Future<void> setAddress(Address address) async {
     loading = true;
+    this.address = address;
 
-    final collectionReference = firestore.collection("aux");
-    final deliveryMap = delivery.toMap();
-
-    // Uses the set method with the merge option to create...
-    // or update the document
-    await collectionReference
-        .doc("delivery")
-        .set(deliveryMap, SetOptions(merge: true));
-    final transactionRef = collectionReference.doc("orderCounter");
-
-    try {
-      // Check if orderCounter exists in the database
-      final doc = await transactionRef.get();
-      if (!doc.exists) {
-        await transactionRef.set({"current": 1});
-      }
-    } catch (error) {
-      return Future.error(
-          'Falha ao gerar número do pedido!: ${error.toString()}');
+    if (await calculateDelivery(address.lat!, address.long!)) {
+      users!.setAddress(address);
+      loading = false;
+    } else {
+      loading = false;
+      return Future.error('Endereço fora do raio de entrega :(');
     }
-
-    loading = false;
   }
 
+  void removeAddress() {
+    address = null;
+    deliveryPrice = null;
+    notifyListeners();
+  }
 
-Future<void> setAddress(Address address) async {
-  loading = true;
-  this.address = address;
+  Future<bool> calculateDelivery(double lat, double long) async {
+    try {
+      final DocumentSnapshot doc = await firestore.doc("aux/delivery").get();
 
-  if (await calculateDelivery(address.lat!, address.long!)) {
-    users!.setAddress(address);
-    loading = false;
-  } else {
-    loading = false;
-    return Future.error('Endereço fora do raio de entrega :(');
+      final latStore = doc.get("lat") as double;
+      final longStore = doc.get("long") as double;
+      final basePriceDelivery = doc.get("basePrice") as num;
+      final kmForDelivery = doc.get("km") as num;
+
+      final maximumDeliveryDistance = doc.get("maxKm") as num;
+
+      double distanceClient =
+          Geolocator.distanceBetween(latStore, longStore, lat, long);
+
+      // Converting distance from M to KM
+      distanceClient /= 1000.0;
+
+      if (distanceClient > maximumDeliveryDistance) {
+        return false;
+      }
+      deliveryPrice = basePriceDelivery + distanceClient * kmForDelivery;
+      return true;
+    } catch (error) {
+      return Future.error('CalculateDelivery $error');
+    }
   }
 }
-
-void removeAddress() {
-  address = null;
-  deliveryPrice = null;
-  notifyListeners();
-}
-
-Future<bool> calculateDelivery(double lat, double long) async {
-  final DocumentSnapshot doc = await firestore.doc("aux/delivery").get();
-
-  final latStore = doc.get("lat") as double;
-  final longStore = doc.get("long") as double;
-  final basePriceDelivery = doc.get("basePrice") as num;
-  final kmForDelivery = doc.get("km") as num;
-
-  final maximumDeliveryDistance = doc.get("maxKm") as num;
-
-  double distanceClient =
-  Geolocator.distanceBetween(latStore, longStore, lat, long);
-
-  // Converting distance from M to KM
-  distanceClient /= 1000.0;
-
-  if (distanceClient > maximumDeliveryDistance) {
-    return false;
-  }
-  deliveryPrice = basePriceDelivery + distanceClient * kmForDelivery;
-  return true;
-}}

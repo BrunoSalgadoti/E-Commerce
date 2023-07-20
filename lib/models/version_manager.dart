@@ -28,23 +28,20 @@ class VersionManager extends ChangeNotifier {
             buildNumber == storedBuildNumber) {
           // Version is up-to-date
           compatibleVersion = true;
-          debugPrint('Versão OK!!!');
           return true;
         } else {
           // Version is outdated
           compatibleVersion = false;
-          debugPrint('Versão Incompatível...');
           return false;
         }
       } else {
         // Version document doesn't exist, assume it's outdated
         compatibleVersion = false;
-        debugPrint('Versão não existe...');
-        return true;
+        return false;
       }
     } catch (error) {
-      debugPrint(
-          'No erro! $error'); // Error occurred while checking version, assume it's outdated
+      // Error occurred while checking version, assume it's outdated
+      compatibleVersion = false;
       return false;
     }
   }

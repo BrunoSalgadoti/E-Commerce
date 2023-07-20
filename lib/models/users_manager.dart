@@ -1,4 +1,5 @@
 import 'package:brn_ecommerce/helpers/firebase_errors.dart';
+import 'package:brn_ecommerce/models/delivery.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/services/db_api/facebook_app_id_for_web.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 class UserManager extends ChangeNotifier {
   UserManager() {
     _loadCurrentUser();
+    _createAuxAndAdminsIfNotExists();
     _auth.setLanguageCode('pt-BR');
   }
 
@@ -47,6 +49,34 @@ class UserManager extends ChangeNotifier {
     width: 15,
     height: 15,
   );
+
+  Future<void> _createAuxAndAdminsIfNotExists() async {
+    // Check if the "admins" collection is empty
+    final adminsQuery = await firestore.collection("admins").limit(1).get();
+    if (adminsQuery.docs.isEmpty) {
+      // Create document '{users.id}' in collection 'admins' with user id as admin
+      await firestore.collection("admins").doc(users!.id).set({
+        "user": users!.id,
+      });
+      users!.admin = true; // Set user as administrator on first login
+    }
+
+    // Check if the "aux" collection contains the "delivery" document
+    final deliveryDoc = firestore.collection("aux").doc("delivery");
+    final doc = await deliveryDoc.get();
+    if (!doc.exists) {
+      final delivery = Delivery(); // Create a new instance of the Delivery class
+      await deliveryDoc.set(delivery.toMap());
+    }
+
+    // Check if the "aux" collection contains the "orderCounter" document
+    final orderCounterDoc = firestore.collection("aux").doc("orderCounter");
+    final orderCounterDocExists = await orderCounterDoc.get();
+    if (!orderCounterDocExists.exists) {
+      // Create the "orderCounter" document with "current" field set to 1
+      await orderCounterDoc.set({"current": 1});
+    }
+  }
 
   Future<void> signInWithEmailAndPassword(
       {required Users users,
@@ -120,6 +150,9 @@ class UserManager extends ChangeNotifier {
             }
           }
 
+          // Create "admins" and "aux/delivery" documents if they don't exist
+          await _createAuxAndAdminsIfNotExists();
+
           loadingFace = false;
           onSuccess!();
           break;
@@ -160,17 +193,8 @@ class UserManager extends ChangeNotifier {
 
       await users.saveUserData();
 
-      // Check if this is the first user to register
-      QuerySnapshot adminsQuery =
-          await firestore.collection("admins").limit(1).get();
-      if (adminsQuery.docs.isEmpty) {
-        // Creates document '{users.id}' in collection 'admins'
-        // with user id admin
-        await firestore.collection("admins").doc(users.id).set({
-          "user": users.id,
-        });
-        users.admin = true; // Set user as administrator on first login
-      }
+      // Create "admins" and "aux/delivery" documents if they don't exist
+      await _createAuxAndAdminsIfNotExists();
 
       onSuccess();
     } on FirebaseAuthException catch (error) {
@@ -204,4 +228,6 @@ class UserManager extends ChangeNotifier {
       StackTrace.empty;
     }
   }
+
+
 }

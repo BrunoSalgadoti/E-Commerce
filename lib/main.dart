@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Configurado com o FlutterFire CLI
+  // Configured with the FlutterFire CLI
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // Carrega as informações de versão assincronamente
+  // Load version information asynchronously
   final versionManager = VersionManager();
   await versionManager.updateVersionInfo();
 

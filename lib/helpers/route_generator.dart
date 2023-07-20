@@ -45,7 +45,7 @@ class RouteGenerator {
       case '/privacy_policy':
         return MaterialPageRoute(
             builder: (_) => TermsAndPrivacyTextScreen(
-                content: settings.arguments as String));
+                content: settings.arguments as String), settings:  settings);
       case "/address":
         return MaterialPageRoute(builder: (_) => const AddressScreen());
       case "/checkout":

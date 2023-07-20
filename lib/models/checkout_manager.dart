@@ -28,6 +28,7 @@ class CheckoutManager extends ChangeNotifier {
     loading = true;
 
     try {
+      await _checkConsistenceOfCounterAndOrders();
       await _decrementStock();
     } catch (error) {
       onStockFail(error);
@@ -50,7 +51,38 @@ class CheckoutManager extends ChangeNotifier {
     loading = false;
   }
 
+  Future<void> _checkConsistenceOfCounterAndOrders() async {
+    final DocumentSnapshot orderCounterSnapshot =
+        await firestore.doc("aux/orderCounter").get();
+    final orderCounterCurrent = orderCounterSnapshot.get("current") as int;
+
+    final QuerySnapshot ordersSnapshot =
+        await firestore.collection("orders").get();
+
+    int lastOrderId = 0;
+
+    if (ordersSnapshot.docs.isNotEmpty) {
+      for (final orderDoc in ordersSnapshot.docs) {
+        final orderId = int.tryParse(orderDoc.id);
+        if (orderId != null && orderId > lastOrderId) {
+          lastOrderId = orderId;
+        }
+      }
+    }
+
+    bool shouldProceed = orderCounterCurrent > lastOrderId;
+
+    if (!shouldProceed) {
+      // Throws an exception an errorr
+      throw 'Entre em contato com a Loja:'
+          '\n Informe-os que a verificação: "CCO" falhou!'
+          '\n Grato Pela Compreenção!';
+    }
+  }
+
   Future<int> _getOrderId() async {
+    await _checkConsistenceOfCounterAndOrders();
+
     final transactionRef = firestore.doc("aux/orderCounter");
 
     try {

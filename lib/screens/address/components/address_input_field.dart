@@ -141,11 +141,13 @@ class AddressInputField extends StatelessWidget {
                         } catch (error) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('$error'),
+                              content: Text('Verifique seu acesso a internet!'
+                                  ' $error'),
                               backgroundColor: Colors.red,
                               duration: const Duration(milliseconds: 4500),
                             ),
                           );
+                          cartManager.loading = false;
                         }
                       }
                     }

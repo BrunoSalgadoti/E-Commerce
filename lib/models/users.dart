@@ -54,7 +54,7 @@ class Users {
     await firestoreRef.set(toMap());
   }
 
-  Future<void> updateUserData([bool? policyAndTerms]) async {
+  Future<void> updateUserData() async {
     await firestoreRef.update(toMap());
   }
 
