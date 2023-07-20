@@ -1,12 +1,15 @@
 import 'dart:io';
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:brn_ecommerce/common/button/custom_text_button.dart';
 import 'package:brn_ecommerce/common/show_alert_dialog.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/order_client.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:custom_universal_html/html.dart' as html;
 
 class ExportAddressDialog extends StatelessWidget {
   ExportAddressDialog(this.address, this.orderClient,
@@ -20,6 +23,10 @@ class ExportAddressDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final formattedCep =
+    UtilBrasilFields.obterCep(address!.zipCode!);
+
     return ShowAlertDialog(
       titleText: 'Endereço de Entrega',
       titleSize: 19,
@@ -27,6 +34,7 @@ class ExportAddressDialog extends StatelessWidget {
         controller: screenshotController,
         child: Container(
           padding: const EdgeInsets.all(8),
+          color: Colors.white,
           width: 270,
           child: Text(
               'Pedido: ${orderClient!.formattedId}\n'
@@ -35,7 +43,7 @@ class ExportAddressDialog extends StatelessWidget {
               '${address!.street ?? ''}, ${address!.number ?? 'S/N'},\n'
               '${address!.district ?? ''}\n'
               '${address!.city ?? ''}-${address!.state ?? ''}\n'
-              '${address!.zipCode ?? ''}\n'
+              '$formattedCep\n'
               '${address?.complement ?? ''}',
               style: const TextStyle(
                 fontSize: 14,
@@ -53,19 +61,35 @@ class ExportAddressDialog extends StatelessWidget {
           onPressed: () async {
             Navigator.of(context).pop();
 
-            ///Capture and saving to a file
-            screenshotController.capture().then((value) async {
-              var image = value;
+            if (kIsWeb) {
+            /// Capture and save to a file on WEB
+            final image = await screenshotController.capture();
 
-              final dir = await getApplicationDocumentsDirectory();
-              final imagePath =
-                  await File('${dir.path}/ ${orderClient!.formattedId}.png')
-                      .create();
-              await imagePath.writeAsBytes(image!);
+              final bytes = image!.buffer.asUint8List();
+              final blob = html.Blob([bytes]);
+              final url = html.Url.createObjectUrlFromBlob(blob);
 
-              ///Save a widget Capture to a Gallery
-              await GallerySaver.saveImage(imagePath.path);
-            });
+               ///Save a widget Capture on Downloads to the PC or Browser location
+              html.AnchorElement(href: url)
+                ..setAttribute("download", "${orderClient!.formattedId}.png")
+                ..click();
+              html.Url.revokeObjectUrl(url);
+            } else {
+
+              ///Capture and saving to a file
+              screenshotController.capture().then((value) async {
+                var image = value;
+
+                final dir = await getApplicationDocumentsDirectory();
+                final imagePath =
+                    await File('${dir.path}/ ${orderClient!.formattedId}.png')
+                        .create();
+                await imagePath.writeAsBytes(image!);
+
+                ///Save a widget Capture to a Gallery
+                await GallerySaver.saveImage(imagePath.path);
+              });
+            }
           },
         )
       ],
