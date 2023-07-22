@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/common/orders/components/order_product_tile.dart';
+import 'package:brn_ecommerce/screens/orders/components/order_product_tile.dart';
 import 'package:brn_ecommerce/models/order_client.dart';
 import 'package:flutter/material.dart';
 

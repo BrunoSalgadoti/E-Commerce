@@ -56,8 +56,7 @@ class OrderProductTile extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          cartProduct!.realColorFromCart ==
-                              Colors.transparent
+                          cartProduct!.realColorFromCart == Colors.transparent
                               ? const Text('Cor: Cor da foto')
                               : const Text('Cor: '),
                           Container(
@@ -67,7 +66,7 @@ class OrderProductTile extends StatelessWidget {
                               boxShadow: [
                                 BoxShadow(
                                   color: cartProduct!.realColorFromCart ==
-                                      Colors.transparent
+                                          Colors.transparent
                                       ? Colors.grey.withOpacity(0.0)
                                       : Colors.grey.withOpacity(0.5),
                                   spreadRadius: 2,

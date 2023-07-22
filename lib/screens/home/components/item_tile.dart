@@ -51,8 +51,13 @@ class ItemTile extends StatelessWidget {
                                   contentPadding: EdgeInsets.zero,
                                   leading: Image.network(product.images!.first),
                                   title: Text(product.name!),
-                                  subtitle: Text('R\$ '
-                                      '${product.basePrice.toStringAsFixed(2)}'),
+                                  subtitle: !product.hasStock
+                                      ? const Text(
+                                          'Fora de Estoque...',
+                                          style: TextStyle(color: Colors.red),
+                                        )
+                                      : Text(
+                                          'R\$ ${product.basePrice.toStringAsFixed(2)}'),
                                 )
                               : const Text('Nenhum Item Vinculado'
                                   ' a Imagem!'),

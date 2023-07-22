@@ -49,7 +49,7 @@ class SignUpScreen extends StatelessWidget {
                       enabled: !userManager.loading,
                       keyboardType: TextInputType.text,
                       validator: (name) {
-                        if (name!.isEmpty) {
+                        if (name!.isEmpty || name == "") {
                           return 'Campo obrigatório!';
                         } else if (name.trim().split(' ').length <= 1) {
                           return 'Preencha seu nome completo!';
@@ -70,7 +70,7 @@ class SignUpScreen extends StatelessWidget {
                       enabled: !userManager.loading,
                       keyboardType: TextInputType.emailAddress,
                       validator: (email) {
-                        if (email!.isEmpty) {
+                        if (email!.isEmpty || email == "") {
                           return 'Campo Obrigatório';
                         } else if (!emailValid(email)) {
                           return 'E-mail inválido';

@@ -12,9 +12,11 @@ import 'package:screenshot/screenshot.dart';
 import 'package:custom_universal_html/html.dart' as html;
 
 class ExportAddressDialog extends StatelessWidget {
-  ExportAddressDialog(this.address, this.orderClient,
-      {Key? key,})
-      : super(key: key);
+  ExportAddressDialog(
+    this.address,
+    this.orderClient, {
+    Key? key,
+  }) : super(key: key);
 
   final Address? address;
   final OrderClient? orderClient;
@@ -23,9 +25,7 @@ class ExportAddressDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final formattedCep =
-    UtilBrasilFields.obterCep(address!.zipCode!);
+    final formattedZipcode = UtilBrasilFields.obterCep(address!.zipCode!);
 
     return ShowAlertDialog(
       titleText: 'Endereço de Entrega',
@@ -35,15 +35,15 @@ class ExportAddressDialog extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(8),
           color: Colors.white,
-          width: 270,
+          width: 30,
           child: Text(
               'Pedido: ${orderClient!.formattedId}\n'
-              '\n---------------- Destinatário ----------------\n'
+              '\n------------ Destinatário ------------\n'
               'Nome: ${orderClient?.userName ?? ''}\n'
               '${address!.street ?? ''}, ${address!.number ?? 'S/N'},\n'
               '${address!.district ?? ''}\n'
               '${address!.city ?? ''}-${address!.state ?? ''}\n'
-              '$formattedCep\n'
+              'CEP : $formattedZipcode\n'
               '${address?.complement ?? ''}',
               style: const TextStyle(
                 fontSize: 14,
@@ -62,20 +62,34 @@ class ExportAddressDialog extends StatelessWidget {
             Navigator.of(context).pop();
 
             if (kIsWeb) {
-            /// Capture and save to a file on WEB
-            final image = await screenshotController.capture();
+              /// Capture and save to a file on WEB
+              final image = await screenshotController.capture();
 
               final bytes = image!.buffer.asUint8List();
               final blob = html.Blob([bytes]);
               final url = html.Url.createObjectUrlFromBlob(blob);
 
-               ///Save a widget Capture on Downloads to the PC or Browser location
-              html.AnchorElement(href: url)
+              /// Try to initiate automatic download
+              final anchor = html.AnchorElement(href: url)
                 ..setAttribute("download", "${orderClient!.formattedId}.png")
                 ..click();
-              html.Url.revokeObjectUrl(url);
-            } else {
 
+              /// Revoke object URL
+              html.Url.revokeObjectUrl(url);
+
+              /// Check if download was initiated successfully
+              bool downloadStarted = anchor.href!.isNotEmpty;
+
+              if (!downloadStarted) {
+                /// If download didn't start, show a link for manual download
+                final downloadLink = html.AnchorElement(href: url)
+                  ..setAttribute("download", "${orderClient!.formattedId}.png")
+                  ..text = "Clique aqui para baixar a imagem";
+
+                /// Add the link to the DOM
+                html.document.body?.append(downloadLink);
+              }
+            } else {
               ///Capture and saving to a file
               screenshotController.capture().then((value) async {
                 var image = value;

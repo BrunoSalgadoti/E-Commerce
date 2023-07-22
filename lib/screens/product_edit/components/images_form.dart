@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:brn_ecommerce/models/product.dart';
-import 'package:brn_ecommerce/screens/edit_product/components/image_source_sheet.dart';
-import 'package:brn_ecommerce/screens/edit_product/components/image_source_web.dart';
+import 'package:brn_ecommerce/screens/product_edit/components/image_source_sheet.dart';
+import 'package:brn_ecommerce/screens/product_edit/components/image_source_web.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -116,42 +116,42 @@ class ImagesForm extends StatelessWidget {
                 ..add(
                   kIsWeb
                       ? Container(
-                    color: Colors.grey[100],
-                    child: IconButton(
-                        icon: Icon(
-                          Icons.add_a_photo,
-                          size: 60,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (_) => buildImageSourceSheet());
-                        }),
-                  )
+                          color: Colors.grey[100],
+                          child: IconButton(
+                              icon: Icon(
+                                Icons.add_a_photo,
+                                size: 60,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => buildImageSourceSheet());
+                              }),
+                        )
                       : Material(
-                      color: Colors.grey[100],
-                      child: IconButton(
-                          icon: Icon(
-                            Icons.add_a_photo,
-                            size: 60,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          onPressed: () {
-                            if (Platform.isAndroid) {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (_) => buildImageSourceSheet());
-                            } else if (Platform.isIOS) {
-                              showCupertinoModalPopup(
-                                  context: context,
-                                  builder: (_) => buildImageSourceSheet());
-                            } else {
-                              showDialog(
-                                  context: context,
-                                  builder: (_) => buildImageSourceSheet());
-                            }
-                          })),
+                          color: Colors.grey[100],
+                          child: IconButton(
+                              icon: Icon(
+                                Icons.add_a_photo,
+                                size: 60,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              onPressed: () {
+                                if (Platform.isAndroid) {
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (_) => buildImageSourceSheet());
+                                } else if (Platform.isIOS) {
+                                  showCupertinoModalPopup(
+                                      context: context,
+                                      builder: (_) => buildImageSourceSheet());
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) => buildImageSourceSheet());
+                                }
+                              })),
                 ),
             ),
             if (state.hasError)

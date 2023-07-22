@@ -1,8 +1,8 @@
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
 import 'package:brn_ecommerce/models/details_products.dart';
 import 'package:brn_ecommerce/models/product.dart';
-import 'package:brn_ecommerce/screens/edit_product/components/colors_form.dart';
-import 'package:brn_ecommerce/screens/edit_product/components/edit_item_size.dart';
+import 'package:brn_ecommerce/screens/product_edit/components/colors_form.dart';
+import 'package:brn_ecommerce/screens/product_edit/components/edit_item_size.dart';
 import 'package:flutter/material.dart';
 
 class SizesForm extends StatelessWidget {
@@ -78,7 +78,7 @@ class SizesForm extends StatelessWidget {
                         }
                             : null,
                       ),
-                      ColorsForm(detailsProducts: size),// Novo FormField aninhado
+                      ColorsForm(detailsProducts: size),// Nested FormField
                       const SizedBox(height: 5,),
                       const Divider(thickness: 2.0,),
                       const SizedBox(height: 10,),

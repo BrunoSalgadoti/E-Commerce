@@ -3,6 +3,7 @@ import 'package:brn_ecommerce/models/version_manager.dart';
 import 'package:brn_ecommerce/my_app.dart';
 import 'package:brn_ecommerce/services/db_api/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
@@ -14,8 +15,11 @@ Future<void> main() async {
   );
 
   // Load version information asynchronously
-  final versionManager = VersionManager();
-  await versionManager.updateVersionInfo();
+  if (!kReleaseMode) {
+    // This code snippet will only run in debug mode
+    final versionManager = VersionManager();
+    await versionManager.updateVersionInfo();
+  }
 
   runApp(
     const AppProviders(

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -47,18 +48,20 @@ class VersionManager extends ChangeNotifier {
   }
 
   Future<void> updateVersionInfo() async {
-    await _initPackageInfo();
-    final appVersion = _packageInfo.version;
-    final buildNumber = _packageInfo.buildNumber;
+    if (!kReleaseMode) {
+      await _initPackageInfo();
+      final appVersion = _packageInfo.version;
+      final buildNumber = _packageInfo.buildNumber;
 
-    final versionData = {
-      'appVersion': appVersion,
-      'buildNumber': buildNumber,
-    };
+      final versionData = {
+        'appVersion': appVersion,
+        'buildNumber': buildNumber,
+      };
 
-    await firestore
-        .collection('versionApp')
-        .doc('currentVersion')
-        .set(versionData);
+      await firestore
+          .collection('versionApp')
+          .doc('currentVersion')
+          .set(versionData);
+    }
   }
 }

@@ -1,7 +1,7 @@
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
 import 'package:brn_ecommerce/models/colors_products.dart';
 import 'package:brn_ecommerce/models/details_products.dart';
-import 'package:brn_ecommerce/screens/edit_product/components/edit_colors.dart';
+import 'package:brn_ecommerce/screens/product_edit/components/edit_colors.dart';
 import 'package:flutter/material.dart';
 
 class ColorsForm extends StatelessWidget {

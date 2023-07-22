@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:brn_ecommerce/models/section.dart';
 import 'package:brn_ecommerce/models/section_item.dart';
-import 'package:brn_ecommerce/screens/edit_product/components/image_source_sheet.dart';
-import 'package:brn_ecommerce/screens/edit_product/components/image_source_web.dart';
+import 'package:brn_ecommerce/screens/product_edit/components/image_source_sheet.dart';
+import 'package:brn_ecommerce/screens/product_edit/components/image_source_web.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';

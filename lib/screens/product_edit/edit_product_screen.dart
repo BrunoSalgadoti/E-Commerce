@@ -4,8 +4,8 @@ import 'package:brn_ecommerce/common/button/custom_text_button.dart';
 import 'package:brn_ecommerce/common/show_alert_dialog.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
-import 'package:brn_ecommerce/screens/edit_product/components/images_form.dart';
-import 'package:brn_ecommerce/screens/edit_product/components/sizes_form.dart';
+import 'package:brn_ecommerce/screens/product_edit/components/images_form.dart';
+import 'package:brn_ecommerce/screens/product_edit/components/sizes_form.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:markdown_editable_textinput/format_markdown.dart';
@@ -225,7 +225,7 @@ class EditProductScreen extends StatelessWidget {
                                               product.loading = false;
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(SnackBar(
-                                                    content: Text(
+                                                content: Text(
                                                     errorSaveProductMessage,
                                                     style: const TextStyle(
                                                         fontSize: 18)),
