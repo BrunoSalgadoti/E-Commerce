@@ -22,7 +22,7 @@ class RouteGenerator {
             builder: (_) => LoginScreen());
       case "/signup":
         return MaterialPageRoute(
-            builder: (_) => SignUpScreen());
+            builder: (_) => const SignUpScreen());
       case "/cart":
         return MaterialPageRoute(
             builder: (_) => const CartScreen(), settings: settings);
