@@ -193,7 +193,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 );
                                 return;
                               }
-                              userManager.singUp(
+                              userManager.singUpWithEmailAndPassword(
                                 users: users,
                                 onFail: (error) {
                                   ScaffoldMessenger.of(context).showSnackBar(

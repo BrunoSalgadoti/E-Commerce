@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -15,17 +16,26 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    // Abre o áudio com autoStart: false para evitar a reprodução automática
     assetsAudioPlayer.open(
       Audio("assets/vignette/vignette.mp3"),
+      autoStart: kIsWeb ? false : true,
     );
     Timer(const Duration(seconds: 6), () {
-      Navigator.pushReplacementNamed(context, "/drawer");
+      Navigator.pushReplacementNamed(context, "/home");
     });
   }
 
   @override
+  void dispose() {
+    assetsAudioPlayer.stop();
+    assetsAudioPlayer.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final colorTween = ColorTween(begin: Colors.grey, end: Colors.green);
+    final colorTween = ColorTween(begin: Colors.grey, end: Colors.blue);
 
     return Scaffold(
       body: Stack(
@@ -35,14 +45,8 @@ class _SplashScreenState extends State<SplashScreen> {
             duration: const Duration(seconds: 7),
             tween: colorTween,
             child: Container(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   invertColors: true,

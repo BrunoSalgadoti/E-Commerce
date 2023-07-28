@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class UserManager extends ChangeNotifier {
   UserManager() {
@@ -40,6 +41,15 @@ class UserManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _loadingGoogle = false;
+
+  bool get loadingGoogle => _loadingGoogle;
+
+  set loadingGoogle(bool value) {
+    _loadingGoogle = value;
+    notifyListeners();
+  }
+
   bool get isLoggedIn => users != null;
 
   bool get adminEnable => users != null && users!.admin;
@@ -65,7 +75,8 @@ class UserManager extends ChangeNotifier {
     final deliveryDoc = firestore.collection("aux").doc("delivery");
     final doc = await deliveryDoc.get();
     if (!doc.exists) {
-      final delivery = Delivery(); // Create a new instance of the Delivery class
+      final delivery =
+          Delivery(); // Create a new instance of the Delivery class
       await deliveryDoc.set(delivery.toMap());
     }
 
@@ -96,7 +107,7 @@ class UserManager extends ChangeNotifier {
     loading = false;
   }
 
-  Future<void> loginWithFacebook(
+  Future<void> loginOrSingUpWithFacebook(
       {required Function? onFail, required Function? onSuccess}) async {
     try {
       loadingFace = true;
@@ -168,16 +179,86 @@ class UserManager extends ChangeNotifier {
           loadingFace = true;
           break;
       }
-    } catch (error) {
-      onFail!(error);
+    } on FirebaseAuthException catch (error) {
+      onFail!(getErrorString(error.code));
+      loadingFace = false;
     }
   }
 
-  void googleLogin() {
-    //TODO: Acesso com o Google
+  Future<void> loginOrSingUpWithGoogle({
+    required Function? onFail,
+    required Function? onSuccess,
+  }) async {
+    try {
+
+      // check if is running on Web
+      if (kIsWeb) {
+        GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+        googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+        googleProvider.setCustomParameters({
+          'login_hint': 'user@example.com'
+        });
+        return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+      }
+
+      final GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
+      loadingGoogle = true;
+
+
+      // Realize authentication for the Google
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
+
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        final UserCredential userCredential =
+            await _auth.signInWithCredential(credential);
+        final User? user = userCredential.user;
+
+        if (user != null) {
+          // Check if the user document already exists in Firestore
+          final DocumentSnapshot userSnapshot =
+              await firestore.collection("users").doc(user.uid).get();
+
+          // Capture user data and save to FirebaseFirestore
+          if (userSnapshot.exists) {
+            users = Users.fromDocument(userSnapshot);
+            await users?.updateUserData();
+          } else {
+            users = Users(
+              email: user.email ?? "",
+              userName: user.displayName,
+              id: user.uid,
+              phoneNumber: user.phoneNumber ?? "",
+              userPhotoURL: user.photoURL ?? "",
+            );
+            await users?.saveUserData();
+          }
+        }
+
+        // Create "admins" and "aux/delivery" documents if they don't exist
+        await _createAuxAndAdminsIfNotExists();
+
+        loadingGoogle = false;
+        onSuccess!();
+      } else {
+        // Handle the case when the user cancels the login
+        onFail!("Login cancelado pelo usuário!");
+        loadingGoogle = false;
+      }
+    } on FirebaseAuthException catch (error) {
+      onFail!(getErrorString(error.code));
+      loadingGoogle = false;
+    }
   }
 
-  Future<void> singUp(
+  Future<void> singUpWithEmailAndPassword(
       {required Users users,
       required Function onFail,
       required Function onSuccess}) async {
@@ -228,6 +309,4 @@ class UserManager extends ChangeNotifier {
       StackTrace.empty;
     }
   }
-
-
 }

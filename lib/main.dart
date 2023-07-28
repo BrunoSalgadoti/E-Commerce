@@ -5,6 +5,7 @@ import 'package:brn_ecommerce/services/db_api/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +21,9 @@ Future<void> main() async {
     final versionManager = VersionManager();
     await versionManager.updateVersionInfo();
   }
+
+  // configure routing based on "history-based routing"
+  setPathUrlStrategy();
 
   runApp(
     const AppProviders(

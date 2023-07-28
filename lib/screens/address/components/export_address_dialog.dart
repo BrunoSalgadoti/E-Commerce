@@ -38,7 +38,7 @@ class ExportAddressDialog extends StatelessWidget {
           width: 30,
           child: Text(
               'Pedido: ${orderClient!.formattedId}\n'
-              '\n------------ Destinatário ------------\n'
+              '\n----- Destinatário -----\n'
               'Nome: ${orderClient?.userName ?? ''}\n'
               '${address!.street ?? ''}, ${address!.number ?? 'S/N'},\n'
               '${address!.district ?? ''}\n'

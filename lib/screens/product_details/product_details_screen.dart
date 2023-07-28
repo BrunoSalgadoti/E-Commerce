@@ -12,7 +12,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';
 
-
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({
     Key? key,
@@ -44,8 +43,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
     final detailsProducts = context.read<DetailsProducts>();
     final selectedSize = widget.product!.itemProducts![index];
-    final transparentColorProduct = selectedSize.colorProducts!.firstWhereOrNull(
-          (colors) => colors.realColor == Colors.transparent,
+    final transparentColorProduct =
+        selectedSize.colorProducts!.firstWhereOrNull(
+      (colors) => colors.realColor == Colors.transparent,
     );
 
     if (transparentColorProduct != null) {
@@ -69,12 +69,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             title: Text(widget.product!.name!),
             centerTitle: true,
             actions: [
-              IconButton(
-                  icon: const Icon(Icons.share_outlined),
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/share_product",
-                        arguments: widget.product);
-                  }),
+              if (widget.product!.hasStock)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                  child: IconButton(
+                      icon: const Icon(Icons.share_outlined),
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/share_product",
+                            arguments: widget.product);
+                      }),
+                ),
+              const SizedBox(width: 16),
               Consumer<UserManager>(
                 builder: (_, userManager, __) {
                   if (userManager.adminEnable && !widget.product!.deleted) {
@@ -215,13 +220,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             .map((entry) {
                           final index = entry.key;
                           final colorProduct = entry.value;
-                          return detailsProducts.areAllColorsEmpty(widget.product)
+                          return detailsProducts
+                                  .areAllColorsEmpty(widget.product)
                               ? Container()
                               : ColorsWidget(
-                            key: ValueKey(index),
-                            colorsProducts: colorProduct,
-                            selectedSizeIndex: selectedSizeIndex,
-                          );
+                                  key: ValueKey(index),
+                                  colorsProducts: colorProduct,
+                                  selectedSizeIndex: selectedSizeIndex,
+                                );
                         }).toList(),
                       ),
                       const SizedBox(
