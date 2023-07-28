@@ -190,6 +190,7 @@ class UserManager extends ChangeNotifier {
     required Function? onSuccess,
   }) async {
     try {
+      loadingGoogle = true;
 
       // check if is running on Web
       if (kIsWeb) {
@@ -203,7 +204,6 @@ class UserManager extends ChangeNotifier {
       }
 
       final GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
-      loadingGoogle = true;
 
 
       // Realize authentication for the Google
