@@ -66,7 +66,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            title: Text(widget.product!.name!),
+            title: Text(widget.product!.name ?? ''),
             centerTitle: true,
             actions: [
               if (widget.product!.hasStock)
@@ -114,7 +114,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   slideViewportFraction: 0.8,
                   sliderWidth: double.maxFinite,
                   imageRadius: 10,
-                  imageFitMode: BoxFit.cover,
+                  imageFitMode: BoxFit.fill,
                   expandImageWidth: double.maxFinite,
                 ),
                 Padding(
@@ -123,7 +123,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
-                        widget.product!.name!,
+                        widget.product!.name ?? '',
                         style: const TextStyle(
                             fontSize: 22, fontWeight: FontWeight.w600),
                       ),

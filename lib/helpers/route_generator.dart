@@ -28,7 +28,7 @@ class RouteGenerator {
       case "/product":
         return MaterialPageRoute(
             builder: (_) => ProductDetailsScreen(
-                  product: settings.arguments as Product,
+                  product: settings.arguments as Product? ?? Product(),
                 ), settings: settings);
       case "/share_product":
         return MaterialPageRoute(
