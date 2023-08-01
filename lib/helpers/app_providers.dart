@@ -8,6 +8,7 @@ import 'package:brn_ecommerce/models/orders_manager.dart';
 import 'package:brn_ecommerce/models/policy_and_documents.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
+import 'package:brn_ecommerce/models/stores_manager.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/models/version_manager.dart';
@@ -54,6 +55,9 @@ class AppProviders extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => AdminUsersSearch(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => StoresManager(),
         ),
         ChangeNotifierProxyProvider<UserManager, CartManager>(
           create: (_) => CartManager(),

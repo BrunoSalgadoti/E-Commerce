@@ -8,6 +8,7 @@ class Assets {
   static const String imagesBrnInfoDev = 'assets/images/brnInfoDev.png';
   static const String imagesEmConstrucaoGitHub = 'assets/images/emConstrucaoGitHub.png';
   static const String imagesGoShopping = 'assets/images/goShopping.gif';
+  static const String imagesNoImage = 'assets/images/noImage.png';
   static const String imagesShoppingHappy = 'assets/images/shoppingHappy.gif';
   static const String imagesSplashScreen = 'assets/images/splashScreen.jpg';
   static const String imagesUserWithoutImage = 'assets/images/userWithoutImage.png';
@@ -15,6 +16,6 @@ class Assets {
   static const String logoGoogleLogo = 'assets/logo/googleLogo.png';
   static const String logoStoreLogo = 'assets/logo/storeLogo.png';
   static const String logoStoreLogo2 = 'assets/logo/storeLogo2.png';
-  static const String soundsBrn = 'assets/sounds/brn.mp3';
+  static const String vignetteVignette = 'assets/vignette/vignette.mp3';
 
 }

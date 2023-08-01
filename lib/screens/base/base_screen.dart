@@ -1,4 +1,3 @@
-import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/models/page_manager.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/screens/admin_orders/admin_orders_screen.dart';
@@ -6,6 +5,7 @@ import 'package:brn_ecommerce/screens/admin_users/admin_users_screen.dart';
 import 'package:brn_ecommerce/screens/home/home_screen.dart';
 import 'package:brn_ecommerce/screens/orders/orders_screen.dart';
 import 'package:brn_ecommerce/screens/products/products_screen.dart';
+import 'package:brn_ecommerce/screens/stores/stores_screen.dart';
 import 'package:brn_ecommerce/screens/who_we_are/who_we_are_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,12 +35,7 @@ class _BaseScreenState extends State<BaseScreen> {
               const HomeScreen(),
               const ProductsScreen(),
               const OrdersScreen(),
-              Scaffold(
-                drawer: const CustomDrawer(),
-                appBar: AppBar(
-                  title: const Text('Home3'),
-                ),
-              ),
+              const StoresScreen(),
               const WhoWeArePage(),
               if (userManager.adminEnable) ...[
                 const AdminUsersScreen(),

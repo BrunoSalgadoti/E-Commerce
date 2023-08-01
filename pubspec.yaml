@@ -73,7 +73,6 @@ dependencies:
   google_sign_in: ^6.1.4
   package_info_plus: ^4.0.2
   assets_audio_player: ^3.0.6
-#  webview_flutter: ^4.2.2
   url_strategy: ^0.2.0
 
 
