@@ -33,7 +33,6 @@ dependencies:
   intl: ^0.18.1
   collection: ^1.17.1
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.5
@@ -54,7 +53,7 @@ dependencies:
   image_cropper: ^4.0.1
   path_provider: ^2.0.15
   uuid: ^3.0.7
-  dio: ^5.3.0
+  dio: ^5.3.1
   brasil_fields: ^1.13.1
   geolocator: ^9.0.2
   sliding_up_panel: ^2.0.0+1
@@ -63,7 +62,7 @@ dependencies:
   gallery_saver: ^2.3.2
   font_awesome_flutter: ^10.5.0
   permission_handler: ^10.4.3
-  share_plus: ^7.0.2
+  share_plus: ^7.1.0
   markdown_editable_textinput: ^2.2.0
   flutter_markdown: ^0.6.17
   youtube_player_iframe: ^4.0.4
@@ -71,8 +70,9 @@ dependencies:
   flutter_spinkit: ^5.2.0
   flutter_facebook_auth: ^5.0.11
   google_sign_in: ^6.1.4
-  package_info_plus: ^4.0.2
+  package_info_plus: ^4.1.0
   assets_audio_player: ^3.0.6
+  map_launcher: ^2.5.0+1
   url_strategy: ^0.2.0
 
 
@@ -81,6 +81,8 @@ dev_dependencies:
     sdk: flutter
   lint: ^2.1.2
   analyzer: ^6.0.0
+
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
-  const CustomIconButton({Key? key,
-    required this.iconData,
-    this.onTap,
-    this.color,
-    this.size
-  }) : super(key: key);
+  const CustomIconButton(
+      {Key? key, required this.iconData, this.onTap, this.color, this.size})
+      : super(key: key);
 
   final IconData iconData;
   final VoidCallback? onTap;
@@ -22,7 +19,7 @@ class CustomIconButton extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(8),
             child: Icon(
               size: size,
               iconData,

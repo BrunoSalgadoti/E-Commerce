@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/opening_stores.dart';
 import 'package:brn_ecommerce/models/stores.dart';
@@ -8,12 +10,14 @@ class StoresManager extends ChangeNotifier {
   StoresManager([this.stores, this.address]) {
     _createStoresCollectionIfNotExists();
     _loadStoreList();
+    _startTime();
   }
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Stores? stores;
   Address? address;
+  Timer? _timer;
 
   List<Stores> storesList = [];
 
@@ -24,15 +28,35 @@ class StoresManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  void _startTime() {
+    _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
+      _checkOpening();
+    });
+  }
+
+  void _checkOpening() {
+    for (final store in storesList) {
+      store.updateStatus();
+      notifyListeners();
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer?.cancel();
+  }
+
   Future<void> _createStoresCollectionIfNotExists() async {
-    // Verifica se a coleção "stores" existe
+    // Checks if the "stores" collection exists
     CollectionReference storesCollection = firestore.collection("stores");
     bool collectionExists = await storesCollection.limit(1).get().then(
           (querySnapshot) => querySnapshot.size > 0,
         );
     // Verifica se o documento existe
     if (!collectionExists) {
-      // Create a new instance of OpeningStores and Address with the initial values
+      // Create a new instance of OpeningStores and Address
+      // with the initial values
       Address initialAddressStores = Address(
         street: "Rua: X",
         number: "Nº 00",
@@ -56,8 +80,8 @@ class StoresManager extends ChangeNotifier {
         openingStores: initialOpeningStores,
         address: initialAddressStores,
       );
-      // O documento não existe, então cria o documento na coleção "stores"
-      // com os dados iniciais do fabricante do APP
+      // The document does not exist, so create the document in the "stores"
+      // collection with the initial data of the APP manufacturer
       await storesCollection.doc(stores.id).set(stores.toMap());
     }
   }

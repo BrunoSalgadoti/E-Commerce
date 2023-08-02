@@ -118,8 +118,9 @@ class CartTile extends StatelessWidget {
                   ),
                 )),
                 Padding(
-                  padding: const EdgeInsets.only(right: 4, left: 4),
-                  child: Consumer<CartProduct>(builder: (_, cartProduct, __) {
+                  padding: const EdgeInsets.only(right: 5, left: 10),
+                  child: Consumer<CartProduct>(
+                      builder: (_, cartProduct, __) {
                     return Column(
                       children: [
                         CustomIconButton(

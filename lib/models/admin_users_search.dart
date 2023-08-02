@@ -78,8 +78,7 @@ class AdminUsersSearch extends ChangeNotifier {
 
     final Uri emailLaunchUri = Uri(
         scheme: "mailto",
-        path: userEmail ??
-            emails.toString().replaceAll("[", "").replaceAll("]", ""),
+        path: userEmail ?? emails.toString().replaceAll(RegExp(r"[\[\]]"), ""),
         query: encodeQueryParameters(<String, String>{
           "subject": "BRN Info_DEV",
           "body": userName == null
@@ -145,14 +144,12 @@ class AdminUsersSearch extends ChangeNotifier {
                 return ListTile(
                   leading: Stack(
                     children: <Widget>[
-                      user.userPhotoURL == "" ||
-                              user.userPhotoURL == null
+                      user.userPhotoURL == "" || user.userPhotoURL == null
                           ? const CircleAvatar(
                               backgroundImage: AssetImage(
                                   'assets/images/userWithoutImage.png'))
                           : CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage(user.userPhotoURL!),
+                              backgroundImage: NetworkImage(user.userPhotoURL!),
                             ),
                       const SizedBox(
                           height: 40,
@@ -169,7 +166,7 @@ class AdminUsersSearch extends ChangeNotifier {
                       style: const TextStyle(
                           fontWeight: FontWeight.w800, color: Colors.white)),
                   subtitle: Text(
-                      "${user.email}\nTel.: ${user.phoneNumber ?? ""}",
+                    "${user.email}\nTel.: ${user.phoneNumber ?? ""}",
                     style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   onTap: () {
@@ -260,14 +257,12 @@ class AdminUsersSearch extends ChangeNotifier {
             child: Consumer2<AdminOrdersManager, PageManager>(
                 builder: (_, adminOrdersManager, pageManager, __) {
               return ListTile(
-                leading: user.userPhotoURL == "" ||
-                        user.userPhotoURL == null
+                leading: user.userPhotoURL == "" || user.userPhotoURL == null
                     ? const CircleAvatar(
                         backgroundImage:
                             AssetImage('assets/images/userWithoutImage.png'))
                     : CircleAvatar(
-                        backgroundImage:
-                            NetworkImage(user.userPhotoURL!)),
+                        backgroundImage: NetworkImage(user.userPhotoURL!)),
                 title: Text(user.userName!,
                     style: const TextStyle(
                         fontWeight: FontWeight.w800, color: Colors.white)),
