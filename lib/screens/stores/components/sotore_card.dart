@@ -21,10 +21,9 @@ class StoreCard extends StatelessWidget {
     closeModal() => Navigator.pop(context);
     showModalContext() => context;
 
-    final storeImage =
-        store.imageStoreURL != null && store.imageStoreURL!.isNotEmpty
-            ? Image.network(store.imageStoreURL!, fit: BoxFit.cover)
-            : Image.asset('assets/images/noImage.png', fit: BoxFit.cover);
+    final storeImage = store.imageStore != null && store.imageStore!.isNotEmpty
+        ? Image.network(store.imageStore!, fit: BoxFit.cover)
+        : Image.asset('assets/images/noImage.png', fit: BoxFit.cover);
 
     Future<void> openPhone(String phoneNumber) async {
       if (await canLaunchUrl(Uri.parse('tel:$phoneNumber'))) {
@@ -54,7 +53,7 @@ class StoreCard extends StatelessWidget {
           context: showModalContext(),
           builder: (_) {
             return SafeArea(
-             child: Column(
+                child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 for (final map in availableMap)
@@ -161,7 +160,7 @@ class StoreCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          store.addressText,
+                          store.addressText ?? '',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 4,
                         ),
@@ -195,10 +194,10 @@ class StoreCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

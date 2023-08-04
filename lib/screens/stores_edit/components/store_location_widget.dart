@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:brn_ecommerce/models/stores.dart';
 
 class StoreLocationWidget extends StatefulWidget {
-  final Stores store;
-
   const StoreLocationWidget({Key? key, required this.store}) : super(key: key);
+
+  final Stores store;
 
   @override
   StoreLocationWidgetState createState() => StoreLocationWidgetState();
@@ -15,6 +16,8 @@ class StoreLocationWidgetState extends State<StoreLocationWidget> {
   // Variables to hold latitude and longitude
   late double _latitude;
   late double _longitude;
+
+  showModalContext() => context;
 
   @override
   void initState() {
@@ -28,7 +31,7 @@ class StoreLocationWidgetState extends State<StoreLocationWidget> {
       final availableMap = await MapLauncher.installedMaps;
 
       showModalBottomSheet(
-        context: context,
+        context: showModalContext(),
         builder: (_) {
           return SafeArea(
             child: Column(
@@ -39,13 +42,13 @@ class StoreLocationWidgetState extends State<StoreLocationWidget> {
                     onTap: () {
                       map.showMarker(
                         coords: Coords(_latitude, _longitude),
-                        title: widget.store.nameStore!,
-                        description: widget.store.addressText,
+                        title: widget.store.nameStore ?? '',
+                        description: widget.store.addressText ?? '00000000',
                       );
                       Navigator.pop(context);
                     },
                     title: Text(map.mapName),
-                    leading: Image.asset(
+                    leading: SvgPicture.asset(
                       map.icon,
                       width: 30,
                       height: 30,

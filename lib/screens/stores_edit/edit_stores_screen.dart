@@ -1,7 +1,8 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
 import 'package:brn_ecommerce/helpers/time_input_formatter.dart';
-import 'package:brn_ecommerce/models/stores_manager.dart';
+import 'package:brn_ecommerce/models/address.dart';
+import 'package:brn_ecommerce/models/opening_stores.dart';
 import 'package:brn_ecommerce/screens/stores_edit/components/store_location_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,14 +21,14 @@ class EditStoresScreen extends StatefulWidget {
 }
 
 class EditStoresScreenState extends State<EditStoresScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    final storeImage = widget.store.imageStoreURL != null &&
-            widget.store.imageStoreURL!.isNotEmpty
-        ? Image.network(widget.store.imageStoreURL!, fit: BoxFit.cover)
-        : Image.asset('assets/images/noImage.png', fit: BoxFit.cover);
+    final storeImage =
+        widget.store.imageStore != null && widget.store.imageStore!.isNotEmpty
+            ? Image.network(widget.store.imageStore!, fit: BoxFit.cover)
+            : Image.asset('assets/images/noImage.png', fit: BoxFit.cover);
 
     String? emptyValidator(String? text) =>
         text!.trim().isEmpty ? 'Campo Obrigatório' : null;
@@ -47,15 +48,16 @@ class EditStoresScreenState extends State<EditStoresScreen> {
             if (widget.store.id != null)
               CustomIconButton(
                 iconData: Icons.delete,
+                color: Colors.white,
                 onTap: () {
-                  context.read<StoresManager>().deleteStore(widget.store);
+                  context.read<Stores>().deleteStore(widget.store);
                 },
               ),
           ],
         ),
         backgroundColor: Colors.white,
         body: Form(
-          key: _formKey,
+          key: formKey,
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -70,13 +72,11 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                     ),
                     Align(
                         alignment: Alignment.topLeft,
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.change_circle_outlined,
-                            color: Colors.blue,
-                            size: 45,
-                          ),
-                          onPressed: () {},
+                        child: CustomIconButton(
+                          onTap: () {},
+                          iconData: Icons.change_circle_outlined,
+                          color: Colors.blue,
+                          size: 45,
                         )),
                   ],
                 ),
@@ -103,7 +103,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                             const InputDecoration(labelText: 'Logradouro:'),
                         validator: emptyValidator,
                         onSaved: (value) {
-                          widget.store.address!.street = value;
+                          widget.store.address?.street = value;
                         },
                       ),
                     ),
@@ -118,7 +118,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                             hintStyle: TextStyle(color: Colors.black26)),
                         validator: emptyValidator,
                         onSaved: (value) {
-                          widget.store.address!.number = value;
+                          widget.store.address?.number = value;
                         },
                       ),
                     ),
@@ -139,7 +139,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                     }
                   },
                   onSaved: (value) {
-                    widget.store.address!.complement = value;
+                    widget.store.address?.complement = value;
                   },
                 ),
                 textFieldSpaceBetweenHeight,
@@ -148,7 +148,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                   decoration: const InputDecoration(labelText: 'Bairro:'),
                   validator: emptyValidator,
                   onSaved: (value) {
-                    widget.store.address!.district = value;
+                    widget.store.address?.district = value;
                   },
                 ),
                 textFieldSpaceBetweenHeight,
@@ -161,7 +161,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                         decoration: const InputDecoration(labelText: 'Cidade:'),
                         validator: emptyValidator,
                         onSaved: (value) {
-                          widget.store.address!.city = value;
+                          widget.store.address?.city = value;
                         },
                       ),
                     ),
@@ -184,7 +184,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                           }
                         },
                         onSaved: (value) {
-                          widget.store.address!.state = value?.toUpperCase();
+                          widget.store.address?.state = value?.toUpperCase();
                         },
                       ),
                     ),
@@ -206,8 +206,8 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                           TelefoneInputFormatter()
                         ],
                         validator: (phone) {
-                          if (phone!.isNotEmpty && phone.length < 11) {
-                            return 'Confira o número digitado!';
+                          if (phone!.isEmpty || phone.length < 11) {
+                            return 'Confira o número digitado (obrigatório)!';
                           } else {
                             return null;
                           }
@@ -241,7 +241,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                           }
                         },
                         onSaved: (value) {
-                          widget.store.address!.zipCode = value;
+                          widget.store.address?.zipCode = value;
                         },
                       ),
                     ),
@@ -273,22 +273,15 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                 StoreLocationWidget(store: widget.store),
                 textFieldSpaceBetweenHeight,
                 TextFormField(
-                  initialValue:
-                      '${widget.store.address?.lat.toString() ?? ""} '
-                          '${widget.store.address?.long.toString() ?? ""}',
+                  initialValue: '${widget.store.address?.lat.toString() ?? ""} '
+                      '${widget.store.address?.long.toString() ?? ""}',
                   decoration: const InputDecoration(
                     labelText: 'Nova Localização:',
                     hintText: 'Ex: -9.1234530, -37.1234168',
                     hintStyle: TextStyle(color: Colors.black26),
                   ),
                   keyboardType: TextInputType.text,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Campo Obrigatório';
-                    } else {
-                      return null;
-                    }
-                  },
+                  validator: emptyValidator,
                   onSaved: (value) {
                     if (value != null && value.isNotEmpty) {
                       final coordinates = value
@@ -296,8 +289,8 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                           .map((coord) => double.tryParse(coord.trim()) ?? 0)
                           .toList();
                       if (coordinates.length == 2) {
-                        widget.store.address!.lat = coordinates[0];
-                        widget.store.address!.long = coordinates[1];
+                        widget.store.address?.lat = coordinates[0];
+                        widget.store.address?.long = coordinates[1];
                       }
                     }
                   },
@@ -319,8 +312,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                         Expanded(
                           flex: 5,
                           child: TextFormField(
-                            initialValue:
-                                widget.store.openingStores?.monFri ?? "",
+                            initialValue: widget.store.openingStores?.monFri,
                             decoration: const InputDecoration(
                                 labelText: 'Abertura e Fechamento:',
                                 hintText: 'Ex: 08:00-18:00',
@@ -332,7 +324,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                               TimeInputFormatter(),
                             ],
                             validator: (value) {
-                              if (value!.isNotEmpty && value.length < 11) {
+                              if (value!.isNotEmpty && value.length < 10) {
                                 return 'Horário Inválido!';
                               } else {
                                 return null;
@@ -352,8 +344,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                         Expanded(
                           flex: 5,
                           child: TextFormField(
-                            initialValue:
-                                widget.store.openingStores?.saturday ?? "",
+                            initialValue: widget.store.openingStores?.saturday,
                             decoration: const InputDecoration(
                                 labelText: 'Abertura e Fechamento:',
                                 hintText: 'Ex: 09:00-12:00',
@@ -364,7 +355,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                               TimeInputFormatter(),
                             ],
                             validator: (value) {
-                              if (value!.isNotEmpty && value.length < 11) {
+                              if (value!.isNotEmpty && value.length < 10) {
                                 return 'Horário Inválido!';
                               } else {
                                 return null;
@@ -384,8 +375,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                         Expanded(
                           flex: 5,
                           child: TextFormField(
-                            initialValue:
-                                widget.store.openingStores?.monday ?? "",
+                            initialValue: widget.store.openingStores?.monday,
                             decoration: const InputDecoration(
                                 labelText: 'Abertura e Fechamento:',
                                 hintText:
@@ -397,7 +387,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                               TimeInputFormatter(),
                             ],
                             validator: (value) {
-                              if (value!.isNotEmpty && value.length < 11) {
+                              if (value!.isNotEmpty && value.length < 10) {
                                 return 'Horário Inválido!';
                               } else {
                                 return null;
@@ -424,11 +414,11 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                 textFieldSpaceBetweenHeight,
                 textFieldSpaceBetweenHeight,
                 ElevatedButton(
-                  onPressed: () {
-                    _saveOrUpdateStore(context);
+                  onPressed: () async {
+                    await _saveOrUpdateStore(context);
                   },
                   child: Text(widget.store.id != null ? 'Salvar' : 'Adicionar'),
-                ),
+                )
               ],
             ),
           ),
@@ -437,20 +427,26 @@ class EditStoresScreenState extends State<EditStoresScreen> {
     );
   }
 
-  void _saveOrUpdateStore(BuildContext context) {
-    final form = _formKey.currentState;
+  backScreen() => Navigator.of(context).pop();
+
+  Future<void> _saveOrUpdateStore(BuildContext context) async {
+    final form = formKey.currentState;
     if (form != null && form.validate()) {
+      widget.store.address ??= Address();
+      widget.store.openingStores ??= OpeningStores();
+
       form.save();
+
+      final stores = context.read<Stores>();
 
       if (widget.store.id != null) {
         // Update the store
-        context.read<StoresManager>().updateStore(widget.store);
+        await stores.updateStore(widget.store.id!, widget.store);
       } else {
-        // Add the new store
-        context.read<StoresManager>().saveStore(widget.store);
+        await stores.saveStore(widget.store);
+        // newAddress, newOpeningStores
       }
-
-      Navigator.of(context).pop();
+      backScreen();
     }
   }
 }

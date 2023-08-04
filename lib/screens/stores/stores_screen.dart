@@ -33,8 +33,7 @@ class StoresScreen extends StatelessWidget {
             )
           ],
         ),
-        body: Consumer<StoresManager>(
-            builder: (_, storesManager, __) {
+        body: Consumer<StoresManager>(builder: (_, storesManager, __) {
           if (storesManager.storesList.isEmpty) {
             return const Center(
               child: EmptyIndicator(

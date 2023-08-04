@@ -41,18 +41,6 @@ class StoresManager extends ChangeNotifier {
     }
   }
 
-  void updateStore(Stores stores) {
-    notifyListeners();
-  }
-
-  void saveStore(Stores stores) {
-    notifyListeners();
-  }
-
-  void deleteStore(Stores stores) async {
-    notifyListeners();
-  }
-
   @override
   void dispose() {
     super.dispose();
@@ -65,7 +53,7 @@ class StoresManager extends ChangeNotifier {
     bool collectionExists = await storesCollection.limit(1).get().then(
           (querySnapshot) => querySnapshot.size > 0,
         );
-    // Verifica se o documento existe
+
     if (!collectionExists) {
       // Create a new instance of OpeningStores and Address
       // with the initial values

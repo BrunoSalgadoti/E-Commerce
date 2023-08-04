@@ -2,6 +2,7 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/opening_stores.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:brn_ecommerce/helpers/extensions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,20 +16,17 @@ class Stores extends ChangeNotifier {
     this.nameStore,
     this.emailStore,
     this.phoneNumberStore,
-    this.imageStoreURL,
+    this.imageStore,
     this.openingStores,
     this.address,
-  }) {
-    openingStores = openingStores;
-    address = address;
-  }
+  });
 
   Stores.fromDocument(DocumentSnapshot document) {
     id = document.id;
     nameStore = document.get("nameStore") as String? ?? "";
     emailStore = document.get("emailStore") as String? ?? "";
     phoneNumberStore = document.get("phoneNumberStore") as String? ?? "";
-    imageStoreURL = document.get("imageStoreURL") as String? ?? "";
+    imageStore = document.get("imageStore") as String? ?? "";
     address = Address.fromMap(document.get("address") as Map<String, dynamic>);
     openingStores = OpeningStores.fromMap(
         document.get("openingStores") as Map<String, dynamic>);
@@ -57,6 +55,13 @@ class Stores extends ChangeNotifier {
     updateStatus();
   }
 
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseStorage storage = FirebaseStorage.instance;
+
+  DocumentReference get firestoreRef => firestore.doc("stores/$id");
+
+  Reference get storageRef => storage.ref().child("stores").child(id!);
+
   Address? address;
   OpeningStores? openingStores;
 
@@ -64,15 +69,15 @@ class Stores extends ChangeNotifier {
   String? nameStore;
   String? emailStore;
   String? phoneNumberStore;
-  String? imageStoreURL;
+  String? imageStore;
   Map<String, Map<String, TimeOfDay>?>? openingStoresFromTimeOfDay;
   StoreStatus? status;
 
   String get formattedCep =>
-      UtilBrasilFields.obterCep(address!.formattedZipCode);
+      UtilBrasilFields.obterCep(address?.formattedZipCode ?? '00000000');
 
-  String get addressText => '${address?.street}, ${address?.number}'
-      '${address!.complement!.isNotEmpty ? ' - ${address!.complement}' : ''} - '
+  String? get addressText => '${address?.street}, ${address?.number}'
+      '${address?.complement?.isNotEmpty == true ? ' - ${address!.complement}' : ''} - '
       '${address?.district}, ${address?.city}/'
       '${address?.state} - $formattedCep';
 
@@ -94,21 +99,45 @@ class Stores extends ChangeNotifier {
       "nameStore": nameStore,
       "emailStore": emailStore,
       "phoneNumberStore": phoneNumberStore,
-      "imageStoreURL": imageStoreURL,
+      "imageStore": imageStore,
       "openingStores": openingStores?.toMap(),
       "address": address?.toMap(),
     };
   }
 
-  Stores cloneStores() {
-    return Stores(
-      id: id,
-      nameStore: nameStore,
-      phoneNumberStore: phoneNumberStore,
-      imageStoreURL: imageStoreURL ?? '',
-      openingStores: openingStores,
-      address: address,
-    );
+  Future<void> updateStore(String storeId, Stores store) async {
+    try {
+      final storeRef = firestore.collection("stores").doc(storeId);
+      await storeRef.update(store.toMap());
+      notifyListeners();
+    } catch (error) {
+      // Tratar erro, se necessário
+    }
+  }
+
+  Future<void> saveStore(Stores store) async {
+    try {
+      final doc = firestore.collection("stores");
+      await doc.add(store.toMap());
+      store.id = doc.id;
+
+      notifyListeners();
+    } catch (error) {
+      // Tratar erro, se necessário
+    }
+  }
+
+  Future<void> deleteStore(Stores store) async {
+    try {
+      if (imageStore != null && imageStore!.contains("firebase")) {
+        final ref = storage.refFromURL(imageStore!);
+        await ref.delete();
+      }
+      await firestoreRef.delete();
+      notifyListeners();
+    } catch (error) {
+      // Tratar erro, se necessário
+    }
   }
 
   void updateStatus() {
@@ -213,7 +242,7 @@ class Stores extends ChangeNotifier {
       context: context,
       builder: (_) {
         return SafeArea(
-            child: Column(
+         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
