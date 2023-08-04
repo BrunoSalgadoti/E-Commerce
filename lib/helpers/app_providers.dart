@@ -8,6 +8,7 @@ import 'package:brn_ecommerce/models/orders_manager.dart';
 import 'package:brn_ecommerce/models/policy_and_documents.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
+import 'package:brn_ecommerce/models/stores.dart';
 import 'package:brn_ecommerce/models/stores_manager.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
@@ -34,7 +35,6 @@ class AppProviders extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ProductManager(),
-          lazy: false,
         ),
         ChangeNotifierProvider(
           create: (_) => DetailsProducts(stock: 0),
@@ -51,10 +51,12 @@ class AppProviders extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => VersionManager(),
-          lazy: false,
         ),
         ChangeNotifierProvider(
           create: (_) => AdminUsersSearch(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Stores(),
         ),
         ChangeNotifierProvider(
           create: (_) => StoresManager(),
@@ -66,7 +68,6 @@ class AppProviders extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<UserManager, OrdersManager>(
           create: (_) => OrdersManager(),
-          lazy: false,
           update: (_, userManager, ordersManager) =>
               ordersManager!..updateUser(userManager.users ?? Users(email: "")),
         ),

@@ -20,9 +20,9 @@ Future<void> main() async {
     // This code snippet will only run in debug mode
     final versionManager = VersionManager();
     await versionManager.updateVersionInfo();
-    // configure routing based on "history-based routing"
-    setPathUrlStrategy();
   }
+  // configure routing based on "history-based routing"
+  setPathUrlStrategy();
 
   runApp(
     const AppProviders(

@@ -1,7 +1,9 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/screens/policy_and_documents/policy_and_documents_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
@@ -46,6 +48,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        const Center(
+                          child: Text(
+                            'Cadastro',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w800),
+                          ),
+                        ),
+                        const SizedBox(height: 18),
                         TextFormField(
                           decoration: const InputDecoration(
                             labelText: 'Nome Completo',
@@ -93,7 +103,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             hintStyle: TextStyle(color: Colors.black38),
                           ),
                           enabled: !userManager.loading,
-                          keyboardType: TextInputType.number,
+                          // keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            TelefoneInputFormatter()
+                          ],
                           validator: (phone) {
                             if (phone!.isNotEmpty && phone.length < 11) {
                               return 'Confira o número digitado!';

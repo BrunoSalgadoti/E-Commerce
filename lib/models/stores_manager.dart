@@ -41,6 +41,18 @@ class StoresManager extends ChangeNotifier {
     }
   }
 
+  void updateStore(Stores stores) {
+    notifyListeners();
+  }
+
+  void saveStore(Stores stores) {
+    notifyListeners();
+  }
+
+  void deleteStore(Stores stores) async {
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     super.dispose();

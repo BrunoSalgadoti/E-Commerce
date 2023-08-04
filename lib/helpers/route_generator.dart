@@ -1,5 +1,6 @@
 import 'package:brn_ecommerce/models/order_client.dart';
 import 'package:brn_ecommerce/models/product.dart';
+import 'package:brn_ecommerce/models/stores.dart';
 import 'package:brn_ecommerce/screens/address/address_screen.dart';
 import 'package:brn_ecommerce/screens/base/base_screen.dart';
 import 'package:brn_ecommerce/screens/cart/cart_screen.dart';
@@ -13,6 +14,7 @@ import 'package:brn_ecommerce/screens/product_selected/selected_product_screen.d
 import 'package:brn_ecommerce/screens/products_share/share_product_screen.dart';
 import 'package:brn_ecommerce/screens/sales_confirmation/sales_confirmation_screen.dart';
 import 'package:brn_ecommerce/screens/sign_up/sign_up_screen.dart';
+import 'package:brn_ecommerce/screens/stores_edit/edit_stores_screen.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
@@ -23,13 +25,14 @@ class RouteGenerator {
       case "/signup":
         return MaterialPageRoute(builder: (_) => const SignUpScreen());
       case "/cart":
-        return MaterialPageRoute(builder: (_) => const CartScreen(),
-            settings: settings);
+        return MaterialPageRoute(
+            builder: (_) => const CartScreen(), settings: settings);
       case "/product":
         return MaterialPageRoute(
             builder: (_) => ProductDetailsScreen(
                   product: settings.arguments as Product? ?? Product(),
-                ), settings: settings);
+                ),
+            settings: settings);
       case "/share_product":
         return MaterialPageRoute(
             builder: (_) =>
@@ -40,6 +43,12 @@ class RouteGenerator {
                 product: settings.arguments != null
                     ? settings.arguments as Product
                     : Product().cloneProduct()));
+      case "/edit_stores":
+        return MaterialPageRoute(
+            builder: (_) => EditStoresScreen(
+                store: settings.arguments != null
+                    ? settings.arguments as Stores
+                    : Stores().cloneStores()));
       case "/select_product":
         return MaterialPageRoute(builder: (_) => const SelectProductScreen());
       case "/privacy_policy":

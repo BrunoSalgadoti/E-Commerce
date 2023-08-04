@@ -23,7 +23,7 @@
 		<key>CFBundleVersion</key>
 		<string>$(FLUTTER_BUILD_NUMBER)</string>
 		<key>LSRequiresIPhoneOS</key>
-		<true/>
+		<true />
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
 		<key>UIMainStoryboardFile</key>
@@ -42,22 +42,17 @@
 			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
-		<false/>
+		<false />
 		<key>CADisableMinimumFrameDurationOnPhone</key>
-		<true/>
+		<true />
 		<key>UIApplicationSupportsIndirectInputEvents</key>
-		<true/>
+		<true />
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>Necessário acesso a galeria para buscar/salvar imagem</string>
 		<key>NSCameraUsageDescription</key>
 		<string>Necessário acesso a câmera para adicionar imagem</string>
 		<key>NSMicrophoneUsageDescription</key>
 		<string>Necessário acesso a câmera para adicionar imagem</string>
-		<key>LSApplicationQueriesSchemes</key>
-		<array>
-			<string>Necessário acesso a APP SMS</string>
-			<string>Necessário acesso ao telefone</string>
-		</array>
 		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>
@@ -66,7 +61,9 @@
 				<key>CFBundleURLSchemes</key>
 				<array>
 					<string>fb1956098281455470</string>
-					<string>com.googleusercontent.apps.'{your-app-specific-url}'</string>
+					<!-- TODO Replace this value: -->
+					<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
+					<string>com.googleusercontent.apps.314834115857-hn7ir6jd1notia2cjqald79cbl4juc2s</string>
 				</array>
 			</dict>
 		</array>
@@ -86,19 +83,12 @@
 			<string>fb-messenger-share-api</string>
 			<string>fbauth2</string>
 			<string>fbshareextension</string>
+			<string>Necessário acesso a APP SMS</string>
+			<string>Necessário acesso ao telefone</string>
+			<string>comgooglemaps</string>
+			<string>iosamap</string>
+			<string>waze</string>
 		</array>
-		<key>CFBundleURLTypes</key>
-<array>
-	<dict>
-		<key>CFBundleTypeRole</key>
-		<string>Editor</string>
-		<key>CFBundleURLSchemes</key>
-		<array>
-			<!-- TODO Replace this value: -->
-			<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
-			<string>com.googleusercontent.apps.314834115857-hn7ir6jd1notia2cjqald79cbl4juc2s</string>
-		</array>
-	</dict>
-</array>
+
 	</dict>
 </plist>

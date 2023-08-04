@@ -1,7 +1,11 @@
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
 import 'package:brn_ecommerce/models/stores.dart';
+import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:map_launcher/map_launcher.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class StoreCard extends StatelessWidget {
   const StoreCard(this.store, {super.key});
@@ -10,9 +14,13 @@ class StoreCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //Keeping context out of async methods
     final primaryColor = Theme.of(context).primaryColor;
     late final alertCall = store.alertForCall(context);
     late final alertEmail = store.alertForEmail(context);
+    closeModal() => Navigator.pop(context);
+    showModalContext() => context;
+
     final storeImage =
         store.imageStoreURL != null && store.imageStoreURL!.isNotEmpty
             ? Image.network(store.imageStoreURL!, fit: BoxFit.cover)
@@ -38,9 +46,48 @@ class StoreCard extends StatelessWidget {
       }
     }
 
+    Future<void> openMap() async {
+      try {
+        final availableMap = await MapLauncher.installedMaps;
+
+        showModalBottomSheet(
+          context: showModalContext(),
+          builder: (_) {
+            return SafeArea(
+             child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for (final map in availableMap)
+                  ListTile(
+                    onTap: () {
+                      map.showMarker(
+                        coords:
+                            Coords(store.address!.lat!, store.address!.long!),
+                        title: store.nameStore!,
+                        description: store.addressText,
+                      );
+                      closeModal();
+                    },
+                    title: Text(map.mapName),
+                    leading: SvgPicture.asset(
+                      map.icon,
+                      width: 30,
+                      height: 30,
+                    ),
+                  )
+              ],
+            ));
+          },
+        );
+      } catch (error) {
+        store.alertForMaps(context);
+      }
+    }
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       clipBehavior: Clip.antiAlias,
+      elevation: 7,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
       child: Padding(
         padding: const EdgeInsets.only(bottom: 2),
@@ -50,7 +97,7 @@ class StoreCard extends StatelessWidget {
               children: [
                 SizedBox(
                   width: double.infinity,
-                  height: 220,
+                  height: 230,
                   child: storeImage,
                 ),
                 Align(
@@ -70,11 +117,33 @@ class StoreCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                )
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Consumer<UserManager>(
+                    builder: (_, userManager, __) {
+                      if (userManager.adminEnable) {
+                        return IconButton(
+                          icon: const Icon(
+                            Icons.edit,
+                            color: Colors.blue,
+                            size: 40,
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/edit_stores",
+                                arguments: store);
+                          },
+                        );
+                      } else {
+                        return Container();
+                      }
+                    },
+                  ),
+                ),
               ],
             ),
             Container(
-              height: 155,
+              height: 180,
               padding: const EdgeInsets.only(
                   top: 9, right: 13, left: 13, bottom: 12),
               child: Row(
@@ -110,9 +179,9 @@ class StoreCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomIconButton(
-                          iconData: Icons.location_on,
+                          iconData: Icons.map_outlined,
                           color: primaryColor,
-                          onTap: () {},
+                          onTap: () => openMap(),
                         ),
                         CustomIconButton(
                           iconData: Icons.phone,

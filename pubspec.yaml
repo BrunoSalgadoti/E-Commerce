@@ -73,6 +73,7 @@ dependencies:
   package_info_plus: ^4.1.0
   assets_audio_player: ^3.0.6
   map_launcher: ^2.5.0+1
+  flutter_svg: ^2.0.7
   url_strategy: ^0.2.0
 
 

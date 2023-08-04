@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class OpeningStores {
   OpeningStores({
     this.monFri,
@@ -7,10 +5,10 @@ class OpeningStores {
     this.monday,
   });
 
-  OpeningStores.fromMap(DocumentSnapshot document) {
-    monFri = document.get("monFri") as String? ?? "";
-    saturday = document.get("saturday") as String? ?? "";
-    monday = document.get("monday") as String? ?? "";
+  OpeningStores.fromMap(Map<String, dynamic> map) {
+    monFri = map["monFri"] as String? ?? "";
+    saturday = map["saturday"] as String? ?? "";
+    monday = map["monday"] as String? ?? "";
   }
 
   String? monFri;

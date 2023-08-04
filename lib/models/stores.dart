@@ -4,10 +4,12 @@ import 'package:brn_ecommerce/models/opening_stores.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:brn_ecommerce/helpers/extensions.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:map_launcher/map_launcher.dart';
 
 enum StoreStatus { closed, open, closing }
 
-class Stores {
+class Stores extends ChangeNotifier {
   Stores({
     this.id,
     this.nameStore,
@@ -28,6 +30,8 @@ class Stores {
     phoneNumberStore = document.get("phoneNumberStore") as String? ?? "";
     imageStoreURL = document.get("imageStoreURL") as String? ?? "";
     address = Address.fromMap(document.get("address") as Map<String, dynamic>);
+    openingStores = OpeningStores.fromMap(
+        document.get("openingStores") as Map<String, dynamic>);
     openingStoresFromTimeOfDay =
         (document.get("openingStores") as Map<String, dynamic>)
             .map((key, value) {
@@ -69,13 +73,13 @@ class Stores {
 
   String get addressText => '${address?.street}, ${address?.number}'
       '${address!.complement!.isNotEmpty ? ' - ${address!.complement}' : ''} - '
-      '${address?.district}, \n${address?.city}/'
+      '${address?.district}, ${address?.city}/'
       '${address?.state} - $formattedCep';
 
   String get openingText {
-    return 'Seg-Sex: ${formattedPeriod(openingStoresFromTimeOfDay!['monFri'])}\n'
-        'Sab: ${formattedPeriod(openingStoresFromTimeOfDay!['saturday'])}\n'
-        'Dom: ${formattedPeriod(openingStoresFromTimeOfDay!['monday'])}';
+    return 'Seg-Sex: ${formattedPeriod(openingStoresFromTimeOfDay!["monFri"])}\n'
+        'Sab: ${formattedPeriod(openingStoresFromTimeOfDay!["saturday"])}\n'
+        'Dom: ${formattedPeriod(openingStoresFromTimeOfDay!["monday"])}';
   }
 
   String get cleanPhone => phoneNumberStore!.replaceAll(RegExp(r"[^\d]"), "");
@@ -94,6 +98,17 @@ class Stores {
       "openingStores": openingStores?.toMap(),
       "address": address?.toMap(),
     };
+  }
+
+  Stores cloneStores() {
+    return Stores(
+      id: id,
+      nameStore: nameStore,
+      phoneNumberStore: phoneNumberStore,
+      imageStoreURL: imageStoreURL ?? '',
+      openingStores: openingStores,
+      address: address,
+    );
   }
 
   void updateStatus() {
@@ -176,5 +191,49 @@ class Stores {
       margin: const EdgeInsets.all(15),
     ));
     return;
+  }
+
+  alertForMaps(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text(
+          'Não foi encontrado nenhum APP de Mapas '
+          'neste dispositívo!\n',
+          style: TextStyle(fontSize: 18)),
+      backgroundColor: Colors.red,
+      duration: const Duration(seconds: 10),
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      margin: const EdgeInsets.all(15),
+    ));
+    return;
+  }
+
+  showModal(BuildContext context, map) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return SafeArea(
+            child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              onTap: () {
+                map.showMarker(
+                  coords: Coords(address!.lat!, address!.long!),
+                  title: nameStore!,
+                  description: addressText,
+                );
+              },
+              title: Text(map.mapName),
+              leading: SvgPicture.asset(
+                map.icon,
+                width: 30,
+                height: 30,
+              ),
+            )
+          ],
+        ));
+      },
+    );
   }
 }
