@@ -4,6 +4,7 @@ import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
 import 'package:brn_ecommerce/helpers/time_input_formatter.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/opening_stores.dart';
+import 'package:brn_ecommerce/screens/stores/components/store_utils.dart';
 import 'package:brn_ecommerce/screens/stores_edit/components/store_image_widget.dart';
 import 'package:brn_ecommerce/screens/stores_edit/components/store_location_widget.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,6 @@ class EditStoresScreenState extends State<EditStoresScreen> {
 
     const textFieldSpaceBetweenHeight = SizedBox(height: 16);
     const textFieldSpaceBetweenWidth = SizedBox(width: 16);
-    backScreen() => Navigator.of(context).pop();
 
     return ChangeNotifierProvider.value(
       value: widget.store,
@@ -47,11 +47,10 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                 iconData: Icons.delete,
                 color: Colors.white,
                 onTap: () {
-                  context
-                      .read<Stores>()
-                      .deleteStore(widget.store, widget.store.id!);
-                  backScreen();
-                },
+                StoreUtils(
+                        store: widget.store, address: widget.store.address!)
+                    .alertForDeleteStore(context);
+                }
               ),
           ],
         ),

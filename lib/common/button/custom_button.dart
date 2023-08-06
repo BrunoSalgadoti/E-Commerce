@@ -60,12 +60,12 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 40,
+        height: 38,
         child: ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
                 disabledBackgroundColor: buttonDisabledColor,
-                backgroundColor: getButtonColor(),
+                backgroundColor: buttonColor ?? getButtonColor(),
                 shadowColor: shadowColor,
                 elevation: elevation,
                 padding: const EdgeInsets.fromLTRB(32, 10, 32, 10),
@@ -83,7 +83,8 @@ class CustomButton extends StatelessWidget {
                     : Text(
                         text,
                         style: TextStyle(
-                            color: getTextColor(), fontSize: fontSize),
+                            color: textColor ?? getTextColor(),
+                            fontSize: fontSize),
                       );
               },
             )));
