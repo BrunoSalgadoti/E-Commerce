@@ -1,11 +1,9 @@
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
 import 'package:brn_ecommerce/models/stores.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
+import 'package:brn_ecommerce/screens/stores/components/store_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:map_launcher/map_launcher.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class StoreCard extends StatelessWidget {
   const StoreCard(this.store, {super.key});
@@ -16,72 +14,9 @@ class StoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     //Keeping context out of async methods
     final primaryColor = Theme.of(context).primaryColor;
-    late final alertCall = store.alertForCall(context);
-    late final alertEmail = store.alertForEmail(context);
-    closeModal() => Navigator.pop(context);
-    showModalContext() => context;
-
-    final storeImage = store.imageStore != null && store.imageStore!.isNotEmpty
-        ? Image.network(store.imageStore!, fit: BoxFit.cover)
+    final storeImage = store.imageStore != null && store.imageStore != ""
+        ? Image.network(store.imageStore, fit: BoxFit.cover)
         : Image.asset('assets/images/noImage.png', fit: BoxFit.cover);
-
-    Future<void> openPhone(String phoneNumber) async {
-      if (await canLaunchUrl(Uri.parse('tel:$phoneNumber'))) {
-        launchUrl(Uri.parse('tel:$phoneNumber'));
-      } else {
-        alertCall;
-      }
-    }
-
-    Future<void> openEmail(String emailAddress) async {
-      final Uri emailLaunchUri = Uri(
-        scheme: 'mailto',
-        path: emailAddress,
-      );
-      if (await canLaunchUrl(emailLaunchUri)) {
-        launchUrl(emailLaunchUri);
-      } else {
-        alertEmail;
-      }
-    }
-
-    Future<void> openMap() async {
-      try {
-        final availableMap = await MapLauncher.installedMaps;
-
-        showModalBottomSheet(
-          context: showModalContext(),
-          builder: (_) {
-            return SafeArea(
-                child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                for (final map in availableMap)
-                  ListTile(
-                    onTap: () {
-                      map.showMarker(
-                        coords:
-                            Coords(store.address!.lat!, store.address!.long!),
-                        title: store.nameStore!,
-                        description: store.addressText,
-                      );
-                      closeModal();
-                    },
-                    title: Text(map.mapName),
-                    leading: SvgPicture.asset(
-                      map.icon,
-                      width: 30,
-                      height: 30,
-                    ),
-                  )
-              ],
-            ));
-          },
-        );
-      } catch (error) {
-        store.alertForMaps(context);
-      }
-    }
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -95,10 +30,7 @@ class StoreCard extends StatelessWidget {
             Stack(
               children: [
                 SizedBox(
-                  width: double.infinity,
-                  height: 230,
-                  child: storeImage,
-                ),
+                    width: double.infinity, height: 230, child: storeImage),
                 Align(
                   alignment: Alignment.topRight,
                   child: Container(
@@ -180,17 +112,24 @@ class StoreCard extends StatelessWidget {
                         CustomIconButton(
                           iconData: Icons.map_outlined,
                           color: primaryColor,
-                          onTap: () => openMap(),
+                          onTap: () =>
+                              StoreUtils(store: store, address: store.address!)
+                                  .openMap(context, store.address!.lat!,
+                                      store.address!.long!),
                         ),
                         CustomIconButton(
                           iconData: Icons.phone,
                           color: primaryColor,
-                          onTap: () => openPhone(store.cleanPhone),
+                          onTap: () => StoreUtils(
+                                  store: store, address: store.address!)
+                              .openPhone(context, store.phoneNumberStore ?? ""),
                         ),
                         CustomIconButton(
                           iconData: Icons.email_outlined,
                           color: primaryColor,
-                          onTap: () => openEmail(store.emailStore ?? ''),
+                          onTap: () =>
+                              StoreUtils(store: store, address: store.address!)
+                                  .openEmail(context, store.emailStore ?? ''),
                         ),
                       ],
                     ),

@@ -50,7 +50,7 @@ class WhoWeAreScreenState extends State<WhoWeAreScreen> {
             child: Center(
               // Embed do vídeo do YouTube
               child: FutureBuilder<void>(
-                future: Future.delayed(const Duration(seconds: 5)),
+                future: Future.delayed(const Duration(seconds: 6)),
                 builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Text('Carregando...');

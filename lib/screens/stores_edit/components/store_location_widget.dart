@@ -1,6 +1,5 @@
+import 'package:brn_ecommerce/screens/stores/components/store_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:map_launcher/map_launcher.dart';
 import 'package:brn_ecommerce/models/stores.dart';
 
 class StoreLocationWidget extends StatefulWidget {
@@ -17,51 +16,11 @@ class StoreLocationWidgetState extends State<StoreLocationWidget> {
   late double _latitude;
   late double _longitude;
 
-  showModalContext() => context;
-
   @override
   void initState() {
     super.initState();
     _latitude = widget.store.address?.lat ?? 0;
     _longitude = widget.store.address?.long ?? 0;
-  }
-
-  Future<void> _openMap() async {
-    try {
-      final availableMap = await MapLauncher.installedMaps;
-
-      showModalBottomSheet(
-        context: showModalContext(),
-        builder: (_) {
-          return SafeArea(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                for (final map in availableMap)
-                  ListTile(
-                    onTap: () {
-                      map.showMarker(
-                        coords: Coords(_latitude, _longitude),
-                        title: widget.store.nameStore ?? '',
-                        description: widget.store.addressText ?? '00000000',
-                      );
-                      Navigator.pop(context);
-                    },
-                    title: Text(map.mapName),
-                    leading: SvgPicture.asset(
-                      map.icon,
-                      width: 30,
-                      height: 30,
-                    ),
-                  )
-              ],
-            ),
-          );
-        },
-      );
-    } catch (error) {
-      widget.store.alertForMaps(context);
-    }
   }
 
   @override
@@ -78,7 +37,10 @@ class StoreLocationWidgetState extends State<StoreLocationWidget> {
           children: [
             IconButton(
               icon: const Icon(Icons.map_outlined),
-              onPressed: _openMap,
+              onPressed: () => StoreUtils(
+                store: widget.store,
+                address: widget.store.address!,
+              ).openMap(context, _latitude, _longitude),
               color: Theme.of(context).primaryColor,
             ),
             const SizedBox(width: 8),

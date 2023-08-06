@@ -1,14 +1,15 @@
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:brn_ecommerce/common/button/custom_button.dart';
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
 import 'package:brn_ecommerce/helpers/time_input_formatter.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/opening_stores.dart';
+import 'package:brn_ecommerce/screens/stores_edit/components/store_image_widget.dart';
 import 'package:brn_ecommerce/screens/stores_edit/components/store_location_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:brn_ecommerce/models/stores.dart';
-
 import '../../helpers/validators.dart';
 
 class EditStoresScreen extends StatefulWidget {
@@ -25,16 +26,12 @@ class EditStoresScreenState extends State<EditStoresScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final storeImage =
-        widget.store.imageStore != null && widget.store.imageStore!.isNotEmpty
-            ? Image.network(widget.store.imageStore!, fit: BoxFit.cover)
-            : Image.asset('assets/images/noImage.png', fit: BoxFit.cover);
-
     String? emptyValidator(String? text) =>
         text!.trim().isEmpty ? 'Campo Obrigatório' : null;
 
     const textFieldSpaceBetweenHeight = SizedBox(height: 16);
     const textFieldSpaceBetweenWidth = SizedBox(width: 16);
+    backScreen() => Navigator.of(context).pop();
 
     return ChangeNotifierProvider.value(
       value: widget.store,
@@ -50,7 +47,10 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                 iconData: Icons.delete,
                 color: Colors.white,
                 onTap: () {
-                  context.read<Stores>().deleteStore(widget.store);
+                  context
+                      .read<Stores>()
+                      .deleteStore(widget.store, widget.store.id!);
+                  backScreen();
                 },
               ),
           ],
@@ -63,23 +63,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Stack(
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      height: 230,
-                      child: storeImage,
-                    ),
-                    Align(
-                        alignment: Alignment.topLeft,
-                        child: CustomIconButton(
-                          onTap: () {},
-                          iconData: Icons.change_circle_outlined,
-                          color: Colors.blue,
-                          size: 45,
-                        )),
-                  ],
-                ),
+                StoreImageWidget(store: widget.store),
                 textFieldSpaceBetweenHeight,
                 TextFormField(
                   initialValue: widget.store.nameStore,
@@ -413,11 +397,11 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                 ),
                 textFieldSpaceBetweenHeight,
                 textFieldSpaceBetweenHeight,
-                ElevatedButton(
+                CustomButton(
+                  text: 'Salvar',
                   onPressed: () async {
                     await _saveOrUpdateStore(context);
                   },
-                  child: Text(widget.store.id != null ? 'Salvar' : 'Adicionar'),
                 )
               ],
             ),

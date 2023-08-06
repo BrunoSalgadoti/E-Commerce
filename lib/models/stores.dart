@@ -1,12 +1,15 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/opening_stores.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:brn_ecommerce/helpers/extensions.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:map_launcher/map_launcher.dart';
+import 'package:uuid/uuid.dart';
 
 enum StoreStatus { closed, open, closing }
 
@@ -58,9 +61,7 @@ class Stores extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseStorage storage = FirebaseStorage.instance;
 
-  DocumentReference get firestoreRef => firestore.doc("stores/$id");
-
-  Reference get storageRef => storage.ref().child("stores").child(id!);
+  Reference get storageRef => storage.ref().child("stores");
 
   Address? address;
   OpeningStores? openingStores;
@@ -69,7 +70,7 @@ class Stores extends ChangeNotifier {
   String? nameStore;
   String? emailStore;
   String? phoneNumberStore;
-  String? imageStore;
+  dynamic imageStore;
   Map<String, Map<String, TimeOfDay>?>? openingStoresFromTimeOfDay;
   StoreStatus? status;
 
@@ -81,13 +82,21 @@ class Stores extends ChangeNotifier {
       '${address?.district}, ${address?.city}/'
       '${address?.state} - $formattedCep';
 
+  // New attribute to store phone code formatted
+  String get cleanPhone {
+    return _formatPhone(phoneNumberStore ?? "");
+  }
+
   String get openingText {
     return 'Seg-Sex: ${formattedPeriod(openingStoresFromTimeOfDay!["monFri"])}\n'
         'Sab: ${formattedPeriod(openingStoresFromTimeOfDay!["saturday"])}\n'
         'Dom: ${formattedPeriod(openingStoresFromTimeOfDay!["monday"])}';
   }
 
-  String get cleanPhone => phoneNumberStore!.replaceAll(RegExp(r"[^\d]"), "");
+  // Function to standardize the phone code format
+  String _formatPhone(String phone) {
+    return phone.replaceAll(RegExp(r"[^\d]"), "");
+  }
 
   String formattedPeriod(Map<String, TimeOfDay>? period) {
     if (period == null || period.isEmpty) return 'Fechada';
@@ -98,7 +107,7 @@ class Stores extends ChangeNotifier {
     return {
       "nameStore": nameStore,
       "emailStore": emailStore,
-      "phoneNumberStore": phoneNumberStore,
+      "phoneNumberStore": phoneNumberStore ?? "",
       "imageStore": imageStore,
       "openingStores": openingStores?.toMap(),
       "address": address?.toMap(),
@@ -109,10 +118,13 @@ class Stores extends ChangeNotifier {
     try {
       final storeRef = firestore.collection("stores").doc(storeId);
       await storeRef.update(store.toMap());
-      notifyListeners();
+      await updateStoreImage(imageStore, storeId);
     } catch (error) {
-      // Tratar erro, se necessário
+      if (kDebugMode) {
+        print(error);
+      }
     }
+    notifyListeners();
   }
 
   Future<void> saveStore(Stores store) async {
@@ -120,24 +132,75 @@ class Stores extends ChangeNotifier {
       final doc = firestore.collection("stores");
       await doc.add(store.toMap());
       store.id = doc.id;
-
-      notifyListeners();
+      await updateStoreImage(imageStore, store.id);
     } catch (error) {
-      // Tratar erro, se necessário
+      if (kDebugMode) {
+        print(error);
+      }
     }
+    notifyListeners();
   }
 
-  Future<void> deleteStore(Stores store) async {
+  Future<void> deleteStore(Stores store, String? storeId) async {
     try {
-      if (imageStore != null && imageStore!.contains("firebase")) {
-        final ref = storage.refFromURL(imageStore!);
-        await ref.delete();
+      final firestoreRef = firestore.collection("stores").doc(storeId);
+
+      if (store.imageStore != null &&
+          store.imageStore is String &&
+          store.imageStore!.contains("firebase")) {
+        final storageRef = storage.refFromURL(store.imageStore!);
+        await storageRef.delete();
       }
+
       await firestoreRef.delete();
-      notifyListeners();
     } catch (error) {
-      // Tratar erro, se necessário
+      if (kDebugMode) {
+        print(error);
+      }
     }
+    notifyListeners();
+  }
+
+  Future<void> updateStoreImage(dynamic image, [String? storeId]) async {
+    if (imageStore != null && imageStore.contains("firebase")) {
+      final oldImageRef = storage.refFromURL(imageStore);
+      await oldImageRef.delete();
+    }
+
+    if (kIsWeb) {
+      final base64String = image?.split(',').last;
+      const String validCharacters =
+          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
+      final trimmedString =
+          base64String?.replaceAll(RegExp("[^$validCharacters]"), "");
+      if (base64String is String &&
+          base64String.isNotEmpty &&
+          base64String.length % 4 == 0) {
+        try {
+          final List<int> bytes = base64.decode(trimmedString!);
+          final Uint8List uint8ListBytes = Uint8List.fromList(bytes);
+          final metadata = SettableMetadata(contentType: "image/jpeg");
+          final task = storageRef
+              .child(const Uuid().v4())
+              .putData(uint8ListBytes, metadata);
+          final snapshot = await task.whenComplete(() {});
+          final url = await snapshot.ref.getDownloadURL();
+          image = url;
+        } catch (e) {
+          if (kDebugMode) {
+            print('Erro ao decodificar o base64String: $e');
+          }
+        }
+      }
+    } else if (image is File) {
+      final UploadTask task =
+          storageRef.child(const Uuid().v4()).putFile(image);
+      final TaskSnapshot snapshot = await task.whenComplete(() {});
+      final String url = await snapshot.ref.getDownloadURL();
+      image = url;
+    }
+    imageStore = image;
+    notifyListeners();
   }
 
   void updateStatus() {
@@ -190,79 +253,5 @@ class Stores extends ChangeNotifier {
       default:
         return Colors.transparent;
     }
-  }
-
-  alertForCall(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(
-          'Este dispositivo não suporta está função!\n'
-          'O Número da Loja é : $phoneNumberStore',
-          style: const TextStyle(fontSize: 18)),
-      backgroundColor: Colors.red,
-      duration: const Duration(seconds: 10),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      margin: const EdgeInsets.all(15),
-    ));
-    return;
-  }
-
-  alertForEmail(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(
-          'Este dispositivo não suporta está função!\n'
-          'O E-mail da Loja é : $emailStore',
-          style: const TextStyle(fontSize: 18)),
-      backgroundColor: Colors.red,
-      duration: const Duration(seconds: 10),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      margin: const EdgeInsets.all(15),
-    ));
-    return;
-  }
-
-  alertForMaps(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: const Text(
-          'Não foi encontrado nenhum APP de Mapas '
-          'neste dispositívo!\n',
-          style: TextStyle(fontSize: 18)),
-      backgroundColor: Colors.red,
-      duration: const Duration(seconds: 10),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      margin: const EdgeInsets.all(15),
-    ));
-    return;
-  }
-
-  showModal(BuildContext context, map) {
-    showModalBottomSheet(
-      context: context,
-      builder: (_) {
-        return SafeArea(
-         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              onTap: () {
-                map.showMarker(
-                  coords: Coords(address!.lat!, address!.long!),
-                  title: nameStore!,
-                  description: addressText,
-                );
-              },
-              title: Text(map.mapName),
-              leading: SvgPicture.asset(
-                map.icon,
-                width: 30,
-                height: 30,
-              ),
-            )
-          ],
-        ));
-      },
-    );
   }
 }
