@@ -168,15 +168,23 @@ class Product extends ChangeNotifier {
   }
 
   Future<void> deleteProductWithZeroStockOneImage() async {
+    // Zerar o estoque das cores mantendo outros detalhes inalterados
     List<Map<String, dynamic>> exportDetailsList() {
       final List<Map<String, dynamic>> detailsList = [];
 
       for (final details in itemProducts!) {
-        final Map<String, dynamic> detailsData = details.toMap();
-        detailsData["stock"] = 0; // Define o estoque como 0
+        final Map<String, dynamic> detailsData = {
+          ...details.toMap(),
+          "stock": 0,
+          "colors": details.colorProducts
+              ?.map((color) => {
+                    ...color.toMap(),
+                    "amount": 0,
+                  })
+              .toList(),
+        };
         detailsList.add(detailsData);
       }
-
       return detailsList;
     }
 
@@ -187,9 +195,6 @@ class Product extends ChangeNotifier {
       "deleted": deleted,
       "isvalid": isValid,
     };
-    await firestoreRef.update(data);
-
-    await firestoreRef.update({"isvalid": false});
 
     // Deletes all images except the first one if there is more than one image
     if (images!.length > 1) {
@@ -215,12 +220,12 @@ class Product extends ChangeNotifier {
       "images": images,
     });
 
-    await details?.ifTheProductIsDeleted(id, itemProducts);
-
+    await firestoreRef.update(data);
+    await firestoreRef.update({"isvalid": false});
     notifyListeners();
   }
 
-  void delete() async {
+  void deleteProduct() async {
     // Call method to update inventory to zero and one image
     await deleteProductWithZeroStockOneImage();
 
@@ -275,7 +280,7 @@ class Product extends ChangeNotifier {
         await productRef.update({"isvalid": true});
         notifyListeners();
       }
-    notifyListeners();
+      notifyListeners();
     }
   }
 }

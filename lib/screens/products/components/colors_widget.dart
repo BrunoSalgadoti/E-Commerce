@@ -22,7 +22,7 @@ class ColorsWidget extends StatelessWidget {
 
         Color color;
         if (!colorsProducts!.hasAmount ||
-            colorsProducts!.realColor == colorsProducts!.realColor!.withAlpha(0)) {
+            colorsProducts!.realColor == colorsProducts!.realColor?.withAlpha(0)) {
           color = Colors.red.withAlpha(70);
         } else if (selected) {
           color = Theme.of(context).primaryColor;

@@ -1,6 +1,7 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:brn_ecommerce/common/button/custom_button.dart';
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/custom_text_form_field.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:flutter/material.dart';
@@ -32,28 +33,23 @@ class _CepInputFieldState extends State<CepInputField> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: 10),
-          TextFormField(
-            enabled: !cartManager.loading,
-            controller: cepController,
-            decoration: const InputDecoration(
-                isDense: true,
-                labelText: 'CEP',
-                hintText: '00.000-000',
-                hintStyle: TextStyle(color: Colors.black26)),
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-              CepInputFormatter()
-            ],
-            keyboardType: TextInputType.number,
-            validator: (cep) {
-              if (cep!.isEmpty) {
-                return 'Campo obrigatório';
-              } else if (cep.length != 10) {
+          CustomTextFormField(
+            enableTextEdit: !cartManager.loading,
+              controller: cepController,
+              labelText: 'CEP',
+              hintText: '00.000-000',
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                CepInputFormatter()
+              ],
+              textInputType: TextInputType.number,
+              validator: (value) {
+              if (value?.length != 10) {
                 return 'CEP Inválido';
               } else {
                 return null;
               }
-            },
+              },
           ),
           const SizedBox(height: 7),
           CustomButton(

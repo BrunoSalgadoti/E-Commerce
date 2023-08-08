@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/common/empty_indicator.dart';
+import 'package:brn_ecommerce/common/empty_page_indicator.dart';
 import 'package:brn_ecommerce/common/price_card.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/screens/cart/components/cart_tile.dart';
@@ -18,7 +18,7 @@ class CartScreen extends StatelessWidget {
       body: Consumer<CartManager>(builder: (_, cartManager, __) {
         if (cartManager.items.isEmpty) {
           return const Center(
-            child: EmptyIndicator(
+            child: EmptyPageIndicator(
               title: 'Nenhum item no carrinho!',
               iconData: null,
               image: "assets/images/goShopping.gif",

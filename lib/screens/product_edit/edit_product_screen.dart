@@ -1,6 +1,7 @@
 import 'package:brn_ecommerce/common/button/custom_button.dart';
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/button/custom_text_button.dart';
+import 'package:brn_ecommerce/common/custom_text_form_field.dart';
 import 'package:brn_ecommerce/common/show_alert_dialog.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
@@ -85,6 +86,7 @@ class EditProductScreen extends StatelessWidget {
                                           .requestDelete(product!);
                                       Navigator.of(context).pop();
                                       Navigator.of(context).pop();
+                                      Navigator.of(context).pop();
                                     }),
                                 CustomTextButton(
                                   text: 'NÃO',
@@ -117,16 +119,13 @@ class EditProductScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      TextFormField(
+                      CustomTextFormField(
                         initialValue: product?.name,
-                        decoration: const InputDecoration(
-                          hintText: 'Título',
-                          border: InputBorder.none,
-                        ),
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        hintText: 'Título do produto',
+                        hintSize: 20,
+                        textFormFieldSize: 22,
+                        textFormFieldBold: true,
+                        enabledBorder: InputBorder.none,
                         validator: (name) {
                           if (name!.length < 6) {
                             return 'Título muito curto';

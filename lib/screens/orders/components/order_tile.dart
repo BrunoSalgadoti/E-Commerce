@@ -19,6 +19,11 @@ class OrderTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
 
+    final verificationNextStatusText =
+        orderClient!.status == Status.transporting ||
+            orderClient!.status == Status.delivered ||
+            orderClient!.status == Status.keepingReturn;
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: ExpansionTile(
@@ -153,17 +158,12 @@ class OrderTile extends StatelessWidget {
                                 CustomTextButton(
                                   text: null,
                                   icon: const Icon(Icons.arrow_forward),
-                                  onPressed: orderClient!.status ==
-                                              Status.transporting ||
-                                          orderClient!.status ==
-                                              Status.delivered ||
-                                          orderClient!.status ==
-                                              Status.keepingReturn
+                                  onPressed: verificationNextStatusText
                                       ? () => showDialog<Status>(
                                           context: context,
                                           builder: (BuildContext context) {
                                             return ShowAlertDialog(
-                                              titleText: 'Atenção!',
+                                              titleText: 'A T E N Ç Ã O!',
                                               bodyText: orderClient!.bodyText,
                                               actions: [
                                                 Row(

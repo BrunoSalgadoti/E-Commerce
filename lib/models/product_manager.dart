@@ -70,7 +70,7 @@ class ProductManager extends ChangeNotifier {
   }
 
   void requestDelete(Product product) {
-    product.delete();
+    product.deleteProduct();
     allProducts.removeWhere((p) => p.id == product.id);
     notifyListeners();
   }

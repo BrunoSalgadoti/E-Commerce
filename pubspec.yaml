@@ -75,6 +75,7 @@ dependencies:
   map_launcher: ^2.5.0+1
   flutter_svg: ^2.0.7
   url_strategy: ^0.2.0
+  flip_card: ^0.7.0
 
 
 dev_dependencies:

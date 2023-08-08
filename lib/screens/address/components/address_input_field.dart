@@ -1,4 +1,6 @@
 import 'package:brn_ecommerce/common/button/custom_button.dart';
+import 'package:brn_ecommerce/common/custom_text_form_field.dart';
+import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/models/delivery.dart';
@@ -17,115 +19,84 @@ class AddressInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartManager = context.watch<CartManager>();
 
-    String? emptyValidator(String? text) =>
-        text!.isEmpty ? 'Campo Obrigatório' : null;
-
     if (address.zipCode != null && cartManager.deliveryPrice == null) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          TextFormField(
+          CustomTextFormField(
             initialValue: address.street,
-            decoration: const InputDecoration(
-                isDense: true,
-                labelText: 'Rua/Avenida',
-                hintText: 'Av. Apolônio Sales',
-                hintStyle: TextStyle(color: Colors.black26)),
+            labelText: 'Logradouro',
+            hintText: 'Av. Apolônio Sales',
             validator: emptyValidator,
-            onSaved: (s) => address.street = s,
+            onSaved: (value) => address.street = value,
           ),
           const SizedBox(height: 8),
           Row(
             children: [
               Expanded(
-                child: TextFormField(
-                  initialValue: address.number,
-                  decoration: const InputDecoration(
-                    isDense: true,
-                    labelText: 'Número',
-                    hintText: '123',
-                    hintStyle: TextStyle(color: Colors.black26),
+                  child: CustomTextFormField(
+                initialValue: address.number,
+                labelText: 'Número',
+                hintText: '123',
+                textInputType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                validator: emptyValidator,
+                onSaved: (value) => address.number = value,
+              )
                   ),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                  keyboardType: TextInputType.number,
-                  validator: emptyValidator,
-                  onSaved: (n) => address.number = n,
-                ),
-              ),
               const SizedBox(width: 16),
               Expanded(
                   flex: 3,
-                  child: TextFormField(
+                  child: CustomTextFormField(
                     initialValue: address.complement,
-                    decoration: const InputDecoration(
-                      isDense: true,
-                      labelText: 'Complemento',
-                      hintText: 'Opcional',
-                      hintStyle: TextStyle(color: Colors.black26),
-                    ),
-                    onSaved: (c) => address.complement = c,
-                  ))
+                    labelText: 'Complemento (Opcional)',
+                    hintText: 'Opcional',
+                    isDense: false,
+                    onSaved: (value) => address.complement = value,
+                  )),
             ],
           ),
           const SizedBox(height: 8),
-          TextFormField(
+          CustomTextFormField(
             initialValue: address.district,
-            decoration: const InputDecoration(
-              isDense: true,
-              labelText: 'Bairro',
-              hintText: 'Centro',
-              hintStyle: TextStyle(color: Colors.black26),
-            ),
+            labelText: 'Bairro',
+            hintText: 'Ex: Centro',
             validator: emptyValidator,
-            onSaved: (d) => address.district = d,
+            onSaved: (value) => address.district = value,
           ),
           const SizedBox(height: 15),
           Row(
             children: [
               Expanded(
                 flex: 3,
-                child: TextFormField(
-                  enabled: false,
+                child: CustomTextFormField(
                   initialValue: address.city,
-                  style: const TextStyle(color: Colors.black45),
-                  decoration: const InputDecoration(
-                    isDense: true,
-                    labelText: 'Cidade',
-                    hintText: 'Paulo Afonso',
-                    hintStyle: TextStyle(color: Colors.black26),
-                  ),
+                  enableTextEdit: false,
+                  labelText: 'Cidade',
                   validator: emptyValidator,
-                  onSaved: (c) => address.city = c,
+                  onSaved: (value) => address.city = value,
                 ),
               ),
               const SizedBox(width: 16),
               Expanded(
-                child: TextFormField(
-                  enabled: false,
-                  textCapitalization: TextCapitalization.characters,
-                  initialValue: address.state,
-                  style: const TextStyle(color: Colors.black45),
-                  decoration: const InputDecoration(
-                    isDense: true,
-                    labelText: 'UF',
-                    hintText: 'BA',
-                    counterText: '',
-                    hintStyle: TextStyle(color: Colors.black26),
+                  child: CustomTextFormField(
+                initialValue: address.state,
+                enableTextEdit: false,
+                labelText: 'UF',
+                hintText: 'BA',
+                validator: (value) {
+                  emptyValidator(value);
+                  if (value?.length != 2) {
+                    return 'Inválido';
+                  }
+                  return null;
+                },
+                textCapitalization: TextCapitalization.characters,
+                onSaved: (value) => address.state = value,
+              )
                   ),
-                  maxLength: 2,
-                  validator: (e) {
-                    if (e!.isEmpty) {
-                      return 'Campo Obrigatório';
-                    } else if (e.length != 2) {
-                      return 'Inválido';
-                    }
-                    return null;
-                  },
-                  onSaved: (st) => address.state = st,
-                ),
-              ),
             ],
           ),
           const SizedBox(height: 8),

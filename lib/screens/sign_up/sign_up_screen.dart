@@ -1,4 +1,5 @@
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:brn_ecommerce/common/custom_text_form_field.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/screens/policy_and_documents/policy_and_documents_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -25,6 +26,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     final userManager = Provider.of<UserManager>(context);
     final policyAndDocuments = Provider.of<PolicyAndDocuments>(context);
+    const textFieldSpaceBetweenHeight = SizedBox(height: 16);
 
     return Scaffold(
       appBar: AppBar(
@@ -56,18 +58,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         const SizedBox(height: 18),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            labelText: 'Nome Completo',
-                            hintText: 'Preencha com seu nome completo',
-                            hintStyle: TextStyle(color: Colors.black38),
-                          ),
-                          enabled: !userManager.loading,
-                          keyboardType: TextInputType.text,
+                        CustomTextFormField(
+                          labelText: 'Nome Completo',
+                          hintText: 'Preencha com seu nome completo',
+                          enableTextEdit: !userManager.loading,
+                          isDense: false,
                           validator: (name) {
-                            if (name!.isEmpty || name == '') {
-                              return 'Campo obrigatório!';
-                            } else if (name.trim().split(' ').length <= 1) {
+                            if (name!.trim().split(' ').length <= 1) {
                               return 'Preencha seu nome completo!';
                             } else {
                               return null;
@@ -75,19 +72,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           },
                           onSaved: (name) => users.userName = name!,
                         ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            labelText: 'E-mail',
-                            hintText: 'E-mail',
-                            hintStyle: TextStyle(color: Colors.black38),
-                          ),
-                          enabled: !userManager.loading,
-                          keyboardType: TextInputType.emailAddress,
+                        textFieldSpaceBetweenHeight,
+                        CustomTextFormField(
+                          labelText: 'E-mail',
+                          hintText: 'EX: nome@domínio.xxx',
+                          enableTextEdit: !userManager.loading,
+                          textInputType: TextInputType.emailAddress,
+                          isDense: false,
                           validator: (email) {
-                            if (email!.isEmpty || email == '') {
-                              return 'Campo Obrigatório';
-                            } else if (!emailValid(email)) {
+                            if (!emailValid(email!)) {
                               return 'E-mail inválido';
                             } else {
                               return null;
@@ -95,15 +88,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           },
                           onSaved: (email) => users.email = email!,
                         ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            labelText: 'Telefone (Opcional)',
-                            hintText: '(00) 00000-0000',
-                            hintStyle: TextStyle(color: Colors.black38),
-                          ),
-                          enabled: !userManager.loading,
-                          // keyboardType: TextInputType.number,
+                        textFieldSpaceBetweenHeight,
+                        CustomTextFormField(
+                          labelText: 'Telefone (Opcional)',
+                          hintText: '(00) 00000-0000',
+                          enableTextEdit: !userManager.loading,
+                          textInputType: TextInputType.number,
+                          isDense: false,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                             TelefoneInputFormatter()
@@ -117,20 +108,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           },
                           onSaved: (phone) => users.phoneNumber = phone!,
                         ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            labelText: 'Senha',
-                            hintText: '*******',
-                            hintStyle: TextStyle(color: Colors.black38),
-                          ),
-                          enabled: !userManager.loading,
-                          keyboardType: TextInputType.text,
+                        textFieldSpaceBetweenHeight,
+                        CustomTextFormField(
+                          labelText: 'Senha',
+                          hintText: 'Mínimo: 7 caracteres',
+                          enableTextEdit: !userManager.loading,
+                          isDense: false,
                           obscureText: true,
                           validator: (password) {
-                            if (password!.isEmpty) {
-                              return 'Campo obrigatório';
-                            } else if (password.length < 7) {
+                            if (password!.length < 7) {
                               return 'Senha deve conter no mínimo 7 caracteres';
                             } else {
                               return null;
@@ -138,29 +124,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           },
                           onSaved: (password) => users.password = password!,
                         ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            labelText: 'Repita a Senha',
-                            hintText: 'Repita a Senha',
-                            hintStyle: TextStyle(color: Colors.black38),
-                          ),
-                          enabled: !userManager.loading,
-                          keyboardType: TextInputType.text,
+                        textFieldSpaceBetweenHeight,
+                        CustomTextFormField(
+                          labelText: 'Repita a Senha',
+                          enableTextEdit: !userManager.loading,
+                          isDense: false,
                           obscureText: true,
                           validator: (password) {
-                            if (password!.isEmpty) {
-                              return 'Campo obrigatório';
-                            } else if (password.length < 7) {
+                            if (password!.length < 7) {
                               return 'Senha deve conter no mínimo 7 caracteres';
                             } else {
                               return null;
                             }
                           },
                           onSaved: (password) =>
-                              users.confirmPassword = password!,
+                          users.confirmPassword = password!,
                         ),
-                        const SizedBox(height: 16),
+                        textFieldSpaceBetweenHeight,
                         ...[const PolicyAndDocumentsScreen()],
                         CustomButton(
                           text: 'Criar Conta',

@@ -65,7 +65,7 @@ class ImageSourceSheet extends StatelessWidget {
 
     Future<void> imgCamera() async {
       XFile? photo = await picker.pickImage(source: ImageSource.camera);
-      editImage(photo!.path);
+      editImage(photo?.path);
     }
 
     if (Platform.isAndroid) {

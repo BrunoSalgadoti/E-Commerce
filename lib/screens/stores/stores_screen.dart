@@ -1,5 +1,5 @@
 import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
-import 'package:brn_ecommerce/common/empty_indicator.dart';
+import 'package:brn_ecommerce/common/empty_page_indicator.dart';
 import 'package:brn_ecommerce/models/stores_manager.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/screens/stores/components/sotore_card.dart';
@@ -36,7 +36,7 @@ class StoresScreen extends StatelessWidget {
         body: Consumer<StoresManager>(builder: (_, storesManager, __) {
           if (storesManager.storesList.isEmpty) {
             return const Center(
-              child: EmptyIndicator(
+              child: EmptyPageIndicator(
                 image: 'assets/images/await.gif',
                 title: 'Carregando...',
                 iconData: null,

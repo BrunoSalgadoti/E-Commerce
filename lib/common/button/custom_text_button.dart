@@ -44,6 +44,7 @@ class CustomTextButton extends StatelessWidget {
                         : const SizedBox(
                             height: 20,
                           ),
+                const SizedBox(width: 10),
                 Text(
                   text!,
                   style: TextStyle(

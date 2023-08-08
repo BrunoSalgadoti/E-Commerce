@@ -1,5 +1,5 @@
 import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
-import 'package:brn_ecommerce/common/empty_indicator.dart';
+import 'package:brn_ecommerce/common/empty_page_indicator.dart';
 import 'package:brn_ecommerce/common/search_dialog.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
@@ -96,7 +96,7 @@ class ProductsScreen extends StatelessWidget {
         builder: (_, productManager, __) {
           final filteredProducts = productManager.filteredProducts;
           if (productManager.filteredProducts.isEmpty) {
-            return const EmptyIndicator(
+            return const EmptyPageIndicator(
               title: 'Carregando Produtos...',
               image: "assets/images/await.gif",
               iconData: null,

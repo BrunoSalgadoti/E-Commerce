@@ -1,4 +1,5 @@
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/custom_text_form_field.dart';
 import 'package:brn_ecommerce/models/colors_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -88,12 +89,10 @@ class EditColorsState extends State<EditColors> {
           flex: 80,
           child: Padding(
             padding: const EdgeInsets.only(top: 10),
-            child: TextFormField(
+            child: CustomTextFormField(
               initialValue: widget.colorsProducts?.amount.toString(),
-              decoration: const InputDecoration(
-                labelText: 'Qtd./cor?',
-                isDense: true,
-              ),
+              labelText: 'Qtd./cor?',
+              textInputType: TextInputType.number,
               validator: (amount) {
                 if (int.tryParse(amount!) == null ||
                     int.tryParse(amount)! < 0) {
@@ -102,8 +101,7 @@ class EditColorsState extends State<EditColors> {
                 return null;
               },
               onChanged: (amount) =>
-                  widget.colorsProducts?.amount = int.tryParse(amount) ?? 0,
-              keyboardType: TextInputType.number,
+                  widget.colorsProducts?.amount = int.tryParse(amount!) ?? 0,
             ),
           ),
         ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class EmptyIndicator extends StatelessWidget {
-  const EmptyIndicator(
+class EmptyPageIndicator extends StatelessWidget {
+  const EmptyPageIndicator(
       {Key? key,
       required this.title,
       required this.iconData,

@@ -1,6 +1,7 @@
 import 'package:brn_ecommerce/common/price_card.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/models/checkout_manager.dart';
+import 'package:brn_ecommerce/screens/checkout/components/credit_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -49,6 +50,7 @@ class CheckoutScreen extends StatelessWidget {
 
               return ListView(
                 children: [
+                  const CreditCardWidget(),
                   PriceCard(
                     buttonText: 'Finalizar Pedido',
                     onPressed: () {

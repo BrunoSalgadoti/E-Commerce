@@ -93,7 +93,6 @@ class _TopDescriptionWidgetState extends State<TopDescriptionWidget> {
                     MarkdownType.separator,
                     MarkdownType.strikethrough,
                     MarkdownType.code,
-                    MarkdownType.link,
                     MarkdownType.list,
                     MarkdownType.blockquote,
                   ],

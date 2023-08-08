@@ -1,6 +1,7 @@
 import 'package:brn_ecommerce/common/button/custom_button.dart';
 import 'package:brn_ecommerce/common/button/custom_text_button.dart';
 import 'package:brn_ecommerce/common/button/custom_text_button_styles.dart';
+import 'package:brn_ecommerce/common/custom_text_form_field.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
@@ -62,12 +63,13 @@ class LoginScreen extends StatelessWidget {
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 5),
-                    TextFormField(
+                    CustomTextFormField(
                       controller: emailController,
-                      enabled: loadingToTextFormField,
-                      decoration: const InputDecoration(hintText: 'E-mail'),
-                      keyboardType: TextInputType.emailAddress,
+                      enableTextEdit: loadingToTextFormField,
+                      hintText: 'E-mail',
+                      textInputType: TextInputType.emailAddress,
                       autocorrect: false,
+                      isDense: false,
                       validator: (email) {
                         if (!emailValid(email!)) {
                           return 'E-Mail Inválido';
@@ -77,15 +79,16 @@ class LoginScreen extends StatelessWidget {
                       },
                     ),
                     const SizedBox(height: 14),
-                    TextFormField(
+                    CustomTextFormField(
                       controller: passwordController,
-                      enabled: loadingToTextFormField,
-                      decoration: const InputDecoration(hintText: 'Senha'),
+                      enableTextEdit: loadingToTextFormField,
+                      hintText: 'Senha',
                       autocorrect: false,
+                      isDense: false,
                       obscureText: true,
-                      validator: (password) {
-                        if (password!.isEmpty || password.length < 7) {
-                          return 'Senha Inválida';
+                      validator: (value) {
+                        if (value!.length < 7) {
+                          return 'Campo Obrigatório';
                         } else {
                           return null;
                         }

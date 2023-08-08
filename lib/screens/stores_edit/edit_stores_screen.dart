@@ -1,7 +1,8 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:brn_ecommerce/common/button/custom_button.dart';
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
-import 'package:brn_ecommerce/helpers/time_input_formatter.dart';
+import 'package:brn_ecommerce/common/custom_text_form_field.dart';
+import 'package:brn_ecommerce/common/formated_fields/time_input_formatter.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/opening_stores.dart';
 import 'package:brn_ecommerce/screens/stores/components/store_utils.dart';
@@ -27,8 +28,6 @@ class EditStoresScreenState extends State<EditStoresScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String? emptyValidator(String? text) =>
-        text!.trim().isEmpty ? 'Campo Obrigatório' : null;
 
     const textFieldSpaceBetweenHeight = SizedBox(height: 16);
     const textFieldSpaceBetweenWidth = SizedBox(width: 16);
@@ -44,14 +43,13 @@ class EditStoresScreenState extends State<EditStoresScreen> {
           actions: [
             if (widget.store.id != null)
               CustomIconButton(
-                iconData: Icons.delete,
-                color: Colors.white,
-                onTap: () {
-                StoreUtils(
-                        store: widget.store, address: widget.store.address!)
-                    .alertForDeleteStore(context);
-                }
-              ),
+                  iconData: Icons.delete,
+                  color: Colors.white,
+                  onTap: () {
+                    StoreUtils(
+                            store: widget.store, address: widget.store.address!)
+                        .alertForDeleteStore(context);
+                  }),
           ],
         ),
         backgroundColor: Colors.white,
@@ -64,206 +62,178 @@ class EditStoresScreenState extends State<EditStoresScreen> {
               children: [
                 StoreImageWidget(store: widget.store),
                 textFieldSpaceBetweenHeight,
-                TextFormField(
+                CustomTextFormField(
                   initialValue: widget.store.nameStore,
-                  decoration: const InputDecoration(
-                      labelText: 'Nome da Loja',
-                      hintText: 'Nome da Faixada da Loja',
-                      hintStyle: TextStyle(color: Colors.black26)),
+                  labelText: 'Nome da Loja',
+                  hintText: 'Nome da Faixada da Loja',
+                  isDense: false,
                   validator: emptyValidator,
-                  onSaved: (value) {
-                    widget.store.nameStore = value;
-                  },
+                  onSaved: (value) => widget.store.nameStore = value,
                 ),
                 textFieldSpaceBetweenHeight,
                 Row(
                   children: [
                     Expanded(
                       flex: 2,
-                      child: TextFormField(
+                      child: CustomTextFormField(
                         initialValue: widget.store.address?.street ?? "",
-                        decoration:
-                            const InputDecoration(labelText: 'Logradouro:'),
+                        labelText: 'Logradouro:',
+                        hintText: 'EX: Rua/Av. ...',
+                        isDense: false,
                         validator: emptyValidator,
-                        onSaved: (value) {
-                          widget.store.address?.street = value;
-                        },
+                        onSaved: (value) =>
+                            widget.store.address?.street = value,
                       ),
                     ),
                     textFieldSpaceBetweenWidth,
                     Expanded(
                       flex: 1,
-                      child: TextFormField(
+                      child: CustomTextFormField(
                         initialValue: widget.store.address?.number ?? "",
-                        decoration: const InputDecoration(
-                            labelText: 'Nº:',
-                            hintText: 'ou "S/N"',
-                            hintStyle: TextStyle(color: Colors.black26)),
+                        labelText: 'Nº:',
+                        hintText: 'ou "S/N"',
+                        isDense: false,
                         validator: emptyValidator,
-                        onSaved: (value) {
-                          widget.store.address?.number = value;
-                        },
+                        onSaved: (value) =>
+                            widget.store.address?.number = value,
                       ),
                     ),
                   ],
                 ),
                 textFieldSpaceBetweenHeight,
-                TextFormField(
+                CustomTextFormField(
                   initialValue: widget.store.address?.complement ?? "",
-                  decoration: const InputDecoration(
-                      labelText: 'Complemento: (Opcional)',
-                      hintText: 'Ex: Matriz ou Filial da Loja (OPCIONAL)',
-                      hintStyle: TextStyle(color: Colors.black26)),
+                  labelText: 'Complemento: (Opcional)',
+                  hintText: 'Ex: Matriz ou Filial da Loja',
+                  isDense: false,
                   validator: (value) {
                     if (value!.length > 28) {
-                      return 'Somente 28 caracteres';
+                      return 'Máximo de 28 caracteres';
                     } else {
                       return null;
                     }
                   },
-                  onSaved: (value) {
-                    widget.store.address?.complement = value;
-                  },
+                  onSaved: (value) => widget.store.address?.complement = value,
                 ),
                 textFieldSpaceBetweenHeight,
-                TextFormField(
+                CustomTextFormField(
                   initialValue: widget.store.address?.district ?? "",
-                  decoration: const InputDecoration(labelText: 'Bairro:'),
+                  labelText: 'Bairro:',
+                  isDense: false,
                   validator: emptyValidator,
-                  onSaved: (value) {
-                    widget.store.address?.district = value;
-                  },
+                  onSaved: (value) => widget.store.address?.district = value,
                 ),
                 textFieldSpaceBetweenHeight,
                 Row(
                   children: [
                     Expanded(
-                      flex: 2,
-                      child: TextFormField(
-                        initialValue: widget.store.address?.city ?? "",
-                        decoration: const InputDecoration(labelText: 'Cidade:'),
-                        validator: emptyValidator,
-                        onSaved: (value) {
-                          widget.store.address?.city = value;
-                        },
-                      ),
-                    ),
+                        flex: 2,
+                        child: CustomTextFormField(
+                          initialValue: widget.store.address?.city ?? "",
+                          labelText: 'Cidade:',
+                          validator: emptyValidator,
+                          isDense: false,
+                          onSaved: (value) =>
+                              widget.store.address?.city = value,
+                        )),
                     textFieldSpaceBetweenWidth,
                     Expanded(
-                      flex: 1,
-                      child: TextFormField(
-                        initialValue: widget.store.address?.state ?? "",
-                        decoration: const InputDecoration(
-                            labelText: 'Estado: (Sigla)',
-                            hintText: 'Ex: BA',
-                            hintStyle: TextStyle(color: Colors.black26)),
-                        validator: (value) {
-                          if (value!.trim().isEmpty) {
-                            return 'Campo Obrigatório';
-                          } else if (value.length != 2) {
-                            return 'Somente a Sigla!';
-                          } else {
-                            return null;
-                          }
-                        },
-                        onSaved: (value) {
-                          widget.store.address?.state = value?.toUpperCase();
-                        },
-                      ),
-                    ),
+                        flex: 1,
+                        child: CustomTextFormField(
+                          initialValue: widget.store.address?.state ?? "",
+                          labelText: 'Estado: (Sigla)',
+                          hintText: 'Ex: BA',
+                          isDense: false,
+                          validator: (value) {
+                            if (value!.trim().isEmpty) {
+                              return 'Campo Obrigatório';
+                            } else if (value.length != 2) {
+                              return 'Somente a Sigla!';
+                            } else {
+                              return null;
+                            }
+                          },
+                          onSaved: (value) => widget.store.address?.state =
+                              value?.toUpperCase(),
+                        ))
                   ],
                 ),
                 textFieldSpaceBetweenHeight,
                 Row(
                   children: [
                     Expanded(
-                      flex: 2,
-                      child: TextFormField(
-                        initialValue: widget.store.phoneNumberStore ?? "",
-                        decoration: const InputDecoration(
-                            labelText: 'Telefone:',
-                            hintText: 'Ex: (00) 9 0000-0000',
-                            hintStyle: TextStyle(color: Colors.black26)),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          TelefoneInputFormatter()
-                        ],
-                        validator: (phone) {
-                          if (phone!.isEmpty || phone.length < 11) {
-                            return 'Confira o número digitado (obrigatório)!';
-                          } else {
-                            return null;
-                          }
-                        },
-                        onSaved: (value) {
-                          widget.store.phoneNumberStore = value;
-                        },
-                      ),
-                    ),
+                        flex: 2,
+                        child: CustomTextFormField(
+                          initialValue: widget.store.phoneNumberStore ?? "",
+                          labelText: 'Telefone:',
+                          hintText: 'Ex: (00) 9 0000-0000',
+                          isDense: false,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            TelefoneInputFormatter()
+                          ],
+                          validator: (value) {
+                            if (value!.length < 11) {
+                              return 'Confira o número digitado (obrigatório)!';
+                            } else {
+                              return null;
+                            }
+                          },
+                          onSaved: (value) =>
+                              widget.store.phoneNumberStore = value,
+                        )),
                     textFieldSpaceBetweenWidth,
                     Expanded(
                       flex: 1,
-                      child: TextFormField(
+                      child: CustomTextFormField(
                         initialValue: widget.store.address?.zipCode ?? "",
-                        decoration: const InputDecoration(
-                            labelText: 'CEP:',
-                            hintText: 'Ex: 00.000-000',
-                            hintStyle: TextStyle(color: Colors.black26)),
+                        labelText: 'CEP:',
+                        hintText: 'Ex: 00.000-000',
+                        textInputType: TextInputType.number,
+                        isDense: false,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
                           CepInputFormatter()
                         ],
-                        keyboardType: TextInputType.number,
-                        validator: (cep) {
-                          if (cep!.isEmpty) {
-                            return 'Campo obrigatório';
-                          } else if (cep.length != 10) {
-                            return 'CEP Inválido';
+                        validator: (value) {
+                          if (value!.length != 10) {
+                            return 'CEP Inválido (Obrigatório!)';
                           } else {
                             return null;
                           }
                         },
-                        onSaved: (value) {
-                          widget.store.address?.zipCode = value;
-                        },
+                        onSaved: (value) =>
+                            widget.store.address?.zipCode = value,
                       ),
                     ),
                   ],
                 ),
                 textFieldSpaceBetweenHeight,
-                TextFormField(
+                CustomTextFormField(
                   initialValue: widget.store.emailStore ?? "",
-                  decoration: const InputDecoration(
-                      labelText: 'E-mail:',
-                      hintText: 'Ex: nome@dominio.xxx',
-                      hintStyle: TextStyle(color: Colors.black26)),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (email) {
-                    if (email!.isEmpty || email == '') {
-                      return 'Campo Obrigatório';
-                    } else if (!emailValid(email)) {
-                      return 'E-mail inválido';
+                  labelText: 'E-mail:',
+                  hintText: 'Ex: nome@domínio.xxx',
+                  isDense: false,
+                  textInputType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (!emailValid(value!)) {
+                      return 'E-mail inválido (Obrigatório!)';
                     } else {
                       return null;
                     }
                   },
-                  onSaved: (value) {
-                    widget.store.emailStore = value;
-                  },
+                  onSaved: (value) => widget.store.emailStore = value,
                 ),
                 textFieldSpaceBetweenHeight,
                 textFieldSpaceBetweenHeight,
                 StoreLocationWidget(store: widget.store),
                 textFieldSpaceBetweenHeight,
-                TextFormField(
+                CustomTextFormField(
                   initialValue: '${widget.store.address?.lat.toString() ?? ""} '
                       '${widget.store.address?.long.toString() ?? ""}',
-                  decoration: const InputDecoration(
-                    labelText: 'Nova Localização:',
-                    hintText: 'Ex: -9.1234530, -37.1234168',
-                    hintStyle: TextStyle(color: Colors.black26),
-                  ),
-                  keyboardType: TextInputType.text,
+                  labelText: 'Nova Localização:',
+                  hintText: 'Ex: -9.1234530, -37.1234168',
+                  isDense: false,
                   validator: emptyValidator,
                   onSaved: (value) {
                     if (value != null && value.isNotEmpty) {
@@ -294,16 +264,15 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                         const Expanded(flex: 1, child: Text('Seg-Sex:')),
                         Expanded(
                           flex: 5,
-                          child: TextFormField(
-                            initialValue: widget.store.openingStores?.monFri,
-                            decoration: const InputDecoration(
-                                labelText: 'Abertura e Fechamento:',
-                                hintText: 'Ex: 08:00-18:00',
-                                hintStyle: TextStyle(color: Colors.black26)),
-                            keyboardType: TextInputType.number,
+                          child: CustomTextFormField(
+                            initialValue:
+                                widget.store.openingStores?.monFri ?? "",
+                            labelText: 'Abertura e Fechamento:',
+                            hintText: 'Ex: 08:00-18:00',
+                            isDense: false,
+                            textInputType: TextInputType.number,
                             inputFormatters: [
                               FilteringTextInputFormatter.digitsOnly,
-                              // Custom input formatter
                               TimeInputFormatter(),
                             ],
                             validator: (value) {
@@ -313,9 +282,8 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                                 return null;
                               }
                             },
-                            onSaved: (value) {
-                              widget.store.openingStores?.monFri = value;
-                            },
+                            onSaved: (value) =>
+                                widget.store.openingStores?.monFri = value,
                           ),
                         ),
                       ],
@@ -325,30 +293,28 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                       children: [
                         const Expanded(flex: 1, child: Text('Sab:')),
                         Expanded(
-                          flex: 5,
-                          child: TextFormField(
-                            initialValue: widget.store.openingStores?.saturday,
-                            decoration: const InputDecoration(
-                                labelText: 'Abertura e Fechamento:',
-                                hintText: 'Ex: 09:00-12:00',
-                                hintStyle: TextStyle(color: Colors.black26)),
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              // Custom input formatter
-                              TimeInputFormatter(),
-                            ],
-                            validator: (value) {
-                              if (value!.isNotEmpty && value.length < 10) {
-                                return 'Horário Inválido!';
-                              } else {
-                                return null;
-                              }
-                            },
-                            onSaved: (value) {
-                              widget.store.openingStores?.saturday = value;
-                            },
-                          ),
-                        ),
+                            flex: 5,
+                            child: CustomTextFormField(
+                              initialValue:
+                                  widget.store.openingStores?.saturday ?? "",
+                              labelText: 'Abertura e Fechamento:',
+                              hintText: 'Ex: 09:00-12:00',
+                              isDense: false,
+                              textInputType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                TimeInputFormatter(),
+                              ],
+                              validator: (value) {
+                                if (value!.isNotEmpty && value.length < 10) {
+                                  return 'Horário Inválido!';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              onSaved: (value) =>
+                                  widget.store.openingStores?.saturday = value,
+                            )),
                       ],
                     ),
                     textFieldSpaceBetweenHeight,
@@ -356,31 +322,28 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                       children: [
                         const Expanded(flex: 1, child: Text('Dom:')),
                         Expanded(
-                          flex: 5,
-                          child: TextFormField(
-                            initialValue: widget.store.openingStores?.monday,
-                            decoration: const InputDecoration(
-                                labelText: 'Abertura e Fechamento:',
-                                hintText:
-                                    'Ex: 08:00-18:00 ou Mantenha em Branco',
-                                hintStyle: TextStyle(color: Colors.black26)),
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              // Custom input formatter
-                              TimeInputFormatter(),
-                            ],
-                            validator: (value) {
-                              if (value!.isNotEmpty && value.length < 10) {
-                                return 'Horário Inválido!';
-                              } else {
-                                return null;
-                              }
-                            },
-                            onSaved: (value) {
-                              widget.store.openingStores?.monday = value;
-                            },
-                          ),
-                        ),
+                            flex: 5,
+                            child: CustomTextFormField(
+                              initialValue:
+                                  widget.store.openingStores?.monday ?? "",
+                              labelText: 'Abertura e Fechamento:',
+                              hintText: 'Ex: 14:00-18:00 ou Mantenha em Branco',
+                              isDense: false,
+                              textInputType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                TimeInputFormatter(),
+                              ],
+                              validator: (value) {
+                                if (value!.isNotEmpty && value.length < 10) {
+                                  return 'Horário Inválido!';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              onSaved: (value) =>
+                                  widget.store.openingStores?.monday = value,
+                            )),
                       ],
                     ),
                     textFieldSpaceBetweenHeight,

@@ -1,4 +1,6 @@
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/custom_text_form_field.dart';
+import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/models/details_products.dart';
 import 'package:flutter/material.dart';
 
@@ -25,19 +27,11 @@ class EditItemSize extends StatelessWidget {
         children: [
           Expanded(
             flex: 25,
-            child: TextFormField(
+            child: CustomTextFormField(
               initialValue: detailsProducts?.size,
-              decoration: const InputDecoration(
-                labelText: 'Tamanho',
-                isDense: true,
-              ),
-              validator: (size) {
-                if (size!.isEmpty) {
-                  return 'Valor Inválido';
-                }
-                return null;
-              },
-              onChanged: (size) => detailsProducts?.size = size.toUpperCase(),
+              labelText: 'Tamanho',
+              validator: (value) => emptyValidator(value),
+              onChanged: (size) => detailsProducts?.size = size?.toUpperCase(),
             ),
           ),
           const SizedBox(
@@ -45,12 +39,10 @@ class EditItemSize extends StatelessWidget {
           ),
           Expanded(
             flex: 25,
-            child: TextFormField(
+            child: CustomTextFormField(
               initialValue: detailsProducts?.stock.toString(),
-              decoration: const InputDecoration(
-                labelText: 'Estoque',
-                isDense: true,
-              ),
+              labelText: 'Estoque',
+              textInputType: TextInputType.number,
               validator: (stock) {
                 if (int.tryParse(stock!) == null || int.tryParse(stock)! < 0) {
                   return 'Valor Inválido';
@@ -58,8 +50,7 @@ class EditItemSize extends StatelessWidget {
                 return null;
               },
               onChanged: (stock) =>
-                  detailsProducts?.stock = int.tryParse(stock) ?? 0,
-              keyboardType: TextInputType.number,
+                  detailsProducts?.stock = int.tryParse(stock!) ?? 0,
             ),
           ),
           const SizedBox(
@@ -67,13 +58,12 @@ class EditItemSize extends StatelessWidget {
           ),
           Expanded(
             flex: 50,
-            child: TextFormField(
+            child: CustomTextFormField(
               initialValue: detailsProducts?.price?.toStringAsFixed(2),
-              decoration: const InputDecoration(
-                labelText: 'Preço',
-                prefixText: 'R\$: ',
-                isDense: true,
-              ),
+              labelText: 'Preço',
+              prefixText: 'R\$: ',
+              textInputType:
+                  const TextInputType.numberWithOptions(decimal: true),
               validator: (price) {
                 if (num.tryParse(price!) == null) {
                   return 'Valor Inválido';
@@ -81,9 +71,7 @@ class EditItemSize extends StatelessWidget {
                 return null;
               },
               onChanged: (price) =>
-                  detailsProducts?.price = num.tryParse(price) ?? 0,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
+                  detailsProducts?.price = num.tryParse(price!) ?? 0,
             ),
           ),
           CustomIconButton(

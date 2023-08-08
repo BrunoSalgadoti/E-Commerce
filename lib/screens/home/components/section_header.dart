@@ -1,4 +1,5 @@
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/custom_text_form_field.dart';
 import 'package:brn_ecommerce/models/home_manager.dart';
 import 'package:brn_ecommerce/models/section.dart';
 import 'package:flutter/material.dart';
@@ -28,24 +29,16 @@ class SectionHeader extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: TextFormField(
-                  initialValue: section.name,
-                  decoration: const InputDecoration(
-                    hintText: 'Adicionar Título',
-                    hintStyle: TextStyle(
-                      color: Colors.white38,
-                    ),
-                    isDense: true,
-                    border: InputBorder.none,
-                  ),
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 18,
-                  ),
-                  onChanged: (text) => section.name = text,
-                ),
-              ),
+                  child: CustomTextFormField(
+                initialValue: section.name,
+                hintText: 'Adicionar Título',
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                textFormFieldColor: Colors.white,
+                textFormFieldBold: true,
+                textFormFieldSize: 18,
+                onChanged: (text) => section.name = text,
+              )),
               CustomIconButton(
                 iconData: Icons.move_up,
                 color: Colors.white,
