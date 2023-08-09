@@ -1,6 +1,8 @@
 import 'package:brn_ecommerce/models/cart_product.dart';
 import 'package:flutter/material.dart';
 
+import '../../../common/formated_fields/format_values.dart';
+
 class OrderProductTile extends StatelessWidget {
   const OrderProductTile(
     this.cartProduct, {
@@ -11,14 +13,16 @@ class OrderProductTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageNotAvailable = cartProduct!.product?.images == null
-        || cartProduct!.product!.images!.isEmpty;
+    final fixedOrUnityPrice =
+        cartProduct?.fixedPrice ?? cartProduct?.unitPrice ?? 0.0;
+    final imageNotAvailable = cartProduct!.product?.images == null ||
+        cartProduct!.product!.images!.isEmpty;
 
     return GestureDetector(
       onTap: () {
-        if(!imageNotAvailable){
-        Navigator.pushNamed(context, "/product",
-            arguments: cartProduct?.product);
+        if (!imageNotAvailable) {
+          Navigator.pushNamed(context, "/product",
+              arguments: cartProduct?.product);
         }
       },
       child: Container(
@@ -30,12 +34,14 @@ class OrderProductTile extends StatelessWidget {
               height: 100,
               width: 100,
               child: imageNotAvailable
-                  ? Image.asset('assets/images/noImage.png',
-                fit: BoxFit.cover,)
-                  :Image.network(
-                cartProduct!.product!.images!.first,
-                fit: BoxFit.cover,
-              ),
+                  ? Image.asset(
+                      'assets/images/noImage.png',
+                      fit: BoxFit.cover,
+                    )
+                  : Image.network(
+                      cartProduct!.product!.images!.first,
+                      fit: BoxFit.cover,
+                    ),
             ),
             const SizedBox(width: 8),
             Expanded(
@@ -91,7 +97,7 @@ class OrderProductTile extends StatelessWidget {
                         ],
                       )),
                   Text(
-                    'R\$ ${(cartProduct?.fixedPrice ?? cartProduct?.unitPrice ?? 0).toStringAsFixed(2)}',
+                    '${formattedRealText(fixedOrUnityPrice)}',
                     style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 15,

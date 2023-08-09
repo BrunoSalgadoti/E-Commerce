@@ -1,6 +1,8 @@
 import 'package:flutter/services.dart';
 
 class TimeInputFormatter extends TextInputFormatter {
+
+  // Personal Time Formatter -> (00:00-00:00)
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {

@@ -2,13 +2,14 @@ import 'package:brn_ecommerce/screens/products_share/share_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../common/formated_fields/format_values.dart';
+
 enum SocialMediaWeb { whatsapp }
 
 class ShareProductWeb {
-  ShareProductScreen shareProductScreen;
-
   ShareProductWeb(this.shareProductScreen);
 
+  ShareProductScreen shareProductScreen;
   String urlShare = 'https://brn-ecommerce.web.app/';
 
   Future<void> shareProductOnWeb(
@@ -21,8 +22,7 @@ class ShareProductWeb {
       String sharedImageUrl = '\n **Confira a foto do produto**: \n '
           '${shareProductScreen.product!.images!.first}\n';
       String productPrice = '\nA partir de: '
-          'R\$ ${shareProductScreen.product!.basePrice
-          .toStringAsFixed(2).toString()}\n';
+          '${formattedRealText(shareProductScreen.product!.basePrice).toString()}\n';
       String productText = '\nDescrição do produto... '
           '\n ${shareProductScreen.product!.description} \n\n '
           '__Visite a nossa Loja Virtual!__';

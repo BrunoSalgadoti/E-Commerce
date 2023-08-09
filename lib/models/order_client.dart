@@ -3,6 +3,8 @@ import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/models/cart_product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../common/formated_fields/format_values.dart';
+
 enum Status {
   canceled,
   preparing,
@@ -94,7 +96,7 @@ class OrderClient {
   Status? status;
   Timestamp? date;
 
-  String get formattedId => "#${orderId?.padLeft(6, "0")}";
+  String get formattedId => '${formattedOrderId(orderId)}';
 
   String get statusText => getStatusText(status!);
 

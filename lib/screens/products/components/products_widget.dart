@@ -3,6 +3,8 @@ import 'package:brn_ecommerce/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../common/formated_fields/format_values.dart';
+
 class ProductsWidget extends StatelessWidget {
   const ProductsWidget({
     Key? key,
@@ -15,6 +17,7 @@ class ProductsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final price = details?.price ?? 0.0;
     final product = context.watch<Product>();
     final selected = details == product.selectedDetails;
 
@@ -55,7 +58,7 @@ class ProductsWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Text(
-                'R\$ ${details!.price?.toStringAsFixed(2)}',
+                '${formattedRealText(price)}',
                 style: TextStyle(
                   color: color,
                 ),

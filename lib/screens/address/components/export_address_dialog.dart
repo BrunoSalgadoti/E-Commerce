@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:brasil_fields/brasil_fields.dart';
 import 'package:brn_ecommerce/common/button/custom_text_button.dart';
 import 'package:brn_ecommerce/common/show_alert_dialog.dart';
 import 'package:brn_ecommerce/models/address.dart';
@@ -10,6 +9,8 @@ import 'package:gallery_saver/gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:custom_universal_html/html.dart' as html;
+
+import '../../../common/formated_fields/format_values.dart';
 
 class ExportAddressDialog extends StatelessWidget {
   ExportAddressDialog(
@@ -25,7 +26,7 @@ class ExportAddressDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formattedZipcode = UtilBrasilFields.obterCep(address!.zipCode!);
+    final orderId = orderClient?.orderId ?? "";
 
     return ShowAlertDialog(
       titleText: 'Endereço de Entrega',
@@ -37,13 +38,13 @@ class ExportAddressDialog extends StatelessWidget {
           color: Colors.white,
           width: 30,
           child: Text(
-              'Pedido: ${orderClient!.formattedId}\n'
+              'Pedido: ${formattedOrderId(orderId)}\n'
               '\n----- Destinatário -----\n'
               'Nome: ${orderClient?.userName ?? ''}\n'
               '${address!.street ?? ''}, ${address!.number ?? 'S/N'},\n'
               '${address!.district ?? ''}\n'
               '${address!.city ?? ''}-${address!.state ?? ''}\n'
-              'CEP : $formattedZipcode\n'
+              'CEP : ${formattedZipcode(address?.zipCode)}\n'
               '${address?.complement ?? ''}',
               style: const TextStyle(
                 fontSize: 14,
@@ -71,7 +72,7 @@ class ExportAddressDialog extends StatelessWidget {
 
               /// Try to initiate automatic download
               final anchor = html.AnchorElement(href: url)
-                ..setAttribute("download", "${orderClient!.formattedId}.png")
+                ..setAttribute("download", "${formattedOrderId(orderId)}.png")
                 ..click();
 
               /// Revoke object URL
@@ -83,7 +84,7 @@ class ExportAddressDialog extends StatelessWidget {
               if (!downloadStarted) {
                 /// If download didn't start, show a link for manual download
                 final downloadLink = html.AnchorElement(href: url)
-                  ..setAttribute("download", "${orderClient!.formattedId}.png")
+                  ..setAttribute("download", "${formattedOrderId(orderId)}.png")
                   ..text = "Clique aqui para baixar a imagem";
 
                 /// Add the link to the DOM
@@ -96,7 +97,7 @@ class ExportAddressDialog extends StatelessWidget {
 
                 final dir = await getApplicationDocumentsDirectory();
                 final imagePath =
-                    await File('${dir.path}/ ${orderClient!.formattedId}.png')
+                    await File('${dir.path}/ ${formattedOrderId(orderId)}.png')
                         .create();
                 await imagePath.writeAsBytes(image!);
 

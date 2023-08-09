@@ -1,8 +1,12 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/custom_text_form_field.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/models/details_products.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import '../../../common/formated_fields/format_values.dart';
 
 class EditItemSize extends StatelessWidget {
   const EditItemSize({
@@ -22,6 +26,7 @@ class EditItemSize extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final initialPrice = detailsProducts?.price ?? 0.0;
     return Column(children: [
       Row(
         children: [
@@ -53,26 +58,27 @@ class EditItemSize extends StatelessWidget {
                   detailsProducts?.stock = int.tryParse(stock!) ?? 0,
             ),
           ),
-          const SizedBox(
-            width: 5,
-          ),
+          const SizedBox(width: 5),
           Expanded(
             flex: 50,
             child: CustomTextFormField(
-              initialValue: detailsProducts?.price?.toStringAsFixed(2),
-              labelText: 'Preço',
-              prefixText: 'R\$: ',
-              textInputType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              validator: (price) {
-                if (num.tryParse(price!) == null) {
-                  return 'Valor Inválido';
-                }
-                return null;
-              },
-              onChanged: (price) =>
-                  detailsProducts?.price = num.tryParse(price!) ?? 0,
-            ),
+                initialValue: '${formattedRealTextFormFiled(initialPrice)}',
+                labelText: 'Preço',
+                prefixText: 'R\$ ',
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  CentavosInputFormatter()
+                ],
+                validator: (price) {
+                  if (unFormattedReal(price!) == "0.00") {
+                    return 'Valor Inválido';
+                  }
+                  return null;
+                },
+                onChanged: (price) {
+                  final unformattedPrice = unFormattedReal(price!);
+                  detailsProducts?.price = num.tryParse(unformattedPrice!);
+                }),
           ),
           CustomIconButton(
             iconData: Icons.remove,
@@ -89,9 +95,7 @@ class EditItemSize extends StatelessWidget {
           ),
         ],
       ),
-      const SizedBox(
-        height: 5,
-      ),
+      const SizedBox(height: 5),
     ]);
   }
 }

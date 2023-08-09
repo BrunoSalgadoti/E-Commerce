@@ -9,6 +9,8 @@ import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
+import '../../common/formated_fields/format_values.dart';
+
 class ShareProductScreen extends StatefulWidget {
   ShareProductScreen({Key? key, required this.product}) : super(key: key);
 
@@ -67,6 +69,7 @@ class ShareProductScreenState extends State<ShareProductScreen> {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+    final basePrice = widget.product?.basePrice ?? 0.0;
 
     Widget buildSocialButtons(BuildContext context) {
       return Card(
@@ -154,8 +157,7 @@ class ShareProductScreenState extends State<ShareProductScreen> {
                       ),
                     ),
                     Text(
-                      'R\$ '
-                      '${widget.product?.basePrice.toStringAsFixed(2)}',
+                      '${formattedRealText(basePrice)}',
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,

@@ -6,6 +6,8 @@ import 'package:brn_ecommerce/common/show_alert_dialog.dart';
 import 'package:brn_ecommerce/models/order_client.dart';
 import 'package:flutter/material.dart';
 
+import '../../../common/formated_fields/format_values.dart';
+
 class OrderTile extends StatelessWidget {
   const OrderTile(this.orderClient, {Key? key, this.showControls = false})
       : super(key: key);
@@ -18,6 +20,8 @@ class OrderTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+    final orderId = orderClient?.orderId;
+    final price = orderClient?.price ?? 0.0;
 
     final verificationNextStatusText =
         orderClient!.status == Status.transporting ||
@@ -34,13 +38,13 @@ class OrderTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    orderClient!.formattedId,
+                    '${formattedOrderId(orderId)}',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: primaryColor,
                     ),
                   ),
-                  Text('R\$ ${orderClient!.price!.toStringAsFixed(2)}',
+                  Text('${formattedRealText(price)}',
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 14,

@@ -2,6 +2,8 @@ import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:flutter/material.dart';
 
+import '../../../common/formated_fields/format_values.dart';
+
 class ProductListTile extends StatelessWidget {
   const ProductListTile({Key? key, this.product}) : super(key: key);
 
@@ -10,6 +12,7 @@ class ProductListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+    final basePrice = product?.basePrice ?? 0.0;
     final imageNotAvailable =
         product?.images == null || product!.images!.isEmpty;
     UserManager userManager = UserManager();
@@ -47,7 +50,7 @@ class ProductListTile extends StatelessWidget {
                       width: 16,
                     ),
                     Expanded(
-                     child: Column(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -73,7 +76,7 @@ class ProductListTile extends StatelessWidget {
                                   )),
                         product!.hasStock
                             ? Text(
-                                'R\$ ${product!.basePrice.toStringAsFixed(2)}',
+                                '${formattedRealText(basePrice)}',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,

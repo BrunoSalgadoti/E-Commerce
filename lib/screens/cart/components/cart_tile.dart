@@ -5,6 +5,8 @@ import 'package:brn_ecommerce/models/cart_product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../common/formated_fields/format_values.dart';
+
 class CartTile extends StatelessWidget {
   const CartTile({Key? key, required this.cartProduct}) : super(key: key);
 
@@ -33,25 +35,25 @@ class CartTile extends StatelessWidget {
                   height: 100,
                   width: 90,
                   child: Image.network(
-                    cartProduct!.product!.images!.first,
+                    cartProduct?.product?.images?.first ?? "",
                     fit: BoxFit.cover,
                   ),
                 ),
                 Expanded(
-                    child: Padding(
+                child: Padding(
                   padding: const EdgeInsets.only(left: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        cartProduct!.product!.name!,
+                        cartProduct?.product?.name ?? "",
                         style: const TextStyle(
                             fontSize: 14, fontWeight: FontWeight.w500),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 7),
                         child: Text(
-                          'Tamanho: ${cartProduct!.size}',
+                          'Tamanho: ${cartProduct?.size ?? ""}',
                           style: const TextStyle(fontWeight: FontWeight.w300),
                         ),
                       ),
@@ -92,8 +94,7 @@ class CartTile extends StatelessWidget {
                         builder: (_, cartProduct, __) {
                           if (cartProduct.hasStock && cartProduct.hasAmount) {
                             return Text(
-                              'R\$ '
-                              '${cartProduct.unitPrice.toStringAsFixed(2)}',
+                              '${formattedRealText(cartProduct.unitPrice)}',
                               style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize: 16.0,
@@ -119,8 +120,7 @@ class CartTile extends StatelessWidget {
                 )),
                 Padding(
                   padding: const EdgeInsets.only(right: 5, left: 10),
-                  child: Consumer<CartProduct>(
-                      builder: (_, cartProduct, __) {
+                  child: Consumer<CartProduct>(builder: (_, cartProduct, __) {
                     return Column(
                       children: [
                         CustomIconButton(

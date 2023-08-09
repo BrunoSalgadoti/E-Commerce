@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
+import '../../../common/formated_fields/format_values.dart';
+
 class ItemTile extends StatelessWidget {
   const ItemTile({Key? key, this.item}) : super(key: key);
 
@@ -57,7 +59,7 @@ class ItemTile extends StatelessWidget {
                                           style: TextStyle(color: Colors.red),
                                         )
                                       : Text(
-                                          'R\$ ${product.basePrice.toStringAsFixed(2)}'),
+                                          '${formattedRealText(product.basePrice)}'),
                                 )
                               : const Text('Nenhum Item Vinculado'
                                   ' a Imagem!'),

@@ -2,6 +2,8 @@ import 'package:brn_ecommerce/screens/orders/components/order_product_tile.dart'
 import 'package:brn_ecommerce/models/order_client.dart';
 import 'package:flutter/material.dart';
 
+import '../../common/formated_fields/format_values.dart';
+
 class SalesConfirmationScreen extends StatelessWidget {
   const SalesConfirmationScreen(
     this.orderClient, {
@@ -12,6 +14,9 @@ class SalesConfirmationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final orderId = orderClient?.orderId ?? '';
+    final price = orderClient?.price ?? 0.0;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pedido Confirmado'),
@@ -26,7 +31,7 @@ class SalesConfirmationScreen extends StatelessWidget {
               Image.asset(
                 "assets/images/shoppingHappy.gif",
                 width: 80,
-                height:80,
+                height: 80,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16),
@@ -34,13 +39,13 @@ class SalesConfirmationScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      orderClient!.formattedId,
+                      '${formattedOrderId(orderId)}',
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           color: Theme.of(context).primaryColor),
                     ),
                     Text(
-                      'R\$ ${orderClient?.price!.toStringAsFixed(2)}',
+                      '${formattedRealText(price)}',
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
                       ),

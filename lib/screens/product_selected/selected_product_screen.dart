@@ -2,6 +2,8 @@ import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../common/formated_fields/format_values.dart';
+
 class SelectProductScreen extends StatelessWidget {
   const SelectProductScreen({Key? key}) : super(key: key);
 
@@ -24,8 +26,7 @@ class SelectProductScreen extends StatelessWidget {
                   child: ListTile(
                     leading: Image.network(product.images!.first),
                     title: Text(product.name!),
-                    subtitle:
-                        Text('R\$ ${product.basePrice.toStringAsFixed(2)}'),
+                    subtitle: Text('${formattedRealText(product.basePrice)}'),
                     onTap: () {
                       Navigator.of(context).pop(product);
                     },

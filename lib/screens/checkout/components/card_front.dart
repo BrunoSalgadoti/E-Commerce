@@ -1,5 +1,7 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:brn_ecommerce/common/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CardFront extends StatelessWidget {
   const CardFront({super.key});
@@ -29,6 +31,10 @@ class CardFront extends StatelessWidget {
                   textInputType: TextInputType.number,
                   focusedBorder: InputBorder.none,
                   enabledBorder: InputBorder.none,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    CartaoBancarioInputFormatter()
+                  ],
                   contentPadding: const EdgeInsets.symmetric(vertical: 6),
                   onSaved: (value) {},
                 ),
@@ -41,6 +47,7 @@ class CardFront extends StatelessWidget {
                   textInputType: TextInputType.number,
                   focusedBorder: InputBorder.none,
                   enabledBorder: InputBorder.none,
+                  inputFormatters: [],
                   contentPadding: const EdgeInsets.symmetric(vertical: 6),
                   onSaved: (value) {},
                 ),
@@ -52,6 +59,7 @@ class CardFront extends StatelessWidget {
                   hintColor: Colors.white.withAlpha(100),
                   focusedBorder: InputBorder.none,
                   enabledBorder: InputBorder.none,
+                  inputFormatters: [],
                   contentPadding: const EdgeInsets.symmetric(vertical: 6),
                   onSaved: (value) {},
                 )

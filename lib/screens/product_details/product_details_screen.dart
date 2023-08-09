@@ -12,6 +12,8 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';
 
+import '../../common/formated_fields/format_values.dart';
+
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({
     Key? key,
@@ -36,13 +38,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   void updateSelectedSizeIndex(int index) {
+    final detailsProducts = context.read<DetailsProducts>();
+    final selectedSize = widget.product!.itemProducts![index];
     clearSelectedColors();
     setState(() {
       selectedSizeIndex = index;
     });
 
-    final detailsProducts = context.read<DetailsProducts>();
-    final selectedSize = widget.product!.itemProducts![index];
     final transparentColorProduct =
         selectedSize.colorProducts!.firstWhereOrNull(
       (colors) => colors.realColor == Colors.transparent,
@@ -60,7 +62,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final basePrice = widget.product?.basePrice ?? 0.0;
     final primaryColor = Theme.of(context).primaryColor;
+
     return ChangeNotifierProvider.value(
       value: widget.product,
       child: Scaffold(
@@ -144,7 +148,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 )),
                       widget.product!.hasStock
                           ? Text(
-                              'R\$ ${widget.product!.basePrice.toStringAsFixed(2)}',
+                              '${formattedRealText(basePrice)}',
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,

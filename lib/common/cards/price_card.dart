@@ -1,11 +1,15 @@
 import 'package:brn_ecommerce/common/button/custom_button.dart';
+import 'package:brn_ecommerce/common/formated_fields/format_values.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PriceCard extends StatelessWidget {
-  const PriceCard({Key? key, required this.buttonText, required this.onPressed,})
-      : super(key: key);
+  const PriceCard({
+    Key? key,
+    required this.buttonText,
+    required this.onPressed,
+  }) : super(key: key);
 
   final String buttonText;
   final VoidCallback? onPressed;
@@ -39,7 +43,7 @@ class PriceCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('Subtotal'),
-                Text('R\$ ${productsPrice.toStringAsFixed(2)}')
+                Text('${formattedRealText(productsPrice)}')
               ],
             ),
             const Divider(),
@@ -48,7 +52,7 @@ class PriceCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Entrega'),
-                  Text('R\$ ${deliveryPrice.toStringAsFixed(2)}')
+                  Text('${formattedRealText(deliveryPrice)}')
                 ],
               ),
               const Divider(),
@@ -66,7 +70,7 @@ class PriceCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'R\$ ${totalPrice.toStringAsFixed(2)}',
+                  '${formattedRealText(totalPrice)}',
                   style: TextStyle(
                       color: Theme.of(context).primaryColor, fontSize: 16),
                 )
@@ -75,7 +79,11 @@ class PriceCard extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            CustomButton(text: buttonText, fontSize: 14, onPressed: onPressed,)
+            CustomButton(
+              text: buttonText,
+              fontSize: 14,
+              onPressed: onPressed,
+            )
           ],
         ),
       ),
