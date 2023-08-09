@@ -3,13 +3,15 @@ import 'package:brn_ecommerce/models/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../common/functions/common_functions.dart';
+
 class CartProduct extends ChangeNotifier {
   CartProduct.fromProduct(this._product, this._detailsProducts) {
     productId = product?.id;
     quantity = 1;
     size = product?.selectedDetails?.size;
     color = detailsProducts?.selectedColors?.color ?? "";
-    realColorFromCart = _getColorFromString(color!);
+    realColorFromCart = getColorFromString(color!);
   }
 
   CartProduct.fromDocument(DocumentSnapshot document) {
@@ -18,7 +20,7 @@ class CartProduct extends ChangeNotifier {
     quantity = document.get("quantity") as int;
     size = document.get("size") as String;
     color = document.get("color") as String? ?? "";
-    realColorFromCart = _getColorFromString(color!);
+    realColorFromCart = getColorFromString(color!);
 
     firestore.doc("products/$productId").get().then((doc) {
       product = Product.fromDocument(doc);
@@ -31,7 +33,7 @@ class CartProduct extends ChangeNotifier {
     size = map["size"] as String;
     fixedPrice = map["fixedPrice"] as num;
     color = map["color"] as String;
-    realColorFromCart = _getColorFromString(color!);
+    realColorFromCart = getColorFromString(color!);
 
     firestore.doc("products/$productId").get().then((doc) {
       product = Product.fromDocument(doc);
@@ -81,7 +83,9 @@ class CartProduct extends ChangeNotifier {
 
   int get unitQuantityAmount {
     if (product == null) return 0;
-    return detailsProductsFindValues?.findAmountByColor(color)?.amount ?? 0;
+    return detailsProductsFindValues
+        ?.findAmountByColor(color)
+        ?.amount ?? 0;
   }
 
   int get unitQuantityStock {
@@ -137,24 +141,10 @@ class CartProduct extends ChangeNotifier {
 
   bool get hasAmount {
     if (product != null && product!.deleted) return false;
-    final amount = detailsProductsFindValues?.findAmountByColor(color)?.amount;
+    final amount = detailsProductsFindValues
+        ?.findAmountByColor(color)
+        ?.amount;
     if (amount == null) return false;
     return amount >= quantity!;
-  }
-
-  Color _getColorFromString(String color) {
-    if (color.length != 7 || color[0] != "#") {
-      // Verificar se a string de cor não tem o tamanho esperado (7 caracteres)
-      // ou se não começa com '#'. Nesse caso, retornar uma cor padrão ou null.
-      return Colors.transparent; // ou retorne null se preferir
-    }
-
-    try {
-      final int value = int.parse(color.substring(1, 7), radix: 16);
-      return Color(value).withOpacity(1.0);
-    } catch (e) {
-      // Se ocorrer uma exceção ao tentar analisar a cor, retorne uma cor padrão ou null.
-      return Colors.transparent; // ou retorne null se preferir
-    }
   }
 }

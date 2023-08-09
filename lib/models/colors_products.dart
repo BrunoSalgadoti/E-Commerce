@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../common/functions/common_functions.dart';
+
 class ColorsProducts extends ChangeNotifier {
   ColorsProducts({
     this.color,
@@ -10,7 +12,7 @@ class ColorsProducts extends ChangeNotifier {
   ColorsProducts.fromMap(Map<String, dynamic> map) {
     color = map["color"] as String;
     amount = map["amount"] as int;
-    realColor = _getColorFromString(color!);
+    realColor = getColorFromString(color!);
     notifyListeners();
   }
 
@@ -33,22 +35,6 @@ class ColorsProducts extends ChangeNotifier {
       "color": color ?? "",
       "amount": amount,
     };
-  }
-
-  Color _getColorFromString(String color) {
-    if (color.length != 7 || color[0] != "#") {
-      // Verificar se a string de cor não tem o tamanho esperado (7 caracteres)
-      // ou se não começa com '#'. Nesse caso, retornar uma cor padrão ou null.
-      return Colors.transparent; // ou retorne null se preferir
-    }
-
-    try {
-      final int value = int.parse(color.substring(1, 7), radix: 16);
-      return Color(value).withOpacity(1.0);
-    } catch (e) {
-      // Se ocorrer uma exceção ao tentar analisar a cor, retorne uma cor padrão ou null.
-      return Colors.transparent; // ou retorne null se preferir
-    }
   }
 
   @override

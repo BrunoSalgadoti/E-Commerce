@@ -1,5 +1,5 @@
 import 'package:brn_ecommerce/common/button/custom_button.dart';
-import 'package:brn_ecommerce/common/price_card.dart';
+import 'package:brn_ecommerce/common/cards/price_card.dart';
 import 'package:brn_ecommerce/common/show_alert_dialog.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/models/policy_and_documents.dart';
@@ -130,6 +130,7 @@ class _AddressScreenState extends State<AddressScreen> {
                           text: 'Atualizar',
                           onPressed: () {
                             Navigator.pop(context);
+                            //TODO: When to Publish the APP
                             // You can redirect to the app store for updating the app
                             // For Android, use:
                             // launch('https://play.google.com/store/apps/details?id=com.example.app');

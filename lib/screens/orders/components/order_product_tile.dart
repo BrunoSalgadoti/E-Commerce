@@ -11,10 +11,15 @@ class OrderProductTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imageNotAvailable = cartProduct!.product?.images == null
+        || cartProduct!.product!.images!.isEmpty;
+
     return GestureDetector(
       onTap: () {
+        if(!imageNotAvailable){
         Navigator.pushNamed(context, "/product",
             arguments: cartProduct?.product);
+        }
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
@@ -24,7 +29,10 @@ class OrderProductTile extends StatelessWidget {
             SizedBox(
               height: 100,
               width: 100,
-              child: Image.network(
+              child: imageNotAvailable
+                  ? Image.asset('assets/images/noImage.png',
+                fit: BoxFit.cover,)
+                  :Image.network(
                 cartProduct!.product!.images!.first,
                 fit: BoxFit.cover,
               ),
@@ -35,7 +43,7 @@ class OrderProductTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    cartProduct?.product?.name ?? 'Nome indisponível',
+                    cartProduct?.product?.name ?? 'Produto indisponível',
                     style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 16,

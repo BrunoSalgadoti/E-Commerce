@@ -27,8 +27,8 @@ class Product extends ChangeNotifier {
 
   Product.fromDocument(DocumentSnapshot document) {
     id = document.id;
-    name = document["name"] as String;
-    description = document["description"] as String;
+    name = document["name"] as String? ?? "";
+    description = document["description"] as String? ?? "";
     images = List<String>.from(document["images"] as List<dynamic>);
     deleted = (document["deleted"] ?? false) as bool;
     isValid = (document["isvalid"] ?? true) as bool;

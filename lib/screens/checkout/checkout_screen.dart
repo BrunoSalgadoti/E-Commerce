@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/common/price_card.dart';
+import 'package:brn_ecommerce/common/cards/price_card.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/models/checkout_manager.dart';
 import 'package:brn_ecommerce/screens/checkout/components/credit_card_widget.dart';

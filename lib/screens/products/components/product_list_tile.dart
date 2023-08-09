@@ -1,4 +1,5 @@
 import 'package:brn_ecommerce/models/product.dart';
+import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:flutter/material.dart';
 
 class ProductListTile extends StatelessWidget {
@@ -9,31 +10,44 @@ class ProductListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+    final imageNotAvailable =
+        product?.images == null || product!.images!.isEmpty;
+    UserManager userManager = UserManager();
 
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, "/product", arguments: product);
+        if (imageNotAvailable && userManager.adminEnable) {
+          Navigator.pushNamed(context, "/edit_product", arguments: product);
+        }
+        if (!imageNotAvailable) {
+          Navigator.pushNamed(context, "/product", arguments: product);
+        }
       },
-      child: product!.isValid! ? Card(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-        child: Container(
-          height: 100,
-          padding: const EdgeInsets.all(8),
-          child: Row(
-            children: [
-              AspectRatio(
-                aspectRatio: 1,
-                child: Image(
-                  image: NetworkImage(product!.images!.first),
-                  fit: BoxFit.fitHeight,
-                ),
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              Expanded(
-                  child: Column(
+      child: product!.isValid!
+          ? Card(
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4)),
+              child: Container(
+                height: 100,
+                padding: const EdgeInsets.all(8),
+                child: Row(
+                  children: [
+                    AspectRatio(
+                      aspectRatio: 1,
+                      child: imageNotAvailable
+                          ? Image.asset('assets/images/noImage.png',
+                              fit: BoxFit.fitHeight)
+                          : Image(
+                              image: NetworkImage(product?.images?.first ?? ""),
+                              fit: BoxFit.fitHeight,
+                            ),
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    Expanded(
+                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -75,11 +89,11 @@ class ProductListTile extends StatelessWidget {
                                 ),
                               ),
                       ],
-              ))
-            ],
-          ),
-        ),
-      )
+                    ))
+                  ],
+                ),
+              ),
+            )
           : Container(),
     );
   }
