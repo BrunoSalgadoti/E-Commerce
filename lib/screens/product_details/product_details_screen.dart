@@ -5,12 +5,12 @@ import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/screens/products/components/colors_widget.dart';
 import 'package:brn_ecommerce/screens/products/components/products_widget.dart';
+import 'package:collection/collection.dart';
 import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
-import 'package:collection/collection.dart';
 
 import '../../common/formated_fields/format_values.dart';
 

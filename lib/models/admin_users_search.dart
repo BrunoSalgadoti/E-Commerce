@@ -1,5 +1,5 @@
 import 'package:brn_ecommerce/common/button/custom_text_button.dart';
-import 'package:brn_ecommerce/common/show_alert_dialog.dart';
+import 'package:brn_ecommerce/common/custom_messengers/custom_alert_dialog.dart';
 import 'package:brn_ecommerce/models/admin_orders_manager.dart';
 import 'package:brn_ecommerce/models/page_manager.dart';
 import 'package:brn_ecommerce/models/users.dart';
@@ -209,7 +209,7 @@ class AdminUsersSearch extends ChangeNotifier {
                           : showDialog<void>(
                               context: context,
                               builder: (BuildContext context) {
-                                return ShowAlertDialog(
+                                return CustomAlertDialog(
                                   titleText: 'Enviar E-mail',
                                   titleSize: 18,
                                   titleColor: Colors.black,

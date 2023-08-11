@@ -71,9 +71,7 @@ class CustomDrawer extends StatelessWidget {
                           title: 'Pedidos',
                           page: 6,
                         ),
-                        ...[
-                          SettingsDrawer()
-                        ]
+                        ...[SettingsDrawer()]
                       ],
                     );
                   } else {

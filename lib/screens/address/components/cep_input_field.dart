@@ -1,12 +1,15 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:brn_ecommerce/common/button/custom_button.dart';
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/common/custom_text_form_field.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+
+import '../../../common/formated_fields/format_values.dart';
 
 class CepInputField extends StatefulWidget {
   const CepInputField({
@@ -35,21 +38,21 @@ class _CepInputFieldState extends State<CepInputField> {
           const SizedBox(height: 10),
           CustomTextFormField(
             enableTextEdit: !cartManager.loading,
-              controller: cepController,
-              labelText: 'CEP',
-              hintText: '00.000-000',
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-                CepInputFormatter()
-              ],
-              textInputType: TextInputType.number,
-              validator: (value) {
+            controller: cepController,
+            labelText: 'CEP',
+            hintText: '00.000-000',
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              CepInputFormatter()
+            ],
+            textInputType: TextInputType.number,
+            validator: (value) {
               if (value?.length != 10) {
                 return 'CEP Inválido';
               } else {
                 return null;
               }
-              },
+            },
           ),
           const SizedBox(height: 7),
           CustomButton(
@@ -60,13 +63,9 @@ class _CepInputFieldState extends State<CepInputField> {
                       try {
                         await cartManager.getAddress(cepController.text);
                       } catch (error) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('$error'),
-                            backgroundColor: Colors.red,
-                            duration: const Duration(milliseconds: 4500),
-                          ),
-                        );
+                        CustomScaffoldMessenger(
+                                context: context, message: '$error')
+                            .msn();
                       }
                     }
                   }
@@ -75,16 +74,13 @@ class _CepInputFieldState extends State<CepInputField> {
         ],
       );
     } else {
-      final formattedCep =
-          UtilBrasilFields.obterCep(widget.address.formattedZipCode);
-
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 4),
         child: Row(
           children: [
             Expanded(
               child: Text(
-                'CEP: $formattedCep',
+                'CEP: ${formattedZipcode(widget.address.zipCode)}',
                 style: TextStyle(
                   color: primaryColor,
                   fontSize: 18,

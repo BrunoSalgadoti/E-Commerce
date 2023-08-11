@@ -1,3 +1,5 @@
+import '../common/formated_fields/format_values.dart';
+
 class Address {
   Address(
       {this.street,
@@ -21,11 +23,6 @@ class Address {
   double? lat;
   double? long;
 
-  // Function to standardize the zip code format
-  String _formatCep(String cep) {
-    return cep.replaceAll(RegExp(r"[^0-9]"), ""); // Removes all non-numeric characters
-  }
-
   Address.fromMap(Map<String, dynamic> map) {
     street = map["street"] as String;
     number = map["number"] as String;
@@ -44,15 +41,11 @@ class Address {
       "number": number,
       "complement": complement,
       "district": district,
-      "zipCode": _formatCep(zipCode ?? ""), // Save the standardized zip code
+      "zipCode": unFormattedZipcode(zipCode ?? ""),
       "city": city,
       "state": state,
       "lat": lat,
       "long": long,
     };
-  }
-  // New attribute to store zip code formatted without hyphen
-  String get formattedZipCode {
-    return _formatCep(zipCode ?? "");
   }
 }

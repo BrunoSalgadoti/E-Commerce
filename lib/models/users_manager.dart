@@ -196,15 +196,13 @@ class UserManager extends ChangeNotifier {
       if (kIsWeb) {
         GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
-        googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-        googleProvider.setCustomParameters({
-          'login_hint': 'user@example.com'
-        });
+        googleProvider
+            .addScope('https://www.googleapis.com/auth/contacts.readonly');
+        googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
         return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
       }
 
       final GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
-
 
       // Realize authentication for the Google
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();

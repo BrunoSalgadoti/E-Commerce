@@ -5,5 +5,6 @@ bool emailValid(String email) {
 
   return regex.hasMatch(email);
 }
+
 String? emptyValidator(String? text) =>
     text!.isEmpty ? 'Campo Obrigatório' : null;

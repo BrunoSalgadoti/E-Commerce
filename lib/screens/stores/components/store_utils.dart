@@ -1,5 +1,7 @@
 import 'package:brn_ecommerce/common/button/custom_button.dart';
-import 'package:brn_ecommerce/common/show_alert_dialog.dart';
+import 'package:brn_ecommerce/common/custom_messengers/custom_alert_dialog.dart';
+import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
+import 'package:brn_ecommerce/common/formated_fields/format_values.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/stores.dart';
 import 'package:flutter/material.dart';
@@ -17,47 +19,32 @@ class StoreUtils {
   final Address address;
 
   alertForCall(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(
-          'Este dispositivo não suporta está função!\n'
-          'O Número da Loja é : ${store.phoneNumberStore}',
-          style: const TextStyle(fontSize: 18)),
-      backgroundColor: Colors.red,
+    CustomScaffoldMessenger(
+      context: context,
+      message: 'Este dispositivo não suporta está função!\n'
+          'O Número da Loja é : ${formattedPhoneNumber(store.phoneNumberStore)}',
       duration: const Duration(seconds: 10),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      margin: const EdgeInsets.all(15),
-    ));
+    ).msn();
     return;
   }
 
   alertForEmail(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(
-          'Este dispositivo não suporta está função!\n'
+    CustomScaffoldMessenger(
+      context: context,
+      message: 'Este dispositivo não suporta está função!\n'
           'O E-mail da Loja é : ${store.emailStore}',
-          style: const TextStyle(fontSize: 18)),
-      backgroundColor: Colors.red,
       duration: const Duration(seconds: 10),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      margin: const EdgeInsets.all(15),
-    ));
+    ).msn();
     return;
   }
 
   alertForMaps(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: const Text(
-          'Não foi encontrado nenhum APP de Mapas '
+    CustomScaffoldMessenger(
+      context: context,
+      message: 'Não foi encontrado nenhum APP de Mapas '
           'neste dispositívo!\n',
-          style: TextStyle(fontSize: 18)),
-      backgroundColor: Colors.red,
       duration: const Duration(seconds: 10),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      margin: const EdgeInsets.all(15),
-    ));
+    ).msn();
     return;
   }
 
@@ -67,7 +54,7 @@ class StoreUtils {
     showDialog<void>(
         context: context,
         builder: (BuildContext context) {
-          return ShowAlertDialog(
+          return CustomAlertDialog(
             titleText: 'A T E N Ç Ã O',
             bodyText: 'Tem certeza que deseja deletar a loja:\n '
                 '${store.nameStore}\n'

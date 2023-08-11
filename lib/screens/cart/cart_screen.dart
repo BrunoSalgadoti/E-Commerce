@@ -1,5 +1,5 @@
-import 'package:brn_ecommerce/common/empty_page_indicator.dart';
 import 'package:brn_ecommerce/common/cards/price_card.dart';
+import 'package:brn_ecommerce/common/empty_page_indicator.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/screens/cart/components/cart_tile.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +32,8 @@ class CartScreen extends StatelessWidget {
               children: cartManager.items
                   .map((cartProduct) => CartTile(
                         cartProduct: cartProduct,
-                      )).toList(),
+                      ))
+                  .toList(),
             ),
             PriceCard(
                 buttonText: 'Continuar para Entrega',

@@ -67,15 +67,6 @@ class DetailsProducts extends ChangeNotifier {
     return true; // If all colors are empty, returns true
   }
 
-  //probably a dead code
-  // String get totalColors {
-  //   String color = "";
-  //   for (final colors in colorProducts!) {
-  //     color += colors.color!;
-  //   }
-  //   return color;
-  // }
-
   Map<String, dynamic> toMap() {
     return {
       "size": size,

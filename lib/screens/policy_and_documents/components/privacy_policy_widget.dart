@@ -1,7 +1,7 @@
+import 'package:brn_ecommerce/models/policy_and_documents.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:brn_ecommerce/models/policy_and_documents.dart';
 
 class PrivacyPolicyWidget extends StatefulWidget {
   const PrivacyPolicyWidget({super.key});

@@ -35,6 +35,6 @@ String getErrorString(String code) {
           'Verifique se você está autorizado a realizar esta operação.';
 
     default:
-    return 'Um erro indefinido ocorreu.';
+      return 'Um erro indefinido ocorreu.';
   }
 }

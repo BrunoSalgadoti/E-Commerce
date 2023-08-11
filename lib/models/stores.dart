@@ -1,15 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:brasil_fields/brasil_fields.dart';
+import 'package:brn_ecommerce/helpers/extensions.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/opening_stores.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:brn_ecommerce/helpers/extensions.dart';
 import 'package:uuid/uuid.dart';
+
+import '../common/formated_fields/format_values.dart';
 
 enum StoreStatus { closed, open, closing }
 
@@ -74,28 +75,15 @@ class Stores extends ChangeNotifier {
   Map<String, Map<String, TimeOfDay>?>? openingStoresFromTimeOfDay;
   StoreStatus? status;
 
-  String get formattedCep =>
-      UtilBrasilFields.obterCep(address?.formattedZipCode ?? '00000000');
-
   String? get addressText => '${address?.street}, ${address?.number}'
       '${address?.complement?.isNotEmpty == true ? ' - ${address!.complement}' : ''} - '
       '${address?.district}, ${address?.city}/'
-      '${address?.state} - $formattedCep';
-
-  // New attribute to store phone code formatted
-  String get cleanPhone {
-    return _formatPhone(phoneNumberStore ?? "");
-  }
+      '${address?.state} - ${formattedZipcode(address?.zipCode)}';
 
   String get openingText {
     return 'Seg-Sex: ${formattedPeriod(openingStoresFromTimeOfDay!["monFri"])}\n'
         'Sab: ${formattedPeriod(openingStoresFromTimeOfDay!["saturday"])}\n'
         'Dom: ${formattedPeriod(openingStoresFromTimeOfDay!["monday"])}';
-  }
-
-  // Function to standardize the phone code format
-  String _formatPhone(String phone) {
-    return phone.replaceAll(RegExp(r"[^\d]"), "");
   }
 
   String formattedPeriod(Map<String, TimeOfDay>? period) {
@@ -107,7 +95,7 @@ class Stores extends ChangeNotifier {
     return {
       "nameStore": nameStore,
       "emailStore": emailStore,
-      "phoneNumberStore": phoneNumberStore ?? "",
+      "phoneNumberStore": unFormatPhone(phoneNumberStore ?? ""),
       "imageStore": imageStore,
       "openingStores": openingStores?.toMap(),
       "address": address?.toMap(),

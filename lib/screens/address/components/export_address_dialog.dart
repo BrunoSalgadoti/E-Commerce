@@ -1,14 +1,15 @@
 import 'dart:io';
+
 import 'package:brn_ecommerce/common/button/custom_text_button.dart';
-import 'package:brn_ecommerce/common/show_alert_dialog.dart';
+import 'package:brn_ecommerce/common/custom_messengers/custom_alert_dialog.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/order_client.dart';
+import 'package:custom_universal_html/html.dart' as html;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:custom_universal_html/html.dart' as html;
 
 import '../../../common/formated_fields/format_values.dart';
 
@@ -28,7 +29,7 @@ class ExportAddressDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final orderId = orderClient?.orderId ?? "";
 
-    return ShowAlertDialog(
+    return CustomAlertDialog(
       titleText: 'Endereço de Entrega',
       titleSize: 19,
       content: Screenshot(

@@ -1,12 +1,13 @@
 import 'dart:io';
+
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/screens/product_edit/components/image_source_sheet.dart';
 import 'package:brn_ecommerce/screens/product_edit/components/image_source_web.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:custom_universal_html/html.dart' as html;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:custom_universal_html/html.dart' as html;
 
 class ImagesForm extends StatelessWidget {
   const ImagesForm({

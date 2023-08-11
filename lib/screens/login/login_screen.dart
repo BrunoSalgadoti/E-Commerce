@@ -1,12 +1,13 @@
 import 'package:brn_ecommerce/common/button/custom_button.dart';
 import 'package:brn_ecommerce/common/button/custom_text_button.dart';
 import 'package:brn_ecommerce/common/button/custom_text_button_styles.dart';
+import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/common/custom_text_form_field.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -33,10 +34,7 @@ class LoginScreen extends StatelessWidget {
         userManager.loadingFace;
 
     messengerToOnFail(error) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(error, style: const TextStyle(fontSize: 18)),
-        backgroundColor: Colors.red,
-      ));
+      CustomScaffoldMessenger(context: context, message: error).msn();
     }
 
     return Scaffold(
@@ -164,18 +162,18 @@ class LoginScreen extends StatelessWidget {
                             child: loadingToButton
                                 ? null
                                 : CustomTextButton(
-                                icon: const Icon(FontAwesomeIcons.facebook),
-                                text: '   Entrar com Facebook',
-                                onPressed: () {
-                                  userManager.loginOrSingUpWithFacebook(
-                                      onFail: (error) {
-                                    messengerToOnFail(error);
-                                  }, onSuccess: () {
-                                    Navigator.of(context).pop();
-                                  });
-                                },
-                                style:
-                                    CustomTextButtonStyles.buttonStyleFacebook),
+                                    icon: const Icon(FontAwesomeIcons.facebook),
+                                    text: '   Entrar com Facebook',
+                                    onPressed: () {
+                                      userManager.loginOrSingUpWithFacebook(
+                                          onFail: (error) {
+                                        messengerToOnFail(error);
+                                      }, onSuccess: () {
+                                        Navigator.of(context).pop();
+                                      });
+                                    },
+                                    style: CustomTextButtonStyles
+                                        .buttonStyleFacebook),
                           ),
                     const SizedBox(height: 10),
                     userManager.loadingGoogle
@@ -188,18 +186,19 @@ class LoginScreen extends StatelessWidget {
                             child: loadingToButton
                                 ? null
                                 : CustomTextButton(
-                                imageAssetsTarget: "assets/logo/googleLogo.png",
-                                text: '   Entrar com Google',
-                                onPressed: () {
-                                  userManager.loginOrSingUpWithGoogle(
-                                      onFail: (error) {
-                                    messengerToOnFail(error);
-                                  }, onSuccess: () {
-                                    Navigator.of(context).pop();
-                                  });
-                                },
-                                style:
-                                    CustomTextButtonStyles.buttonStyleGoogle),
+                                    imageAssetsTarget:
+                                        "assets/logo/googleLogo.png",
+                                    text: '   Entrar com Google',
+                                    onPressed: () {
+                                      userManager.loginOrSingUpWithGoogle(
+                                          onFail: (error) {
+                                        messengerToOnFail(error);
+                                      }, onSuccess: () {
+                                        Navigator.of(context).pop();
+                                      });
+                                    },
+                                    style: CustomTextButtonStyles
+                                        .buttonStyleGoogle),
                           )
                   ],
                 )),

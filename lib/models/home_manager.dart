@@ -92,7 +92,6 @@ class HomeManager extends ChangeNotifier {
     }
     if (!valid) return;
 
-
     loading = true;
     notifyListeners();
 

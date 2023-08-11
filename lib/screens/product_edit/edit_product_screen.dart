@@ -1,16 +1,17 @@
 import 'package:brn_ecommerce/common/button/custom_button.dart';
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/button/custom_text_button.dart';
+import 'package:brn_ecommerce/common/custom_messengers/custom_alert_dialog.dart';
+import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/common/custom_text_form_field.dart';
-import 'package:brn_ecommerce/common/show_alert_dialog.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:brn_ecommerce/screens/product_edit/components/images_form.dart';
 import 'package:brn_ecommerce/screens/product_edit/components/sizes_form.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:markdown_editable_textinput/format_markdown.dart';
 import 'package:markdown_editable_textinput/markdown_text_input.dart';
+import 'package:provider/provider.dart';
 
 class EditProductScreen extends StatelessWidget {
   EditProductScreen({super.key, Product? product})
@@ -33,7 +34,7 @@ class EditProductScreen extends StatelessWidget {
     showAlertDialog() => showDialog(
         context: context,
         builder: (BuildContext context) {
-          return ShowAlertDialog(
+          return CustomAlertDialog(
             titleText: 'Valores não correspondentes!',
             bodyText: product!.errorMessage,
             actions: [
@@ -63,7 +64,7 @@ class EditProductScreen extends StatelessWidget {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return ShowAlertDialog(
+                        return CustomAlertDialog(
                           titleText: 'Atenção!',
                           bodyText: 'Realmente deseja deletar este produto?\n'
                               '\nProduto: ${product!.name ?? ''};\n'
@@ -222,24 +223,11 @@ class EditProductScreen extends StatelessWidget {
                                               }
                                             } catch (error) {
                                               product.loading = false;
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                content: Text(
+                                              CustomScaffoldMessenger(
+                                                context: context,
+                                                message:
                                                     errorSaveProductMessage,
-                                                    style: const TextStyle(
-                                                        fontSize: 18)),
-                                                backgroundColor: Colors.red,
-                                                duration:
-                                                    const Duration(seconds: 6),
-                                                behavior:
-                                                    SnackBarBehavior.floating,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10)),
-                                                margin:
-                                                    const EdgeInsets.all(15),
-                                              ));
+                                              ).msn();
                                             }
                                           }
                                         });

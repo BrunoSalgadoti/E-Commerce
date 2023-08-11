@@ -1,11 +1,11 @@
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/cart_product.dart';
+import 'package:brn_ecommerce/models/chearch_cep/viacep_adress.dart';
 import 'package:brn_ecommerce/models/delivery.dart';
 import 'package:brn_ecommerce/models/details_products.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
-import 'package:brn_ecommerce/models/chearch_cep/viacep_adress.dart';
 import 'package:brn_ecommerce/services/cepaberto_service.dart';
 import 'package:brn_ecommerce/services/viacep_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

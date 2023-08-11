@@ -2,16 +2,18 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:brn_ecommerce/common/button/custom_button.dart';
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/custom_text_form_field.dart';
+import 'package:brn_ecommerce/common/formated_fields/format_values.dart';
 import 'package:brn_ecommerce/common/formated_fields/time_input_formatter.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/opening_stores.dart';
+import 'package:brn_ecommerce/models/stores.dart';
 import 'package:brn_ecommerce/screens/stores/components/store_utils.dart';
 import 'package:brn_ecommerce/screens/stores_edit/components/store_image_widget.dart';
 import 'package:brn_ecommerce/screens/stores_edit/components/store_location_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:brn_ecommerce/models/stores.dart';
+
 import '../../helpers/validators.dart';
 
 class EditStoresScreen extends StatefulWidget {
@@ -28,7 +30,6 @@ class EditStoresScreenState extends State<EditStoresScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     const textFieldSpaceBetweenHeight = SizedBox(height: 16);
     const textFieldSpaceBetweenWidth = SizedBox(width: 16);
 
@@ -164,9 +165,10 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                     Expanded(
                         flex: 2,
                         child: CustomTextFormField(
-                          initialValue: widget.store.phoneNumberStore ?? "",
+                          initialValue: formattedPhoneNumber(
+                              widget.store.phoneNumberStore),
                           labelText: 'Telefone:',
-                          hintText: 'Ex: (00) 9 0000-0000',
+                          hintText: 'Ex: (00) 90000-0000',
                           isDense: false,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
@@ -179,14 +181,15 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                               return null;
                             }
                           },
-                          onSaved: (value) =>
-                              widget.store.phoneNumberStore = value,
+                          onSaved: (value) => widget.store.phoneNumberStore =
+                              unFormatPhone(value!),
                         )),
                     textFieldSpaceBetweenWidth,
                     Expanded(
                       flex: 1,
                       child: CustomTextFormField(
-                        initialValue: widget.store.address?.zipCode ?? "",
+                        initialValue:
+                            formattedZipcode(widget.store.address?.zipCode),
                         labelText: 'CEP:',
                         hintText: 'Ex: 00.000-000',
                         textInputType: TextInputType.number,

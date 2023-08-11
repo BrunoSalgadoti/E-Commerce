@@ -1,15 +1,16 @@
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:brn_ecommerce/common/button/custom_button.dart';
+import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/common/custom_text_form_field.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
+import 'package:brn_ecommerce/models/policy_and_documents.dart';
+import 'package:brn_ecommerce/models/users.dart';
+import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/screens/policy_and_documents/policy_and_documents_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:brn_ecommerce/models/users.dart';
-import 'package:brn_ecommerce/models/users_manager.dart';
-import 'package:brn_ecommerce/models/policy_and_documents.dart';
-import 'package:brn_ecommerce/common/button/custom_button.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -138,7 +139,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             }
                           },
                           onSaved: (password) =>
-                          users.confirmPassword = password!,
+                              users.confirmPassword = password!,
                         ),
                         textFieldSpaceBetweenHeight,
                         ...[const PolicyAndDocumentsScreen()],
@@ -149,62 +150,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               formKey.currentState!.save();
 
                               if (users.password != users.confirmPassword) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: const Text(
+                                CustomScaffoldMessenger(
+                                  context: context,
+                                  message:
                                       'Confirmação de Senha não confere! Tente '
                                       'Redigitar a Senha e a confirmação da Senha',
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                                    backgroundColor: Colors.red,
-                                    duration: const Duration(seconds: 5),
-                                    behavior: SnackBarBehavior.floating,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    margin: const EdgeInsets.all(15),
-                                  ),
-                                );
+                                ).msn();
                                 return;
                               }
                               if (!policyAndDocuments.agreedToPolicyTerms ||
                                   !policyAndDocuments.agreedToTermsOfService) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: const Text(
+                                CustomScaffoldMessenger(
+                                  context: context,
+                                  message:
                                       'É necessário Concordar com a Política de '
                                       'privacidade e nossos Termos de Serviço',
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                                    backgroundColor: Colors.red,
-                                    duration: const Duration(seconds: 5),
-                                    behavior: SnackBarBehavior.floating,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    margin: const EdgeInsets.all(15),
-                                  ),
-                                );
+                                ).msn();
                                 return;
                               }
                               userManager.singUpWithEmailAndPassword(
                                 users: users,
                                 onFail: (error) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        'Falha ao cadastrar $error',
-                                        style: const TextStyle(fontSize: 18),
-                                      ),
-                                      backgroundColor: Colors.red,
-                                      duration: const Duration(seconds: 5),
-                                      behavior: SnackBarBehavior.floating,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      margin: const EdgeInsets.all(15),
-                                    ),
-                                  );
+                                  CustomScaffoldMessenger(
+                                          context: context,
+                                          message: 'Falha ao cadastrar $error')
+                                      .msn();
                                 },
                                 onSuccess: () {
                                   Navigator.of(context).pop();

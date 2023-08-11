@@ -2,20 +2,237 @@
 class Assets {
   Assets._();
 
+  static const String addressAddressScreen =
+      'lib/screens/address/address_screen.dart';
+  static const String adminOrdersAdminOrdersScreen =
+      'lib/screens/admin_orders/admin_orders_screen.dart';
+  static const String adminUsersAdminUsersScreen =
+      'lib/screens/admin_users/admin_users_screen.dart';
+  static const String baseBaseScreen = 'lib/screens/base/base_screen.dart';
+  static const String buttonCustomButton =
+      'lib/common/button/custom_button.dart';
+  static const String buttonCustomIconButton =
+      'lib/common/button/custom_icon_button.dart';
+  static const String buttonCustomTextButton =
+      'lib/common/button/custom_text_button.dart';
+  static const String buttonCustomTextButtonStyles =
+      'lib/common/button/custom_text_button_styles.dart';
+  static const String cardsLoginCard = 'lib/common/cards/login_card.dart';
+  static const String cardsPriceCard = 'lib/common/cards/price_card.dart';
+  static const String cartCartScreen = 'lib/screens/cart/cart_screen.dart';
+  static const String chearchCepCepabertoAddress =
+      'lib/models/chearch_cep/cepaberto_address.dart';
+  static const String chearchCepViacepAdress =
+      'lib/models/chearch_cep/viacep_adress.dart';
+  static const String checkoutCheckoutScreen =
+      'lib/screens/checkout/checkout_screen.dart';
+  static const String commonCustomTextFormField =
+      'lib/common/custom_text_form_field.dart';
+  static const String commonEmptyPageIndicator =
+      'lib/common/empty_page_indicator.dart';
+  static const String commonSearchDialog = 'lib/common/search_dialog.dart';
+  static const String componentsAddSectionWidget =
+      'lib/screens/home/components/add_section_widget.dart';
+  static const String componentsAddTileWidget =
+      'lib/screens/home/components/add_tile_widget.dart';
+  static const String componentsAddressCard =
+      'lib/screens/address/components/address_card.dart';
+  static const String componentsAddressInputField =
+      'lib/screens/address/components/address_input_field.dart';
+  static const String componentsCardBack =
+      'lib/screens/checkout/components/card_back.dart';
+  static const String componentsCardFront =
+      'lib/screens/checkout/components/card_front.dart';
+  static const String componentsCartTile =
+      'lib/screens/cart/components/cart_tile.dart';
+  static const String componentsCepInputField =
+      'lib/screens/address/components/cep_input_field.dart';
+  static const String componentsColorsForm =
+      'lib/screens/product_edit/components/colors_form.dart';
+  static const String componentsColorsWidget =
+      'lib/screens/products/components/colors_widget.dart';
+  static const String componentsCreditCardWidget =
+      'lib/screens/checkout/components/credit_card_widget.dart';
+  static const String componentsCustomDrawerHeader =
+      'lib/common/custom_drawer/components/custom_drawer_header.dart';
+  static const String componentsDrawerTitle =
+      'lib/common/custom_drawer/components/drawer_title.dart';
+  static const String componentsEditColors =
+      'lib/screens/product_edit/components/edit_colors.dart';
+  static const String componentsEditItemSize =
+      'lib/screens/product_edit/components/edit_item_size.dart';
+  static const String componentsExportAddressDialog =
+      'lib/screens/address/components/export_address_dialog.dart';
+  static const String componentsFooterDescriptionWidget =
+      'lib/screens/who_we_are/components/footer_description_widget.dart';
+  static const String componentsImageSourceSheet =
+      'lib/screens/product_edit/components/image_source_sheet.dart';
+  static const String componentsImageSourceWeb =
+      'lib/screens/product_edit/components/image_source_web.dart';
+  static const String componentsImagesForm =
+      'lib/screens/product_edit/components/images_form.dart';
+  static const String componentsItemTile =
+      'lib/screens/home/components/item_tile.dart';
+  static const String componentsOrderProductTile =
+      'lib/screens/orders/components/order_product_tile.dart';
+  static const String componentsOrderTile =
+      'lib/screens/orders/components/order_tile.dart';
+  static const String componentsPrivacyPolicyWidget =
+      'lib/screens/policy_and_documents/components/privacy_policy_widget.dart';
+  static const String componentsProductListTile =
+      'lib/screens/products/components/product_list_tile.dart';
+  static const String componentsProductsWidget =
+      'lib/screens/products/components/products_widget.dart';
+  static const String componentsSectionHeader =
+      'lib/screens/home/components/section_header.dart';
+  static const String componentsSectionList =
+      'lib/screens/home/components/section_list.dart';
+  static const String componentsSectionStaggered =
+      'lib/screens/home/components/section_staggered.dart';
+  static const String componentsSettingDrawer =
+      'lib/common/custom_drawer/components/setting_drawer.dart';
+  static const String componentsShareProduct =
+      'lib/screens/products_share/components/share_product.dart';
+  static const String componentsShareProductWeb =
+      'lib/screens/products_share/components/share_product_web.dart';
+  static const String componentsSizesForm =
+      'lib/screens/product_edit/components/sizes_form.dart';
+  static const String componentsSotoreCard =
+      'lib/screens/stores/components/sotore_card.dart';
+  static const String componentsStoreImageWidget =
+      'lib/screens/stores_edit/components/store_image_widget.dart';
+  static const String componentsStoreLocationWidget =
+      'lib/screens/stores_edit/components/store_location_widget.dart';
+  static const String componentsStoreUtils =
+      'lib/screens/stores/components/store_utils.dart';
+  static const String componentsTermsAndPrivacyTextScreen =
+      'lib/screens/policy_and_documents/components/terms_and_privacy_text_screen.dart';
+  static const String componentsTermsOfServiceWidget =
+      'lib/screens/policy_and_documents/components/terms_of_service_widget.dart';
+  static const String componentsTopDescriptionWidget =
+      'lib/screens/who_we_are/components/top_description_widget.dart';
+  static const String customDrawerCustomDrawer =
+      'lib/common/custom_drawer/custom_drawer.dart';
+  static const String customMessengersCustomAlertDialog =
+      'lib/common/custom_messengers/custom_alert_dialog.dart';
+  static const String customMessengersCustomScaffoldMessenger =
+      'lib/common/custom_messengers/custom_scaffold_messenger.dart';
+  static const String dbApiCepabertoServiceToken =
+      'lib/services/db_api/cepaberto_service_token.dart';
+  static const String dbApiFacebookAppIdForWeb =
+      'lib/services/db_api/facebook_app_id_for_web.dart';
+  static const String dbApiFirebaseOptions =
+      'lib/services/db_api/firebase_options.dart';
   static const String docsPrivacyPolicy = 'assets/docs/privacyPolicy.md';
   static const String docsTermsOfService = 'assets/docs/termsOfService.md';
+  static const String factoryColorsAndroidFactoryColors =
+      'lib/helpers/themes/factory_colors/android_factory_colors.dart';
+  static const String factoryColorsAnotherColors =
+      'lib/helpers/themes/factory_colors/another_colors.dart';
+  static const String factoryColorsIosFactoryColos =
+      'lib/helpers/themes/factory_colors/ios_factory_colos.dart';
+  static const String factoryColorsWebFactoryColors =
+      'lib/helpers/themes/factory_colors/web_factory_colors.dart';
+  static const String formatedFieldsFormatTimestamp =
+      'lib/common/formated_fields/format_timestamp.dart';
+  static const String formatedFieldsFormatValues =
+      'lib/common/formated_fields/format_values.dart';
+  static const String formatedFieldsTimeInputFormatter =
+      'lib/common/formated_fields/time_input_formatter.dart';
+  static const String functionsCommonFunctions =
+      'lib/common/functions/common_functions.dart';
+  static const String generatedAssets = 'lib/generated/assets.dart';
+  static const String helpersAppProviders = 'lib/helpers/app_providers.dart';
+  static const String helpersExtensions = 'lib/helpers/extensions.dart';
+  static const String helpersFirebaseErrors =
+      'lib/helpers/firebase_errors.dart';
+  static const String helpersRouteGenerator =
+      'lib/helpers/route_generator.dart';
+  static const String helpersValidators = 'lib/helpers/validators.dart';
+  static const String homeHomeScreen = 'lib/screens/home/home_screen.dart';
+  static const String homeSplashScreen = 'lib/screens/home/splash_screen.dart';
   static const String imagesAwait = 'assets/images/await.gif';
   static const String imagesBrnInfoDev = 'assets/images/brnInfoDev.png';
-  static const String imagesEmConstrucaoGitHub = 'assets/images/emConstrucaoGitHub.png';
+  static const String imagesEmConstrucaoGitHub =
+      'assets/images/emConstrucaoGitHub.png';
   static const String imagesGoShopping = 'assets/images/goShopping.gif';
   static const String imagesNoImage = 'assets/images/noImage.png';
   static const String imagesShoppingHappy = 'assets/images/shoppingHappy.gif';
   static const String imagesSplashScreen = 'assets/images/splashScreen.jpg';
-  static const String imagesUserWithoutImage = 'assets/images/userWithoutImage.png';
+  static const String imagesUserWithoutImage =
+      'assets/images/userWithoutImage.png';
   static const String imagesWaitingSales = 'assets/images/waitingSales.gif';
+  static const String libMain = 'lib/main.dart';
+  static const String libMyApp = 'lib/my_app.dart';
+  static const String loginLoginScreen = 'lib/screens/login/login_screen.dart';
   static const String logoGoogleLogo = 'assets/logo/googleLogo.png';
   static const String logoStoreLogo = 'assets/logo/storeLogo.png';
   static const String logoStoreLogo2 = 'assets/logo/storeLogo2.png';
+  static const String modelsAddress = 'lib/models/address.dart';
+  static const String modelsAdminOrdersManager =
+      'lib/models/admin_orders_manager.dart';
+  static const String modelsAdminUsersManager =
+      'lib/models/admin_users_manager.dart';
+  static const String modelsAdminUsersSearch =
+      'lib/models/admin_users_search.dart';
+  static const String modelsCartManager = 'lib/models/cart_manager.dart';
+  static const String modelsCartProduct = 'lib/models/cart_product.dart';
+  static const String modelsCheckoutManager =
+      'lib/models/checkout_manager.dart';
+  static const String modelsColorsProducts = 'lib/models/colors_products.dart';
+  static const String modelsDelivery = 'lib/models/delivery.dart';
+  static const String modelsDetailsProducts =
+      'lib/models/details_products.dart';
+  static const String modelsHomeManager = 'lib/models/home_manager.dart';
+  static const String modelsOpeningStores = 'lib/models/opening_stores.dart';
+  static const String modelsOrderClient = 'lib/models/order_client.dart';
+  static const String modelsOrdersManager = 'lib/models/orders_manager.dart';
+  static const String modelsPageManager = 'lib/models/page_manager.dart';
+  static const String modelsPolicyAndDocuments =
+      'lib/models/policy_and_documents.dart';
+  static const String modelsProduct = 'lib/models/product.dart';
+  static const String modelsProductManager = 'lib/models/product_manager.dart';
+  static const String modelsSection = 'lib/models/section.dart';
+  static const String modelsSectionItem = 'lib/models/section_item.dart';
+  static const String modelsStores = 'lib/models/stores.dart';
+  static const String modelsStoresManager = 'lib/models/stores_manager.dart';
+  static const String modelsUsers = 'lib/models/users.dart';
+  static const String modelsUsersManager = 'lib/models/users_manager.dart';
+  static const String modelsVersionManager = 'lib/models/version_manager.dart';
+  static const String modelsWhoWeAreManager =
+      'lib/models/who_we_are_manager.dart';
+  static const String ordersOrdersScreen =
+      'lib/screens/orders/orders_screen.dart';
+  static const String policyAndDocumentsPolicyAndDocumentsScreen =
+      'lib/screens/policy_and_documents/policy_and_documents_screen.dart';
+  static const String productDetailsProductDetailsScreen =
+      'lib/screens/product_details/product_details_screen.dart';
+  static const String productEditEditProductScreen =
+      'lib/screens/product_edit/edit_product_screen.dart';
+  static const String productSelectedSelectedProductScreen =
+      'lib/screens/product_selected/selected_product_screen.dart';
+  static const String productsProductsScreen =
+      'lib/screens/products/products_screen.dart';
+  static const String productsShareShareProductScreen =
+      'lib/screens/products_share/share_product_screen.dart';
+  static const String salesConfirmationSalesConfirmationScreen =
+      'lib/screens/sales_confirmation/sales_confirmation_screen.dart';
+  static const String servicesCepabertoService =
+      'lib/services/cepaberto_service.dart';
+  static const String servicesViacepService =
+      'lib/services/viacep_service.dart';
+  static const String signUpSignUpScreen =
+      'lib/screens/sign_up/sign_up_screen.dart';
+  static const String storesEditEditStoresScreen =
+      'lib/screens/stores_edit/edit_stores_screen.dart';
+  static const String storesStoresScreen =
+      'lib/screens/stores/stores_screen.dart';
+  static const String themesGetThemeData =
+      'lib/helpers/themes/get_theme_data.dart';
+  static const String themesThemes = 'lib/helpers/themes/themes.dart';
   static const String vignetteVignette = 'assets/vignette/vignette.mp3';
-
+  static const String whoWeAreWhoWeArePage =
+      'lib/screens/who_we_are/who_we_are_page.dart';
+  static const String whoWeAreWhoWeAreScreen =
+      'lib/screens/who_we_are/who_we_are_screen.dart';
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:brn_ecommerce/screens/products_share/share_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';

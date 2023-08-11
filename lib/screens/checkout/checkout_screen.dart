@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CheckoutScreen extends StatelessWidget {
-  const CheckoutScreen({
+  CheckoutScreen({
     Key? key,
   }) : super(key: key);
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +34,7 @@ class CheckoutScreen extends StatelessWidget {
                       CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation(Colors.white),
                       ),
-                      SizedBox(
-                        height: 16,
-                      ),
+                      SizedBox(height: 16),
                       Text(
                         'Processando seu pagamento...',
                         style: TextStyle(
@@ -48,34 +48,35 @@ class CheckoutScreen extends StatelessWidget {
                 );
               }
 
-              return ListView(
-                children: [
-                  const CreditCardWidget(),
-                  PriceCard(
-                    buttonText: 'Finalizar Pedido',
-                    onPressed: () {
-                      checkoutManager.checkout(onStockFail: (error) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('$error',
-                              style: const TextStyle(fontSize: 18)),
-                          backgroundColor: Colors.red,
-                          duration: const Duration(seconds: 5),
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          margin: const EdgeInsets.all(15),
-                        ));
-                        Navigator.popUntil(
-                            context, (route) => route.settings.name == "/cart");
-                      }, onSuccess: (order) {
-                        Navigator.popUntil(
-                            context, (route) => route.settings.name == "/product");
-                        Navigator.pushNamed(context, "/sales_confirmation",
-                            arguments: order);
-                      });
-                    },
-                  )
-                ],
+              return Form(
+                key: formKey,
+                child: ListView(
+                  children: [
+                    const CreditCardWidget(),
+                    PriceCard(
+                      buttonText: 'Finalizar Pedido',
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          debugPrint('enviar!!');
+
+                          /*checkoutManager.checkout(onStockFail: (error) {
+                            CustomScaffoldMessenger(
+                                context: context,
+                                message: '$error'
+                            ).msn();
+                            Navigator.popUntil(
+                                context, (route) => route.settings.name == "/cart");
+                          }, onSuccess: (order) {
+                            Navigator.popUntil(context,
+                                    (route) => route.settings.name == "/product");
+                            Navigator.pushNamed(context, "/sales_confirmation",
+                                arguments: order);
+                          });*/
+                        }
+                      },
+                    )
+                  ],
+                ),
               );
             },
           )),

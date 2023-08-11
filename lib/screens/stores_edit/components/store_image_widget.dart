@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/models/stores.dart';
 import 'package:brn_ecommerce/screens/product_edit/components/image_source_sheet.dart';
 import 'package:brn_ecommerce/screens/product_edit/components/image_source_web.dart';
+import 'package:custom_universal_html/html.dart' as html;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:custom_universal_html/html.dart' as html;
 
 class StoreImageWidget extends StatelessWidget {
   const StoreImageWidget({super.key, required this.store});
@@ -28,11 +29,10 @@ class StoreImageWidget extends StatelessWidget {
 
     void onImageSelectedList(List<File> files) {
       if (files.length > 1) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Está seção não permite seleção de várias imagens',
-              style: TextStyle(fontSize: 18)),
-          backgroundColor: Colors.red,
-        ));
+        CustomScaffoldMessenger(
+          context: context,
+          message: 'Está seção não permite seleção de várias imagens',
+        ).msn();
         backScreen();
       } else {
         File file = files.first;
@@ -43,11 +43,10 @@ class StoreImageWidget extends StatelessWidget {
 
     void onImageSelectedWeb(List<html.File> files) {
       if (files.length > 1) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Está seção não permite seleção de várias imagens',
-              style: TextStyle(fontSize: 18)),
-          backgroundColor: Colors.red,
-        ));
+        CustomScaffoldMessenger(
+          context: context,
+          message: 'Está seção não permite seleção de várias imagens',
+        ).msn();
         backScreen();
       } else {
         for (html.File file in files) {

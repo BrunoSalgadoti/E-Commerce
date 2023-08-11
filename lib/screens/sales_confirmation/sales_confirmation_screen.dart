@@ -1,5 +1,5 @@
-import 'package:brn_ecommerce/screens/orders/components/order_product_tile.dart';
 import 'package:brn_ecommerce/models/order_client.dart';
+import 'package:brn_ecommerce/screens/orders/components/order_product_tile.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/formated_fields/format_values.dart';

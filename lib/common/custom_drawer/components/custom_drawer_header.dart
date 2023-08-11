@@ -11,8 +11,7 @@ class CustomDrawerHeader extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.fromLTRB(25, 15, 40, 8),
         height: 240,
-        child: Consumer<UserManager>(
-            builder: (_, userManager, __) {
+        child: Consumer<UserManager>(builder: (_, userManager, __) {
           return ListView(
             children: [
               Column(
@@ -22,7 +21,8 @@ class CustomDrawerHeader extends StatelessWidget {
                   if (userManager.image != null) ...[
                     const Text(
                       'Loja Virtual:',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     Image.asset(
                       "assets/logo/storeLogo.png",
@@ -32,14 +32,15 @@ class CustomDrawerHeader extends StatelessWidget {
                   ] else
                     const Text(
                       'Loja Virtual:\n BRN Info_Dev',
-                      style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
                     ),
                   Text(
                     'Bem-Vindo(a)! ${userManager.users?.userName ?? ''}',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
-                    style:
-                    const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 17, fontWeight: FontWeight.bold),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -51,7 +52,9 @@ class CustomDrawerHeader extends StatelessWidget {
                       }
                     },
                     child: Text(
-                      userManager.isLoggedIn ? 'Sair' : 'Entre ou Cadastre-se >',
+                      userManager.isLoggedIn
+                          ? 'Sair'
+                          : 'Entre ou Cadastre-se >',
                       style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 16,
@@ -61,7 +64,6 @@ class CustomDrawerHeader extends StatelessWidget {
                 ],
               ),
             ],
-
           );
         }));
   }

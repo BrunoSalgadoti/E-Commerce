@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.2+39
+version: 1.0.2+41
 
 environment:
   sdk: '>=3.0.3 <4.0.0'
@@ -48,12 +48,12 @@ dependencies:
   alphabet_list_scroll_view_fix: ^2.0.2
   flutter_slidable: ^3.0.0
   url_launcher: ^6.1.12
-  image_picker: ^1.0.1
+  image_picker: ^1.0.2
   custom_universal_html: ^2.0.0
   image_cropper: ^4.0.1
-  path_provider: ^2.0.15
+  path_provider: ^2.1.0
   uuid: ^3.0.7
-  dio: ^5.3.1
+  dio: ^5.3.2
   brasil_fields: ^1.13.1
   geolocator: ^9.0.2
   sliding_up_panel: ^2.0.0+1
@@ -64,7 +64,7 @@ dependencies:
   permission_handler: ^10.4.3
   share_plus: ^7.1.0
   markdown_editable_textinput: ^2.2.0
-  flutter_markdown: ^0.6.17
+  flutter_markdown: ^0.6.17+1
   youtube_player_iframe: ^4.0.4
   flutter_colorpicker: ^1.0.3
   flutter_spinkit: ^5.2.0
@@ -113,6 +113,55 @@ flutter:
     - assets/logo/
     - assets/docs/
     - assets/vignette/
+    - lib/
+    - lib/common/
+    - lib/common/cards/
+    - lib/common/button/
+    - lib/common/functions/
+    - lib/common/custom_drawer/
+    - lib/common/custom_drawer/components/
+    - lib/common/formated_fields/
+    - lib/models/
+    - lib/models/chearch_cep/
+    - lib/helpers/
+    - lib/helpers/themes/
+    - lib/helpers/themes/factory_colors/
+    - lib/screens/
+    - lib/screens/base/
+    - lib/screens/cart/
+    - lib/screens/cart/components/
+    - lib/screens/home/
+    - lib/screens/home/components/
+    - lib/screens/login/
+    - lib/screens/orders/
+    - lib/screens/orders/components/
+    - lib/screens/stores/
+    - lib/screens/stores/components/
+    - lib/screens/address/
+    - lib/screens/address/components/
+    - lib/screens/sign_up/
+    - lib/screens/checkout/
+    - lib/screens/checkout/components/
+    - lib/screens/products/
+    - lib/screens/products/components/
+    - lib/screens/who_we_are/
+    - lib/screens/who_we_are/components/
+    - lib/screens/admin_users/
+    - lib/screens/stores_edit/
+    - lib/screens/stores_edit/components/
+    - lib/screens/admin_orders/
+    - lib/screens/product_edit/
+    - lib/screens/product_edit/components/
+    - lib/screens/products_share/
+    - lib/screens/products_share/components/
+    - lib/screens/product_details/
+    - lib/screens/product_selected/
+    - lib/screens/sales_confirmation/
+    - lib/screens/policy_and_documents/
+    - lib/screens/policy_and_documents/components/
+    - lib/services/
+    - lib/services/db_api/
+    - lib/generated/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

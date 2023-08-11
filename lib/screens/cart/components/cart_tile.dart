@@ -1,6 +1,6 @@
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/button/custom_text_button.dart';
-import 'package:brn_ecommerce/common/show_alert_dialog.dart';
+import 'package:brn_ecommerce/common/custom_messengers/custom_alert_dialog.dart';
 import 'package:brn_ecommerce/models/cart_product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +40,7 @@ class CartTile extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                child: Padding(
+                    child: Padding(
                   padding: const EdgeInsets.only(left: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,7 +156,7 @@ class CartTile extends StatelessWidget {
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return ShowAlertDialog(
+                                        return CustomAlertDialog(
                                             titleText:
                                                 'Confirmação de Exclusão',
                                             bodyText:

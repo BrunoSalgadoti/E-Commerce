@@ -1,6 +1,7 @@
 import 'package:brn_ecommerce/common/button/custom_button.dart';
 import 'package:brn_ecommerce/common/cards/price_card.dart';
-import 'package:brn_ecommerce/common/show_alert_dialog.dart';
+import 'package:brn_ecommerce/common/custom_messengers/custom_alert_dialog.dart';
+import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/models/policy_and_documents.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
@@ -24,19 +25,13 @@ class _AddressScreenState extends State<AddressScreen> {
     goToScreen() => Navigator.pushNamed(context, "/checkout");
     backScreen() => Navigator.pop(context);
 
-    alert() {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text(
-            'É necessário Concordar com a Política'
+    alertPolicyAndTerms() {
+      CustomScaffoldMessenger(
+        context: context,
+        message: 'É necessário Concordar com a Política'
             ' de privacidade e nossos '
             'Termos de Serviço',
-            style: TextStyle(fontSize: 18)),
-        backgroundColor: Colors.red,
-        duration: const Duration(seconds: 5),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        margin: const EdgeInsets.all(15),
-      ));
+      ).msn();
       return;
     }
 
@@ -68,7 +63,7 @@ class _AddressScreenState extends State<AddressScreen> {
                   context: context,
                   barrierDismissible: false,
                   builder: (BuildContext context) {
-                    return ShowAlertDialog(
+                    return CustomAlertDialog(
                       titleText: 'A T E N Ç Ã O!',
                       bodyText: messenger,
                       actions: [
@@ -96,7 +91,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                         false ||
                                     policyAndDocuments.agreedToTermsOfService ==
                                         false) {
-                                  alert();
+                                  alertPolicyAndTerms();
                                 } else {
                                   currentUser.policyAndTerms = true;
                                   await currentUser.updateUserData();
@@ -121,10 +116,11 @@ class _AddressScreenState extends State<AddressScreen> {
                   context: context,
                   barrierDismissible: false,
                   builder: (BuildContext context) {
-                    return ShowAlertDialog(
+                    return CustomAlertDialog(
                       titleText: 'Atualização Necessária!',
                       bodyText: 'Por favor, para continuar: \n'
-                          'é necessário atualizar o aplicativo para a versão mais recente!',
+                          'é necessário atualizar o aplicativo para a '
+                          'versão mais recente!',
                       actions: [
                         CustomButton(
                           text: 'Atualizar',

@@ -6,10 +6,7 @@ import 'package:brn_ecommerce/screens/product_edit/components/edit_item_size.dar
 import 'package:flutter/material.dart';
 
 class SizesForm extends StatelessWidget {
-  const SizesForm({
-    Key? key,
-    this.product
-  }) : super(key: key);
+  const SizesForm({Key? key, this.product}) : super(key: key);
 
   final Product? product;
 
@@ -30,9 +27,9 @@ class SizesForm extends StatelessWidget {
           children: [
             Row(
               children: [
-                 const Expanded(
-                   flex: 1,
-                  child:  Text(
+                const Expanded(
+                  flex: 1,
+                  child: Text(
                     'Adicionar Item',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
@@ -48,44 +45,50 @@ class SizesForm extends StatelessWidget {
             ),
             ListView(
               physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                children: state.value!.map((size) {
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      EditItemSize(
-                        key: ObjectKey(size),
-                        detailsProducts: size,
-                        onRemove: () {
-                          state.value!.remove(size);
-                          state.didChange(state.value);
-                        },
-                        onMoveUp: size != state.value!.first
-                            ? () {
-                          final index = state.value!.indexOf(size);
-                          state.value!.remove(size);
-                          state.value!.insert(index - 1, size);
-                          state.didChange(state.value);
-                        }
-                            : null,
-                        onMoveDown: size != state.value!.last
-                            ? () {
-                          final index = state.value!.indexOf(size);
-                          state.value!.remove(size);
-                          state.value!.insert(index + 1, size);
-                          state.didChange(state.value);
-                        }
-                            : null,
-                      ),
-                      ColorsForm(detailsProducts: size),// Nested FormField
-                      const SizedBox(height: 5,),
-                      const Divider(thickness: 2.0,),
-                      const SizedBox(height: 10,),
-                    ],
-                  );
-                }).toList(),
-              ),
+              shrinkWrap: true,
+              children: state.value!.map((size) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    EditItemSize(
+                      key: ObjectKey(size),
+                      detailsProducts: size,
+                      onRemove: () {
+                        state.value!.remove(size);
+                        state.didChange(state.value);
+                      },
+                      onMoveUp: size != state.value!.first
+                          ? () {
+                              final index = state.value!.indexOf(size);
+                              state.value!.remove(size);
+                              state.value!.insert(index - 1, size);
+                              state.didChange(state.value);
+                            }
+                          : null,
+                      onMoveDown: size != state.value!.last
+                          ? () {
+                              final index = state.value!.indexOf(size);
+                              state.value!.remove(size);
+                              state.value!.insert(index + 1, size);
+                              state.didChange(state.value);
+                            }
+                          : null,
+                    ),
+                    ColorsForm(detailsProducts: size), // Nested FormField
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Divider(
+                      thickness: 2.0,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                );
+              }).toList(),
+            ),
             if (state.hasError)
               Container(
                 alignment: Alignment.centerLeft,

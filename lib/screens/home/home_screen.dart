@@ -1,13 +1,14 @@
 import 'dart:io';
+
 import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/helpers/themes/factory_colors/another_colors.dart';
 import 'package:brn_ecommerce/models/home_manager.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/screens/home/components/add_section_widget.dart';
-import 'package:brn_ecommerce/screens/who_we_are/who_we_are_screen.dart';
 import 'package:brn_ecommerce/screens/home/components/section_header.dart';
 import 'package:brn_ecommerce/screens/home/components/section_list.dart';
 import 'package:brn_ecommerce/screens/home/components/section_staggered.dart';
+import 'package:brn_ecommerce/screens/who_we_are/who_we_are_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -1,4 +1,5 @@
 import 'package:brn_ecommerce/common/button/custom_button.dart';
+import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/common/custom_text_form_field.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/models/address.dart';
@@ -44,8 +45,7 @@ class AddressInputField extends StatelessWidget {
                 ],
                 validator: emptyValidator,
                 onSaved: (value) => address.number = value,
-              )
-                  ),
+              )),
               const SizedBox(width: 16),
               Expanded(
                   flex: 3,
@@ -95,8 +95,7 @@ class AddressInputField extends StatelessWidget {
                 },
                 textCapitalization: TextCapitalization.characters,
                 onSaved: (value) => address.state = value,
-              )
-                  ),
+              )),
             ],
           ),
           const SizedBox(height: 8),
@@ -110,14 +109,11 @@ class AddressInputField extends StatelessWidget {
                         try {
                           await cartManager.setAddress(address);
                         } catch (error) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Verifique seu acesso a internet!'
-                                  ' $error'),
-                              backgroundColor: Colors.red,
-                              duration: const Duration(milliseconds: 4500),
-                            ),
-                          );
+                          CustomScaffoldMessenger(
+                            context: context,
+                            message: 'Verifique seu acesso a internet!',
+                            duration: const Duration(milliseconds: 4500),
+                          ).msn();
                           cartManager.loading = false;
                         }
                       }

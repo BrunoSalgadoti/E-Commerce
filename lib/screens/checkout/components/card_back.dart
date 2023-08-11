@@ -10,8 +10,8 @@ class CardBack extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 16,
       child: Container(
-        height: 220,
-        color: const Color(0xFF1B4B52),
+        height: 250,
+        color: const Color(0xFF343131),
       ),
     );
   }

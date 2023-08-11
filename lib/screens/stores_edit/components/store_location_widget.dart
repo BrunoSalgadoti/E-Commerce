@@ -1,6 +1,6 @@
+import 'package:brn_ecommerce/models/stores.dart';
 import 'package:brn_ecommerce/screens/stores/components/store_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:brn_ecommerce/models/stores.dart';
 
 class StoreLocationWidget extends StatefulWidget {
   const StoreLocationWidget({Key? key, required this.store}) : super(key: key);

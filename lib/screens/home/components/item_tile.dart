@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:brn_ecommerce/common/button/custom_button.dart';
-import 'package:brn_ecommerce/common/show_alert_dialog.dart';
+import 'package:brn_ecommerce/common/custom_messengers/custom_alert_dialog.dart';
 import 'package:brn_ecommerce/models/home_manager.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
@@ -42,7 +42,7 @@ class ItemTile extends StatelessWidget {
                           .read<ProductManager>()
                           .findProductById(
                               item?.product != null ? item!.product! : '');
-                      return ShowAlertDialog(
+                      return CustomAlertDialog(
                           titleText: 'Editar Item',
                           titleColor: Colors.black,
                           titleSize: 18,

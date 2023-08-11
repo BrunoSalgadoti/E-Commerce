@@ -1,13 +1,15 @@
 import 'dart:io';
+
+import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/models/section.dart';
 import 'package:brn_ecommerce/models/section_item.dart';
 import 'package:brn_ecommerce/screens/product_edit/components/image_source_sheet.dart';
 import 'package:brn_ecommerce/screens/product_edit/components/image_source_web.dart';
+import 'package:custom_universal_html/html.dart' as html;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:custom_universal_html/html.dart' as html;
 
 class AddTileWidget extends StatelessWidget {
   const AddTileWidget({
@@ -25,11 +27,10 @@ class AddTileWidget extends StatelessWidget {
 
     void onImageSelectedList(List<File> files) {
       if (files.length > 1) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Está seção não permite seleção de várias imagens',
-              style: TextStyle(fontSize: 18)),
-          backgroundColor: Colors.red,
-        ));
+        CustomScaffoldMessenger(
+          context: context,
+          message: 'Está seção não permite seleção de várias imagens',
+        ).msn();
         Navigator.of(context).pop();
       } else {
         File file = files.first;
@@ -40,11 +41,10 @@ class AddTileWidget extends StatelessWidget {
 
     void onImageSelectedWeb(List<html.File> files) {
       if (files.length > 1) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Está seção não permite seleção de várias imagens',
-              style: TextStyle(fontSize: 18)),
-          backgroundColor: Colors.red,
-        ));
+        CustomScaffoldMessenger(
+          context: context,
+          message: 'Está seção não permite seleção de várias imagens',
+        ).msn();
         Navigator.of(context).pop();
       } else {
         for (html.File file in files) {

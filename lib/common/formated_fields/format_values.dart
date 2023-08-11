@@ -1,13 +1,23 @@
 import 'package:brasil_fields/brasil_fields.dart';
 
 formattedZipcode(String? address) {
-  final zipcode = UtilBrasilFields.obterCep(address ?? "");
+  final zipcode = UtilBrasilFields.obterCep(address ?? "00000000");
   return zipcode;
+}
+
+unFormattedZipcode(String? address) {
+  final unformattedValue = address?.replaceAll(RegExp(r"[^0-9]"), ""); //
+  return unformattedValue;
 }
 
 formattedPhoneNumber(String? phone) {
   final phoneNumber = UtilBrasilFields.obterTelefone(phone ?? "");
   return phoneNumber;
+}
+
+unFormatPhone(String formattedValue) {
+  final unformattedValue = formattedValue.replaceAll(RegExp(r"[^\d]"), "");
+  return unformattedValue;
 }
 
 formattedRealText(num real) {
@@ -25,7 +35,6 @@ formattedRealTextFormFiled(num real) {
 unFormattedReal(String formattedValue) {
   final unformattedValue =
       formattedValue.replaceAll(".", "").replaceAll(",", ".");
-
   return unformattedValue;
 }
 

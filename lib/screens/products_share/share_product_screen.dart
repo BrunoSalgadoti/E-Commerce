@@ -1,13 +1,15 @@
+import 'dart:ui' as ui;
+
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/screens/products_share/components/share_product.dart';
 import 'package:brn_ecommerce/screens/products_share/components/share_product_web.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../common/formated_fields/format_values.dart';
 
@@ -33,15 +35,17 @@ class ShareProductScreenState extends State<ShareProductScreen> {
   void _onShareButtonPressed() {
     if (kIsWeb) {
       _shareProductWeb().then((value) {}).catchError((error) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao compartilhar: $error')),
-        );
+        CustomScaffoldMessenger(
+          context: context,
+          message: 'Erro ao compartilhar: $error',
+        ).msn();
       });
     } else {
       _shareProduct().then((value) {}).catchError((error) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao compartilhar: $error')),
-        );
+        CustomScaffoldMessenger(
+          context: context,
+          message: 'Erro ao compartilhar: $error',
+        ).msn();
       });
     }
   }

@@ -24,7 +24,7 @@ class PriceCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -36,9 +36,7 @@ class PriceCard extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            const SizedBox(
-              height: 12,
-            ),
+            const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -57,9 +55,7 @@ class PriceCard extends StatelessWidget {
               ),
               const Divider(),
             ],
-            const SizedBox(
-              height: 12,
-            ),
+            const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -76,9 +72,7 @@ class PriceCard extends StatelessWidget {
                 )
               ],
             ),
-            const SizedBox(
-              height: 8,
-            ),
+            const SizedBox(height: 8),
             CustomButton(
               text: buttonText,
               fontSize: 14,

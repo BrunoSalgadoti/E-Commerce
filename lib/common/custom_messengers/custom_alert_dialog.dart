@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ShowAlertDialog extends StatelessWidget {
-  const ShowAlertDialog({
+class CustomAlertDialog extends StatelessWidget {
+  const CustomAlertDialog({
     Key? key,
     required this.titleText,
     required this.bodyText,
@@ -9,7 +9,7 @@ class ShowAlertDialog extends StatelessWidget {
     this.content,
     this.titleColor = Colors.red,
     this.titleSize = 22,
-    this.titleWeight = FontWeight.w600,
+    this.titleWeight = FontWeight.w400,
     this.bodyColor = Colors.black,
     this.bodySize = 14,
     this.bodyWeight = FontWeight.w600,
