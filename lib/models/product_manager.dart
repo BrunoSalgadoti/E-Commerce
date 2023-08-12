@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
@@ -37,6 +38,10 @@ class ProductManager extends ChangeNotifier {
   }
 
   void _listenToProducts() async {
+    // Start custom code tracing (TRACEPERFORMANCE)
+    final trace = FirebasePerformance.instance.newTrace('listen-products');
+    await trace.start();
+
     _subscription = firestore
         .collection("products")
         .where("deleted", isEqualTo: false)
@@ -54,6 +59,9 @@ class ProductManager extends ChangeNotifier {
       }
       notifyListeners();
     });
+
+    // Stop custom code trace
+    await trace.stop();
   }
 
   Product? findProductById(String id) {

@@ -43,6 +43,10 @@ class CustomTextFormField extends StatelessWidget {
     this.onChanged,
     this.autocorrect,
     this.prefixText,
+    this.counterText = '',
+    this.textAlign = TextAlign.start,
+    this.focusNode,
+    this.onSubmitted,
   });
 
   final String? title;
@@ -50,6 +54,7 @@ class CustomTextFormField extends StatelessWidget {
   final String? hintText;
   final String? labelText;
   final String? prefixText;
+  final String? counterText;
   final double? titleSize;
   final double? hintSize;
   final double? textFormFieldSize;
@@ -70,11 +75,14 @@ class CustomTextFormField extends StatelessWidget {
   final bool obscureText;
   final TextCapitalization? textCapitalization;
   final TextEditingController? controller;
+  final TextAlign? textAlign;
+  final FocusNode? focusNode;
   final TextInputType textInputType;
   final InputBorder? focusedBorder;
   final InputBorder? enabledBorder;
   final EdgeInsetsGeometry? contentPadding;
   final void Function(String?)? onSaved;
+  final void Function(String?)? onSubmitted;
   final void Function(String?)? onChanged;
   final String? Function(String?)? validator;
   final List<TextInputFormatter>? inputFormatters;
@@ -111,8 +119,10 @@ class CustomTextFormField extends StatelessWidget {
           enabled: enableTextEdit,
           controller: controller,
           autocorrect: autocorrect ?? true,
+          focusNode: focusNode,
           textCapitalization: textCapitalization ?? TextCapitalization.none,
           maxLength: maxLength,
+          textAlign: textAlign!,
           style: TextStyle(
             color: textFormFieldColor,
             fontWeight: textFormFieldBold ? FontWeight.bold : FontWeight.w400,
@@ -122,6 +132,7 @@ class CustomTextFormField extends StatelessWidget {
             labelText: labelText,
             hintText: hintText,
             prefixText: prefixText,
+            counterText: counterText,
             hintStyle: TextStyle(
               color: hintColor ?? Colors.black.withAlpha(100),
               fontSize: hintSize,
@@ -151,6 +162,7 @@ class CustomTextFormField extends StatelessWidget {
           onChanged: onChanged,
           validator: validator,
           obscureText: obscureText,
+          onFieldSubmitted: onSubmitted,
         )
       ],
     );

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/material.dart';
 
 class AdminUsersManager with ChangeNotifier {
@@ -23,6 +24,10 @@ class AdminUsersManager with ChangeNotifier {
   }
 
   Future<void> _listenToUsers() async {
+    // Start custom code tracing (TRACEPERFORMANCE)
+    final trace = FirebasePerformance.instance.newTrace('listen-users');
+    await trace.start();
+
     QuerySnapshot<Map<String, dynamic>> snapshot = await firestore
         .collection("users")
         .get(const GetOptions(source: Source.cache));
@@ -39,6 +44,9 @@ class AdminUsersManager with ChangeNotifier {
       userList = snapshot.docs.map((d) => Users.fromDocument(d)).toList();
       notifyListeners();
     });
+
+    // Stop custom code trace
+    await trace.stop();
   }
 
   @override

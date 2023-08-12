@@ -5,6 +5,7 @@ import 'package:brn_ecommerce/helpers/extensions.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/opening_stores.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_performance/firebase_performance.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -150,6 +151,10 @@ class Stores extends ChangeNotifier {
   }
 
   Future<void> updateStoreImage(dynamic image, [String? storeId]) async {
+    // Start custom code tracing (TRACEPERFORMANCE)
+    final trace = FirebasePerformance.instance.newTrace('update-store-image');
+    await trace.start();
+
     if (imageStore != null && imageStore.contains("firebase")) {
       final oldImageRef = storage.refFromURL(imageStore);
       await oldImageRef.delete();
@@ -189,6 +194,9 @@ class Stores extends ChangeNotifier {
     }
     imageStore = image;
     notifyListeners();
+
+    // Stop custom code trace
+    await trace.stop();
   }
 
   void updateStatus() {

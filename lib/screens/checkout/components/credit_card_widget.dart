@@ -5,12 +5,17 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 
 class CreditCardWidget extends StatelessWidget {
-  const CreditCardWidget({super.key});
+   CreditCardWidget({super.key});
+
+    final GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
+
+    final FocusNode numberFocus = FocusNode();
+    final FocusNode dateFocus = FocusNode();
+    final FocusNode nameFocus = FocusNode();
+    final FocusNode cvvFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
-
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Column(
@@ -21,8 +26,14 @@ class CreditCardWidget extends StatelessWidget {
               direction: FlipDirection.HORIZONTAL,
               speed: 700,
               flipOnTouch: false,
-              front: const CardFront(),
-              back: const CardBack()),
+              front: CardFront(
+                  numberFocus: numberFocus,
+                  dateFocus: dateFocus,
+                  nameFocus: nameFocus,
+              ),
+              back: CardBack(
+                cvvFocus: cvvFocus,
+              )),
           const SizedBox(
             height: 5,
           ),

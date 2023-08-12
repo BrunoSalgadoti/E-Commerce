@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:brn_ecommerce/models/order_client.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/cupertino.dart';
 
 class OrdersManager extends ChangeNotifier {
@@ -24,7 +25,11 @@ class OrdersManager extends ChangeNotifier {
     }
   }
 
-  void _listenToOrders() {
+  Future<void> _listenToOrders() async {
+    // Start custom code tracing (TRACEPERFORMANCE)
+    final trace = FirebasePerformance.instance.newTrace('listen-orders');
+    await trace.start();
+
     _subscription = firestore
         .collection("orders")
         .where("user", isEqualTo: users!.id)
@@ -36,6 +41,9 @@ class OrdersManager extends ChangeNotifier {
       }
       notifyListeners();
     });
+
+    // Stop custom code trace
+    await trace.stop();
   }
 
   @override

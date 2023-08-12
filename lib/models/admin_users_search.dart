@@ -217,36 +217,39 @@ class AdminUsersSearch extends ChangeNotifier {
                                       'o E-mail!',
                                   bodyWeight: FontWeight.normal,
                                   actions: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        CustomTextButton(
-                                          text: 'Este Contato',
-                                          icon: null,
-                                          onPressed: () {
-                                            _sendEmail(
-                                                user.email, user.userName);
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                        CustomTextButton(
-                                          text: 'Todos contatos!',
-                                          icon: null,
-                                          onPressed: () {
-                                            _sendEmail(null, null);
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                        CustomTextButton(
-                                          text: 'Cancelar',
-                                          icon: null,
-                                          fontColor: Colors.red,
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                      ],
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          CustomTextButton(
+                                            text: 'Este Contato',
+                                            icon: null,
+                                            onPressed: () {
+                                              _sendEmail(
+                                                  user.email, user.userName);
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          CustomTextButton(
+                                            text: 'Todos contatos!',
+                                            icon: null,
+                                            onPressed: () {
+                                              _sendEmail(null, null);
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          CustomTextButton(
+                                            text: 'Cancelar',
+                                            icon: null,
+                                            fontColor: Colors.red,
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 );
