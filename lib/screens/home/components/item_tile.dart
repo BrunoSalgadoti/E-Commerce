@@ -59,7 +59,7 @@ class ItemTile extends StatelessWidget {
                                           style: TextStyle(color: Colors.red),
                                         )
                                       : Text(
-                                          '${formattedRealText(product.basePrice)}'),
+                                          formattedRealText(product.basePrice)),
                                 )
                               : const Text('Nenhum Item Vinculado'
                                   ' a Imagem!'),

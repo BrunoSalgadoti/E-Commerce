@@ -97,7 +97,7 @@ class OrderProductTile extends StatelessWidget {
                         ],
                       )),
                   Text(
-                    '${formattedRealText(fixedOrUnityPrice)}',
+                    formattedRealText(fixedOrUnityPrice),
                     style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 15,

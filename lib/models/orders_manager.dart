@@ -13,7 +13,7 @@ class OrdersManager extends ChangeNotifier {
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  StreamSubscription? _subscription;
+  StreamSubscription<dynamic>? _subscription;
 
   void updateUser(Users users) {
     this.users = users;

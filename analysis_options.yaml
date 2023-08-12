@@ -14,6 +14,13 @@ linter:
     - camel_case_types
     - empty_constructor_bodies
 
+analyzer:
+  language:
+    strict-casts: false
+    strict-raw-types: true
+    strict-inference: false
+
+
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

@@ -21,11 +21,11 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-apply plugin: 'com.google.firebase.firebase-perf'
 
 android {
     namespace "br.com.brninfodev.brn_ecommerce"
@@ -45,6 +45,10 @@ android {
             reset()
             include 'mdpi', 'hdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi'
         }
+    }
+
+    buildFeatures {
+        buildConfig true
     }
 
     compileOptions {
@@ -73,7 +77,7 @@ android {
 
     buildTypes {
         release {
-//              ProGuard/R8:
+            // ProGuard/R8:
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug

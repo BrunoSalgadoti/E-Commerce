@@ -26,7 +26,7 @@ class SelectProductScreen extends StatelessWidget {
                   child: ListTile(
                     leading: Image.network(product.images!.first),
                     title: Text(product.name!),
-                    subtitle: Text('${formattedRealText(product.basePrice)}'),
+                    subtitle: Text(formattedRealText(product.basePrice)),
                     onTap: () {
                       Navigator.of(context).pop(product);
                     },

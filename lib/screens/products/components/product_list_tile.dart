@@ -76,7 +76,7 @@ class ProductListTile extends StatelessWidget {
                                   )),
                         product!.hasStock
                             ? Text(
-                                '${formattedRealText(basePrice)}',
+                                formattedRealText(basePrice),
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,

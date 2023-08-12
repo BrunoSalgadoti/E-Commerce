@@ -31,7 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.18.1
-#  collection: ^1.17.1
+  collection: ^1.17.1
   cupertino_icons: ^1.0.5
   cloud_firestore: ^4.8.4
   firebase_auth: ^4.7.2
@@ -69,7 +69,7 @@ dependencies:
   flutter_facebook_auth: ^5.0.11
   google_sign_in: ^6.1.4
   package_info_plus: ^4.1.0
-  assets_audio_player: ^3.0.6
+  assets_audio_player: ^3.1.0
   map_launcher: ^2.5.0+1
   flutter_svg: ^2.0.7
   url_strategy: ^0.2.0
@@ -81,9 +81,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   lint: ^2.1.2
-  analyzer: ^6.0.0
-
-
+  analyzer: ^6.1.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

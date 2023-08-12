@@ -41,7 +41,7 @@ class PriceCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('Subtotal'),
-                Text('${formattedRealText(productsPrice)}')
+                Text(formattedRealText(productsPrice))
               ],
             ),
             const Divider(),
@@ -50,7 +50,7 @@ class PriceCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Entrega'),
-                  Text('${formattedRealText(deliveryPrice)}')
+                  Text(formattedRealText(deliveryPrice))
                 ],
               ),
               const Divider(),
@@ -66,7 +66,7 @@ class PriceCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${formattedRealText(totalPrice)}',
+                  formattedRealText(totalPrice),
                   style: TextStyle(
                       color: Theme.of(context).primaryColor, fontSize: 16),
                 )

@@ -94,7 +94,7 @@ class CartTile extends StatelessWidget {
                         builder: (_, cartProduct, __) {
                           if (cartProduct.hasStock && cartProduct.hasAmount) {
                             return Text(
-                              '${formattedRealText(cartProduct.unitPrice)}',
+                              formattedRealText(cartProduct.unitPrice),
                               style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize: 16.0,

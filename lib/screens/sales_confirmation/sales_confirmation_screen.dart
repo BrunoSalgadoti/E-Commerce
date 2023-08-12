@@ -39,13 +39,13 @@ class SalesConfirmationScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${formattedOrderId(orderId)}',
+                      formattedOrderId(orderId),
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           color: Theme.of(context).primaryColor),
                     ),
                     Text(
-                      '${formattedRealText(price)}',
+                      formattedRealText(price),
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
                       ),

@@ -38,13 +38,13 @@ class OrderTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${formattedOrderId(orderId)}',
+                    formattedOrderId(orderId),
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: primaryColor,
                     ),
                   ),
-                  Text('${formattedRealText(price)}',
+                  Text(formattedRealText(price),
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 14,

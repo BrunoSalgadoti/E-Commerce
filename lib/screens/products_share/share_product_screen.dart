@@ -161,7 +161,7 @@ class ShareProductScreenState extends State<ShareProductScreen> {
                       ),
                     ),
                     Text(
-                      '${formattedRealText(basePrice)}',
+                      formattedRealText(basePrice),
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,

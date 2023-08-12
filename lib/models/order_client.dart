@@ -96,7 +96,7 @@ class OrderClient {
   Status? status;
   Timestamp? date;
 
-  String get formattedId => '${formattedOrderId(orderId)}';
+  String get formattedId => formattedOrderId(orderId);
 
   String get statusText => getStatusText(status!);
 

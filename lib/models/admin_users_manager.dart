@@ -11,7 +11,7 @@ class AdminUsersManager with ChangeNotifier {
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  StreamSubscription? _subscription;
+  StreamSubscription<dynamic>?  _subscription;
 
   void updateUser(UserManager userManager) {
     _subscription?.cancel();

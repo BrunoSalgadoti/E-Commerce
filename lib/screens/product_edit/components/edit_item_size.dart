@@ -62,7 +62,7 @@ class EditItemSize extends StatelessWidget {
           Expanded(
             flex: 50,
             child: CustomTextFormField(
-                initialValue: '${formattedRealTextFormFiled(initialPrice)}',
+                initialValue: formattedRealTextFormFiled(initialPrice),
                 labelText: 'Preço',
                 prefixText: 'R\$ ',
                 inputFormatters: [
@@ -77,7 +77,7 @@ class EditItemSize extends StatelessWidget {
                 },
                 onChanged: (price) {
                   final unformattedPrice = unFormattedReal(price!);
-                  detailsProducts?.price = num.tryParse(unformattedPrice!);
+                  detailsProducts?.price = num.tryParse(unformattedPrice);
                 }),
           ),
           CustomIconButton(

@@ -58,7 +58,7 @@ class ProductsWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Text(
-                '${formattedRealText(price)}',
+                formattedRealText(price),
                 style: TextStyle(
                   color: color,
                 ),

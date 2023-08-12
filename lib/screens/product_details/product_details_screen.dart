@@ -148,7 +148,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 )),
                       widget.product!.hasStock
                           ? Text(
-                              '${formattedRealText(basePrice)}',
+                              formattedRealText(basePrice),
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,

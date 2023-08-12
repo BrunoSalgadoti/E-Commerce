@@ -14,7 +14,7 @@ class AdminOrdersManager extends ChangeNotifier {
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  StreamSubscription? _subscription;
+  StreamSubscription<dynamic>? _subscription;
 
   void updateAdmin({required bool adminEnable}) {
     _orders.clear();

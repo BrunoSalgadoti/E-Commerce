@@ -13,7 +13,7 @@ class ProductManager extends ChangeNotifier {
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  StreamSubscription? _subscription;
+  StreamSubscription<dynamic>? _subscription;
 
   List<Product> allProducts = [];
   String _search = '';
