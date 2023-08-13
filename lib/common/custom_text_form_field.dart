@@ -47,7 +47,9 @@ class CustomTextFormField extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.focusNode,
     this.onSubmitted,
-  });
+  }) : textInputAction = onSubmitted == null
+                ? TextInputAction.done
+                : TextInputAction.next;
 
   final String? title;
   final String? initialValue;
@@ -73,6 +75,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool? filled;
   final bool? isDense;
   final bool obscureText;
+  final TextInputAction? textInputAction;
   final TextCapitalization? textCapitalization;
   final TextEditingController? controller;
   final TextAlign? textAlign;
@@ -163,6 +166,7 @@ class CustomTextFormField extends StatelessWidget {
           validator: validator,
           obscureText: obscureText,
           onFieldSubmitted: onSubmitted,
+          textInputAction: textInputAction,
         )
       ],
     );

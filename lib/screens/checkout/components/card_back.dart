@@ -26,7 +26,7 @@ class CardBack extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  flex: 60,
+                    flex: 60,
                     child: Container(
                       color: Colors.grey[500],
                       margin: const EdgeInsets.only(left: 12),
@@ -47,17 +47,12 @@ class CardBack extends StatelessWidget {
                           FilteringTextInputFormatter.digitsOnly,
                         ],
                         validator: (cvv) {
-                          if(cvv?.length !=3) return 'I N V Á L I D O';
+                          if (cvv?.length != 3) return 'I N V Á L I D O';
                           return null;
                         },
-                        onSubmitted: (_){},
                       ),
-                    )
-                ),
-                Expanded(
-                  flex: 40,
-                    child: Container()
-                )
+                    )),
+                Expanded(flex: 40, child: Container())
               ],
             )
           ],

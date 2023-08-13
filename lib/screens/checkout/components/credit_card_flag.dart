@@ -10,7 +10,6 @@
 //   americanExpress,
 //   discover,
 //   elo,
-//   maestro,
 //   hipercard
 // }
 //
