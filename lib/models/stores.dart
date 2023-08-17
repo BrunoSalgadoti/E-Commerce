@@ -4,8 +4,9 @@ import 'dart:io';
 import 'package:brn_ecommerce/helpers/extensions.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/opening_stores.dart';
+import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
+import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_performance/firebase_performance.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,12 @@ class Stores extends ChangeNotifier {
     this.address,
   });
 
+  final logger = LoggerService();
+
   Stores.fromDocument(DocumentSnapshot document) {
+    PerformanceMonitoring().startTrace('storesFromDocument', shouldStart: true);
+    logger.logInfo('Instance beginning Stores.fromDocument');
+
     id = document.id;
     nameStore = document.get("nameStore") as String? ?? "";
     emailStore = document.get("emailStore") as String? ?? "";
@@ -58,6 +64,8 @@ class Stores extends ChangeNotifier {
       }
     });
     updateStatus();
+    PerformanceMonitoring().stopTrace('storesFromDocument');
+    logger.logInfo('Instance end Stores.fromDocument');
   }
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -79,7 +87,7 @@ class Stores extends ChangeNotifier {
   String? get addressText => '${address?.street}, ${address?.number}'
       '${address?.complement?.isNotEmpty == true ? ' - ${address!.complement}' : ''} - '
       '${address?.district}, ${address?.city}/'
-      '${address?.state} - ${formattedZipcode(address?.zipCode)}';
+      '${address?.state} - ${address?.zipCode}';
 
   String get openingText {
     return 'Seg-Sex: ${formattedPeriod(openingStoresFromTimeOfDay!["monFri"])}\n'
@@ -117,6 +125,9 @@ class Stores extends ChangeNotifier {
   }
 
   Future<void> saveStore(Stores store) async {
+    PerformanceMonitoring().startTrace('saveStore', shouldStart: true);
+    logger.logInfo('Save file upload to Firebase Storage');
+
     try {
       final doc = firestore.collection("stores");
       await doc.add(store.toMap());
@@ -128,9 +139,14 @@ class Stores extends ChangeNotifier {
       }
     }
     notifyListeners();
+
+    PerformanceMonitoring().stopTrace('saveStore');
+    logger.logInfo('File saved completed');
   }
 
   Future<void> deleteStore(Stores store, String? storeId) async {
+    logger.logInfo('Starting file delete to Firebase Storage');
+
     try {
       final firestoreRef = firestore.collection("stores").doc(storeId);
 
@@ -148,12 +164,12 @@ class Stores extends ChangeNotifier {
       }
     }
     notifyListeners();
+    logger.logInfo('File delete completed');
   }
 
   Future<void> updateStoreImage(dynamic image, [String? storeId]) async {
-    // Start custom code tracing (TRACEPERFORMANCE)
-    final trace = FirebasePerformance.instance.newTrace('update-store-image');
-    await trace.start();
+    PerformanceMonitoring().startTrace('updateStoreImage', shouldStart: true);
+    logger.logInfo('Starting file upload to Firebase Storage');
 
     if (imageStore != null && imageStore.contains("firebase")) {
       final oldImageRef = storage.refFromURL(imageStore);
@@ -195,8 +211,8 @@ class Stores extends ChangeNotifier {
     imageStore = image;
     notifyListeners();
 
-    // Stop custom code trace
-    await trace.stop();
+    PerformanceMonitoring().stopTrace('updateStoreImage');
+    logger.logInfo('File upload to Firebase Storage');
   }
 
   void updateStatus() {

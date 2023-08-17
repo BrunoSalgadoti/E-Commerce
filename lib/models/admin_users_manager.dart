@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
+import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
+import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/material.dart';
 
 class AdminUsersManager with ChangeNotifier {
@@ -11,7 +12,9 @@ class AdminUsersManager with ChangeNotifier {
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  StreamSubscription<dynamic>?  _subscription;
+  final logger = LoggerService();
+
+  StreamSubscription<dynamic>? _subscription;
 
   void updateUser(UserManager userManager) {
     _subscription?.cancel();
@@ -23,10 +26,10 @@ class AdminUsersManager with ChangeNotifier {
     }
   }
 
+
   Future<void> _listenToUsers() async {
-    // Start custom code tracing (TRACEPERFORMANCE)
-    final trace = FirebasePerformance.instance.newTrace('listen-users');
-    await trace.start();
+    PerformanceMonitoring().startTrace('listen-users', shouldStart: true);
+    logger.logInfo('Info message: Instance  _listenToUsers');
 
     QuerySnapshot<Map<String, dynamic>> snapshot = await firestore
         .collection("users")
@@ -45,13 +48,13 @@ class AdminUsersManager with ChangeNotifier {
       notifyListeners();
     });
 
-    // Stop custom code trace
-    await trace.stop();
+    PerformanceMonitoring().stopTrace('listen-users');
   }
 
   @override
   void dispose() {
     _subscription?.cancel();
+    logger.logInfo('Info message: Instance  $_subscription CANCELADO');
     super.dispose();
   }
 }

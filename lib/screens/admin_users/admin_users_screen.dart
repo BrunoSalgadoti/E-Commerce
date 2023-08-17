@@ -7,9 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AdminUsersScreen extends StatelessWidget {
-  const AdminUsersScreen({Key? key, this.initialText}) : super(key: key);
-
-  final String? initialText;
+  const AdminUsersScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

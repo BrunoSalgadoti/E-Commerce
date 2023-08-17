@@ -9,6 +9,8 @@ import 'package:brn_ecommerce/models/version_manager.dart';
 import 'package:brn_ecommerce/screens/address/components/address_card.dart';
 import 'package:brn_ecommerce/screens/policy_and_documents/components/privacy_policy_widget.dart';
 import 'package:brn_ecommerce/screens/policy_and_documents/components/terms_of_service_widget.dart';
+import 'package:custom_universal_html/html.dart' as html;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -111,7 +113,7 @@ class _AddressScreenState extends State<AddressScreen> {
             }
 
             void checkAndHandleVersion() {
-              if (versionManager.compatibleVersion == false) {
+              if (!versionManager.compatibleVersion) {
                 showDialog(
                   context: context,
                   barrierDismissible: false,
@@ -125,13 +127,17 @@ class _AddressScreenState extends State<AddressScreen> {
                         CustomButton(
                           text: 'Atualizar',
                           onPressed: () {
+                            if (kIsWeb) {
+                              // Refresh the web page and clear cache
+                              html.window.location.reload();
+                            } else {
+                              // Redirect to app store for updating the app
+                              // Example for Android:
+                              // launch('https://play.google.com/store/apps/details?id=com.example.app');
+                              // Example for iOS:
+                              // launch('https://apps.apple.com/app/id<your_app_id>');
+                            }
                             Navigator.pop(context);
-                            //TODO: When to Publish the APP
-                            // You can redirect to the app store for updating the app
-                            // For Android, use:
-                            // launch('https://play.google.com/store/apps/details?id=com.example.app');
-                            // For iOS, use:
-                            // launch('https://apps.apple.com/app/id<your_app_id>');
                           },
                         )
                       ],
@@ -139,7 +145,6 @@ class _AddressScreenState extends State<AddressScreen> {
                   },
                 );
                 userManager.loading = false;
-                return;
               } else {
                 checkPolicyAndTerms();
               }

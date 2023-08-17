@@ -1,3 +1,4 @@
+import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart';
@@ -13,6 +14,8 @@ class VersionManager extends ChangeNotifier {
   }
 
   Future<bool> checkVersion() async {
+    PerformanceMonitoring().startTrace('checkVersion', shouldStart: true);
+
     _initPackageInfo();
     try {
       final versionDoc =
@@ -29,22 +32,22 @@ class VersionManager extends ChangeNotifier {
             buildNumber == storedBuildNumber) {
           // Version is up-to-date
           compatibleVersion = true;
-          return true;
         } else {
           // Version is outdated
           compatibleVersion = false;
-          return false;
         }
       } else {
         // Version document doesn't exist, assume it's outdated
         compatibleVersion = false;
-        return false;
       }
     } catch (error) {
       // Error occurred while checking version, assume it's outdated
       compatibleVersion = false;
-      return false;
     }
+
+    PerformanceMonitoring().stopTrace('checkVersion');
+
+    return compatibleVersion;
   }
 
   Future<void> updateVersionInfo() async {

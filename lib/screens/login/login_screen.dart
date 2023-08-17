@@ -187,8 +187,9 @@ class LoginScreen extends StatelessWidget {
                                 ? null
                                 : CustomTextButton(
                                     imageAssetsTarget:
-                                        "assets/logo/googleLogo.png",
+                                        "assets/icons/googleLogo.svg",
                                     text: '   Entrar com Google',
+                                    isSvg: true,
                                     onPressed: () {
                                       userManager.loginOrSingUpWithGoogle(
                                           onFail: (error) {

@@ -7,6 +7,7 @@ import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/services/cepaberto_service.dart';
+import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:brn_ecommerce/services/viacep_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -26,6 +27,8 @@ class CartManager extends ChangeNotifier {
 
   bool get loading => _loading;
 
+  final logger = LoggerService();
+
   set loading(bool value) {
     _loading = value;
     notifyListeners();
@@ -34,6 +37,8 @@ class CartManager extends ChangeNotifier {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   void updateUser(UserManager userManager) {
+    logger.logInfo('Info message: Start Load User Cart');
+
     users = userManager.users;
     productsPrice = 0.0;
     items.clear();
@@ -46,23 +51,30 @@ class CartManager extends ChangeNotifier {
       users = null;
       notifyListeners();
     }
+    logger.logInfo('Info message: End Load User Cart');
   }
 
   Future<void> _loadCartItems() async {
+    logger.logInfo('Info message: Start Load Cart Items');
+
     final QuerySnapshot cartSnap = await users!.cartReference.get();
 
     items = cartSnap.docs
         .map((d) => CartProduct.fromDocument(d)..addListener(_onItemUpdate))
         .toList();
     notifyListeners();
+    logger.logInfo('Info message: End Load Cart Items');
   }
 
   Future<void> _loadUserAddress() async {
+    logger.logInfo('Info message: Start Load Cart Address');
+
     if (users?.address != null &&
         await calculateDelivery(users!.address!.lat!, users!.address!.long!)) {
       address = users!.address;
       notifyListeners();
     }
+    logger.logInfo('Info message: End Load Cart Address');
   }
 
   void addToCart(Product product, DetailsProducts detailsProducts) {
@@ -132,6 +144,8 @@ class CartManager extends ChangeNotifier {
   bool get isAddressValid => address != null && deliveryPrice != null;
 
   Future<void> getAddress(String cep) async {
+    logger.logInfo('Info message: Start Load Get Address Cart');
+
     if (kIsWeb) {
       loading = true;
       final viaCepService = ViaCepService();
@@ -181,6 +195,7 @@ class CartManager extends ChangeNotifier {
         return Future.error('CEP Inválido');
       }
     }
+    logger.logInfo('Info message: End Load Get Address Cart');
   }
 
   Future<void> setAddress(Address address) async {
@@ -203,6 +218,8 @@ class CartManager extends ChangeNotifier {
   }
 
   Future<bool> calculateDelivery(double lat, double long) async {
+    logger.logInfo('Info message: Start Calculate Delivery Cart');
+
     try {
       final DocumentSnapshot doc = await firestore.doc("aux/delivery").get();
 
@@ -218,6 +235,8 @@ class CartManager extends ChangeNotifier {
 
       // Converting distance from M to KM
       distanceClient /= 1000.0;
+
+  logger.logInfo('Info message: Take Data Calculate Delivery Cart');
 
       if (distanceClient > maximumDeliveryDistance) {
         return false;

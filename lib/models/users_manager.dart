@@ -2,6 +2,7 @@ import 'package:brn_ecommerce/helpers/firebase_errors.dart';
 import 'package:brn_ecommerce/models/delivery.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/services/db_api/facebook_app_id_for_web.dart';
+import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -93,6 +94,9 @@ class UserManager extends ChangeNotifier {
       {required Users users,
       required Function onFail,
       required Function onSuccess}) async {
+    PerformanceMonitoring()
+        .startTrace('signInWithEmailAndPassword', shouldStart: true);
+
     loading = true;
     try {
       final UserCredential result = await _auth.signInWithEmailAndPassword(
@@ -105,10 +109,14 @@ class UserManager extends ChangeNotifier {
       onFail(getErrorString(error.code));
     }
     loading = false;
+    PerformanceMonitoring().stopTrace('signInWithEmailAndPassword');
   }
 
   Future<void> loginOrSingUpWithFacebook(
       {required Function? onFail, required Function? onSuccess}) async {
+    PerformanceMonitoring()
+        .startTrace('loginOrSingUpWithFacebook', shouldStart: true);
+
     try {
       loadingFace = true;
       // check if is running on Web
@@ -183,12 +191,16 @@ class UserManager extends ChangeNotifier {
       onFail!(getErrorString(error.code));
       loadingFace = false;
     }
+    PerformanceMonitoring().stopTrace('loginOrSingUpWithFacebook');
   }
 
   Future<void> loginOrSingUpWithGoogle({
     required Function? onFail,
     required Function? onSuccess,
   }) async {
+    PerformanceMonitoring()
+        .startTrace('loginOrSingUpWithGoogle', shouldStart: true);
+
     try {
       loadingGoogle = true;
 
@@ -254,12 +266,16 @@ class UserManager extends ChangeNotifier {
       onFail!(getErrorString(error.code));
       loadingGoogle = false;
     }
+    PerformanceMonitoring().stopTrace('loginOrSingUpWithGoogle');
   }
 
   Future<void> singUpWithEmailAndPassword(
       {required Users users,
       required Function onFail,
       required Function onSuccess}) async {
+    PerformanceMonitoring()
+        .startTrace('singUpWithEmailAndPassword', shouldStart: true);
+
     loading = true;
 
     try {
@@ -280,6 +296,8 @@ class UserManager extends ChangeNotifier {
       onFail(getErrorString(error.code));
     }
     loading = false;
+
+    PerformanceMonitoring().stopTrace('singUpWithEmailAndPassword');
   }
 
   void signOut() {

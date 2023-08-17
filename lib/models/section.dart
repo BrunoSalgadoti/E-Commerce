@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:brn_ecommerce/models/section_item.dart';
+import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart'
@@ -64,6 +65,8 @@ class Section extends ChangeNotifier {
   }
 
   Future<void> saveSection(int position) async {
+    PerformanceMonitoring().startTrace('saveSection', shouldStart: true);
+
     final Map<String, dynamic> data = {
       "name": name,
       "type": type,
@@ -127,6 +130,8 @@ class Section extends ChangeNotifier {
       "items": items?.map((e) => e.toMap()).toList(),
     };
     await firestoreRef.update(itemsData);
+
+    PerformanceMonitoring().stopTrace('saveSection');
   }
 
   Future<void> delete() async {

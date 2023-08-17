@@ -1,3 +1,4 @@
+import 'package:brn_ecommerce/common/button/custom_text_button.dart';
 import 'package:brn_ecommerce/common/cards/price_card.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/models/checkout_manager.dart';
@@ -14,72 +15,123 @@ class CheckoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final iconSize = screenHeight * 0.043;
+    final fontSize = screenHeight * 0.025;
+
     return ChangeNotifierProxyProvider<CartManager, CheckoutManager>(
       create: (_) => CheckoutManager(),
       update: (_, cartManager, checkoutManager) =>
           checkoutManager!..updateCart(cartManager),
       lazy: false,
       child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Pagamento'),
-            centerTitle: true,
-          ),
-          body: Consumer<CheckoutManager>(
-            builder: (_, checkoutManager, __) {
-              if (checkoutManager.loading) {
-                return const Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation(Colors.white),
-                      ),
-                      SizedBox(height: 16),
-                      Text(
-                        'Processando seu pagamento...',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 16,
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                snap: true,
+                floating: true,
+                elevation: 4,
+                backgroundColor: Colors.green,
+                flexibleSpace: FlexibleSpaceBar(
+                  title: Text('Pagamento Seguro!',
+                      style: TextStyle(
+                          fontSize: fontSize, fontWeight: FontWeight.bold)),
+
+                  // centerTitle: true,
+                ),
+                actions: [
+                  const SizedBox(width: 150),
+                  CustomTextButton(
+                    style: ButtonStyle(
+                        padding: MaterialStateProperty.all<EdgeInsets>(
+                            EdgeInsets.zero)),
+                    imageAssetsTarget: 'assets/icons/locked.svg',
+                    imageWidth: iconSize,
+                    imageHeight: iconSize,
+                    isSvg: true,
+                    onPressed: null,
+                  ),
+                  CustomTextButton(
+                    style: ButtonStyle(
+                        padding: MaterialStateProperty.all<EdgeInsets>(
+                            EdgeInsets.zero)),
+                    imageAssetsTarget: 'assets/icons/firebase.svg',
+                    imageWidth: iconSize,
+                    imageHeight: iconSize,
+                    isSvg: true,
+                    onPressed: null,
+                  ),
+                  const SizedBox(width: 16)
+                ],
+              ),
+              Consumer<CheckoutManager>(
+                builder: (_, checkoutManager, __) {
+                  if (checkoutManager.loading) {
+                    return const SliverToBoxAdapter(
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation(Colors.white),
+                            ),
+                            SizedBox(height: 16),
+                            Text(
+                              'Processando seu pagamento...',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                fontSize: 16,
+                              ),
+                            )
+                          ],
                         ),
-                      )
+                      ),
+                    );
+                  }
+                  return const SliverToBoxAdapter(child: SizedBox.shrink());
+                },
+              ),
+              SliverToBoxAdapter(
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      const CreditCardWidget(),
+                      PriceCard(
+                        buttonText: 'Finalizar Pedido',
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            debugPrint('enviar!!');
+
+                            /*checkoutManager.checkout(onStockFail: (error) {
+                              CustomScaffoldMessenger(
+                                  context: context,
+                                  message: '$error'
+                              ).msn();
+                              Navigator.popUntil(
+                                  context, (route) => route.settings.name == "/cart");
+                            }, onSuccess: (order) {
+                              Navigator.popUntil(context,
+                                  (route) => route.settings.name == "/product");
+                              Navigator.pushNamed(context, "/sales_confirmation",
+                                  arguments: order);
+                            });*/
+                          }
+                        },
+                      ),
                     ],
                   ),
-                );
-              }
-
-              return Form(
-                key: formKey,
-                child: ListView(
-                  children: [
-                   CreditCardWidget(),
-                    PriceCard(
-                      buttonText: 'Finalizar Pedido',
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          debugPrint('enviar!!');
-
-                          /*checkoutManager.checkout(onStockFail: (error) {
-                            CustomScaffoldMessenger(
-                                context: context,
-                                message: '$error'
-                            ).msn();
-                            Navigator.popUntil(
-                                context, (route) => route.settings.name == "/cart");
-                          }, onSuccess: (order) {
-                            Navigator.popUntil(context,
-                                    (route) => route.settings.name == "/product");
-                            Navigator.pushNamed(context, "/sales_confirmation",
-                                arguments: order);
-                          });*/
-                        }
-                      },
-                    )
-                  ],
                 ),
-              );
-            },
-          )),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

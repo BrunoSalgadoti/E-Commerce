@@ -68,14 +68,15 @@ class PriceCard extends StatelessWidget {
                 Text(
                   formattedRealText(totalPrice),
                   style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 16),
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 16
+                  ),
                 )
               ],
             ),
             const SizedBox(height: 8),
             CustomButton(
               text: buttonText,
-              fontSize: 14,
               onPressed: onPressed,
             )
           ],

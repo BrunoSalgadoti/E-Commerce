@@ -1,12 +1,14 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:brn_ecommerce/common/custom_text_form_field.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
+import 'package:brn_ecommerce/screens/checkout/components/card_icon_colors.dart';
+import 'package:credit_card_type_detector/credit_card_type_detector.dart';
+import 'package:credit_card_type_detector/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:credit_card_type_detector/credit_card_type_detector.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class CardFront extends StatelessWidget {
+class CardFront extends StatefulWidget {
   const CardFront(
       {super.key,
       required this.numberFocus,
@@ -20,10 +22,16 @@ class CardFront extends StatelessWidget {
   final FocusNode nameFocus;
 
   @override
+  State<CardFront> createState() => _CardFrontState();
+}
+
+class _CardFrontState extends State<CardFront> {
+  @override
   Widget build(BuildContext context) {
     const spaceTextFormFieldHeight = SizedBox(height: 3);
-    const double ccIconSize = 35;
-    const Color ccColor = Color(0xffbdf8f6);
+    const double containerSizeWidth = 45;
+    const spaceBetweenCardsWidth = SizedBox(width: 4);
+    Color containerColor;
 
     return Stack(alignment: Alignment.topRight, children: [
       Card(
@@ -48,21 +56,37 @@ class CardFront extends StatelessWidget {
                     textInputType: TextInputType.number,
                     focusedBorder: InputBorder.none,
                     enabledBorder: InputBorder.none,
-                    focusNode: numberFocus,
+                    focusNode: widget.numberFocus,
                     contentPadding: const EdgeInsets.symmetric(vertical: 8),
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
                       CartaoBancarioInputFormatter()
                     ],
+                    onChanged: (number) {
+                      setState(() {
+                        if (number!.length < 4) {
+                          containerColor = const Color(0xff727881);
+                        } else {
+                          List<CreditCardType> types = detectCCType(number);
+                          if (types.isNotEmpty) {
+                            CreditCardType primaryType = types.first;
+                            debugPrint(primaryType.toString());
+                            containerColor =
+                                CardIconColors.getIconColor(primaryType);
+                          } else {
+                            containerColor = const Color(0xffa1dbef);
+                          }
+                        }
+                      });
+                    },
                     validator: (number) {
                       if (number?.length != 19) {
                         return 'I N V Á L I D O!';
-                      } else if (detectCCType(number!) == null) {
-                        return 'Cartão Desconhecido';
+                      } else {
+                        return null;
                       }
-                      return null;
                     },
-                    onSubmitted: (_) => dateFocus.requestFocus(),
+                    onSubmitted: (_) => widget.dateFocus.requestFocus(),
                     onSaved: (value) {},
                   ),
                   CustomTextFormField(
@@ -74,7 +98,7 @@ class CardFront extends StatelessWidget {
                     textInputType: TextInputType.number,
                     focusedBorder: InputBorder.none,
                     enabledBorder: InputBorder.none,
-                    focusNode: dateFocus,
+                    focusNode: widget.dateFocus,
                     contentPadding: const EdgeInsets.symmetric(vertical: 6),
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -84,7 +108,7 @@ class CardFront extends StatelessWidget {
                       if (date?.length != 5) return 'I N V Á L I D O!';
                       return null;
                     },
-                    onSubmitted: (_) => nameFocus.requestFocus(),
+                    onSubmitted: (_) => widget.nameFocus.requestFocus(),
                     onSaved: (value) {},
                   ),
                   spaceTextFormFieldHeight,
@@ -96,11 +120,10 @@ class CardFront extends StatelessWidget {
                     hintColor: Colors.white.withAlpha(100),
                     focusedBorder: InputBorder.none,
                     enabledBorder: InputBorder.none,
-                    focusNode: nameFocus,
+                    focusNode: widget.nameFocus,
                     contentPadding: const EdgeInsets.symmetric(vertical: 6),
-                    inputFormatters: [],
                     validator: (name) => emptyValidator(name),
-                    onSubmitted: (_) => finishedFront(),
+                    onSubmitted: (_) => widget.finishedFront(),
                     onSaved: (value) {},
                   )
                 ],
@@ -109,50 +132,55 @@ class CardFront extends StatelessWidget {
           ]),
         ),
       ),
-      const Positioned(
-          top: 10,
-          right: 10,
-          child: Row(
-            children: [
-              Icon(
-                FontAwesomeIcons.ccVisa,
-                size: ccIconSize,
-                color: ccColor,
-              ),
-              SizedBox(width: 10),
-              Icon(
-                FontAwesomeIcons.ccMastercard,
-                size: ccIconSize,
-                color: ccColor,
-              ),
-              SizedBox(width: 10),
-              Icon(
-                FontAwesomeIcons.ccAmex,
-                size: ccIconSize,
-                color: ccColor,
-              ),
-              SizedBox(width: 10),
-              Icon(
-                FontAwesomeIcons.ccDiscover,
-                size: ccIconSize,
-                color: ccColor,
-              ),
-              SizedBox(width: 10),
-              //TODO: Elo card icon
-              // Icon(
-              //   FontAwesomeIcons.cc,
-              //   size: ccIconSize,
-              //   color:  Color(0xffffffff),
-              // ),
-              SizedBox(width: 10),
-              //TODO: Elo Hipercard icon
-              // Icon(
-              //   FontAwesomeIcons.cc,
-              //   size: ccIconSize,
-              //   color:  Color(0xffffffff),
-              // )
-            ],
-          )),
+      Positioned(
+        top: 10,
+        right: 10,
+        child: Row(
+          children: [
+            spaceBetweenCardsWidth,
+            _buildIconContainer('assets/icons/visa.svg', containerSizeWidth,
+                CardIconColors.getIconColor(CreditCardType.visa())),
+            spaceBetweenCardsWidth,
+            _buildIconContainer(
+                'assets/icons/mastercard.svg',
+                containerSizeWidth,
+                CardIconColors.getIconColor(CreditCardType.mastercard())),
+            spaceBetweenCardsWidth,
+            _buildIconContainer('assets/icons/elo.svg', containerSizeWidth,
+                CardIconColors.getIconColor(CreditCardType.elo())),
+            spaceBetweenCardsWidth,
+            _buildIconContainer('assets/icons/amex.svg', containerSizeWidth,
+                CardIconColors.getIconColor(CreditCardType.americanExpress())),
+            spaceBetweenCardsWidth,
+            _buildIconContainer('assets/icons/discover.svg', containerSizeWidth,
+                CardIconColors.getIconColor(CreditCardType.discover())),
+            spaceBetweenCardsWidth,
+            _buildIconContainer(
+                'assets/icons/hipercard.svg',
+                containerSizeWidth,
+                CardIconColors.getIconColor(CreditCardType.hipercard())),
+          ],
+        ),
+      ),
     ]);
+  }
+
+  Widget _buildIconContainer(
+      String iconAsset, double containerSizeWidth, Color color) {
+    const double containerSizeHeight = 35;
+
+    return Container(
+      width: containerSizeWidth,
+      height: containerSizeHeight,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(9),
+      ),
+      child: Center(
+        child: SvgPicture.asset(
+          iconAsset,
+        ),
+      ),
+    );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/models/cart_product.dart';
+import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../common/formated_fields/format_values.dart';
@@ -49,6 +50,8 @@ class OrderClient {
   }
 
   Future<void> saveOrder() async {
+    PerformanceMonitoring().startTrace('saveOrder', shouldStart: true);
+
     firestore.collection("orders").doc(orderId).set({
       "items": items?.map((e) => e.toOrderItemMap()).toList(),
       "price": price,
@@ -58,6 +61,7 @@ class OrderClient {
       "status": status!.index,
       "date": Timestamp.now(),
     });
+    PerformanceMonitoring().stopTrace('saveOrder');
   }
 
   Function()? get back {

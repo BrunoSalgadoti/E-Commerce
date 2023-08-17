@@ -3,7 +3,9 @@ import 'package:brn_ecommerce/common/custom_messengers/custom_alert_dialog.dart'
 import 'package:brn_ecommerce/models/admin_orders_manager.dart';
 import 'package:brn_ecommerce/models/page_manager.dart';
 import 'package:brn_ecommerce/models/users.dart';
+import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
@@ -11,22 +13,36 @@ import 'package:url_launcher/url_launcher.dart';
 
 class AdminUsersSearch extends ChangeNotifier {
   AdminUsersSearch() {
-    _loadAllUsers();
+    if (allUsers.isEmpty) {
+      _loadAllUsers();
+    }
   }
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  final logger = LoggerService();
+
   bool userFilteredSendEmail = false;
   String _search = '';
+  bool _isLoaded = false;
 
   List<Users> allUsers = [];
   List<Widget> favouriteList = [];
   List<Widget> normalList = [];
 
-  List<String> get names => allUsers
-      .where((user) => !user.favourite!)
-      .map((user) => user.userName!.toUpperCase())
-      .toList();
+  List<String> get names {
+    if (search.isEmpty) {
+      return allUsers
+          .where((user) => !user.favourite!)
+          .map((user) => user.userName!.toUpperCase())
+          .toList();
+    } else {
+      return filteredUsers
+          .where((user) => !user.favourite!)
+          .map((user) => user.userName!.toUpperCase())
+          .toList();
+    }
+  }
 
   List<String> get emails => allUsers.map((e) => e.email).toList();
 
@@ -45,34 +61,39 @@ class AdminUsersSearch extends ChangeNotifier {
     if (search.isEmpty) {
       userFilteredSendEmail = false;
       filteredUsers.addAll(allUsers);
-      allUsers = filteredUsers;
     } else {
       userFilteredSendEmail = true;
-      filteredUsers.addAll(allUsers.where((u) => u.userName!
-          .toString()
-          .toLowerCase()
-          .contains(search.toString().toLowerCase())));
-      allUsers = filteredUsers;
+      filteredUsers.addAll(allUsers.where((u) =>
+          u.userName!
+              .toString()
+              .toLowerCase()
+              .contains(search.toString().toLowerCase())));
     }
+
     return filteredUsers;
   }
 
   Future<void> _loadAllUsers() async {
     final QuerySnapshot snapUsers = await firestore.collection("users").get();
+    final newUsers = snapUsers.docs.map((d) => Users.fromDocument(d)).toList();
 
-    allUsers = snapUsers.docs.map((d) => Users.fromDocument(d)).toList();
-    allUsers.sort((a, b) =>
-        a.userName!.toLowerCase().compareTo(b.userName!.toLowerCase()));
-
-    filterList();
-    notifyListeners();
+    if (!listEquals(allUsers, newUsers)) {
+      allUsers = newUsers;
+      allUsers.sort((a, b) =>
+          a.userName!.toLowerCase().compareTo(b.userName!.toLowerCase()));
+      if (!_isLoaded) {
+        _isLoaded = true;
+      }
+      filterList();
+      notifyListeners();
+    }
   }
 
   void _sendEmail(String? userEmail, String? userName) {
     String? encodeQueryParameters(Map<String, String> params) {
       return params.entries
           .map((MapEntry<String, String> e) =>
-              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+      '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
           .join("&");
     }
 
@@ -146,11 +167,11 @@ class AdminUsersSearch extends ChangeNotifier {
                     children: <Widget>[
                       user.userPhotoURL == "" || user.userPhotoURL == null
                           ? const CircleAvatar(
-                              backgroundImage: AssetImage(
-                                  'assets/images/userWithoutImage.png'))
+                          backgroundImage: AssetImage(
+                              'assets/images/userWithoutImage.png'))
                           : CircleAvatar(
-                              backgroundImage: NetworkImage(user.userPhotoURL!),
-                            ),
+                        backgroundImage: NetworkImage(user.userPhotoURL!),
+                      ),
                       const SizedBox(
                           height: 40,
                           width: 40,
@@ -207,78 +228,79 @@ class AdminUsersSearch extends ChangeNotifier {
                       userFilteredSendEmail == true
                           ? _sendEmail(user.email, user.userName)
                           : showDialog<void>(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return CustomAlertDialog(
-                                  titleText: 'Enviar E-mail',
-                                  titleSize: 18,
-                                  titleColor: Colors.black,
-                                  bodyText: 'Escolha para quem deseja enviar\n '
-                                      'o E-mail!',
-                                  bodyWeight: FontWeight.normal,
-                                  actions: [
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          CustomTextButton(
-                                            text: 'Este Contato',
-                                            icon: null,
-                                            onPressed: () {
-                                              _sendEmail(
-                                                  user.email, user.userName);
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                          CustomTextButton(
-                                            text: 'Todos contatos!',
-                                            icon: null,
-                                            onPressed: () {
-                                              _sendEmail(null, null);
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                          CustomTextButton(
-                                            text: 'Cancelar',
-                                            icon: null,
-                                            fontColor: Colors.red,
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                        ],
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CustomAlertDialog(
+                              titleText: 'Enviar E-mail',
+                              titleSize: 18,
+                              titleColor: Colors.black,
+                              bodyText: 'Escolha para quem deseja enviar\n '
+                                  'o E-mail!',
+                              bodyWeight: FontWeight.normal,
+                              actions: [
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      CustomTextButton(
+                                        text: 'Este Contato',
+                                        icon: null,
+                                        onPressed: () {
+                                          _sendEmail(
+                                              user.email, user.userName);
+                                          Navigator.of(context).pop();
+                                        },
                                       ),
-                                    ),
-                                  ],
-                                );
-                              });
+                                      CustomTextButton(
+                                        text: 'Todos contatos!',
+                                        icon: null,
+                                        onPressed: () {
+                                          _sendEmail(null, null);
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      CustomTextButton(
+                                        text: 'Cancelar',
+                                        icon: null,
+                                        fontColor: Colors.red,
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          });
                     }),
               ],
             ),
             child: Consumer2<AdminOrdersManager, PageManager>(
                 builder: (_, adminOrdersManager, pageManager, __) {
-              return ListTile(
-                leading: user.userPhotoURL == "" || user.userPhotoURL == null
-                    ? const CircleAvatar(
+                  return ListTile(
+                    leading: user.userPhotoURL == "" ||
+                        user.userPhotoURL == null
+                        ? const CircleAvatar(
                         backgroundImage:
-                            AssetImage('assets/images/userWithoutImage.png'))
-                    : CircleAvatar(
+                        AssetImage('assets/images/userWithoutImage.png'))
+                        : CircleAvatar(
                         backgroundImage: NetworkImage(user.userPhotoURL!)),
-                title: Text(user.userName!,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w800, color: Colors.white)),
-                subtitle: Text(
-                  "${user.email}\nTel.: ${user.phoneNumber ?? ""}",
-                  style: const TextStyle(fontSize: 16, color: Colors.white),
-                ),
-                onTap: () {
-                  adminOrdersManager.setUserFilter(user);
-                  pageManager.setPage(6);
-                },
-              );
-            })));
+                    title: Text(user.userName!,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w800, color: Colors.white)),
+                    subtitle: Text(
+                      "${user.email}\nTel.: ${user.phoneNumber ?? ""}",
+                      style: const TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                    onTap: () {
+                      adminOrdersManager.setUserFilter(user);
+                      pageManager.setPage(6);
+                    },
+                  );
+                })));
       }
     }
   }

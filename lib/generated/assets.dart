@@ -25,11 +25,11 @@ class Assets {
   static const String componentsAddressInputField = 'lib/screens/address/components/address_input_field.dart';
   static const String componentsCardBack = 'lib/screens/checkout/components/card_back.dart';
   static const String componentsCardFront = 'lib/screens/checkout/components/card_front.dart';
+  static const String componentsCardIconColors = 'lib/screens/checkout/components/card_icon_colors.dart';
   static const String componentsCartTile = 'lib/screens/cart/components/cart_tile.dart';
   static const String componentsCepInputField = 'lib/screens/address/components/cep_input_field.dart';
   static const String componentsColorsForm = 'lib/screens/product_edit/components/colors_form.dart';
   static const String componentsColorsWidget = 'lib/screens/products/components/colors_widget.dart';
-  static const String componentsCreditCardFlag = 'lib/screens/checkout/components/credit_card_flag.dart';
   static const String componentsCreditCardWidget = 'lib/screens/checkout/components/credit_card_widget.dart';
   static const String componentsCustomDrawerHeader = 'lib/common/custom_drawer/components/custom_drawer_header.dart';
   static const String componentsDrawerTitle = 'lib/common/custom_drawer/components/drawer_title.dart';
@@ -66,6 +66,8 @@ class Assets {
   static const String dbApiCepabertoServiceToken = 'lib/services/db_api/cepaberto_service_token.dart';
   static const String dbApiFacebookAppIdForWeb = 'lib/services/db_api/facebook_app_id_for_web.dart';
   static const String dbApiFirebaseOptions = 'lib/services/db_api/firebase_options.dart';
+  static const String developmentMonitoringFirebasePerformance = 'lib/services/development_monitoring/firebase_performance.dart';
+  static const String developmentMonitoringMonitoringLogger = 'lib/services/development_monitoring/monitoring_logger.dart';
   static const String docsPrivacyPolicy = 'assets/docs/privacyPolicy.md';
   static const String docsTermsOfService = 'assets/docs/termsOfService.md';
   static const String factoryColorsAndroidFactoryColors = 'lib/helpers/themes/factory_colors/android_factory_colors.dart';
@@ -84,6 +86,16 @@ class Assets {
   static const String helpersValidators = 'lib/helpers/validators.dart';
   static const String homeHomeScreen = 'lib/screens/home/home_screen.dart';
   static const String homeSplashScreen = 'lib/screens/home/splash_screen.dart';
+  static const String iconsAmex = 'assets/icons/amex.svg';
+  static const String iconsDiscover = 'assets/icons/discover.svg';
+  static const String iconsElo = 'assets/icons/elo.svg';
+  static const String iconsFirebase = 'assets/icons/firebase.svg';
+  static const String iconsGoogleLogo = 'assets/icons/googleLogo.svg';
+  static const String iconsHipercard = 'assets/icons/hipercard.svg';
+  static const String iconsLocked = 'assets/icons/locked.svg';
+  static const String iconsMastercard = 'assets/icons/mastercard.svg';
+  static const String iconsUserWithoutImage = 'assets/icons/userWithoutImage.svg';
+  static const String iconsVisa = 'assets/icons/visa.svg';
   static const String imagesAwait = 'assets/images/await.gif';
   static const String imagesBrnInfoDev = 'assets/images/brnInfoDev.png';
   static const String imagesEmConstrucaoGitHub = 'assets/images/emConstrucaoGitHub.png';
@@ -96,7 +108,6 @@ class Assets {
   static const String libMain = 'lib/main.dart';
   static const String libMyApp = 'lib/my_app.dart';
   static const String loginLoginScreen = 'lib/screens/login/login_screen.dart';
-  static const String logoGoogleLogo = 'assets/logo/googleLogo.png';
   static const String logoStoreLogo = 'assets/logo/storeLogo.png';
   static const String logoStoreLogo2 = 'assets/logo/storeLogo2.png';
   static const String modelsAddress = 'lib/models/address.dart';

@@ -4,12 +4,16 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:brn_ecommerce/models/details_products.dart';
+import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
+import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart' show kIsWeb, ChangeNotifier;
+import 'package:flutter/foundation.dart' show ChangeNotifier, kIsWeb;
 import 'package:uuid/uuid.dart';
 
 class Product extends ChangeNotifier {
+  final logger = LoggerService();
+
   Product({
     this.id,
     this.name,
@@ -27,6 +31,10 @@ class Product extends ChangeNotifier {
   }
 
   Product.fromDocument(DocumentSnapshot document) {
+    PerformanceMonitoring()
+        .startTrace('product-from-document', shouldStart: true);
+    logger.logInfo('Debug message: Instance Product.fromDocument');
+
     id = document.id;
     name = document["name"] as String? ?? "";
     description = document["description"] as String? ?? "";
@@ -36,6 +44,8 @@ class Product extends ChangeNotifier {
     itemProducts = (document["details"] as List<dynamic>)
         .map((d) => DetailsProducts.fromMap(d as Map<String, dynamic>))
         .toList();
+
+    PerformanceMonitoring().stopTrace('product-from-document');
   }
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -108,6 +118,9 @@ class Product extends ChangeNotifier {
   }
 
   Future<void> saveProduct() async {
+    PerformanceMonitoring().startTrace('saveProduct', shouldStart: true);
+    logger.logDebug('Debug message: Instance starting saveProduct');
+
     loading = true;
 
     final Map<String, dynamic> data = {
@@ -166,10 +179,13 @@ class Product extends ChangeNotifier {
     images = updateImages;
 
     loading = false;
+
+    PerformanceMonitoring().stopTrace('saveProduct');
+    logger.logDebug('Debug message: Instance ending saveProduct');
   }
 
   Future<void> deleteProductWithZeroStockOneImage() async {
-    // Zerar o estoque das cores mantendo outros detalhes inalterados
+    // Reset color stock keeping other details unchanged
     List<Map<String, dynamic>> exportDetailsList() {
       final List<Map<String, dynamic>> detailsList = [];
 

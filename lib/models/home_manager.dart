@@ -1,4 +1,6 @@
 import 'package:brn_ecommerce/models/section.dart';
+import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
+import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -14,9 +16,14 @@ class HomeManager extends ChangeNotifier {
   bool editing = false;
   bool loading = false;
 
+  final logger = LoggerService();
+
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<void> _loadSections() async {
+    PerformanceMonitoring().startTrace('loadSections', shouldStart: true);
+    logger.logInfo('Info message: Starting listen Sections');
+
     firestore
         .collection("home")
         .orderBy("position")
@@ -28,6 +35,8 @@ class HomeManager extends ChangeNotifier {
       }
       notifyListeners();
     });
+    PerformanceMonitoring().stopTrace('loadSections');
+    logger.logInfo('Info message: Ending listen Sections');
   }
 
   void addSection(Section section) {

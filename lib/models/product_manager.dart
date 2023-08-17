@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:brn_ecommerce/models/product.dart';
+import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
+import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
@@ -14,6 +15,8 @@ class ProductManager extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   StreamSubscription<dynamic>? _subscription;
+
+  final logger = LoggerService();
 
   List<Product> allProducts = [];
   String _search = '';
@@ -38,9 +41,8 @@ class ProductManager extends ChangeNotifier {
   }
 
   void _listenToProducts() async {
-    // Start custom code tracing (TRACEPERFORMANCE)
-    final trace = FirebasePerformance.instance.newTrace('listen-products');
-    await trace.start();
+    PerformanceMonitoring().startTrace('listenToProducts', shouldStart: true);
+    logger.logInfo('Starting listen products');
 
     _subscription = firestore
         .collection("products")
@@ -59,9 +61,8 @@ class ProductManager extends ChangeNotifier {
       }
       notifyListeners();
     });
-
-    // Stop custom code trace
-    await trace.stop();
+    PerformanceMonitoring().stopTrace('listenToProducts');
+    logger.logInfo('Ending listen products');
   }
 
   Product? findProductById(String id) {

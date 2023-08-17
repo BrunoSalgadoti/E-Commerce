@@ -19,7 +19,6 @@ class CustomButton extends StatelessWidget {
     this.textColor,
     this.buttonDisabledColor,
     this.shadowColor = Colors.white24,
-    this.fontSize = 15,
     this.elevation = 08,
     this.buttonColor,
   }) : super(key: key);
@@ -30,7 +29,6 @@ class CustomButton extends StatelessWidget {
   final Color? textColor;
   final Color? buttonDisabledColor;
   final Color shadowColor;
-  final double fontSize;
   final double elevation;
 
   Color getButtonColor([BuildContext? context]) {
@@ -59,6 +57,15 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    const buttonHeight = 38;
+    const maxFontSize = 15.0;
+
+    double adjustedFontSize = maxFontSize;
+    if (screenHeight < buttonHeight) {
+      adjustedFontSize = maxFontSize * (screenHeight / buttonHeight);
+    }
+
     return SizedBox(
         height: 38,
         child: ElevatedButton(
@@ -84,7 +91,7 @@ class CustomButton extends StatelessWidget {
                         text,
                         style: TextStyle(
                             color: textColor ?? getTextColor(),
-                            fontSize: fontSize),
+                            fontSize: adjustedFontSize),
                       );
               },
             )));

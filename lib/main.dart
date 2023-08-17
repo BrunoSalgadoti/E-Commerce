@@ -3,10 +3,11 @@ import 'package:brn_ecommerce/models/version_manager.dart';
 import 'package:brn_ecommerce/my_app.dart';
 import 'package:brn_ecommerce/services/db_api/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart';
 import 'package:url_strategy/url_strategy.dart';
+
+import 'services/development_monitoring/firebase_performance.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,9 +17,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // Start custom code tracing (TRACEPERFORMANCE)
-  final trace = FirebasePerformance.instance.newTrace('main');
-  await trace.start();
+  PerformanceMonitoring().startTrace('StartMain.dart', shouldStart: true);
 
   // Load version information asynchronously
   if (!kReleaseMode) {
@@ -35,6 +34,5 @@ Future<void> main() async {
     ),
   );
 
-  // Stop custom code trace
-  await trace.stop();
+  PerformanceMonitoring().stopTrace('StartMain.dart');
 }

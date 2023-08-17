@@ -18,7 +18,7 @@ class StoreUtils {
   final Stores store;
   final Address address;
 
-  alertForCall(BuildContext context) {
+  void alertForCall(BuildContext context) {
     CustomScaffoldMessenger(
       context: context,
       message: 'Este dispositivo não suporta está função!\n'
@@ -28,7 +28,7 @@ class StoreUtils {
     return;
   }
 
-  alertForEmail(BuildContext context) {
+  void alertForEmail(BuildContext context) {
     CustomScaffoldMessenger(
       context: context,
       message: 'Este dispositivo não suporta está função!\n'
@@ -38,7 +38,7 @@ class StoreUtils {
     return;
   }
 
-  alertForMaps(BuildContext context) {
+  void alertForMaps(BuildContext context) {
     CustomScaffoldMessenger(
       context: context,
       message: 'Não foi encontrado nenhum APP de Mapas '
@@ -48,9 +48,7 @@ class StoreUtils {
     return;
   }
 
-  alertForDeleteStore(
-    BuildContext context,
-  ) {
+  void alertForDeleteStore(BuildContext context) {
     showDialog<void>(
         context: context,
         builder: (BuildContext context) {
@@ -66,7 +64,6 @@ class StoreUtils {
                   CustomButton(
                       text: 'sim',
                       textColor: Colors.white,
-                      fontSize: 12,
                       buttonColor: Colors.redAccent,
                       onPressed: () {
                         store.deleteStore(store, store.id);
@@ -76,7 +73,6 @@ class StoreUtils {
                   CustomButton(
                       text: 'NÃO',
                       textColor: Colors.white,
-                      fontSize: 14,
                       buttonColor: Colors.greenAccent,
                       onPressed: () => Navigator.of(context).pop())
                 ],

@@ -1,7 +1,10 @@
 import 'package:brasil_fields/brasil_fields.dart';
 
 String formattedZipcode(String? address) {
-  final zipcode = UtilBrasilFields.obterCep(address ?? "00000000");
+  if (address == null || address.length != 8) {
+    return '00000000';
+  }
+  final zipcode = UtilBrasilFields.obterCep(address);
   return zipcode;
 }
 

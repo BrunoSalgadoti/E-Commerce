@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomTextButton extends StatelessWidget {
   const CustomTextButton({
     Key? key,
     this.fontColor,
     required this.onPressed,
-    required this.text,
+    this.text,
     this.fontSize = 14,
     this.fontWeight,
     this.icon,
     this.style,
     this.imageAssetsTarget,
+    this.imageWidth = 28,
+    this.imageHeight = 28,
+    this.isSvg = false,
+    this.imageColor,
   }) : super(key: key);
 
   final String? text;
@@ -21,6 +26,10 @@ class CustomTextButton extends StatelessWidget {
   final double fontSize;
   final Icon? icon;
   final FontWeight? fontWeight;
+  final double imageWidth;
+  final double imageHeight;
+  final bool? isSvg;
+  final Color? imageColor;
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +45,22 @@ class CustomTextButton extends StatelessWidget {
                 icon != null
                     ? icon!
                     : imageAssetsTarget != null
-                        ? Image.asset(
-                            imageAssetsTarget!,
-                            width: 28,
-                            height: 28,
-                          )
+                        ? isSvg! // Checks if the image is of SVG type
+                            ? SvgPicture.asset(
+                                imageAssetsTarget!,
+                                width: imageWidth,
+                                height: imageHeight,
+                              )
+                            : Image.asset(
+                                imageAssetsTarget!,
+                                width: imageWidth,
+                                height: imageHeight,
+                                color: imageColor,
+                              )
                         : const SizedBox(height: 20),
                 const SizedBox(width: 10),
                 Text(
-                  text!,
+                  text ?? '',
                   style: TextStyle(
                     color: fontColor,
                     fontSize: fontSize,

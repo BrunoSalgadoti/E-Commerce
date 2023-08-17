@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:brn_ecommerce/models/order_client.dart';
 import 'package:brn_ecommerce/models/users.dart';
+import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/cupertino.dart';
 
 class AdminOrdersManager extends ChangeNotifier {
@@ -37,9 +37,7 @@ class AdminOrdersManager extends ChangeNotifier {
   }
 
   Future<void> _listenToOrders() async {
-    // Start custom code tracing (TRACEPERFORMANCE)
-    final trace = FirebasePerformance.instance.newTrace('listen-orders');
-    await trace.start();
+    PerformanceMonitoring().startTrace('listen-orders', shouldStart: true);
 
     _subscription = firestore.collection("orders").snapshots().listen((events) {
       for (final change in events.docChanges) {
@@ -59,8 +57,7 @@ class AdminOrdersManager extends ChangeNotifier {
       notifyListeners();
     });
 
-    // Stop custom code trace
-    await trace.stop();
+    PerformanceMonitoring().stopTrace('listen-orders');
   }
 
   void setUserFilter(Users? user) {
