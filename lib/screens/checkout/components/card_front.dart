@@ -2,11 +2,11 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:brn_ecommerce/common/custom_text_form_field.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/screens/checkout/components/card_icon_colors.dart';
+import 'package:brn_ecommerce/screens/checkout/components/card_icon_types.dart';
 import 'package:credit_card_type_detector/credit_card_type_detector.dart';
 import 'package:credit_card_type_detector/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CardFront extends StatefulWidget {
   const CardFront(
@@ -26,12 +26,33 @@ class CardFront extends StatefulWidget {
 }
 
 class _CardFrontState extends State<CardFront> {
+  Color containerColor = const Color(0xff727881);
+
+  CreditCardType? detectedCardType;
+
+  void onNumberChanged(String number) {
+    setState(() {
+      if (number.length < 4) {
+        containerColor = const Color(0xff727881); // Default color when invalid
+        detectedCardType =
+            null; // Clears the detected card type when the number is invalid
+      } else {
+        List<CreditCardType> cardTypes = detectCCType(number);
+        if (cardTypes.isNotEmpty) {
+          detectedCardType = cardTypes[0]; // Store detected card type
+          containerColor = CardIconColors.getIconColor(detectedCardType!);
+        } else {
+          // unknown card
+          containerColor = CardIconColors.defaultColor;
+          detectedCardType = null; // Clear card detected when invalid
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     const spaceTextFormFieldHeight = SizedBox(height: 3);
-    const double containerSizeWidth = 45;
-    const spaceBetweenCardsWidth = SizedBox(width: 4);
-    Color containerColor;
 
     return Stack(alignment: Alignment.topRight, children: [
       Card(
@@ -62,23 +83,7 @@ class _CardFrontState extends State<CardFront> {
                       FilteringTextInputFormatter.digitsOnly,
                       CartaoBancarioInputFormatter()
                     ],
-                    onChanged: (number) {
-                      setState(() {
-                        if (number!.length < 4) {
-                          containerColor = const Color(0xff727881);
-                        } else {
-                          List<CreditCardType> types = detectCCType(number);
-                          if (types.isNotEmpty) {
-                            CreditCardType primaryType = types.first;
-                            debugPrint(primaryType.toString());
-                            containerColor =
-                                CardIconColors.getIconColor(primaryType);
-                          } else {
-                            containerColor = const Color(0xffa1dbef);
-                          }
-                        }
-                      });
-                    },
+                    onChanged: (number) => onNumberChanged(number!),
                     validator: (number) {
                       if (number?.length != 19) {
                         return 'I N V Á L I D O!';
@@ -132,55 +137,7 @@ class _CardFrontState extends State<CardFront> {
           ]),
         ),
       ),
-      Positioned(
-        top: 10,
-        right: 10,
-        child: Row(
-          children: [
-            spaceBetweenCardsWidth,
-            _buildIconContainer('assets/icons/visa.svg', containerSizeWidth,
-                CardIconColors.getIconColor(CreditCardType.visa())),
-            spaceBetweenCardsWidth,
-            _buildIconContainer(
-                'assets/icons/mastercard.svg',
-                containerSizeWidth,
-                CardIconColors.getIconColor(CreditCardType.mastercard())),
-            spaceBetweenCardsWidth,
-            _buildIconContainer('assets/icons/elo.svg', containerSizeWidth,
-                CardIconColors.getIconColor(CreditCardType.elo())),
-            spaceBetweenCardsWidth,
-            _buildIconContainer('assets/icons/amex.svg', containerSizeWidth,
-                CardIconColors.getIconColor(CreditCardType.americanExpress())),
-            spaceBetweenCardsWidth,
-            _buildIconContainer('assets/icons/discover.svg', containerSizeWidth,
-                CardIconColors.getIconColor(CreditCardType.discover())),
-            spaceBetweenCardsWidth,
-            _buildIconContainer(
-                'assets/icons/hipercard.svg',
-                containerSizeWidth,
-                CardIconColors.getIconColor(CreditCardType.hipercard())),
-          ],
-        ),
-      ),
+      CardIconTypes(detectedCardType: detectedCardType)
     ]);
-  }
-
-  Widget _buildIconContainer(
-      String iconAsset, double containerSizeWidth, Color color) {
-    const double containerSizeHeight = 35;
-
-    return Container(
-      width: containerSizeWidth,
-      height: containerSizeHeight,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(9),
-      ),
-      child: Center(
-        child: SvgPicture.asset(
-          iconAsset,
-        ),
-      ),
-    );
   }
 }
