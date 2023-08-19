@@ -34,7 +34,7 @@ class OrdersManager extends ChangeNotifier {
   }
 
   Future<void> _listenToOrders() async {
-    PerformanceMonitoring().startTrace('listenToOrders', shouldStart: true);
+    PerformanceMonitoring().startTrace('listen-orders', shouldStart: true);
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Info: listenToOrders');
     }
@@ -51,7 +51,7 @@ class OrdersManager extends ChangeNotifier {
       notifyListeners();
     });
 
-    PerformanceMonitoring().stopTrace('listenToOrders');
+    PerformanceMonitoring().stopTrace('listen-orders');
   }
 
   @override

@@ -28,7 +28,7 @@ class Stores extends ChangeNotifier {
   });
 
   Stores.fromDocument(DocumentSnapshot document) {
-    PerformanceMonitoring().startTrace('storesFromDocument', shouldStart: true);
+    PerformanceMonitoring().startTrace('stores-from-document', shouldStart: true);
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Instance beginning Stores.fromDocument');
     }
@@ -64,7 +64,7 @@ class Stores extends ChangeNotifier {
       }
     });
     updateStatus();
-    PerformanceMonitoring().stopTrace('storesFromDocument');
+    PerformanceMonitoring().stopTrace('stores-from-document');
   }
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -124,7 +124,7 @@ class Stores extends ChangeNotifier {
   }
 
   Future<void> saveStore(Stores store) async {
-    PerformanceMonitoring().startTrace('saveStore', shouldStart: true);
+    PerformanceMonitoring().startTrace('save-store', shouldStart: true);
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Save file upload to Firebase Storage');
     }
@@ -141,7 +141,7 @@ class Stores extends ChangeNotifier {
     }
     notifyListeners();
 
-    PerformanceMonitoring().stopTrace('saveStore');
+    PerformanceMonitoring().stopTrace('save-store');
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('File saved completed');
     }
@@ -172,7 +172,7 @@ class Stores extends ChangeNotifier {
   }
 
   Future<void> updateStoreImage(dynamic image, [String? storeId]) async {
-    PerformanceMonitoring().startTrace('updateStoreImage', shouldStart: true);
+    PerformanceMonitoring().startTrace('update-store-image', shouldStart: true);
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Starting file upload to Firebase Storage');
     }
@@ -217,7 +217,7 @@ class Stores extends ChangeNotifier {
     imageStore = image;
     notifyListeners();
 
-    PerformanceMonitoring().stopTrace('updateStoreImage');
+    PerformanceMonitoring().stopTrace('update-store-image');
   }
 
   void updateStatus() {

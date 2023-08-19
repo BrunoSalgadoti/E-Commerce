@@ -120,7 +120,7 @@ class Product extends ChangeNotifier {
   }
 
   Future<void> saveProduct() async {
-    PerformanceMonitoring().startTrace('saveProduct', shouldStart: true);
+    PerformanceMonitoring().startTrace('save_product', shouldStart: true);
     if (!kReleaseMode) {
       MonitoringLogger()
           .logDebug('Debug message: Instance starting saveProduct');
@@ -185,7 +185,7 @@ class Product extends ChangeNotifier {
 
     loading = false;
 
-    PerformanceMonitoring().stopTrace('saveProduct');
+    PerformanceMonitoring().stopTrace('save_product');
     if (!kReleaseMode) {
       MonitoringLogger().logDebug('Debug message: Instance ending saveProduct');
     }

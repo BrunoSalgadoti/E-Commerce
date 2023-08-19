@@ -102,7 +102,7 @@ class UserManager extends ChangeNotifier {
       required Function onFail,
       required Function onSuccess}) async {
     PerformanceMonitoring()
-        .startTrace('signInWithEmailAndPassword', shouldStart: true);
+        .startTrace('sign-in-email', shouldStart: true);
 
     loading = true;
     try {
@@ -116,13 +116,13 @@ class UserManager extends ChangeNotifier {
       onFail(getErrorString(error.code));
     }
     loading = false;
-    PerformanceMonitoring().stopTrace('signInWithEmailAndPassword');
+    PerformanceMonitoring().stopTrace('sign-in-email');
   }
 
   Future<void> loginOrSingUpWithFacebook(
       {required Function? onFail, required Function? onSuccess}) async {
     PerformanceMonitoring()
-        .startTrace('loginOrSingUpWithFacebook', shouldStart: true);
+        .startTrace('login-facebook', shouldStart: true);
 
     try {
       loadingFace = true;
@@ -198,7 +198,7 @@ class UserManager extends ChangeNotifier {
       onFail!(getErrorString(error.code));
       loadingFace = false;
     }
-    PerformanceMonitoring().stopTrace('loginOrSingUpWithFacebook');
+    PerformanceMonitoring().stopTrace('login-facebook');
   }
 
   Future<void> loginOrSingUpWithGoogle({
@@ -206,7 +206,7 @@ class UserManager extends ChangeNotifier {
     required Function? onSuccess,
   }) async {
     PerformanceMonitoring()
-        .startTrace('loginOrSingUpWithGoogle', shouldStart: true);
+        .startTrace('login-google', shouldStart: true);
 
     try {
       loadingGoogle = true;
@@ -273,7 +273,7 @@ class UserManager extends ChangeNotifier {
       onFail!(getErrorString(error.code));
       loadingGoogle = false;
     }
-    PerformanceMonitoring().stopTrace('loginOrSingUpWithGoogle');
+    PerformanceMonitoring().stopTrace('login-google');
   }
 
   Future<void> singUpWithEmailAndPassword(
@@ -281,7 +281,7 @@ class UserManager extends ChangeNotifier {
       required Function onFail,
       required Function onSuccess}) async {
     PerformanceMonitoring()
-        .startTrace('singUpWithEmailAndPassword', shouldStart: true);
+        .startTrace('sing-up-email', shouldStart: true);
 
     loading = true;
 
@@ -304,7 +304,7 @@ class UserManager extends ChangeNotifier {
     }
     loading = false;
 
-    PerformanceMonitoring().stopTrace('singUpWithEmailAndPassword');
+    PerformanceMonitoring().stopTrace('sing-up-email');
   }
 
   void signOut() {

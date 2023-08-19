@@ -65,7 +65,7 @@ class Section extends ChangeNotifier {
   }
 
   Future<void> saveSection(int position) async {
-    PerformanceMonitoring().startTrace('saveSection', shouldStart: true);
+    PerformanceMonitoring().startTrace('save-section', shouldStart: true);
 
     final Map<String, dynamic> data = {
       "name": name,
@@ -131,7 +131,7 @@ class Section extends ChangeNotifier {
     };
     await firestoreRef.update(itemsData);
 
-    PerformanceMonitoring().stopTrace('saveSection');
+    PerformanceMonitoring().stopTrace('save-section');
   }
 
   Future<void> delete() async {

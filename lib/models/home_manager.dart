@@ -18,7 +18,7 @@ class HomeManager extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<void> _loadSections() async {
-    PerformanceMonitoring().startTrace('loadSections', shouldStart: true);
+    PerformanceMonitoring().startTrace('load-sections', shouldStart: true);
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Info message: Starting listen Sections');
     }
@@ -34,7 +34,7 @@ class HomeManager extends ChangeNotifier {
       }
       notifyListeners();
     });
-    PerformanceMonitoring().stopTrace('loadSections');
+    PerformanceMonitoring().stopTrace('load-sections');
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Info message: Ending listen Sections');
     }

@@ -1,6 +1,3 @@
-import 'package:flutter/foundation.dart' show kDebugMode;
-
-// ignore: depend_on_referenced_packages
 import 'package:firebase_performance/firebase_performance.dart';
 
 class PerformanceMonitoring {
@@ -13,17 +10,15 @@ class PerformanceMonitoring {
   final FirebasePerformance _performance = FirebasePerformance.instance;
 
   void startTrace(String name, {bool shouldStart = true}) {
-    if (!kDebugMode && shouldStart) {
+    if (shouldStart) {
       final trace = _performance.newTrace(name);
       trace.start();
     }
   }
 
   void stopTrace(String name) {
-    if (!kDebugMode) {
       final trace = _performance.newTrace(name);
       trace.stop();
-    }
   }
 }
 

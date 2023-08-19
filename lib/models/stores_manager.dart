@@ -41,13 +41,13 @@ class StoresManager extends ChangeNotifier {
   }
 
   void _startTime() async {
-    PerformanceMonitoring().startTrace('startTime', shouldStart: true);
+    PerformanceMonitoring().startTrace('start-time', shouldStart: true);
 
     _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
       _checkOpening();
     });
 
-    PerformanceMonitoring().stopTrace('startTime');
+    PerformanceMonitoring().stopTrace('start-time');
   }
 
   void _checkOpening() {
@@ -59,7 +59,7 @@ class StoresManager extends ChangeNotifier {
 
   Future<void> _setupRealTimeUpdates() async {
     PerformanceMonitoring()
-        .startTrace('setupRealTimeUpdates', shouldStart: true);
+        .startTrace('setup-rt-updates', shouldStart: true);
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Info message: _storesListener Start ');
     }
@@ -71,7 +71,7 @@ class StoresManager extends ChangeNotifier {
       notifyListeners();
     });
 
-    PerformanceMonitoring().stopTrace('setupRealTimeUpdates');
+    PerformanceMonitoring().stopTrace('setup-rt-updates');
   }
 
   @override

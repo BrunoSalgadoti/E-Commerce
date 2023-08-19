@@ -56,7 +56,7 @@ class OrderClient {
   }
 
   Future<void> saveOrder() async {
-    PerformanceMonitoring().startTrace('saveOrder', shouldStart: true);
+    PerformanceMonitoring().startTrace('save-order', shouldStart: true);
 
     firestore.collection("orders").doc(orderId).set({
       "items": items?.map((e) => e.toOrderItemMap()).toList(),
@@ -67,7 +67,7 @@ class OrderClient {
       "status": status!.index,
       "date": Timestamp.now(),
     });
-    PerformanceMonitoring().stopTrace('saveOrder');
+    PerformanceMonitoring().stopTrace('save-order');
   }
 
   Function()? get back {

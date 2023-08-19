@@ -39,7 +39,7 @@ class ProductManager extends ChangeNotifier {
   }
 
   void _listenToProducts() async {
-    PerformanceMonitoring().startTrace('listenToProducts', shouldStart: true);
+    PerformanceMonitoring().startTrace('listen_products', shouldStart: true);
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Starting listen products');
     }
@@ -61,7 +61,7 @@ class ProductManager extends ChangeNotifier {
       }
       notifyListeners();
     });
-    PerformanceMonitoring().stopTrace('listenToProducts');
+    PerformanceMonitoring().stopTrace('listen_products');
   }
 
   Product? findProductById(String id) {

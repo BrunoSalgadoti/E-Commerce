@@ -17,7 +17,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  PerformanceMonitoring().startTrace('StartMain.dart', shouldStart: true);
+  PerformanceMonitoring().startTrace('start_main.dart', shouldStart: true);
 
   // Load version information asynchronously
   if (!kReleaseMode) {
@@ -34,5 +34,5 @@ Future<void> main() async {
     ),
   );
 
-  PerformanceMonitoring().stopTrace('StartMain.dart');
+  PerformanceMonitoring().stopTrace('start_main.dart');
 }
