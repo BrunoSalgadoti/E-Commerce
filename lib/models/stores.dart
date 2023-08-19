@@ -27,11 +27,11 @@ class Stores extends ChangeNotifier {
     this.address,
   });
 
-  final logger = LoggerService();
-
   Stores.fromDocument(DocumentSnapshot document) {
     PerformanceMonitoring().startTrace('storesFromDocument', shouldStart: true);
-    logger.logInfo('Instance beginning Stores.fromDocument');
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Instance beginning Stores.fromDocument');
+    }
 
     id = document.id;
     nameStore = document.get("nameStore") as String? ?? "";
@@ -65,7 +65,6 @@ class Stores extends ChangeNotifier {
     });
     updateStatus();
     PerformanceMonitoring().stopTrace('storesFromDocument');
-    logger.logInfo('Instance end Stores.fromDocument');
   }
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -87,7 +86,7 @@ class Stores extends ChangeNotifier {
   String? get addressText => '${address?.street}, ${address?.number}'
       '${address?.complement?.isNotEmpty == true ? ' - ${address!.complement}' : ''} - '
       '${address?.district}, ${address?.city}/'
-      '${address?.state} - ${address?.zipCode}';
+      '${address?.state} - ${formattedZipcode(address?.zipCode)}';
 
   String get openingText {
     return 'Seg-Sex: ${formattedPeriod(openingStoresFromTimeOfDay!["monFri"])}\n'
@@ -126,7 +125,9 @@ class Stores extends ChangeNotifier {
 
   Future<void> saveStore(Stores store) async {
     PerformanceMonitoring().startTrace('saveStore', shouldStart: true);
-    logger.logInfo('Save file upload to Firebase Storage');
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Save file upload to Firebase Storage');
+    }
 
     try {
       final doc = firestore.collection("stores");
@@ -141,11 +142,15 @@ class Stores extends ChangeNotifier {
     notifyListeners();
 
     PerformanceMonitoring().stopTrace('saveStore');
-    logger.logInfo('File saved completed');
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('File saved completed');
+    }
   }
 
   Future<void> deleteStore(Stores store, String? storeId) async {
-    logger.logInfo('Starting file delete to Firebase Storage');
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Starting file delete to Firebase Storage');
+    }
 
     try {
       final firestoreRef = firestore.collection("stores").doc(storeId);
@@ -164,12 +169,13 @@ class Stores extends ChangeNotifier {
       }
     }
     notifyListeners();
-    logger.logInfo('File delete completed');
   }
 
   Future<void> updateStoreImage(dynamic image, [String? storeId]) async {
     PerformanceMonitoring().startTrace('updateStoreImage', shouldStart: true);
-    logger.logInfo('Starting file upload to Firebase Storage');
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Starting file upload to Firebase Storage');
+    }
 
     if (imageStore != null && imageStore.contains("firebase")) {
       final oldImageRef = storage.refFromURL(imageStore);
@@ -212,7 +218,6 @@ class Stores extends ChangeNotifier {
     notifyListeners();
 
     PerformanceMonitoring().stopTrace('updateStoreImage');
-    logger.logInfo('File upload to Firebase Storage');
   }
 
   void updateStatus() {

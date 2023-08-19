@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../services/development_monitoring/monitoring_logger.dart';
+
 class UserManager extends ChangeNotifier {
   UserManager() {
     _loadCurrentUser();
@@ -62,6 +64,11 @@ class UserManager extends ChangeNotifier {
   );
 
   Future<void> _createAuxAndAdminsIfNotExists() async {
+    if (!kReleaseMode) {
+      MonitoringLogger()
+          .logInfo('Info: Verifier createAuxAndAdminsIfNotExists');
+    }
+
     // Check if the "admins" collection is empty
     final adminsQuery = await firestore.collection("admins").limit(1).get();
     if (adminsQuery.docs.isEmpty) {

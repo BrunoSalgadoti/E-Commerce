@@ -27,8 +27,6 @@ class CartManager extends ChangeNotifier {
 
   bool get loading => _loading;
 
-  final logger = LoggerService();
-
   set loading(bool value) {
     _loading = value;
     notifyListeners();
@@ -37,7 +35,9 @@ class CartManager extends ChangeNotifier {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   void updateUser(UserManager userManager) {
-    logger.logInfo('Info message: Start Load User Cart');
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Info message: Start Load User Cart');
+    }
 
     users = userManager.users;
     productsPrice = 0.0;
@@ -51,11 +51,12 @@ class CartManager extends ChangeNotifier {
       users = null;
       notifyListeners();
     }
-    logger.logInfo('Info message: End Load User Cart');
   }
 
   Future<void> _loadCartItems() async {
-    logger.logInfo('Info message: Start Load Cart Items');
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Info message: Start Load Cart Items');
+    }
 
     final QuerySnapshot cartSnap = await users!.cartReference.get();
 
@@ -63,21 +64,25 @@ class CartManager extends ChangeNotifier {
         .map((d) => CartProduct.fromDocument(d)..addListener(_onItemUpdate))
         .toList();
     notifyListeners();
-    logger.logInfo('Info message: End Load Cart Items');
   }
 
   Future<void> _loadUserAddress() async {
-    logger.logInfo('Info message: Start Load Cart Address');
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Info message: Start Load Cart Address');
+    }
 
     if (users?.address != null &&
         await calculateDelivery(users!.address!.lat!, users!.address!.long!)) {
       address = users!.address;
       notifyListeners();
     }
-    logger.logInfo('Info message: End Load Cart Address');
   }
 
   void addToCart(Product product, DetailsProducts detailsProducts) {
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Info message: Add to Cart');
+    }
+
     try {
       final sameEntity = items.firstWhere((p) => p.stackableSize(product));
       sameEntity.increment();
@@ -144,7 +149,9 @@ class CartManager extends ChangeNotifier {
   bool get isAddressValid => address != null && deliveryPrice != null;
 
   Future<void> getAddress(String cep) async {
-    logger.logInfo('Info message: Start Load Get Address Cart');
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Info message: Start Load Get Address Cart');
+    }
 
     if (kIsWeb) {
       loading = true;
@@ -195,7 +202,6 @@ class CartManager extends ChangeNotifier {
         return Future.error('CEP Inválido');
       }
     }
-    logger.logInfo('Info message: End Load Get Address Cart');
   }
 
   Future<void> setAddress(Address address) async {
@@ -218,7 +224,9 @@ class CartManager extends ChangeNotifier {
   }
 
   Future<bool> calculateDelivery(double lat, double long) async {
-    logger.logInfo('Info message: Start Calculate Delivery Cart');
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Info message: Start Calculate Delivery Cart');
+    }
 
     try {
       final DocumentSnapshot doc = await firestore.doc("aux/delivery").get();
@@ -235,8 +243,6 @@ class CartManager extends ChangeNotifier {
 
       // Converting distance from M to KM
       distanceClient /= 1000.0;
-
-  logger.logInfo('Info message: Take Data Calculate Delivery Cart');
 
       if (distanceClient > maximumDeliveryDistance) {
         return false;

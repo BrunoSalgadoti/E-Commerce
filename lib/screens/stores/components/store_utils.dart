@@ -93,7 +93,7 @@ class StoreUtils {
         context: showModalContext(),
         builder: (_) {
           return SafeArea(
-              child: Column(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               for (final map in availableMap)
@@ -118,6 +118,7 @@ class StoreUtils {
         },
       );
     } catch (error) {
+      // ignore: use_build_context_synchronously
       alertForMaps(context);
     }
   }
@@ -128,6 +129,7 @@ class StoreUtils {
         launchUrl(Uri.parse('tel:$phoneNumber'));
       }
     } catch (error) {
+      // ignore: use_build_context_synchronously
       alertForCall(context);
     }
   }
@@ -142,6 +144,7 @@ class StoreUtils {
         launchUrl(emailLaunchUri);
       }
     } catch (error) {
+      // ignore: use_build_context_synchronously
       alertForEmail(context);
     }
   }

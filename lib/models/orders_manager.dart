@@ -4,7 +4,9 @@ import 'package:brn_ecommerce/models/order_client.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+
+import '../services/development_monitoring/monitoring_logger.dart';
 
 class OrdersManager extends ChangeNotifier {
   Users? users;
@@ -20,6 +22,12 @@ class OrdersManager extends ChangeNotifier {
     orders.clear();
 
     _subscription?.cancel();
+
+    if (!kReleaseMode) {
+      MonitoringLogger()
+          .logInfo('Info: ${_subscription?.cancel()}listenToOrders');
+    }
+
     if (users.id != null) {
       _listenToOrders();
     }
@@ -27,6 +35,9 @@ class OrdersManager extends ChangeNotifier {
 
   Future<void> _listenToOrders() async {
     PerformanceMonitoring().startTrace('listenToOrders', shouldStart: true);
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Info: listenToOrders');
+    }
 
     _subscription = firestore
         .collection("orders")
@@ -45,7 +56,7 @@ class OrdersManager extends ChangeNotifier {
 
   @override
   void dispose() {
-    super.dispose();
     _subscription?.cancel();
+    super.dispose();
   }
 }

@@ -63,6 +63,7 @@ class _CepInputFieldState extends State<CepInputField> {
                       try {
                         await cartManager.getAddress(cepController.text);
                       } catch (error) {
+                        // ignore: use_build_context_synchronously
                         CustomScaffoldMessenger(
                                 context: context, message: '$error')
                             .msn();

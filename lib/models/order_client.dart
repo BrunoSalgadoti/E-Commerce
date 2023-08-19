@@ -3,8 +3,10 @@ import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/models/cart_product.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 import '../common/formated_fields/format_values.dart';
+import '../services/development_monitoring/monitoring_logger.dart';
 
 enum Status {
   canceled,
@@ -26,6 +28,10 @@ class OrderClient {
   }
 
   OrderClient.fromDocument(DocumentSnapshot doc) {
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Info: OrderClient.fromDocument');
+    }
+
     orderId = doc.id;
 
     items = (doc["items"] as List<dynamic>).map((e) {

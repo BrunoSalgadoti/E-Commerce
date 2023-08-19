@@ -8,12 +8,11 @@ import 'package:brn_ecommerce/services/development_monitoring/firebase_performan
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart' show ChangeNotifier, kIsWeb;
+import 'package:flutter/foundation.dart'
+    show ChangeNotifier, kIsWeb, kReleaseMode;
 import 'package:uuid/uuid.dart';
 
 class Product extends ChangeNotifier {
-  final logger = LoggerService();
-
   Product({
     this.id,
     this.name,
@@ -33,7 +32,10 @@ class Product extends ChangeNotifier {
   Product.fromDocument(DocumentSnapshot document) {
     PerformanceMonitoring()
         .startTrace('product-from-document', shouldStart: true);
-    logger.logInfo('Debug message: Instance Product.fromDocument');
+    if (!kReleaseMode) {
+      MonitoringLogger()
+          .logInfo('Debug message: Instance Product.fromDocument');
+    }
 
     id = document.id;
     name = document["name"] as String? ?? "";
@@ -119,7 +121,10 @@ class Product extends ChangeNotifier {
 
   Future<void> saveProduct() async {
     PerformanceMonitoring().startTrace('saveProduct', shouldStart: true);
-    logger.logDebug('Debug message: Instance starting saveProduct');
+    if (!kReleaseMode) {
+      MonitoringLogger()
+          .logDebug('Debug message: Instance starting saveProduct');
+    }
 
     loading = true;
 
@@ -181,7 +186,9 @@ class Product extends ChangeNotifier {
     loading = false;
 
     PerformanceMonitoring().stopTrace('saveProduct');
-    logger.logDebug('Debug message: Instance ending saveProduct');
+    if (!kReleaseMode) {
+      MonitoringLogger().logDebug('Debug message: Instance ending saveProduct');
+    }
   }
 
   Future<void> deleteProductWithZeroStockOneImage() async {

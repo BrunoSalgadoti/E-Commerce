@@ -5,14 +5,12 @@ import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class AdminUsersManager with ChangeNotifier {
   List<Users> userList = [];
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  final logger = LoggerService();
 
   StreamSubscription<dynamic>? _subscription;
 
@@ -26,10 +24,11 @@ class AdminUsersManager with ChangeNotifier {
     }
   }
 
-
   Future<void> _listenToUsers() async {
     PerformanceMonitoring().startTrace('listen-users', shouldStart: true);
-    logger.logInfo('Info message: Instance  _listenToUsers');
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Info message: Instance  _listenToUsers');
+    }
 
     QuerySnapshot<Map<String, dynamic>> snapshot = await firestore
         .collection("users")
@@ -54,7 +53,10 @@ class AdminUsersManager with ChangeNotifier {
   @override
   void dispose() {
     _subscription?.cancel();
-    logger.logInfo('Info message: Instance  $_subscription CANCELADO');
+    if (!kReleaseMode) {
+      MonitoringLogger()
+          .logInfo('Info message: Instance  $_subscription CANCELADO');
+    }
     super.dispose();
   }
 }

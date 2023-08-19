@@ -19,6 +19,11 @@ class AddressInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartManager = context.watch<CartManager>();
+    calculateShippingError() => CustomScaffoldMessenger(
+      context: context,
+      message: 'Verifique seu acesso a internet!',
+      duration: const Duration(milliseconds: 4500),
+    ).msn();
 
     if (address.zipCode != null && cartManager.deliveryPrice == null) {
       return Column(
@@ -109,11 +114,7 @@ class AddressInputField extends StatelessWidget {
                         try {
                           await cartManager.setAddress(address);
                         } catch (error) {
-                          CustomScaffoldMessenger(
-                            context: context,
-                            message: 'Verifique seu acesso a internet!',
-                            duration: const Duration(milliseconds: 4500),
-                          ).msn();
+                          calculateShippingError();
                           cartManager.loading = false;
                         }
                       }

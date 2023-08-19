@@ -26,9 +26,12 @@ class EditProductScreen extends StatelessWidget {
     final primaryColor = Theme.of(context).primaryColor;
     TextEditingController controller = TextEditingController();
 
-    String errorSaveProductMessage = 'Erro ao salvar/editar o Produto\n'
-        'Revise os campos e tente novamente!a\n'
-        '\nSE O ERRO PERCISTIR CONTATE O SUPORTE';
+    saveProductError() => CustomScaffoldMessenger(
+      context: context,
+      message: 'Erro ao salvar/editar o Produto\n'
+          'Revise os campos e tente novamente!\n'
+          '\nSE O ERRO PERCISTIR CONTATE O SUPORTE',
+    ).msn();
 
     backScreen() => Navigator.of(context).pop();
     showAlertDialog() => showDialog(
@@ -210,7 +213,8 @@ class EditProductScreen extends StatelessWidget {
                                               productManager
                                                   .updateProducts(product);
 
-                                              // Verificar a consistência das quantidades e estoques
+                                              // Verificar a consistência das
+                                              // quantidades e estoques
                                               await product
                                                   .checkAmountsAndStocksConsistency(
                                                       product.id!,
@@ -223,11 +227,7 @@ class EditProductScreen extends StatelessWidget {
                                               }
                                             } catch (error) {
                                               product.loading = false;
-                                              CustomScaffoldMessenger(
-                                                context: context,
-                                                message:
-                                                    errorSaveProductMessage,
-                                              ).msn();
+                                              saveProductError();
                                             }
                                           }
                                         });

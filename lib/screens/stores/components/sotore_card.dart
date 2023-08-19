@@ -86,7 +86,7 @@ class StoreCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          store.nameStore!,
+                          store.nameStore ?? '',
                           style: const TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.bold,

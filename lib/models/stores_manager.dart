@@ -5,7 +5,6 @@ import 'package:brn_ecommerce/models/stores.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 class StoresManager extends ChangeNotifier {
@@ -23,8 +22,6 @@ class StoresManager extends ChangeNotifier {
   StreamSubscription<QuerySnapshot>? _storesListener;
 
   List<Stores> storesList = [];
-
-  final logger = LoggerService();
 
   Future<void> _loadStoreList() async {
     PerformanceMonitoring().startTrace('load-store-list', shouldStart: true);
@@ -63,7 +60,9 @@ class StoresManager extends ChangeNotifier {
   Future<void> _setupRealTimeUpdates() async {
     PerformanceMonitoring()
         .startTrace('setupRealTimeUpdates', shouldStart: true);
-    logger.logInfo('Info message: _storesListener Start ');
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Info message: _storesListener Start ');
+    }
 
     // Configure real-time update listener
     _storesListener =
@@ -73,7 +72,6 @@ class StoresManager extends ChangeNotifier {
     });
 
     PerformanceMonitoring().stopTrace('setupRealTimeUpdates');
-    logger.logInfo('Info message: _storesListener END ');
   }
 
   @override
@@ -81,6 +79,9 @@ class StoresManager extends ChangeNotifier {
     super.dispose();
     _timer?.cancel();
     _storesListener?.cancel();
-    logger.logInfo('Info message: _storesListener Cancel ');
+    if (!kReleaseMode) {
+      MonitoringLogger()
+          .logInfo('Info: ${_storesListener?.cancel()} ListenerCancel ');
+    }
   }
 }

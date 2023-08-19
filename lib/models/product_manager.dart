@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
-import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+
+import '../services/development_monitoring/monitoring_logger.dart';
 
 class ProductManager extends ChangeNotifier {
   ProductManager() {
@@ -15,8 +15,6 @@ class ProductManager extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   StreamSubscription<dynamic>? _subscription;
-
-  final logger = LoggerService();
 
   List<Product> allProducts = [];
   String _search = '';
@@ -42,7 +40,9 @@ class ProductManager extends ChangeNotifier {
 
   void _listenToProducts() async {
     PerformanceMonitoring().startTrace('listenToProducts', shouldStart: true);
-    logger.logInfo('Starting listen products');
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Starting listen products');
+    }
 
     _subscription = firestore
         .collection("products")
@@ -62,7 +62,6 @@ class ProductManager extends ChangeNotifier {
       notifyListeners();
     });
     PerformanceMonitoring().stopTrace('listenToProducts');
-    logger.logInfo('Ending listen products');
   }
 
   Product? findProductById(String id) {

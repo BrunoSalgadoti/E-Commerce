@@ -59,7 +59,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     const buttonHeight = 38;
-    const maxFontSize = 15.0;
+    const maxFontSize = 14.0;
 
     double adjustedFontSize = maxFontSize;
     if (screenHeight < buttonHeight) {
