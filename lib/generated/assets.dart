@@ -26,7 +26,7 @@ class Assets {
   static const String componentsCardBack = 'lib/screens/checkout/components/card_back.dart';
   static const String componentsCardFront = 'lib/screens/checkout/components/card_front.dart';
   static const String componentsCardIconColors = 'lib/screens/checkout/components/card_icon_colors.dart';
-  static const String componentsCardUtils = 'lib/screens/checkout/components/card_icon_types.dart';
+  static const String componentsCardIconTypes = 'lib/screens/checkout/components/card_icon_types.dart';
   static const String componentsCartTile = 'lib/screens/cart/components/cart_tile.dart';
   static const String componentsCepInputField = 'lib/screens/address/components/cep_input_field.dart';
   static const String componentsColorsForm = 'lib/screens/product_edit/components/colors_form.dart';

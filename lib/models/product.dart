@@ -31,7 +31,8 @@ class Product extends ChangeNotifier {
 
   Product.fromDocument(DocumentSnapshot document) {
     PerformanceMonitoring()
-        .startTrace('product-from-document', shouldStart: true);
+        .startTrace('product-document', shouldStart: true);
+
     if (!kReleaseMode) {
       MonitoringLogger()
           .logInfo('Debug message: Instance Product.fromDocument');
@@ -47,7 +48,7 @@ class Product extends ChangeNotifier {
         .map((d) => DetailsProducts.fromMap(d as Map<String, dynamic>))
         .toList();
 
-    PerformanceMonitoring().stopTrace('product-from-document');
+    PerformanceMonitoring().stopTrace('product-document');
   }
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;

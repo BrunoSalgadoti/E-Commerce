@@ -16,8 +16,11 @@ import '../services/development_monitoring/monitoring_logger.dart';
 class UserManager extends ChangeNotifier {
   UserManager() {
     _loadCurrentUser();
-    _createAuxAndAdminsIfNotExists();
     _auth.setLanguageCode('pt-BR');
+
+    if (!kReleaseMode) {
+      _createAuxAndAdminsIfNotExists();
+    }
   }
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -67,33 +70,33 @@ class UserManager extends ChangeNotifier {
     if (!kReleaseMode) {
       MonitoringLogger()
           .logInfo('Info: Verifier createAuxAndAdminsIfNotExists');
-    }
 
-    // Check if the "admins" collection is empty
-    final adminsQuery = await firestore.collection("admins").limit(1).get();
-    if (adminsQuery.docs.isEmpty) {
-      // Create document '{users.id}' in collection 'admins' with user id as admin
-      await firestore.collection("admins").doc(users!.id).set({
-        "user": users!.id,
-      });
-      users!.admin = true; // Set user as administrator on first login
-    }
+      // Check if the "admins" collection is empty
+      final adminsQuery = await firestore.collection("admins").limit(1).get();
+      if (adminsQuery.docs.isEmpty) {
+        // Create document '{users.id}' in collection 'admins' with user id as admin
+        await firestore.collection("admins").doc(users!.id).set({
+          "user": users!.id,
+        });
+        users!.admin = true; // Set user as administrator on first login
+      }
 
-    // Check if the "aux" collection contains the "delivery" document
-    final deliveryDoc = firestore.collection("aux").doc("delivery");
-    final doc = await deliveryDoc.get();
-    if (!doc.exists) {
-      final delivery =
-          Delivery(); // Create a new instance of the Delivery class
-      await deliveryDoc.set(delivery.toMap());
-    }
+      // Check if the "aux" collection contains the "delivery" document
+      final deliveryDoc = firestore.collection("aux").doc("delivery");
+      final doc = await deliveryDoc.get();
+      if (!doc.exists) {
+        final delivery =
+        Delivery(); // Create a new instance of the Delivery class
+        await deliveryDoc.set(delivery.toMap());
+      }
 
-    // Check if the "aux" collection contains the "orderCounter" document
-    final orderCounterDoc = firestore.collection("aux").doc("orderCounter");
-    final orderCounterDocExists = await orderCounterDoc.get();
-    if (!orderCounterDocExists.exists) {
-      // Create the "orderCounter" document with "current" field set to 1
-      await orderCounterDoc.set({"current": 1});
+      // Check if the "aux" collection contains the "orderCounter" document
+      final orderCounterDoc = firestore.collection("aux").doc("orderCounter");
+      final orderCounterDocExists = await orderCounterDoc.get();
+      if (!orderCounterDocExists.exists) {
+        // Create the "orderCounter" document with "current" field set to 1
+        await orderCounterDoc.set({"current": 1});
+      }
     }
   }
 
@@ -177,7 +180,9 @@ class UserManager extends ChangeNotifier {
           }
 
           // Create "admins" and "aux/delivery" documents if they don't exist
-          await _createAuxAndAdminsIfNotExists();
+          if (!kReleaseMode) {
+            await _createAuxAndAdminsIfNotExists();
+          }
 
           loadingFace = false;
           onSuccess!();
@@ -260,7 +265,9 @@ class UserManager extends ChangeNotifier {
         }
 
         // Create "admins" and "aux/delivery" documents if they don't exist
-        await _createAuxAndAdminsIfNotExists();
+        if (!kReleaseMode) {
+          await _createAuxAndAdminsIfNotExists();
+        }
 
         loadingGoogle = false;
         onSuccess!();
@@ -296,7 +303,9 @@ class UserManager extends ChangeNotifier {
       await users.saveUserData();
 
       // Create "admins" and "aux/delivery" documents if they don't exist
-      await _createAuxAndAdminsIfNotExists();
+      if (!kReleaseMode) {
+        await _createAuxAndAdminsIfNotExists();
+      }
 
       onSuccess();
     } on FirebaseAuthException catch (error) {
