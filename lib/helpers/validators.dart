@@ -7,4 +7,4 @@ bool emailValid(String email) {
 }
 
 String? emptyValidator(String? text) =>
-    text!.isEmpty ? 'Campo Obrigatório' : null;
+    text!.trim().isEmpty ? 'Campo Obrigatório' : null;

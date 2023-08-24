@@ -6,6 +6,7 @@ import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger
 import 'package:brn_ecommerce/common/custom_text_form_field.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
+import 'package:brn_ecommerce/screens/product_edit/components/freight_form.dart';
 import 'package:brn_ecommerce/screens/product_edit/components/images_form.dart';
 import 'package:brn_ecommerce/screens/product_edit/components/sizes_form.dart';
 import 'package:flutter/material.dart';
@@ -27,11 +28,11 @@ class EditProductScreen extends StatelessWidget {
     TextEditingController controller = TextEditingController();
 
     saveProductError() => CustomScaffoldMessenger(
-      context: context,
-      message: 'Erro ao salvar/editar o Produto\n'
-          'Revise os campos e tente novamente!\n'
-          '\nSE O ERRO PERCISTIR CONTATE O SUPORTE',
-    ).msn();
+          context: context,
+          message: 'Erro ao salvar/editar o Produto\n'
+              'Revise os campos e tente novamente!\n'
+              '\nSE O ERRO PERCISTIR CONTATE O SUPORTE',
+        ).msn();
 
     backScreen() => Navigator.of(context).pop();
     showAlertDialog() => showDialog(
@@ -138,6 +139,34 @@ class EditProductScreen extends StatelessWidget {
                         },
                         onSaved: (name) => product?.name = name!,
                       ),
+                      const SizedBox(height: 4),
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Expanded(
+                              flex: 75,
+                              child: CustomTextFormField(
+                                initialValue: product?.brand ?? "",
+                                labelText: 'Inserir a Marca (Opicional)',
+                                hintText: 'Marca do Produto',
+                                hintSize: 20,
+                                textFormFieldSize: 20,
+                                enabledBorder: InputBorder.none,
+                                onSaved: (brand) {
+                                  if (brand?.trim().isEmpty ?? true) {
+                                    product?.brand = null;
+                                  } else {
+                                    product?.brand = brand;
+                                  }
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            FreightForm(product: product),
+                          ]),
+                      const SizedBox(width: 10),
                       Padding(
                         padding: const EdgeInsets.only(top: 4),
                         child: Text(
@@ -213,8 +242,8 @@ class EditProductScreen extends StatelessWidget {
                                               productManager
                                                   .updateProducts(product);
 
-                                              // Verificar a consistência das
-                                              // quantidades e estoques
+                                              // Check the consistency of
+                                              // quantities and stocks
                                               await product
                                                   .checkAmountsAndStocksConsistency(
                                                       product.id!,

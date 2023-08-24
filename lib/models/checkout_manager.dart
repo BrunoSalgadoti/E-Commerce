@@ -132,6 +132,7 @@ class CheckoutManager extends ChangeNotifier {
           details.colorProducts
               ?.firstWhere((color) => color.color == cartProduct.color)
               .amount -= cartProduct.quantity!;
+          details.sellers += cartProduct.quantity!;
           productsToUpdate.add(product);
         }
       }

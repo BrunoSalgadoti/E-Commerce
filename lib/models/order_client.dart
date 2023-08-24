@@ -22,6 +22,7 @@ class OrderClient {
     items = List.from(cartManager.items);
     price = cartManager.totalPrice;
     userId = cartManager.users?.id;
+    totalQuantity = cartManager.totalQuantity;
     userName = cartManager.users?.userName;
     address = cartManager.address;
     status = Status.preparing;
@@ -39,6 +40,7 @@ class OrderClient {
     }).toList();
 
     price = doc["price"] as num;
+    totalQuantity = doc["totalQuantity"] as num;
     userId = doc["user"] as String;
     userName = doc["userName"] as String;
     date = doc["date"] as Timestamp;
@@ -63,6 +65,7 @@ class OrderClient {
       "price": price,
       "user": userId,
       "userName": userName,
+      "totalQuantity": totalQuantity,
       "address": address!.toMap(),
       "status": status!.index,
       "date": Timestamp.now(),
@@ -90,7 +93,7 @@ class OrderClient {
         : null;
   }
 
-  void cancel() {
+  void cancelStatus() {
     status = Status.canceled;
     firestoreRef.update({"status": status!.index});
   }
@@ -103,6 +106,7 @@ class OrderClient {
   String? userId;
   String? userName;
   Address? address;
+  num? totalQuantity;
   Status? status;
   Timestamp? date;
 

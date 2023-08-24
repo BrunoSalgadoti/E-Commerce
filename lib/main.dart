@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart';
 import 'package:url_strategy/url_strategy.dart';
 
+import 'models/users_manager.dart';
 import 'services/development_monitoring/firebase_performance.dart';
 
 Future<void> main() async {
@@ -24,6 +25,7 @@ Future<void> main() async {
     // This code snippet will only run in debug mode
     final versionManager = VersionManager();
     await versionManager.updateVersionInfo();
+    UserManager().createAuxAndAdminsIfNotExists(firstStart: false);
   }
   // configure routing based on "history-based routing"
   setPathUrlStrategy();

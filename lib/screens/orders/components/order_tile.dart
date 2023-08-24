@@ -75,7 +75,27 @@ class OrderTile extends StatelessWidget {
                 return OrderProductTile(e);
               }).toList(),
             ),
-            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Qtd. Itens: ',
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
+                  Text(
+                    '${orderClient!.totalQuantity}',
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(height: 8),
             if (showControls &&
                 orderClient!.status != Status.canceled &&
                 orderClient!.status != Status.returned)
@@ -125,7 +145,7 @@ class OrderTile extends StatelessWidget {
                                                 icon: null,
                                                 fontColor: Colors.red,
                                                 onPressed: () {
-                                                  orderClient?.cancel();
+                                                  orderClient?.cancelStatus();
                                                   Navigator.of(context).pop();
                                                 },
                                               ),

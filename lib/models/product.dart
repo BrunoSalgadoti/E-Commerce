@@ -23,6 +23,8 @@ class Product extends ChangeNotifier {
     this.isValid,
     this.errorMessage,
     this.details,
+    this.brand = "",
+    this.freight = true,
   }) {
     images = images ?? [];
     itemProducts = itemProducts ?? [];
@@ -30,8 +32,7 @@ class Product extends ChangeNotifier {
   }
 
   Product.fromDocument(DocumentSnapshot document) {
-    PerformanceMonitoring()
-        .startTrace('product-document', shouldStart: true);
+    PerformanceMonitoring().startTrace('product-document', shouldStart: true);
 
     if (!kReleaseMode) {
       MonitoringLogger()
@@ -44,6 +45,8 @@ class Product extends ChangeNotifier {
     images = List<String>.from(document["images"] as List<dynamic>);
     deleted = (document["deleted"] ?? false) as bool;
     isValid = (document["isvalid"] ?? true) as bool;
+    brand = document["brand"] as String? ?? "";
+    freight = document["freight"] as bool? ?? true;
     itemProducts = (document["details"] as List<dynamic>)
         .map((d) => DetailsProducts.fromMap(d as Map<String, dynamic>))
         .toList();
@@ -62,6 +65,8 @@ class Product extends ChangeNotifier {
   String? name;
   String? description;
   String? errorMessage;
+  String? brand = "";
+  bool? freight = true;
   bool deleted = false;
   bool? isValid;
   List<String>? images;
@@ -94,6 +99,14 @@ class Product extends ChangeNotifier {
     return stock;
   }
 
+  int get totalSellers {
+    int sellers = 0;
+    for (final item in itemProducts!) {
+      sellers += item.sellers;
+    }
+    return sellers;
+  }
+
   bool get hasStock {
     return totalStock > 0 && !deleted && isValid!;
   }
@@ -107,6 +120,13 @@ class Product extends ChangeNotifier {
     }
     return lowest;
   }
+
+  // List<Product> getBestSellingProducts(ProductManager productManager, int count) {
+  //   final sortedProducts = productManager.allProducts.toList()
+  //     ..sort((a, b) => b.totalSellers.compareTo(a.totalSellers));
+  //
+  //   return sortedProducts.take(count).toList();
+  // }
 
   DetailsProducts? findSize(String name) {
     try {
@@ -131,6 +151,8 @@ class Product extends ChangeNotifier {
 
     final Map<String, dynamic> data = {
       "name": name,
+      "brand": brand ?? "",
+      "freight": freight ?? true,
       "description": description,
       "details": exportDetailsList(),
       "deleted": deleted,
@@ -215,6 +237,8 @@ class Product extends ChangeNotifier {
 
     final Map<String, dynamic> data = {
       "name": name,
+      "brand": brand,
+      "freight": freight,
       "description": description,
       "details": exportDetailsList(),
       "deleted": deleted,
@@ -263,6 +287,8 @@ class Product extends ChangeNotifier {
     return Product(
       id: id,
       name: name,
+      brand: brand ?? "",
+      freight: freight ?? true,
       description: description,
       images: List.from(images!),
       itemProducts: itemProducts?.map((items) => items.clone()).toList(),

@@ -53,6 +53,10 @@ class ProductManager extends ChangeNotifier {
       for (final product in event.docs) {
         // Make sure the document is complete before creating a Product instance
         if (product.data().containsKey("name") &&
+            product.data().containsKey("deleted") &&
+            product.data().containsKey("isvalid") &&
+            product.data().containsKey("brand") &&
+            product.data().containsKey("freight") &&
             product.data().containsKey("description") &&
             product.data().containsKey("images") &&
             product.data().containsKey("details")) {

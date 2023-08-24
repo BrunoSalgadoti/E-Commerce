@@ -47,7 +47,6 @@ class CartProduct extends ChangeNotifier {
   String? size;
   String? color;
   int? quantity;
-
   num? fixedPrice;
   Color? realColorFromCart;
 

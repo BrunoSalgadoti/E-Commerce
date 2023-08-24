@@ -25,7 +25,7 @@ class OrdersManager extends ChangeNotifier {
 
     if (!kReleaseMode) {
       MonitoringLogger()
-          .logInfo('Info: ${_subscription?.cancel()}listenToOrders');
+          .logInfo('Info: ${_subscription?.cancel()}_subscriptionCANCEL');
     }
 
     if (users.id != null) {

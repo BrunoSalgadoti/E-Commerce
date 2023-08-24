@@ -17,10 +17,6 @@ class UserManager extends ChangeNotifier {
   UserManager() {
     _loadCurrentUser();
     _auth.setLanguageCode('pt-BR');
-
-    if (!kReleaseMode) {
-      _createAuxAndAdminsIfNotExists();
-    }
   }
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -66,14 +62,15 @@ class UserManager extends ChangeNotifier {
     height: 15,
   );
 
-  Future<void> _createAuxAndAdminsIfNotExists() async {
-    if (!kReleaseMode) {
+  Future<void> createAuxAndAdminsIfNotExists({required bool firstStart}) async {
+    if (!kReleaseMode && firstStart == true) {
       MonitoringLogger()
           .logInfo('Info: Verifier createAuxAndAdminsIfNotExists');
 
       // Check if the "admins" collection is empty
       final adminsQuery = await firestore.collection("admins").limit(1).get();
-      if (adminsQuery.docs.isEmpty) {
+      final usersQuery = await firestore.collection("users").get();
+      if (adminsQuery.docs.isEmpty && usersQuery.docs.isNotEmpty) {
         // Create document '{users.id}' in collection 'admins' with user id as admin
         await firestore.collection("admins").doc(users!.id).set({
           "user": users!.id,
@@ -86,7 +83,7 @@ class UserManager extends ChangeNotifier {
       final doc = await deliveryDoc.get();
       if (!doc.exists) {
         final delivery =
-        Delivery(); // Create a new instance of the Delivery class
+            Delivery(); // Create a new instance of the Delivery class
         await deliveryDoc.set(delivery.toMap());
       }
 
@@ -104,8 +101,7 @@ class UserManager extends ChangeNotifier {
       {required Users users,
       required Function onFail,
       required Function onSuccess}) async {
-    PerformanceMonitoring()
-        .startTrace('sign-in-email', shouldStart: true);
+    PerformanceMonitoring().startTrace('sign-in-email', shouldStart: true);
 
     loading = true;
     try {
@@ -124,8 +120,7 @@ class UserManager extends ChangeNotifier {
 
   Future<void> loginOrSingUpWithFacebook(
       {required Function? onFail, required Function? onSuccess}) async {
-    PerformanceMonitoring()
-        .startTrace('login-facebook', shouldStart: true);
+    PerformanceMonitoring().startTrace('login-facebook', shouldStart: true);
 
     try {
       loadingFace = true;
@@ -179,11 +174,6 @@ class UserManager extends ChangeNotifier {
             }
           }
 
-          // Create "admins" and "aux/delivery" documents if they don't exist
-          if (!kReleaseMode) {
-            await _createAuxAndAdminsIfNotExists();
-          }
-
           loadingFace = false;
           onSuccess!();
           break;
@@ -210,8 +200,7 @@ class UserManager extends ChangeNotifier {
     required Function? onFail,
     required Function? onSuccess,
   }) async {
-    PerformanceMonitoring()
-        .startTrace('login-google', shouldStart: true);
+    PerformanceMonitoring().startTrace('login-google', shouldStart: true);
 
     try {
       loadingGoogle = true;
@@ -264,11 +253,6 @@ class UserManager extends ChangeNotifier {
           }
         }
 
-        // Create "admins" and "aux/delivery" documents if they don't exist
-        if (!kReleaseMode) {
-          await _createAuxAndAdminsIfNotExists();
-        }
-
         loadingGoogle = false;
         onSuccess!();
       } else {
@@ -287,8 +271,7 @@ class UserManager extends ChangeNotifier {
       {required Users users,
       required Function onFail,
       required Function onSuccess}) async {
-    PerformanceMonitoring()
-        .startTrace('sing-up-email', shouldStart: true);
+    PerformanceMonitoring().startTrace('sing-up-email', shouldStart: true);
 
     loading = true;
 
@@ -301,11 +284,6 @@ class UserManager extends ChangeNotifier {
       this.users = users;
 
       await users.saveUserData();
-
-      // Create "admins" and "aux/delivery" documents if they don't exist
-      if (!kReleaseMode) {
-        await _createAuxAndAdminsIfNotExists();
-      }
 
       onSuccess();
     } on FirebaseAuthException catch (error) {

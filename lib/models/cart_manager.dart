@@ -148,6 +148,14 @@ class CartManager extends ChangeNotifier {
 
   bool get isAddressValid => address != null && deliveryPrice != null;
 
+  num get totalQuantity {
+    num quantity = 0;
+    for (final item in items) {
+      quantity += item.quantity ?? 0;
+    }
+    return quantity;
+  }
+
   Future<void> getAddress(String cep) async {
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Info message: Start Load Get Address Cart');

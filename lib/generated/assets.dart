@@ -38,6 +38,7 @@ class Assets {
   static const String componentsEditItemSize = 'lib/screens/product_edit/components/edit_item_size.dart';
   static const String componentsExportAddressDialog = 'lib/screens/address/components/export_address_dialog.dart';
   static const String componentsFooterDescriptionWidget = 'lib/screens/who_we_are/components/footer_description_widget.dart';
+  static const String componentsFreightForm = 'lib/screens/product_edit/components/freight_form.dart';
   static const String componentsImageSourceSheet = 'lib/screens/product_edit/components/image_source_sheet.dart';
   static const String componentsImageSourceWeb = 'lib/screens/product_edit/components/image_source_web.dart';
   static const String componentsImagesForm = 'lib/screens/product_edit/components/images_form.dart';
@@ -61,6 +62,7 @@ class Assets {
   static const String componentsTermsAndPrivacyTextScreen = 'lib/screens/policy_and_documents/components/terms_and_privacy_text_screen.dart';
   static const String componentsTermsOfServiceWidget = 'lib/screens/policy_and_documents/components/terms_of_service_widget.dart';
   static const String componentsTopDescriptionWidget = 'lib/screens/who_we_are/components/top_description_widget.dart';
+  static const String componetsCategoriesCard = 'lib/screens/product_categories/componets/categories_card.dart';
   static const String customDrawerCustomDrawer = 'lib/common/custom_drawer/custom_drawer.dart';
   static const String customMessengersCustomAlertDialog = 'lib/common/custom_messengers/custom_alert_dialog.dart';
   static const String customMessengersCustomScaffoldMessenger = 'lib/common/custom_messengers/custom_scaffold_messenger.dart';
@@ -129,6 +131,7 @@ class Assets {
   static const String modelsPolicyAndDocuments = 'lib/models/policy_and_documents.dart';
   static const String modelsProduct = 'lib/models/product.dart';
   static const String modelsProductManager = 'lib/models/product_manager.dart';
+  static const String modelsProductsBestSelling = 'lib/models/products_best_selling.dart';
   static const String modelsSection = 'lib/models/section.dart';
   static const String modelsSectionItem = 'lib/models/section_item.dart';
   static const String modelsStores = 'lib/models/stores.dart';
@@ -139,6 +142,8 @@ class Assets {
   static const String modelsWhoWeAreManager = 'lib/models/who_we_are_manager.dart';
   static const String ordersOrdersScreen = 'lib/screens/orders/orders_screen.dart';
   static const String policyAndDocumentsPolicyAndDocumentsScreen = 'lib/screens/policy_and_documents/policy_and_documents_screen.dart';
+  static const String productBestSellingBestSellingProductsScreen = 'lib/screens/product_best_selling/best_selling_products_screen.dart';
+  static const String productCategoriesCategoriesScreen = 'lib/screens/product_categories/categories_screen.dart';
   static const String productDetailsProductDetailsScreen = 'lib/screens/product_details/product_details_screen.dart';
   static const String productEditEditProductScreen = 'lib/screens/product_edit/edit_product_screen.dart';
   static const String productSelectedSelectedProductScreen = 'lib/screens/product_selected/selected_product_screen.dart';

@@ -8,6 +8,7 @@ class DetailsProducts extends ChangeNotifier {
     this.price,
     required this.stock,
     this.colorProducts,
+    this.sellers = 0,
   }) {
     colorProducts = colorProducts ?? [];
   }
@@ -16,6 +17,7 @@ class DetailsProducts extends ChangeNotifier {
     size = map["size"] as String;
     price = map["price"] as num;
     stock = map["stock"] as int;
+    sellers = map["sellers"] as int? ?? 0;
     colorProducts = (map["colors"] as List<dynamic>)
         .map((d) => ColorsProducts.fromMap(d as Map<String, dynamic>))
         .toList();
@@ -24,6 +26,7 @@ class DetailsProducts extends ChangeNotifier {
   String? size;
   num? price;
   int stock = 0;
+  int sellers = 0;
   List<ColorsProducts>? colorProducts;
 
   bool get hasStock => stock > 0;
@@ -72,6 +75,7 @@ class DetailsProducts extends ChangeNotifier {
       "size": size,
       "price": price,
       "stock": stock,
+      "sellers": sellers,
       "colors": colorProducts!.map((colors) => colors.toMap()).toList(),
     };
   }
@@ -81,6 +85,7 @@ class DetailsProducts extends ChangeNotifier {
       size: size,
       price: price,
       stock: stock,
+      sellers: sellers,
       colorProducts: colorProducts?.map((colors) => colors.clone()).toList(),
     );
   }

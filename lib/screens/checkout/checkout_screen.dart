@@ -1,5 +1,6 @@
 import 'package:brn_ecommerce/common/button/custom_text_button.dart';
 import 'package:brn_ecommerce/common/cards/price_card.dart';
+import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/models/checkout_manager.dart';
 import 'package:brn_ecommerce/screens/checkout/components/credit_card_widget.dart';
@@ -102,28 +103,35 @@ class CheckoutScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       const CreditCardWidget(),
-                      PriceCard(
-                        buttonText: 'Finalizar Pedido',
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            debugPrint('enviar!!');
+                      Consumer<CheckoutManager>(
+                        builder: (_, checkoutManager, __) {
+                          return PriceCard(
+                            buttonText: 'Finalizar Pedido',
+                            onPressed: () {
+                              if (formKey.currentState!.validate()) {
+                                debugPrint('enviar!!');
 
-                            /*checkoutManager.checkout(onStockFail: (error) {
-                              CustomScaffoldMessenger(
-                                  context: context,
-                                  message: '$error'
-                              ).msn();
-                              Navigator.popUntil(
-                                  context, (route) => route.settings.name == "/cart");
-                            }, onSuccess: (order) {
-                              Navigator.popUntil(context,
-                                  (route) => route.settings.name == "/product");
-                              Navigator.pushNamed(context, "/sales_confirmation",
-                                  arguments: order);
-                            });*/
-                          }
-                        },
-                      ),
+
+
+
+                                checkoutManager.checkout(onStockFail: (error) {
+                                  CustomScaffoldMessenger(
+                                      context: context,
+                                      message: '$error'
+                                  ).msn();
+                                  Navigator.popUntil(
+                                      context, (route) => route.settings.name == "/cart");
+                                }, onSuccess: (order) {
+                                  Navigator.popUntil(context,
+                                          (route) => route.settings.name == "/product");
+                                  Navigator.pushReplacementNamed(context, "/sales_confirmation",
+                                      arguments: order);
+                                });
+                              }
+                            },
+                          );
+                        },)
+
                     ],
                   ),
                 ),
