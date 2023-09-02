@@ -121,13 +121,6 @@ class Product extends ChangeNotifier {
     return lowest;
   }
 
-  // List<Product> getBestSellingProducts(ProductManager productManager, int count) {
-  //   final sortedProducts = productManager.allProducts.toList()
-  //     ..sort((a, b) => b.totalSellers.compareTo(a.totalSellers));
-  //
-  //   return sortedProducts.take(count).toList();
-  // }
-
   DetailsProducts? findSize(String name) {
     try {
       return itemProducts?.firstWhere((s) => s.size == name);

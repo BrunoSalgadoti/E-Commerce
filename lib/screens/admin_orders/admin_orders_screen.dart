@@ -117,7 +117,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                 Expanded(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: Status.values.map((s) {
+                  children: StatusOfOrders.values.map((s) {
                     return CheckboxListTile(
                         title: Text(OrderClient.getStatusText(s)),
                         dense: true,

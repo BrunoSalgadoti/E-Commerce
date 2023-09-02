@@ -24,9 +24,9 @@ class OrderTile extends StatelessWidget {
     final price = orderClient?.price ?? 0.0;
 
     final verificationNextStatusText =
-        orderClient!.status == Status.transporting ||
-            orderClient!.status == Status.delivered ||
-            orderClient!.status == Status.keepingReturn;
+        orderClient!.status == StatusOfOrders.transporting ||
+            orderClient!.status == StatusOfOrders.delivered ||
+            orderClient!.status == StatusOfOrders.keepingReturn;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -60,8 +60,8 @@ class OrderTile extends StatelessWidget {
                 orderClient!.statusText,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  color: orderClient!.status == Status.canceled ||
-                          orderClient!.status == Status.returned
+                  color: orderClient!.status == StatusOfOrders.canceled ||
+                          orderClient!.status == StatusOfOrders.returned
                       ? Colors.red
                       : primaryColor,
                   fontSize: 14,
@@ -97,8 +97,8 @@ class OrderTile extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             if (showControls &&
-                orderClient!.status != Status.canceled &&
-                orderClient!.status != Status.returned)
+                orderClient!.status != StatusOfOrders.canceled &&
+                orderClient!.status != StatusOfOrders.returned)
               SizedBox(
                 height: 90,
                 child: ListView(
@@ -127,8 +127,8 @@ class OrderTile extends StatelessWidget {
                               icon: null,
                               fontColor: Colors.red,
                               onPressed: () {
-                                orderClient?.status = Status.canceled;
-                                showDialog<Status>(
+                                orderClient?.status = StatusOfOrders.canceled;
+                                showDialog<StatusOfOrders>(
                                     context: context,
                                     builder: (BuildContext context) {
                                       return CustomAlertDialog(
@@ -183,7 +183,7 @@ class OrderTile extends StatelessWidget {
                                   text: null,
                                   icon: const Icon(Icons.arrow_forward),
                                   onPressed: verificationNextStatusText
-                                      ? () => showDialog<Status>(
+                                      ? () => showDialog<StatusOfOrders>(
                                           context: context,
                                           builder: (BuildContext context) {
                                             return CustomAlertDialog(

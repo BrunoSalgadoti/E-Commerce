@@ -153,6 +153,7 @@ class Assets {
   static const String servicesCepabertoService = 'lib/services/cepaberto_service.dart';
   static const String servicesViacepService = 'lib/services/viacep_service.dart';
   static const String signUpSignUpScreen = 'lib/screens/sign_up/sign_up_screen.dart';
+  static const String slidingUpPanelFiltersSlidingUpPanel = 'lib/common/sliding_up_panel/filters_sliding_up_panel.dart';
   static const String storesEditEditStoresScreen = 'lib/screens/stores_edit/edit_stores_screen.dart';
   static const String storesStoresScreen = 'lib/screens/stores/stores_screen.dart';
   static const String themesGetThemeData = 'lib/helpers/themes/get_theme_data.dart';

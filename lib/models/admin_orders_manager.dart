@@ -3,14 +3,18 @@ import 'dart:async';
 import 'package:brn_ecommerce/models/order_client.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
+import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 class AdminOrdersManager extends ChangeNotifier {
   final List<OrderClient> _orders = [];
 
   Users? userFilter;
-  List<Status> statusFilter = [Status.preparing, Status.transporting];
+  List<StatusOfOrders> statusFilter = [
+    StatusOfOrders.preparing,
+    StatusOfOrders.transporting
+  ];
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -37,6 +41,10 @@ class AdminOrdersManager extends ChangeNotifier {
   }
 
   Future<void> _listenToOrders() async {
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('_listenToOrders');
+    }
+
     PerformanceMonitoring().startTrace('listen-orders', shouldStart: true);
 
     _subscription = firestore.collection("orders").snapshots().listen((events) {
@@ -65,7 +73,7 @@ class AdminOrdersManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setStatusFilter({Status? status, bool? enabled}) {
+  void setStatusFilter({StatusOfOrders? status, bool? enabled}) {
     if (enabled!) {
       statusFilter.add(status!);
     } else {

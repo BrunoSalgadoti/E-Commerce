@@ -32,7 +32,7 @@ class ProductListTile extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4)),
               child: Container(
-                height: 100,
+                height: 120,
                 padding: const EdgeInsets.all(8),
                 child: Row(
                   children: [
@@ -61,6 +61,14 @@ class ProductListTile extends StatelessWidget {
                             fontWeight: FontWeight.w800,
                           ),
                         ),
+                        if (product!.brand!.isNotEmpty)
+                          Text(
+                            product!.brand!,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         Padding(
                             padding: const EdgeInsets.only(top: 4),
                             child: product!.hasStock

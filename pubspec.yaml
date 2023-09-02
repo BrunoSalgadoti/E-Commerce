@@ -12,10 +12,10 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.18.1
-  collection: ^1.18.0
-  cupertino_icons: ^1.0.5
-  cloud_firestore: ^4.8.5
-  firebase_auth: ^4.7.3
+  collection: ^1.17.2
+  cupertino_icons: ^1.0.6
+  cloud_firestore: ^4.9.1
+  firebase_auth: ^4.9.0
   firebase_storage: ^11.2.6
   firebase_core: ^2.15.1
   firebase_performance: ^0.9.2+5
@@ -26,11 +26,11 @@ dependencies:
   transparent_image: ^2.0.1
   alphabet_list_scroll_view_fix: ^2.0.2
   flutter_slidable: ^3.0.0
-  url_launcher: ^6.1.12
-  image_picker: ^1.0.2
+  url_launcher: ^6.1.14
+  image_picker: ^1.0.4
   custom_universal_html: ^2.0.0
   image_cropper: ^4.0.1
-  path_provider: ^2.1.0
+  path_provider: ^2.1.1
   uuid: ^3.0.7
   dio: ^5.3.2
   brasil_fields: ^1.14.0
@@ -43,14 +43,14 @@ dependencies:
   permission_handler: ^10.4.3
   share_plus: ^7.1.0
   markdown_editable_textinput: ^2.2.0
-  flutter_markdown: ^0.6.17+1
+  flutter_markdown: ^0.6.17+2
   youtube_player_iframe: ^4.0.4
   flutter_colorpicker: ^1.0.3
   flutter_spinkit: ^5.2.0
   flutter_facebook_auth: ^5.0.11
-  google_sign_in: ^6.1.4
+  google_sign_in: ^6.1.5
   package_info_plus: ^4.1.0
-  assets_audio_player: ^3.1.0
+  assets_audio_player: ^3.1.1
   map_launcher: ^2.5.0+1
   flutter_svg: ^2.0.7
   url_strategy: ^0.2.0
@@ -65,7 +65,7 @@ dev_dependencies:
   lint: ^2.1.2
   analyzer: ^6.2.0
   logger: ^2.0.1
-  flutter_lints: ^2.0.2
+  flutter_lints: ^2.0.3
   file: ^7.0.0
 
 # The following section is specific to Flutter packages.

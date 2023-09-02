@@ -8,6 +8,7 @@ import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
@@ -57,10 +58,16 @@ class AdminUsersSearch extends ChangeNotifier {
   }
 
   void _loadAllUsers() {
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('_loadAllUsers');
+    }
+
     PerformanceMonitoring().startTrace('listen-users', shouldStart: true);
 
     // Start by fetching data from cache
-    firestore.collection("users").get(const GetOptions(source: Source.cache))
+    firestore
+        .collection("users")
+        .get(const GetOptions(source: Source.cache))
         .then((snapshot) {
       if (snapshot.metadata.isFromCache) {
         allUsers = snapshot.docs.map((d) => Users.fromDocument(d)).toList();
@@ -74,18 +81,20 @@ class AdminUsersSearch extends ChangeNotifier {
     // Listen to the stream for real-time updates and update the UI when necessary
     _subscription =
         firestore.collection("users").snapshots().listen((snapshot) {
-          allUsers = snapshot.docs.map((d) => Users.fromDocument(d)).toList();
-          allUsers.sort((a, b) =>
-              a.userName!.toLowerCase().compareTo(b.userName!.toLowerCase()));
-          filterList(allUsers);
-          notifyListeners();
-        });
+      allUsers = snapshot.docs.map((d) => Users.fromDocument(d)).toList();
+      allUsers.sort((a, b) =>
+          a.userName!.toLowerCase().compareTo(b.userName!.toLowerCase()));
+      filterList(allUsers);
+      notifyListeners();
+    });
 
     PerformanceMonitoring().stopTrace('listen-users');
   }
 
   List<Users> getFilteredUsers() {
-    MonitoringLogger().logInfo('getFilteredUsers');
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('getFilteredUsers');
+    }
 
     List<Users> filteredUsers = [];
 
@@ -94,11 +103,10 @@ class AdminUsersSearch extends ChangeNotifier {
       filteredUsers.addAll(allUsers);
     } else {
       userFilteredSendEmail = true;
-      filteredUsers.addAll(allUsers.where((u) =>
-          u.userName!
-              .toString()
-              .toLowerCase()
-              .contains(search.toString().toLowerCase())));
+      filteredUsers.addAll(allUsers.where((u) => u.userName!
+          .toString()
+          .toLowerCase()
+          .contains(search.toString().toLowerCase())));
     }
 
     filterList(filteredUsers);
@@ -109,7 +117,7 @@ class AdminUsersSearch extends ChangeNotifier {
     String? encodeQueryParameters(Map<String, String> params) {
       return params.entries
           .map((MapEntry<String, String> e) =>
-      '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
           .join("&");
     }
 
@@ -183,11 +191,11 @@ class AdminUsersSearch extends ChangeNotifier {
                     children: <Widget>[
                       user.userPhotoURL == "" || user.userPhotoURL == null
                           ? const CircleAvatar(
-                          backgroundImage: AssetImage(
-                              'assets/images/userWithoutImage.png'))
+                              backgroundImage: AssetImage(
+                                  'assets/images/userWithoutImage.png'))
                           : CircleAvatar(
-                        backgroundImage: NetworkImage(user.userPhotoURL!),
-                      ),
+                              backgroundImage: NetworkImage(user.userPhotoURL!),
+                            ),
                       const SizedBox(
                           height: 40,
                           width: 40,
@@ -244,85 +252,85 @@ class AdminUsersSearch extends ChangeNotifier {
                       userFilteredSendEmail == true
                           ? _sendEmail(user.email, user.userName)
                           : showDialog<void>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return CustomAlertDialog(
-                              titleText: 'Enviar E-mail',
-                              titleSize: 18,
-                              titleColor: Colors.black,
-                              bodyText: 'Escolha para quem deseja enviar\n '
-                                  'o E-mail!',
-                              bodyWeight: FontWeight.normal,
-                              actions: [
-                                SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      CustomTextButton(
-                                        text: 'Este Contato',
-                                        icon: null,
-                                        onPressed: () {
-                                          _sendEmail(
-                                              user.email, user.userName);
-                                          Navigator.of(context).pop();
-                                        },
+                              context: context,
+                              builder: (BuildContext context) {
+                                return CustomAlertDialog(
+                                  titleText: 'Enviar E-mail',
+                                  titleSize: 18,
+                                  titleColor: Colors.black,
+                                  bodyText: 'Escolha para quem deseja enviar\n '
+                                      'o E-mail!',
+                                  bodyWeight: FontWeight.normal,
+                                  actions: [
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          CustomTextButton(
+                                            text: 'Este Contato',
+                                            icon: null,
+                                            onPressed: () {
+                                              _sendEmail(
+                                                  user.email, user.userName);
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          CustomTextButton(
+                                            text: 'Todos contatos!',
+                                            icon: null,
+                                            onPressed: () {
+                                              _sendEmail(null, null);
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          CustomTextButton(
+                                            text: 'Cancelar',
+                                            icon: null,
+                                            fontColor: Colors.red,
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
                                       ),
-                                      CustomTextButton(
-                                        text: 'Todos contatos!',
-                                        icon: null,
-                                        onPressed: () {
-                                          _sendEmail(null, null);
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                      CustomTextButton(
-                                        text: 'Cancelar',
-                                        icon: null,
-                                        fontColor: Colors.red,
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            );
-                          });
+                                    ),
+                                  ],
+                                );
+                              });
                     }),
               ],
             ),
             child: Consumer2<AdminOrdersManager, PageManager>(
                 builder: (_, adminOrdersManager, pageManager, __) {
-                  return ListTile(
-                    leading: user.userPhotoURL == "" ||
-                        user.userPhotoURL == null
-                        ? const CircleAvatar(
+              return ListTile(
+                leading: user.userPhotoURL == "" || user.userPhotoURL == null
+                    ? const CircleAvatar(
                         backgroundImage:
-                        AssetImage('assets/images/userWithoutImage.png'))
-                        : CircleAvatar(
+                            AssetImage('assets/images/userWithoutImage.png'))
+                    : CircleAvatar(
                         backgroundImage: NetworkImage(user.userPhotoURL!)),
-                    title: Text(user.userName!,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w800, color: Colors.white)),
-                    subtitle: Text(
-                      "${user.email}\nTel.: ${user.phoneNumber ?? ""}",
-                      style: const TextStyle(fontSize: 16, color: Colors.white),
-                    ),
-                    onTap: () {
-                      adminOrdersManager.setUserFilter(user);
-                      pageManager.setPage(6);
-                    },
-                  );
-                })));
+                title: Text(user.userName!,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w800, color: Colors.white)),
+                subtitle: Text(
+                  "${user.email}\nTel.: ${user.phoneNumber ?? ""}",
+                  style: const TextStyle(fontSize: 16, color: Colors.white),
+                ),
+                onTap: () {
+                  adminOrdersManager.setUserFilter(user);
+                  pageManager.setPage(6);
+                },
+              );
+            })));
       }
     }
   }
+
   @override
   void dispose() {
-    _subscription?.cancel(); // Cancelar a inscrição no stream
+    _subscription?.cancel();
     super.dispose();
   }
 }
