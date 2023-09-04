@@ -45,13 +45,20 @@ class PriceCard extends StatelessWidget {
               ],
             ),
             const Divider(),
-            if (deliveryPrice != null) ...[
+            if (deliveryPrice != null &&
+                cartManager.hasFreeShippingProduct) ...[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Entrega'),
                   Text(formattedRealText(deliveryPrice))
                 ],
+              ),
+              const Divider(),
+            ] else ...[
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [Text('Entrega'), Text('Frete Grátis')],
               ),
               const Divider(),
             ],
@@ -68,9 +75,7 @@ class PriceCard extends StatelessWidget {
                 Text(
                   formattedRealText(totalPrice),
                   style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 16
-                  ),
+                      color: Theme.of(context).primaryColor, fontSize: 16),
                 )
               ],
             ),

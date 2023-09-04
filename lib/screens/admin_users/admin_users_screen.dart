@@ -1,6 +1,6 @@
 import 'package:alphabet_list_scroll_view_fix/alphabet_list_scroll_view.dart';
 import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
-import 'package:brn_ecommerce/common/search_dialog.dart';
+import 'package:brn_ecommerce/common/miscellaneous/search_dialog.dart';
 import 'package:brn_ecommerce/models/admin_users_manager.dart';
 import 'package:brn_ecommerce/models/admin_users_search.dart';
 import 'package:flutter/material.dart';

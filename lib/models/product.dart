@@ -24,7 +24,7 @@ class Product extends ChangeNotifier {
     this.errorMessage,
     this.details,
     this.brand = "",
-    this.freight = true,
+    this.freight,
   }) {
     images = images ?? [];
     itemProducts = itemProducts ?? [];
@@ -46,7 +46,7 @@ class Product extends ChangeNotifier {
     deleted = (document["deleted"] ?? false) as bool;
     isValid = (document["isvalid"] ?? true) as bool;
     brand = document["brand"] as String? ?? "";
-    freight = document["freight"] as bool? ?? true;
+    freight = document["freight"] as bool;
     itemProducts = (document["details"] as List<dynamic>)
         .map((d) => DetailsProducts.fromMap(d as Map<String, dynamic>))
         .toList();
@@ -65,8 +65,8 @@ class Product extends ChangeNotifier {
   String? name;
   String? description;
   String? errorMessage;
-  String? brand = "";
-  bool? freight = true;
+  String brand = "";
+  bool? freight;
   bool deleted = false;
   bool? isValid;
   List<String>? images;
@@ -144,7 +144,7 @@ class Product extends ChangeNotifier {
 
     final Map<String, dynamic> data = {
       "name": name,
-      "brand": brand ?? "",
+      "brand": brand,
       "freight": freight ?? true,
       "description": description,
       "details": exportDetailsList(),
@@ -280,7 +280,7 @@ class Product extends ChangeNotifier {
     return Product(
       id: id,
       name: name,
-      brand: brand ?? "",
+      brand: brand,
       freight: freight ?? true,
       description: description,
       images: List.from(images!),

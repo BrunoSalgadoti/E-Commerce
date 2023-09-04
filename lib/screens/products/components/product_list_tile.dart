@@ -1,3 +1,4 @@
+import 'package:brn_ecommerce/common/miscellaneous/freight_logo.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:flutter/material.dart';
@@ -29,80 +30,89 @@ class ProductListTile extends StatelessWidget {
       child: product!.isValid!
           ? Card(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              clipBehavior: Clip.antiAlias,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4)),
-              child: Container(
-                height: 120,
-                padding: const EdgeInsets.all(8),
-                child: Row(
-                  children: [
-                    AspectRatio(
-                      aspectRatio: 1,
-                      child: imageNotAvailable
-                          ? Image.asset('assets/images/noImage.png',
-                              fit: BoxFit.fitHeight)
-                          : Image(
-                              image: NetworkImage(product?.images?.first ?? ""),
-                              fit: BoxFit.fitHeight,
-                            ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Expanded(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  borderRadius: BorderRadius.circular(7)),
+              child: Stack(
+                children: [
+                  Container(
+                    height: 120,
+                    padding: const EdgeInsets.all(5),
+                    child: Row(
                       children: [
-                        Text(
-                          product!.name!,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        if (product!.brand!.isNotEmpty)
-                          Text(
-                            product!.brand!,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        Padding(
-                            padding: const EdgeInsets.only(top: 4),
-                            child: product!.hasStock
-                                ? Text(
-                                    'A partir de: ',
-                                    style: TextStyle(
-                                        fontSize: 15, color: Colors.grey[600]),
-                                  )
-                                : Text(
-                                    'Aguadando reposição de estoque... ',
-                                    style: TextStyle(
-                                        fontSize: 14, color: Colors.grey[600]),
-                                  )),
-                        product!.hasStock
-                            ? Text(
-                                formattedRealText(basePrice),
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: primaryColor,
+                        AspectRatio(
+                          aspectRatio: 1,
+                          child: imageNotAvailable
+                              ? Image.asset('assets/images/noImage.png',
+                                  fit: BoxFit.fitHeight)
+                              : Image(
+                                  image: NetworkImage(
+                                      product?.images?.first ?? ""),
+                                  fit: BoxFit.cover,
                                 ),
-                              )
-                            : Text(
-                                'Fora de estoque',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: primaryColor,
+                        ),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              product!.name!,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                            if (product?.brand != "")
+                              Text(
+                                product!.brand,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 4),
+                                child: product!.hasStock
+                                    ? Text(
+                                        'A partir de: ',
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.grey[600]),
+                                      )
+                                    : Text(
+                                        'Aguadando reposição de estoque... ',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey[600]),
+                                      )),
+                            product!.hasStock
+                                ? Text(
+                                    formattedRealText(basePrice),
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: primaryColor,
+                                    ),
+                                  )
+                                : Text(
+                                    'Fora de estoque',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: primaryColor,
+                                    ),
+                                  ),
+                          ],
+                        ))
                       ],
-                    ))
-                  ],
-                ),
+                    ),
+                  ),
+                  FreightLogo(product: product ?? Product())
+                ],
               ),
             )
           : Container(),

@@ -8,6 +8,8 @@ import '../common/functions/common_functions.dart';
 class CartProduct extends ChangeNotifier {
   CartProduct.fromProduct(this._product, this._detailsProducts) {
     productId = product?.id;
+    brand = product?.brand;
+    freight = product?.freight;
     quantity = 1;
     size = product?.selectedDetails?.size;
     color = detailsProducts?.selectedColors?.color ?? "";
@@ -17,6 +19,8 @@ class CartProduct extends ChangeNotifier {
   CartProduct.fromDocument(DocumentSnapshot document) {
     id = document.id;
     productId = document.get("pid") as String;
+    brand = document.get("brand") as String? ?? "";
+    freight = document.get("freight") as bool? ?? false;
     quantity = document.get("quantity") as int;
     size = document.get("size") as String;
     color = document.get("color") as String? ?? "";
@@ -29,6 +33,8 @@ class CartProduct extends ChangeNotifier {
 
   CartProduct.fromMap(Map<String, dynamic> map) {
     productId = map["pid"] as String;
+    brand = map["brand"] as String? ?? "";
+    freight = map["freight"] as bool? ?? false;
     quantity = map["quantity"] as int;
     size = map["size"] as String;
     fixedPrice = map["fixedPrice"] as num;
@@ -44,6 +50,7 @@ class CartProduct extends ChangeNotifier {
 
   String? id;
   String? productId;
+  String? brand;
   String? size;
   String? color;
   int? quantity;
@@ -90,12 +97,25 @@ class CartProduct extends ChangeNotifier {
     return detailsProductsFindValues?.stock ?? 0;
   }
 
+  bool? _freight;
+
+  bool? get freight => _freight;
+
+  set freight(bool? value) {
+    if (_freight != value) {
+      _freight = value;
+      notifyListeners();
+    }
+  }
+
   Map<String, dynamic> toCartItemMap() {
     return {
       "pid": productId,
       "quantity": quantity,
       "size": size,
       "color": color,
+      "brand": brand,
+      "freight": freight
     };
   }
 
@@ -105,6 +125,8 @@ class CartProduct extends ChangeNotifier {
       "quantity": quantity,
       "size": size,
       "color": color,
+      "brand": brand,
+      "freight": freight,
       "fixedPrice": fixedPrice ?? unitPrice
     };
   }

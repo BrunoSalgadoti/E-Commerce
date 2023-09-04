@@ -17,8 +17,6 @@ class Assets {
   static const String chearchCepViacepAdress = 'lib/models/chearch_cep/viacep_adress.dart';
   static const String checkoutCheckoutScreen = 'lib/screens/checkout/checkout_screen.dart';
   static const String commonCustomTextFormField = 'lib/common/custom_text_form_field.dart';
-  static const String commonEmptyPageIndicator = 'lib/common/empty_page_indicator.dart';
-  static const String commonSearchDialog = 'lib/common/search_dialog.dart';
   static const String componentsAddSectionWidget = 'lib/screens/home/components/add_section_widget.dart';
   static const String componentsAddTileWidget = 'lib/screens/home/components/add_tile_widget.dart';
   static const String componentsAddressCard = 'lib/screens/address/components/address_card.dart';
@@ -113,6 +111,9 @@ class Assets {
   static const String loginLoginScreen = 'lib/screens/login/login_screen.dart';
   static const String logoStoreLogo = 'assets/logo/storeLogo.png';
   static const String logoStoreLogo2 = 'assets/logo/storeLogo2.png';
+  static const String miscellaneousEmptyPageIndicator = 'lib/common/miscellaneous/empty_page_indicator.dart';
+  static const String miscellaneousFreightLogo = 'lib/common/miscellaneous/freight_logo.dart';
+  static const String miscellaneousSearchDialog = 'lib/common/miscellaneous/search_dialog.dart';
   static const String modelsAddress = 'lib/models/address.dart';
   static const String modelsAdminOrdersManager = 'lib/models/admin_orders_manager.dart';
   static const String modelsAdminUsersManager = 'lib/models/admin_users_manager.dart';

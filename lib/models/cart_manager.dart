@@ -136,6 +136,12 @@ class CartManager extends ChangeNotifier {
           .update(cartProduct.toCartItemMap());
       users!.firestoreRef.update({"favourite": true});
     }
+
+    hasFreeShippingProduct;
+    if (hasFreeShippingProduct) {
+      calculateDelivery(
+          users?.address?.lat ?? 0.00, users?.address?.long ?? 0.00);
+    }
     notifyListeners();
   }
 
@@ -144,6 +150,10 @@ class CartManager extends ChangeNotifier {
       if (!cartProduct.hasStock || !cartProduct.hasAmount) return false;
     }
     return true;
+  }
+
+  bool get hasFreeShippingProduct {
+    return items.any((product) => product.freight == true);
   }
 
   bool get isAddressValid => address != null && deliveryPrice != null;
@@ -255,7 +265,15 @@ class CartManager extends ChangeNotifier {
       if (distanceClient > maximumDeliveryDistance) {
         return false;
       }
-      deliveryPrice = basePriceDelivery + distanceClient * kmForDelivery;
+
+      if (hasFreeShippingProduct) {
+        deliveryPrice = basePriceDelivery + distanceClient * kmForDelivery;
+        notifyListeners();
+      } else {
+        deliveryPrice = 0;
+        notifyListeners();
+      }
+
       return true;
     } catch (error) {
       return Future.error('CalculateDelivery $error');

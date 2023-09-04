@@ -1,7 +1,7 @@
 import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
-import 'package:brn_ecommerce/common/empty_page_indicator.dart';
+import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/filters_sliding_up_panel.dart';
-import 'package:brn_ecommerce/common/search_dialog.dart';
+import 'package:brn_ecommerce/common/miscellaneous/search_dialog.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/screens/products/components/product_list_tile.dart';
@@ -152,7 +152,9 @@ class ProductsScreen extends StatelessWidget {
                         itemCount: filteredProducts.length,
                         itemBuilder: (_, index) {
                           return ProductListTile(
-                            product: filteredProducts.toList()[index],
+                            product:  productManager.filtersOn == true
+                                ? filteredProducts.toList()[index]
+                                : filteredProducts.reversed.toList()[index],
                           );
                         },
                       ),

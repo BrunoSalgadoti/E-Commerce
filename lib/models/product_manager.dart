@@ -90,9 +90,9 @@ class ProductManager extends ChangeNotifier {
     if (statusFilter.contains(StatusOfProducts.brand)) {
       filteredProducts.clear();
       statusFilter = [];
-      filteredProducts.addAll(allProducts.where(
-          (product) => product.brand!.trim() != "" || product.brand == null));
-      filteredProducts.sort((a, b) => a.brand!.compareTo(b.brand!));
+      filteredProducts
+          .addAll(allProducts.where((product) => product.brand.trim() != ""));
+      filteredProducts.sort((a, b) => a.brand.compareTo(b.brand));
     }
 
     if (statusFilter.contains(StatusOfProducts.freight)) {

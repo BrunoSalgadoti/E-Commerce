@@ -151,7 +151,7 @@ class _AddressScreenState extends State<AddressScreen> {
             }
 
             return PriceCard(
-              buttonText: 'Continuar para Pagamento',
+              buttonText: 'Ir ao Pagamento',
               onPressed: cartManager.isAddressValid
                   ? () async {
                       userManager.loading = true;

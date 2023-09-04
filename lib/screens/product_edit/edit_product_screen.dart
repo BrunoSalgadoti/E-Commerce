@@ -156,9 +156,9 @@ class EditProductScreen extends StatelessWidget {
                                 enabledBorder: InputBorder.none,
                                 onSaved: (brand) {
                                   if (brand?.trim().isEmpty ?? true) {
-                                    product?.brand = null;
+                                    product?.brand = "";
                                   } else {
-                                    product?.brand = brand;
+                                    product?.brand = brand!;
                                   }
                                 },
                               ),
