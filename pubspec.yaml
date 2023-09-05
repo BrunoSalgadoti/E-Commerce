@@ -64,7 +64,7 @@ dev_dependencies:
     sdk: flutter
   lint: ^2.1.2
   analyzer: ^6.2.0
-  logger: ^2.0.1
+  logger: ^2.0.2
   flutter_lints: ^2.0.3
   file: ^7.0.0
 

@@ -113,6 +113,7 @@ class Assets {
   static const String logoStoreLogo2 = 'assets/logo/storeLogo2.png';
   static const String miscellaneousEmptyPageIndicator = 'lib/common/miscellaneous/empty_page_indicator.dart';
   static const String miscellaneousFreightLogo = 'lib/common/miscellaneous/freight_logo.dart';
+  static const String miscellaneousProductSearchFAB = 'lib/common/miscellaneous/product_search_fab.dart';
   static const String miscellaneousSearchDialog = 'lib/common/miscellaneous/search_dialog.dart';
   static const String modelsAddress = 'lib/models/address.dart';
   static const String modelsAdminOrdersManager = 'lib/models/admin_orders_manager.dart';
