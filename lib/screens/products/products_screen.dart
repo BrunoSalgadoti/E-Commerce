@@ -1,7 +1,7 @@
 import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
-import 'package:brn_ecommerce/common/sliding_up_panel/filters_sliding_up_panel.dart';
 import 'package:brn_ecommerce/common/miscellaneous/search_dialog.dart';
+import 'package:brn_ecommerce/common/sliding_up_panel/filters_sliding_up_panel.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/screens/products/components/product_list_tile.dart';
@@ -152,7 +152,7 @@ class ProductsScreen extends StatelessWidget {
                         itemCount: filteredProducts.length,
                         itemBuilder: (_, index) {
                           return ProductListTile(
-                            product:  productManager.filtersOn == true
+                            product: productManager.filtersOn == true
                                 ? filteredProducts.toList()[index]
                                 : filteredProducts.reversed.toList()[index],
                           );
@@ -167,17 +167,17 @@ class ProductsScreen extends StatelessWidget {
       }),
       floatingActionButton:
           Consumer<UserManager>(builder: (_, userManager, __) {
-            return FloatingActionButton(
-              backgroundColor: Colors.white,
-              foregroundColor: Theme.of(context).primaryColor,
-              onPressed: () {
-                if (userManager.isLoggedIn) {
-                  Navigator.pushNamed(context, "/cart");
-                } else {
-                  Navigator.pushNamed(context, "/login");
-                }
-              },
-              child: userManager.isLoggedIn
+        return FloatingActionButton(
+          backgroundColor: Colors.white,
+          foregroundColor: Theme.of(context).primaryColor,
+          onPressed: () {
+            if (userManager.isLoggedIn) {
+              Navigator.pushNamed(context, "/cart");
+            } else {
+              Navigator.pushNamed(context, "/login");
+            }
+          },
+          child: userManager.isLoggedIn
               ? const Icon(Icons.shopping_cart)
               : const Icon(Icons.account_circle),
         );

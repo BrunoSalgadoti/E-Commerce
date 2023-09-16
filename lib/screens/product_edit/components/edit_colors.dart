@@ -4,6 +4,8 @@ import 'package:brn_ecommerce/models/colors_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
+import '../../../common/functions/common_functions.dart';
+
 class EditColors extends StatefulWidget {
   const EditColors({
     Key? key,
@@ -113,11 +115,5 @@ class EditColorsState extends State<EditColors> {
         ),
       ],
     );
-  }
-
-  String getHexColor(Color color) {
-    String hexColor =
-        '#${color.value.toRadixString(16).padLeft(8, '0').substring(2).toUpperCase()}';
-    return hexColor;
   }
 }

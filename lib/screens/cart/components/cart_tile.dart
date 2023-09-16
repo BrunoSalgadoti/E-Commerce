@@ -68,8 +68,19 @@ class CartTile extends StatelessWidget {
                               style: const TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.w500),
                             ),
+                            if (cartProduct?.brand != null &&
+                                cartProduct?.brand != "")
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 7),
+                                child: Text(
+                                  'Marca: ${cartProduct?.brand ?? ""}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w300),
+                                ),
+                              ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 7),
+                              padding: const EdgeInsets.symmetric(vertical: 2),
                               child: Text(
                                 'Tamanho: ${cartProduct?.size ?? ""}',
                                 style: const TextStyle(

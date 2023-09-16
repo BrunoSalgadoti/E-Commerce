@@ -1,8 +1,8 @@
 import 'package:brn_ecommerce/models/chearch_cep/cepaberto_address.dart';
-import 'package:brn_ecommerce/services/db_api/cepaberto_service_token.dart';
+import 'package:brn_ecommerce/services/db_api/config.dart';
 import 'package:dio/dio.dart';
 
-final token = CepabertoServiceToken().token;
+const token = Config.cepabertoServiceToken;
 
 class CepAbertoService {
   Map<String, dynamic>? headers;
