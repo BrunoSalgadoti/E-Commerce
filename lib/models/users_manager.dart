@@ -1,7 +1,7 @@
 import 'package:brn_ecommerce/helpers/firebase_errors.dart';
 import 'package:brn_ecommerce/models/delivery.dart';
 import 'package:brn_ecommerce/models/users.dart';
-import 'package:brn_ecommerce/services/db_api/facebook_app_id_for_web.dart';
+import 'package:brn_ecommerce/services/db_api/config.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,6 +31,15 @@ class UserManager extends ChangeNotifier {
 
   set loading(bool value) {
     _loading = value;
+    notifyListeners();
+  }
+
+  bool _editingCategories = false;
+
+  bool get editingCategories => _editingCategories;
+
+  set editingCategories(bool value) {
+    _editingCategories = value;
     notifyListeners();
   }
 
@@ -127,7 +136,7 @@ class UserManager extends ChangeNotifier {
       // check if is running on Web
       if (kIsWeb) {
         await FacebookAuth.i.webAndDesktopInitialize(
-          appId: FacebookAppIdForWeb().facebookAppId,
+          appId: Config.facebookAppId,
           cookie: true,
           xfbml: true,
           version: "v17.0",

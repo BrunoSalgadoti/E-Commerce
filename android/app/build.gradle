@@ -92,11 +92,11 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation platform("com.google.firebase:firebase-bom:32.2.2")
-    implementation "com.google.firebase:firebase-analytics-ktx"
+    implementation platform("com.google.firebase:firebase-bom:32.2.3")
+    implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-perf-ktx")   // firebase performance monitoring
     implementation("com.google.firebase:firebase-auth-ktx")
-    implementation "com.facebook.android:facebook-android-sdk:[8,9)"
-    implementation "com.google.android.gms:play-services-auth:20.7.0"
+    implementation("com.facebook.android:facebook-android-sdk:[8,9)")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation("androidx.multidex:multidex:2.0.1")
 }

@@ -60,12 +60,13 @@ class Assets {
   static const String componentsTermsAndPrivacyTextScreen = 'lib/screens/policy_and_documents/components/terms_and_privacy_text_screen.dart';
   static const String componentsTermsOfServiceWidget = 'lib/screens/policy_and_documents/components/terms_of_service_widget.dart';
   static const String componentsTopDescriptionWidget = 'lib/screens/who_we_are/components/top_description_widget.dart';
-  static const String componetsCategoriesCard = 'lib/screens/product_categories/componets/categories_card.dart';
+  static const String componetsMainCategoriesCard = 'lib/screens/product_categories/componets/main_categories_card.dart';
+  static const String componetsSubCategoriesCard = 'lib/screens/product_categories/componets/sub_categories_card.dart';
+  static const String configDebugModeAndFirstStart = 'lib/services/config/debug_mode_and_first_start.dart';
   static const String customDrawerCustomDrawer = 'lib/common/custom_drawer/custom_drawer.dart';
   static const String customMessengersCustomAlertDialog = 'lib/common/custom_messengers/custom_alert_dialog.dart';
   static const String customMessengersCustomScaffoldMessenger = 'lib/common/custom_messengers/custom_scaffold_messenger.dart';
-  static const String dbApiCepabertoServiceToken = 'lib/services/db_api/cepaberto_service_token.dart';
-  static const String dbApiFacebookAppIdForWeb = 'lib/services/db_api/facebook_app_id_for_web.dart';
+  static const String dbApiConfig = 'lib/services/db_api/config.dart';
   static const String dbApiFirebaseOptions = 'lib/services/db_api/firebase_options.dart';
   static const String developmentMonitoringFirebasePerformance = 'lib/services/development_monitoring/firebase_performance.dart';
   static const String developmentMonitoringMonitoringLogger = 'lib/services/development_monitoring/monitoring_logger.dart';
@@ -75,6 +76,7 @@ class Assets {
   static const String factoryColorsAnotherColors = 'lib/helpers/themes/factory_colors/another_colors.dart';
   static const String factoryColorsIosFactoryColos = 'lib/helpers/themes/factory_colors/ios_factory_colos.dart';
   static const String factoryColorsWebFactoryColors = 'lib/helpers/themes/factory_colors/web_factory_colors.dart';
+  static const String firebaseRemoteConfigsMonitoringStockMin = 'lib/services/firebase_remote_configs/monitoring_stock_min.dart';
   static const String formatedFieldsFormatTimestamp = 'lib/common/formated_fields/format_timestamp.dart';
   static const String formatedFieldsFormatValues = 'lib/common/formated_fields/format_values.dart';
   static const String formatedFieldsTimeInputFormatter = 'lib/common/formated_fields/time_input_formatter.dart';
@@ -83,6 +85,7 @@ class Assets {
   static const String helpersAppProviders = 'lib/helpers/app_providers.dart';
   static const String helpersExtensions = 'lib/helpers/extensions.dart';
   static const String helpersFirebaseErrors = 'lib/helpers/firebase_errors.dart';
+  static const String helpersHandleErros = 'lib/helpers/handle_erros.dart';
   static const String helpersRouteGenerator = 'lib/helpers/route_generator.dart';
   static const String helpersValidators = 'lib/helpers/validators.dart';
   static const String homeHomeScreen = 'lib/screens/home/home_screen.dart';
@@ -95,10 +98,12 @@ class Assets {
   static const String iconsHipercard = 'assets/icons/hipercard.svg';
   static const String iconsLocked = 'assets/icons/locked.svg';
   static const String iconsMastercard = 'assets/icons/mastercard.svg';
+  static const String iconsSmilingFace = 'assets/icons/smilingFace.svg';
   static const String iconsUserWithoutImage = 'assets/icons/userWithoutImage.svg';
   static const String iconsVisa = 'assets/icons/visa.svg';
   static const String imagesAwait = 'assets/images/await.gif';
   static const String imagesBrnInfoDev = 'assets/images/brnInfoDev.png';
+  static const String imagesCategoriesBackground = 'assets/images/CategoriesBackground.jpg';
   static const String imagesEmConstrucaoGitHub = 'assets/images/emConstrucaoGitHub.png';
   static const String imagesGoShopping = 'assets/images/goShopping.gif';
   static const String imagesNoImage = 'assets/images/noImage.png';
@@ -113,7 +118,7 @@ class Assets {
   static const String logoStoreLogo2 = 'assets/logo/storeLogo2.png';
   static const String miscellaneousEmptyPageIndicator = 'lib/common/miscellaneous/empty_page_indicator.dart';
   static const String miscellaneousFreightLogo = 'lib/common/miscellaneous/freight_logo.dart';
-  static const String miscellaneousProductSearchFAB = 'lib/common/miscellaneous/product_search_fab.dart';
+  static const String miscellaneousProductSearchFab = 'lib/common/miscellaneous/product_search_fab.dart';
   static const String miscellaneousSearchDialog = 'lib/common/miscellaneous/search_dialog.dart';
   static const String modelsAddress = 'lib/models/address.dart';
   static const String modelsAdminOrdersManager = 'lib/models/admin_orders_manager.dart';
@@ -132,7 +137,11 @@ class Assets {
   static const String modelsPageManager = 'lib/models/page_manager.dart';
   static const String modelsPolicyAndDocuments = 'lib/models/policy_and_documents.dart';
   static const String modelsProduct = 'lib/models/product.dart';
+  static const String modelsProductCategory = 'lib/models/product_category.dart';
+  static const String modelsProductCategoryManager = 'lib/models/product_category_manager.dart';
   static const String modelsProductManager = 'lib/models/product_manager.dart';
+  static const String modelsProductSectionList = 'lib/models/product_section_list.dart';
+  static const String modelsProductSubCategory = 'lib/models/product_sub_category.dart';
   static const String modelsProductsBestSelling = 'lib/models/products_best_selling.dart';
   static const String modelsSection = 'lib/models/section.dart';
   static const String modelsSectionItem = 'lib/models/section_item.dart';
@@ -146,6 +155,9 @@ class Assets {
   static const String policyAndDocumentsPolicyAndDocumentsScreen = 'lib/screens/policy_and_documents/policy_and_documents_screen.dart';
   static const String productBestSellingBestSellingProductsScreen = 'lib/screens/product_best_selling/best_selling_products_screen.dart';
   static const String productCategoriesCategoriesScreen = 'lib/screens/product_categories/categories_screen.dart';
+  static const String productCategoriesFactoryListsCategoriesFactory = 'lib/helpers/product_categories_factory_lists/categories_factory.dart';
+  static const String productCategoriesFactoryListsSectionCategory = 'lib/helpers/product_categories_factory_lists/section_category.dart';
+  static const String productCategoriesFactoryListsSubCategoriesFactory = 'lib/helpers/product_categories_factory_lists/sub_categories_factory.dart';
   static const String productDetailsProductDetailsScreen = 'lib/screens/product_details/product_details_screen.dart';
   static const String productEditEditProductScreen = 'lib/screens/product_edit/edit_product_screen.dart';
   static const String productSelectedSelectedProductScreen = 'lib/screens/product_selected/selected_product_screen.dart';

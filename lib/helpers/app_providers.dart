@@ -7,6 +7,8 @@ import 'package:brn_ecommerce/models/home_manager.dart';
 import 'package:brn_ecommerce/models/orders_manager.dart';
 import 'package:brn_ecommerce/models/policy_and_documents.dart';
 import 'package:brn_ecommerce/models/product.dart';
+import 'package:brn_ecommerce/models/product_category.dart';
+import 'package:brn_ecommerce/models/product_category_manager.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:brn_ecommerce/models/stores.dart';
 import 'package:brn_ecommerce/models/stores_manager.dart';
@@ -35,6 +37,12 @@ class AppProviders extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ProductManager(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ProductCategory(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ProductCategoryManager(),
         ),
         ChangeNotifierProvider(
           create: (_) => DetailsProducts(stock: 0),

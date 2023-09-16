@@ -1,4 +1,6 @@
+import 'package:brn_ecommerce/models/page_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SettingsDrawer extends StatelessWidget {
   const SettingsDrawer({super.key});
@@ -8,20 +10,22 @@ class SettingsDrawer extends StatelessWidget {
     return PopupMenuButton<String>(
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
         const PopupMenuItem<String>(
-          //TODO: settings
+          //TODO: Settings
           value: 'Opção1',
           child: Text(
-            'Opção_1',
+            'Gerenciar Categorias',
           ),
         ),
         const PopupMenuItem<String>(
-          value: 'Opção_2',
+          value: 'Opção2',
           child: Text('Opção 2'),
         ),
         // AAdd other menu options as needed
       ],
       onSelected: (String value) {
-        if (value == 'Opção_1') {}
+        if (value == 'Opção1') {
+          context.read<PageManager>().setPage(2);
+        }
       },
       // Add the conditions for the other selected options
       child: const SizedBox(

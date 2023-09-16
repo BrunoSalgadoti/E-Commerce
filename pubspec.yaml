@@ -19,6 +19,8 @@ dependencies:
   firebase_storage: ^11.2.6
   firebase_core: ^2.15.1
   firebase_performance: ^0.9.2+5
+  firebase_remote_config: ^4.2.5
+  firebase_analytics: ^10.4.5
   provider: ^6.0.5
   fan_carousel_image_slider: ^0.1.2
   carousel_slider: ^4.2.1
@@ -57,6 +59,7 @@ dependencies:
   flip_card: ^0.7.0
   credit_card_type_detector: ^3.0.0
   keyboard_actions: ^4.2.0
+  mailer: ^6.0.1
 
 
 dev_dependencies:

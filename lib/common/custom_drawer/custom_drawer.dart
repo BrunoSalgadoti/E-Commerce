@@ -41,19 +41,24 @@ class CustomDrawer extends StatelessWidget {
                 page: 1,
               ),
               const DrawerTitle(
+                iconData: Icons.list_alt_sharp,
+                title: "Por Categorias",
+                page: 2,
+              ),
+              const DrawerTitle(
                 iconData: Icons.playlist_add_check,
                 title: "Meus Pedidos",
-                page: 2,
+                page: 3,
               ),
               const DrawerTitle(
                 iconData: Icons.location_on,
                 title: "Lojas",
-                page: 3,
+                page: 4,
               ),
               const DrawerTitle(
                 iconData: FontAwesomeIcons.peopleGroup,
                 title: "Quem Somos?",
-                page: 4,
+                page: 5,
               ),
               Consumer<UserManager>(
                 builder: (_, userManager, __) {
@@ -64,12 +69,12 @@ class CustomDrawer extends StatelessWidget {
                         DrawerTitle(
                           iconData: Icons.supervised_user_circle,
                           title: 'Clientes',
-                          page: 5,
+                          page: 6,
                         ),
                         DrawerTitle(
                           iconData: Icons.task_alt,
                           title: 'Pedidos',
-                          page: 6,
+                          page: 7,
                         ),
                         ...[SettingsDrawer()]
                       ],

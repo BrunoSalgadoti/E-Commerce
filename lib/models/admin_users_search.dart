@@ -216,7 +216,7 @@ class AdminUsersSearch extends ChangeNotifier {
                   ),
                   onTap: () {
                     adminOrdersManager.setUserFilter(user);
-                    pageManager.setPage(6);
+                    pageManager.setPage(7);
                   },
                 );
               },

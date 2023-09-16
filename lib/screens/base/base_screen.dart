@@ -4,6 +4,7 @@ import 'package:brn_ecommerce/screens/admin_orders/admin_orders_screen.dart';
 import 'package:brn_ecommerce/screens/admin_users/admin_users_screen.dart';
 import 'package:brn_ecommerce/screens/home/home_screen.dart';
 import 'package:brn_ecommerce/screens/orders/orders_screen.dart';
+import 'package:brn_ecommerce/screens/product_categories/categories_screen.dart';
 import 'package:brn_ecommerce/screens/products/products_screen.dart';
 import 'package:brn_ecommerce/screens/stores/stores_screen.dart';
 import 'package:brn_ecommerce/screens/who_we_are/who_we_are_page.dart';
@@ -34,6 +35,7 @@ class _BaseScreenState extends State<BaseScreen> {
             children: [
               const HomeScreen(),
               const ProductsScreen(),
+              const CategoriesScreen(),
               const OrdersScreen(),
               const StoresScreen(),
               const WhoWeArePage(),
