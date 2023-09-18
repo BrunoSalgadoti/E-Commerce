@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:brn_ecommerce/models/section_item.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
+import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart'
@@ -122,8 +123,9 @@ class Section extends ChangeNotifier {
           final ref = storage.refFromURL(original.image as String);
           await ref.delete();
         }
-        // ignore: empty_catches
-      } catch (error) {}
+      } catch (error) {
+        MonitoringLogger().logError('Erro ao Salvar Seção: $error');
+      }
     }
 
     final Map<String, dynamic> itemsData = {

@@ -31,6 +31,7 @@ class OrdersScreen extends StatelessWidget {
                   'Vamos a compra!',
               image: "assets/images/waitingSales.gif",
               iconData: null,
+              duration: null,
             );
           }
           return ListView.builder(

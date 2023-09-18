@@ -1,4 +1,3 @@
-import 'package:brn_ecommerce/models/product_category.dart';
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -59,19 +58,3 @@ Future<void> sendEmailNotification({
   }
 }
 
-List<ProductCategory> filteredCategories(List<ProductCategory>? categoriesList,
-    bool adminEnable, bool editingCategories) {
-  final List<ProductCategory> categoriesActive = [];
-
-  if (adminEnable == true && editingCategories == true) {
-    categoriesActive.addAll(categoriesList!.toList()
-      ..sort((a, b) => a.categoryTitle!.compareTo(b.categoryTitle!)));
-  } else {
-    categoriesActive.addAll(categoriesList!
-        .where((category) => category.categoryActivated!)
-        .toList()
-      ..sort((a, b) => a.categoryTitle!.compareTo(b.categoryTitle!)));
-  }
-
-  return categoriesActive;
-}

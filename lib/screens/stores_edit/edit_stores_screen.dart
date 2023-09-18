@@ -39,7 +39,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
         appBar: AppBar(
           title: Text(widget.store.id != null
               ? 'Editar dados da Loja'
-              : 'Adicionar outra Loja'),
+              : 'Adicionar nova Loja'),
           centerTitle: true,
           actions: [
             if (widget.store.id != null)

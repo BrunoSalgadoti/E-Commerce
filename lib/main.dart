@@ -22,7 +22,7 @@ Future<void> main() async {
   // Load version information asynchronously
   if (!kReleaseMode) {
     // This code snippet will only run in debug mode
-    debugModeAndFirstStart(firstStart: true);
+    debugModeAndFirstStart(firstStart: false);
   }
   // configure routing based on "history-based routing"
   setPathUrlStrategy();

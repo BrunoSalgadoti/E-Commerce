@@ -17,21 +17,16 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Abre o áudio com autoStart: false para evitar a reprodução automática
-    assetsAudioPlayer.open(
-      Audio("assets/vignette/vignette.mp3"),
-      autoStart: kIsWeb ? false : true,
-    );
-    Timer(const Duration(seconds: 6), () {
-      Navigator.pushReplacementNamed(context, "/home");
-    });
-  }
-
-  @override
-  void dispose() {
-    assetsAudioPlayer.stop();
-    assetsAudioPlayer.dispose();
-    super.dispose();
+    if (mounted) {
+      // Abre o áudio com autoStart: false para evitar a reprodução automática
+      assetsAudioPlayer.open(
+        Audio("assets/vignette/vignette.mp3"),
+        autoStart: kIsWeb ? false : true,
+      );
+      Timer(const Duration(seconds: 6), () {
+        Navigator.pushReplacementNamed(context, "/home");
+      });
+    }
   }
 
   @override
@@ -89,5 +84,11 @@ class _SplashScreenState extends State<SplashScreen> {
         ],
       ),
     );
+  }
+  @override
+  void dispose() {
+    assetsAudioPlayer.stop();
+    assetsAudioPlayer.dispose();
+    super.dispose();
   }
 }

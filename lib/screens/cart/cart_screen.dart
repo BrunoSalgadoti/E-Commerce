@@ -22,6 +22,7 @@ class CartScreen extends StatelessWidget {
               title: 'Nenhum item no carrinho!',
               iconData: null,
               image: "assets/images/goShopping.gif",
+              duration: null,
             ),
           );
         }

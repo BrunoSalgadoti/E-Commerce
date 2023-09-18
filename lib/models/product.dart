@@ -218,10 +218,8 @@ class Product extends ChangeNotifier {
           "stock": 0,
           "colors": details.colorProducts
               ?.map((color) => {
-                    ...color.toMap(),
-                    "amount": 0,
-                  })
-              .toList(),
+                ...color.toMap(),
+            "amount": 0,}).toList(),
         };
         detailsList.add(detailsData);
       }
@@ -292,7 +290,7 @@ class Product extends ChangeNotifier {
 
   Future<void> checkAmountsAndStocksConsistency(
       String productId, List<DetailsProducts> detailsProducts) async {
-    isValid = true; // Assume inicialmente que é válido
+    isValid = true; // Assume initially that it is valid
 
     for (final stock in detailsProducts) {
       final matchingDetails =

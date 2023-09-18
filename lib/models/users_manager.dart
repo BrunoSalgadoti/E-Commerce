@@ -324,8 +324,11 @@ class UserManager extends ChangeNotifier {
         }
         notifyListeners();
       }
-    } catch (noUser) {
-      StackTrace.empty;
+    } catch (error) {
+      if(kDebugMode) {
+        MonitoringLogger().logError('Erro ao carregar CurrentUser: $error');
+      }
     }
+    notifyListeners();
   }
 }

@@ -74,6 +74,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                     title: 'Aguardando vendas...',
                     iconData: Icons.border_clear,
                     image: null,
+                    duration: null,
                   ))
                 else
                   Expanded(

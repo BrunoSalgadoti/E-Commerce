@@ -139,6 +139,7 @@ class ProductsScreen extends StatelessWidget {
                             title: 'Pesquisa não encontrada...',
                             iconData: Icons.search_off,
                             image: null,
+                            duration: null,
                           )
                         : const EmptyPageIndicator(
                             title: "Carregando Produtos...",

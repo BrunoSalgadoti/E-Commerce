@@ -1,6 +1,7 @@
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/models/order_client.dart';
 import 'package:brn_ecommerce/models/product.dart';
+import 'package:brn_ecommerce/services/firebase_remote_configs/monitoring_stock_min.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -147,6 +148,9 @@ class CheckoutManager extends ChangeNotifier {
         tx.update(firestore.doc("products/${product.id}"),
             {"details": product.exportDetailsList()});
       }
+
+      MonitoringStockMin.checkMinimumStock(
+          productsToUpdate, productsWithoutStock);
     });
   }
 }
