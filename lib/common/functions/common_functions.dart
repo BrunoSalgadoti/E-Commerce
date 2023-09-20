@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -34,6 +35,16 @@ Color getTextColorBasedOnBackground(Color backgroundColor) {
   return textColor;
 }
 
+Color getBorderColorInvertedTextColor(Color backgroundColor) {
+  // Calculates the luminosity of the background color.
+  final luminance = backgroundColor.computeLuminance();
+
+  // Sets the text color based on luminosity.
+  final textColor = luminance < 0.2 ? Colors.black : Colors.white;
+
+  return textColor;
+}
+
 //TODO: Configure sending parameters after activating firebase functions
 Future<void> sendEmailNotification({
   required String recipientEmail, // Recipient email as parameter
@@ -58,3 +69,15 @@ Future<void> sendEmailNotification({
   }
 }
 
+Future<void> reportNoFatalErrorToCrashlytics(
+    {required String error,
+      String? reason,
+      required StackTrace stackTrace,
+      required String information}) async {
+  await FirebaseCrashlytics.instance.recordError(
+    error,
+    stackTrace,
+    reason: reason ?? 'Monitoramento Try-Catch',
+    information: [information, 'version 1.0'],
+  );
+}

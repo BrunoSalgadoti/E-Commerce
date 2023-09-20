@@ -1,3 +1,4 @@
+import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/helpers/firebase_errors.dart';
 import 'package:brn_ecommerce/models/delivery.dart';
 import 'package:brn_ecommerce/models/users.dart';
@@ -15,7 +16,9 @@ import '../services/development_monitoring/monitoring_logger.dart';
 
 class UserManager extends ChangeNotifier {
   UserManager() {
-    _loadCurrentUser();
+    if(isLoggedIn || _newUserAccount == true) {
+      _loadCurrentUser();
+    }
     _auth.setLanguageCode('pt-BR');
   }
 
@@ -26,6 +29,8 @@ class UserManager extends ChangeNotifier {
   Users? users;
 
   bool _loading = false;
+
+  bool _newUserAccount = false;
 
   bool get loading => _loading;
 
@@ -112,6 +117,7 @@ class UserManager extends ChangeNotifier {
       required Function onSuccess}) async {
     PerformanceMonitoring().startTrace('sign-in-email', shouldStart: true);
 
+    _newUserAccount = true;
     loading = true;
     try {
       final UserCredential result = await _auth.signInWithEmailAndPassword(
@@ -325,9 +331,12 @@ class UserManager extends ChangeNotifier {
         notifyListeners();
       }
     } catch (error) {
-      if(kDebugMode) {
+        reportNoFatalErrorToCrashlytics(
+            error: "$error",
+            stackTrace: StackTrace.current,
+            information: "Erro na Classe: UserManager no método _loadCurrentUser()"
+        );
         MonitoringLogger().logError('Erro ao carregar CurrentUser: $error');
-      }
     }
     notifyListeners();
   }

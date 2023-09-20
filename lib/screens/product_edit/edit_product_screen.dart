@@ -149,7 +149,7 @@ class EditProductScreen extends StatelessWidget {
                               flex: 75,
                               child: CustomTextFormField(
                                 initialValue: product?.brand ?? "",
-                                labelText: 'Inserir a Marca (Opicional)',
+                                labelText: 'Inserir a Marca (Opcional)',
                                 hintText: 'Marca do Produto',
                                 hintSize: 20,
                                 textFormFieldSize: 20,
