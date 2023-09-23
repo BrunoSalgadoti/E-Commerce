@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:brn_ecommerce/models/product_category.dart';
+import 'package:brn_ecommerce/models/users_manager.dart';
+import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -6,22 +10,163 @@ import 'package:flutter/foundation.dart';
 import '../helpers/product_categories_factory_lists/categories_factory.dart';
 
 class ProductCategoryManager extends ChangeNotifier {
-  ProductCategoryManager({this.categoriesList}) {
-    categoriesList = categoriesList ?? [];
+  ProductCategoryManager() {
+    verifyUser(userManager ?? UserManager());
   }
 
-  List<ProductCategory>? categoriesList;
+  UserManager? userManager;
 
-  ProductCategory? categories;
+  List<ProductCategory> _categoriesList = [];
 
-  ProductCategory? get categoriesChanges => categories;
-
-  set categoriesChanges(ProductCategory? value) {
-    categories = value;
-    notifyListeners();
-  }
+  StreamSubscription<QuerySnapshot>? _categoriesListener;
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  bool verifyCategoriesList() {
+    if (_categoriesList.isEmpty) return true;
+    return false;
+  }
+
+  Future<void> updateCategory() async {
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Update Category to Firebase');
+    }
+
+    final categoriesQuery = await firestore.collection("categories").get();
+
+    for (final category in _categoriesList) {
+      // Check if the category already exists in the database
+      final categoryRef = categoriesQuery.docs
+          .firstWhere((doc) => doc.id == category.categoryID);
+
+      // If it exists, check if any attributes are different and update
+      final data = category.toMap();
+      final dbData = categoryRef.data();
+
+      if (!mapEquals(data, dbData)) {
+        await firestore
+            .collection("categories")
+            .doc(category.categoryID)
+            .update(data);
+      }
+    }
+  }
+
+  /// Esta função verifica o tipo de usuário e carrega as categorias correspondentes.
+  ///
+  /// Se o usuário for um administrador (adminEnable == true), ela carrega todas as
+  /// categorias e configura a escuta em tempo real para atualizações nas categorias.
+  /// Isso garante que os administradores tenham acesso a todas as categorias, independentemente
+  /// do status de ativação da categoria.
+  ///
+  /// Se o usuário não for um administrador (adminEnable == false), ela carrega apenas
+  /// as categorias ativas (categoryActivated == true) e configura a escuta em tempo real
+  /// para atualizações nessas categorias. Isso economiza recursos, pois os usuários regulares
+  /// não precisam carregar todas as categorias.
+  ///
+  /// [userManager] é uma instância de [UserManager] que contém informações sobre o usuário.
+  void verifyUser(UserManager userManager) {
+    _categoriesListener?.cancel();
+    _categoriesList.clear();
+    if (userManager.adminEnable) {
+      _loadAllCategories();
+      _setupRealTimeUpdatesAllCategories();
+      notifyListeners();
+    } else if (!userManager.adminEnable) {
+      _categoriesList.clear();
+      _loadCategoriesForUsers();
+      notifyListeners();
+    }
+  }
+
+  Future<void> _loadCategoriesForUsers() async {
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Info _loadCategoriesForUSERS');
+    }
+    // Starts trying to get data from cache
+    QuerySnapshot<Map<String, dynamic>> snapshot = await firestore
+        .collection("categories")
+        .where("categoryActivated", isEqualTo: true)
+        .get(const GetOptions(source: Source.cache));
+
+    if (snapshot.metadata.isFromCache) {
+      // If data is retrieved from the cache, update the UI...
+      // immediately with cached data
+      _categoriesList = snapshot.docs
+          .map((category) => ProductCategory.fromDocument(category))
+          .toList();
+      notifyListeners();
+    }
+
+    // Configure real-time update listener for Users
+    _categoriesListener = firestore
+        .collection("categories")
+        .where("categoryActivated", isEqualTo: true)
+        .snapshots()
+        .listen((event) {
+      _categoriesList =
+          event.docs.map((s) => ProductCategory.fromDocument(s)).toList();
+      notifyListeners();
+    });
+  }
+
+  Future<void> _loadAllCategories() async {
+    PerformanceMonitoring()
+        .startTrace('_loadCategoriesList', shouldStart: true);
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Info _loadAllCategories');
+    }
+
+    // Starts trying to get data from cache
+    QuerySnapshot<Map<String, dynamic>> snapshot = await firestore
+        .collection("categories")
+        .get(const GetOptions(source: Source.cache));
+
+    if (snapshot.metadata.isFromCache) {
+      // If data is retrieved from the cache, update the UI...
+      // immediately with cached data
+      _categoriesList =
+          snapshot.docs.map((s) => ProductCategory.fromDocument(s)).toList();
+      notifyListeners();
+    }
+
+    PerformanceMonitoring().stopTrace('_loadCategoriesList');
+  }
+
+  Future<void> _setupRealTimeUpdatesAllCategories() async {
+    PerformanceMonitoring()
+        .startTrace('setup-rt-updates-categories', shouldStart: true);
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Info message: _categoriesListener Start ');
+    }
+
+    // Configure real-time update listener
+    _categoriesListener =
+        firestore.collection("categories").snapshots().listen((event) {
+      _categoriesList =
+          event.docs.map((s) => ProductCategory.fromDocument(s)).toList();
+      notifyListeners();
+    });
+
+    PerformanceMonitoring().stopTrace('setup-rt-updates-categories');
+  }
+
+  List<ProductCategory> filteredCategories(
+      bool adminEnable, bool editingCategories) {
+    final List<ProductCategory> categoriesActive = [];
+
+    if (adminEnable == true && editingCategories == true) {
+      categoriesActive.addAll(_categoriesList.toList()
+        ..sort((a, b) => a.categoryTitle!.compareTo(b.categoryTitle!)));
+    } else {
+      categoriesActive.addAll(_categoriesList
+          .where((category) => category.categoryActivated!)
+          .toList()
+        ..sort((a, b) => a.categoryTitle!.compareTo(b.categoryTitle!)));
+    }
+
+    return categoriesActive;
+  }
 
   /// Esta função é usada para criar ou atualizar categorias de produtos no Firestore,
   /// dependendo das condições especificadas.
@@ -102,52 +247,12 @@ class ProductCategoryManager extends ChangeNotifier {
     }
   }
 
-//
-// Future<List<ProductCategory>> getCategoriesFromDB() async {
-//   // Lógica para obter as categorias atualizadas do banco de dados
-//   // Isso pode incluir uma chamada a um serviço ou consulta a um banco de dados
-//   // Retorne uma lista de categorias atualizadas
-// }
-
-// void updateCategory({
-//   Color? categoryColor,
-//   String? categoryImg,
-//   bool? categoryActivated,
-// }) {
-//   if (categoryColor != null) {
-//     this.categoryColor = categoryColor;
-//   }
-//   if (categoryImg != null) {
-//     this.categoryImg = categoryImg;
-//   }
-//   if (categoryActivated != null) {
-//     this.categoryActivated = categoryActivated;
-//   }
-//   // Notificar os ouvintes de que a categoria foi atualizada
-//   notifyListeners();
-// }
-
-//   // Suponha que você tenha obtido as informações do banco de dados em updatedCategories
-//   final updatedCategories = await getCategoriesFromDB();
-//
-// // Percorra as categorias atualizadas e atualize as propriedades individuais
-//   for (final updatedCategory in updatedCategories) {
-//   final existingCategory = productCategoryLists.categoriesList.firstWhere(
-//   (category) => category.categoryID == updatedCategory.categoryID,
-//   orElse: () => null,
-//   );
-//
-//   if (existingCategory != null) {
-//   // Atualize apenas as propriedades que você deseja modificar
-//   existingCategory.categoryTitle = updatedCategory.categoryTitle;
-//   existingCategory.categoryColor = updatedCategory.categoryColor;
-//   // Adicione outras propriedades que deseja atualizar
-//   }
-//   }
-
-//   void updateCategoryColor(Color newColor) {
-//     categoryColor = newColor;
-//     notifyListeners(); // Notificar os ouvintes sobre a mudança.
-//   }
-// }
+  @override
+  void dispose() {
+    super.dispose();
+    _categoriesListener?.cancel();
+    if (!kReleaseMode) {
+      MonitoringLogger().logInfo('Info: ListenerCancel ');
+    }
+  }
 }

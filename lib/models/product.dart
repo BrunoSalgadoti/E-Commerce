@@ -25,6 +25,7 @@ class Product extends ChangeNotifier {
     this.details,
     this.brand = "",
     this.freight,
+    this.categoryOfProduct = "",
   }) {
     images = images ?? [];
     itemProducts = itemProducts ?? [];
@@ -47,6 +48,7 @@ class Product extends ChangeNotifier {
     isValid = (document["isvalid"] ?? true) as bool;
     brand = document["brand"] as String? ?? "";
     freight = document["freight"] as bool;
+    categoryOfProduct = document["categoryOfProduct"] as String? ?? "";
     itemProducts = (document["details"] as List<dynamic>)
         .map((d) => DetailsProducts.fromMap(d as Map<String, dynamic>))
         .toList();
@@ -69,6 +71,7 @@ class Product extends ChangeNotifier {
   bool? freight;
   bool deleted = false;
   bool? isValid;
+  String? categoryOfProduct;
   List<String>? images;
   List<dynamic>? newImages;
   List<DetailsProducts>? itemProducts;
@@ -150,6 +153,7 @@ class Product extends ChangeNotifier {
       "details": exportDetailsList(),
       "deleted": deleted,
       "isvalid": isValid,
+      "categoryOfProduct": categoryOfProduct
     };
 
     if (id == null) {
@@ -234,6 +238,7 @@ class Product extends ChangeNotifier {
       "details": exportDetailsList(),
       "deleted": deleted,
       "isvalid": isValid,
+      "categoryOfProduct": categoryOfProduct,
     };
 
     // Deletes all images except the first one if there is more than one image
@@ -285,6 +290,7 @@ class Product extends ChangeNotifier {
       itemProducts: itemProducts?.map((items) => items.clone()).toList(),
       deleted: deleted,
       isValid: isValid,
+      categoryOfProduct: categoryOfProduct,
     );
   }
 
@@ -299,7 +305,7 @@ class Product extends ChangeNotifier {
       final int totalAmount =
           matchingDetails.colorProducts!.fold(0, (a, b) => a + b.amount);
 
-      if (totalAmount != stock.stock) {
+      if (totalAmount != stock.stock || (categoryOfProduct != null && categoryOfProduct!.isNotEmpty)) {
         isValid = false; // Inconsistency found
 
         final DocumentReference productRef =

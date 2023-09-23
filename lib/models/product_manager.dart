@@ -35,7 +35,6 @@ class ProductManager extends ChangeNotifier {
 
   List<Product> allProducts = [];
   StatusOfProducts? status;
-  String? selectedBrand;
   String? activeFilterName = "";
   bool filtersOn = false;
   List<StatusOfProducts> statusFilter = [];
@@ -140,6 +139,7 @@ class ProductManager extends ChangeNotifier {
             product.data().containsKey("freight") &&
             product.data().containsKey("description") &&
             product.data().containsKey("images") &&
+            product.data().containsKey("categoryOfProduct") &&
             product.data().containsKey("details")) {
           allProducts.add(Product.fromDocument(product));
         }

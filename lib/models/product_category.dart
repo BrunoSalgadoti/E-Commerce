@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/models/product_sub_category.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
@@ -7,7 +10,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class ProductCategory extends ChangeNotifier {
+class ProductCategory extends ChangeNotifier{
   ProductCategory({
     this.categoryID,
     this.categoryTitle,
@@ -24,13 +27,13 @@ class ProductCategory extends ChangeNotifier {
     PerformanceMonitoring().startTrace('categoryFromMap', shouldStart: true);
 
     if (!kReleaseMode) {
-      MonitoringLogger().logInfo('Message: CategoryFromMap.fromDocument');
+      MonitoringLogger().logInfo('Message: CategoryFromMap');
     }
 
-    categoryID = document[categoryID ?? ""] as String;
+    categoryID = document["categoryID"] as String;
     categoryTitle = document["categoryTitle"] as String? ?? "";
     categoryColor = document["categoryColor"] as String? ?? "";
-    categoryRealColor = getColorFromString(categoryColor!);
+    categoryRealColor = getColorFromString(categoryColor ?? "");
     categoryImg = document["categoryImg"] as String? ?? "";
     categoryActivated = (document["categoryActivated"] ?? false) as bool;
     // subCategoryList = (document["details"] as List<dynamic>)
@@ -40,33 +43,23 @@ class ProductCategory extends ChangeNotifier {
     PerformanceMonitoring().stopTrace('categoryFromMap');
   }
 
-  String? categoryID;
-  String? categoryTitle;
-  Color? categoryRealColor;
-  String? categoryColor;
-  String? categoryImg;
-  bool? categoryActivated;
-  List<SubCategory>? subCategoryList;
-
-  bool _loading = false;
-
-  bool get loading => _loading;
-
-  set loading(bool value) {
-    _loading = value;
-    notifyListeners();
-  }
-
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseStorage storage = FirebaseStorage.instance;
 
   DocumentReference get firestoreRef => firestore.doc("categories/$categoryID");
 
-  Reference get storageRef =>
-      storage.ref().child("categories").child(categoryID!);
+  Reference get storageRef => storage.ref().child("categories").child("$categoryID!");
+
+  String? categoryID;
+  String? categoryTitle;
+  Color? categoryRealColor;
+  String? categoryColor;
+  dynamic categoryImg;
+  bool? categoryActivated;
+  List<SubCategory>? subCategoryList;
 
   List<Map<String, dynamic>>? exportSubCategories() {
-    return subCategoryList!.map((sub) => sub.toMap()).toList();
+    return subCategoryList?.map((sub) => sub.toMap()).toList();
   }
 
   Map<String, dynamic> toMap() {
@@ -76,82 +69,66 @@ class ProductCategory extends ChangeNotifier {
       "categoryColor": getHexColor(categoryRealColor ?? Colors.blueGrey),
       "categoryImg": categoryImg,
       "categoryActivated": categoryActivated,
-      "subCategoryList": exportSubCategories(),
+      "subCategoryList": exportSubCategories() ?? [],
     };
   }
 
-  Future<void> saveCategories() async {
-    PerformanceMonitoring().startTrace('save_categories', shouldStart: true);
+  Future<void> updateCategoryImage(dynamic image, [String? id]) async {
+    PerformanceMonitoring().startTrace('update-category-image', shouldStart: true);
     if (!kReleaseMode) {
-      MonitoringLogger().logDebug('Message: SAVE Categories');
+      MonitoringLogger().logInfo('Starting file upload Category');
     }
 
-    loading = true;
+    if (categoryImg != null && categoryImg.contains("firebase")) {
+      final oldImageRef = storage.refFromURL(categoryImg);
+      await oldImageRef.delete();
+    }
 
-    final Map<String, dynamic> data = {
-      "categoryColor": categoryColor,
-      "categoryImg": categoryImg,
-      "categoryActivated": categoryActivated,
-      "details": exportSubCategories(),
-    };
+    if (kIsWeb) {
+      final base64String = image?.split(',').last;
+      const String validCharacters =
+          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
+      final trimmedString =
+      base64String?.replaceAll(RegExp("[^$validCharacters]"), "");
+      if (base64String is String &&
+          base64String.isNotEmpty &&
+          base64String.length % 4 == 0) {
+        try {
+          final List<int> bytes = base64.decode(trimmedString!);
+          final Uint8List uint8ListBytes = Uint8List.fromList(bytes);
+          final metadata = SettableMetadata(contentType: "image/jpeg");
+          final task = storageRef
+              .child("$categoryID!")
+              .putData(uint8ListBytes, metadata);
+          final snapshot = await task.whenComplete(() {});
+          final url = await snapshot.ref.getDownloadURL();
+          image = url;
+        } catch (e) {
+          if (kDebugMode) {
+            print('Erro ao decodificar o base64String: $e');
+          }
+        }
+      }
+    } else if (image is File) {
+      final UploadTask task =
+      storageRef.child("$categoryID!").putFile(image);
+      final TaskSnapshot snapshot = await task.whenComplete(() {});
+      final String url = await snapshot.ref.getDownloadURL();
+      image = url;
+    }
 
-    await firestoreRef.update(data);
+    await firestoreRef.update({"categoryImg": image});
 
-    // final List<String> updateImages = [];
-    // for (final newImage in newImages!) {
-    //   if (images!.contains(newImage)) {
-    //     updateImages.add(newImage as String);
-    //   } else {
-    //     if (kIsWeb) {
-    //       final List<int> bytes = base64.decode(newImage.split(',').last);
-    //       final Uint8List uint8ListBytes = Uint8List.fromList(bytes);
-    //       final metadata = SettableMetadata(contentType: "image/jpeg");
-    //       final task = storageRef
-    //           .child(const Uuid().v4())
-    //           .putData(uint8ListBytes, metadata);
-    //       final snapshot = await task.whenComplete(() {});
-    //       final url = await snapshot.ref.getDownloadURL();
-    //       updateImages.add(url);
-    //     } else {
-    //       final UploadTask task =
-    //       storageRef.child(const Uuid().v4()).putFile(newImage as File);
-    //       final TaskSnapshot snapshot = await task.whenComplete(() {});
-    //       final String url = await snapshot.ref.getDownloadURL();
-    //       updateImages.add(url);
-    //     }
-    //   }
-    // }
-    //
-    // for (final image in images!) {
-    //   try {
-    //     if (!newImages!.contains(image) && image.contains("firebase")) {
-    //       final ref = storage.refFromURL(image);
-    //       await ref.delete();
-    //     }
-    //   } catch (error) {
-    //     return;
-    //   }
-    // }
-    //
-    // await firestoreRef.update({"images": updateImages});
-    //
-    // images = updateImages;
+    categoryImg = image;
+    notifyListeners();
 
-    loading = false;
-
-    PerformanceMonitoring().stopTrace('save_categories');
+    PerformanceMonitoring().stopTrace('update-category-image');
   }
 
-  ProductCategory cloneCategory() {
-    return ProductCategory(
-      categoryID: categoryID ?? "",
-      categoryTitle: categoryTitle ?? "",
-      categoryRealColor: categoryRealColor ?? Colors.transparent,
-      categoryImg: categoryImg ?? "",
-      categoryActivated: categoryActivated ?? false,
-      subCategoryList:
-          subCategoryList?.map((items) => items.cloneSubCategory()).toList() ??
-              [],
-    );
+  @override
+  String toString() {
+    return 'ProductCategory{categoryID: $categoryID, '
+        'categoryTitle: $categoryTitle, categoryColor: $categoryColor, '
+        'categoryImg: $categoryImg, categoryActivated: $categoryActivated}';
   }
 }
