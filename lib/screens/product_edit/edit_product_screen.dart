@@ -31,7 +31,7 @@ class EditProductScreen extends StatelessWidget {
           context: context,
           message: 'Erro ao salvar/editar o Produto\n'
               'Revise os campos e tente novamente!\n'
-              '\nSE O ERRO PERCISTIR CONTATE O SUPORTE',
+              '\nSE O ERRO PERSISTIR CONTATE O SUPORTE',
         ).msn();
 
     backScreen() => Navigator.of(context).pop();

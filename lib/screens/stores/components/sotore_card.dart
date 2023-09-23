@@ -2,7 +2,7 @@ import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/formated_fields/format_values.dart';
 import 'package:brn_ecommerce/models/stores.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
-import 'package:brn_ecommerce/screens/stores/components/store_utils.dart';
+import 'package:brn_ecommerce/common/miscellaneous/communications_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -113,26 +113,50 @@ class StoreCard extends StatelessWidget {
                         CustomIconButton(
                           iconData: Icons.map_outlined,
                           color: primaryColor,
-                          onTap: () =>
-                              StoreUtils(store: store, address: store.address!)
-                                  .openMap(context, store.address!.lat!,
-                                      store.address!.long!),
-                        ),
+                          onTap: () {
+                            CommunicationsUtils(
+                                parameterClass1Of2: store,
+                                parameterClass2Of2: store.address!)
+                                .openMap(
+                              context,
+                              store.address!.lat!,
+                              store.address!.long!,
+                              store.nameStore ?? '',
+                              store.addressText ?? '',
+                            );
+                            CommunicationsUtils(parameterClass1Of2: store)
+                                .alertForMaps(context, '');
+                          }),
                         CustomIconButton(
-                          iconData: Icons.phone,
-                          color: primaryColor,
-                          onTap: () => StoreUtils(
-                                  store: store, address: store.address!)
-                              .openPhone(context,
-                                  unFormatPhone(store.phoneNumberStore ?? '')),
-                        ),
+                            iconData: Icons.phone,
+                            color: primaryColor,
+                            onTap: () {
+                              CommunicationsUtils(parameterClass1Of2: store)
+                                  .openPhone(
+                                      context,
+                                      unFormatPhone(
+                                          store.phoneNumberStore ?? ''));
+                              CommunicationsUtils(parameterClass1Of2: store)
+                                  .alertForCall(
+                                context,
+                                'Este dispositivo não suporta está função!\n'
+                                'O Número da Loja é : '
+                                '${formattedPhoneNumber(store.phoneNumberStore)}',
+                              );
+                            }),
                         CustomIconButton(
-                          iconData: Icons.email_outlined,
-                          color: primaryColor,
-                          onTap: () =>
-                              StoreUtils(store: store, address: store.address!)
-                                  .openEmail(context, store.emailStore ?? ''),
-                        ),
+                            iconData: Icons.email_outlined,
+                            color: primaryColor,
+                            onTap: () {
+                              CommunicationsUtils(parameterClass1Of2: store)
+                                  .openEmail(context, store.emailStore ?? '');
+                              CommunicationsUtils(parameterClass1Of2: store)
+                                  .alertForEmail(
+                                context,
+                                'Este dispositivo não suporta está função!\n'
+                                'O E-mail da Loja é : ${store.emailStore}',
+                              );
+                            }),
                       ],
                     ),
                   ),

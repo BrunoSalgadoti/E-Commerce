@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:brn_ecommerce/common/button/custom_text_button.dart';
 import 'package:brn_ecommerce/common/custom_messengers/custom_alert_dialog.dart';
+import 'package:brn_ecommerce/common/miscellaneous/communications_utils.dart';
 import 'package:brn_ecommerce/models/admin_orders_manager.dart';
 import 'package:brn_ecommerce/models/page_manager.dart';
 import 'package:brn_ecommerce/models/users.dart';
@@ -157,7 +158,7 @@ class AdminUsersSearch extends ChangeNotifier {
           Slidable(
             startActionPane: ActionPane(
               motion: const DrawerMotion(),
-              extentRatio: 0.25,
+              extentRatio: 0.30,
               children: [
                 SlidableAction(
                   flex: 2,
@@ -172,7 +173,7 @@ class AdminUsersSearch extends ChangeNotifier {
             ),
             endActionPane: ActionPane(
               motion: const DrawerMotion(),
-              extentRatio: 0.25,
+              extentRatio: 0.50,
               children: [
                 SlidableAction(
                   label: 'Enviar',
@@ -180,6 +181,17 @@ class AdminUsersSearch extends ChangeNotifier {
                   icon: Icons.email,
                   onPressed: (context) {
                     _sendEmail(user.email, user.userName!);
+                  },
+                ),
+                SlidableAction(
+                  label: 'Ligar',
+                  backgroundColor: Colors.greenAccent,
+                  icon: Icons.phone,
+                  onPressed: (context) {
+                    CommunicationsUtils(parameterClass1Of2: user)
+                        .openPhone(context, user.phoneNumber ?? '');
+                    CommunicationsUtils(parameterClass1Of2: user)
+                        .alertForCall(context, 'Número telefônico indisponível!');
                   },
                 ),
               ],
@@ -227,7 +239,7 @@ class AdminUsersSearch extends ChangeNotifier {
         normalList.add(Slidable(
             startActionPane: ActionPane(
               motion: const DrawerMotion(),
-              extentRatio: 0.25,
+              extentRatio: 0.30,
               children: [
                 SlidableAction(
                   flex: 2,
@@ -242,7 +254,7 @@ class AdminUsersSearch extends ChangeNotifier {
             ),
             endActionPane: ActionPane(
               motion: const DrawerMotion(),
-              extentRatio: 0.25,
+              extentRatio: 0.50,
               children: [
                 SlidableAction(
                     label: 'Enviar',
@@ -299,6 +311,16 @@ class AdminUsersSearch extends ChangeNotifier {
                                   ],
                                 );
                               });
+                    }),
+                SlidableAction(
+                    label: 'Ligar',
+                    backgroundColor: Colors.greenAccent,
+                    icon: Icons.phone,
+                    onPressed: (context) {
+                         CommunicationsUtils(parameterClass1Of2: user)
+                             .openPhone(context, user.phoneNumber ?? '');
+                         CommunicationsUtils(parameterClass1Of2: user)
+                             .alertForCall(context, 'Erro ao tentar abrir o telefone!' );
                     }),
               ],
             ),

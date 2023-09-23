@@ -26,6 +26,7 @@ class Assets {
   static const String componentsCardIconColors = 'lib/screens/checkout/components/card_icon_colors.dart';
   static const String componentsCardIconTypes = 'lib/screens/checkout/components/card_icon_types.dart';
   static const String componentsCartTile = 'lib/screens/cart/components/cart_tile.dart';
+  static const String componentsCategoryForm = 'lib/screens/product_edit/components/category_form.dart';
   static const String componentsCepInputField = 'lib/screens/address/components/cep_input_field.dart';
   static const String componentsColorsForm = 'lib/screens/product_edit/components/colors_form.dart';
   static const String componentsColorsWidget = 'lib/screens/products/components/colors_widget.dart';
@@ -41,6 +42,7 @@ class Assets {
   static const String componentsImageSourceWeb = 'lib/screens/product_edit/components/image_source_web.dart';
   static const String componentsImagesForm = 'lib/screens/product_edit/components/images_form.dart';
   static const String componentsItemTile = 'lib/screens/home/components/item_tile.dart';
+  static const String componentsMainCategoriesCard = 'lib/screens/product_categories/components/main_categories_card.dart';
   static const String componentsOrderProductTile = 'lib/screens/orders/components/order_product_tile.dart';
   static const String componentsOrderTile = 'lib/screens/orders/components/order_tile.dart';
   static const String componentsPrivacyPolicyWidget = 'lib/screens/policy_and_documents/components/privacy_policy_widget.dart';
@@ -57,11 +59,11 @@ class Assets {
   static const String componentsStoreImageWidget = 'lib/screens/stores_edit/components/store_image_widget.dart';
   static const String componentsStoreLocationWidget = 'lib/screens/stores_edit/components/store_location_widget.dart';
   static const String componentsStoreUtils = 'lib/screens/stores/components/store_utils.dart';
+  static const String componentsSubCategoriesCard = 'lib/screens/product_categories/components/sub_categories_card.dart';
   static const String componentsTermsAndPrivacyTextScreen = 'lib/screens/policy_and_documents/components/terms_and_privacy_text_screen.dart';
   static const String componentsTermsOfServiceWidget = 'lib/screens/policy_and_documents/components/terms_of_service_widget.dart';
   static const String componentsTopDescriptionWidget = 'lib/screens/who_we_are/components/top_description_widget.dart';
-  static const String componetsMainCategoriesCard = 'lib/screens/product_categories/componets/main_categories_card.dart';
-  static const String componetsSubCategoriesCard = 'lib/screens/product_categories/componets/sub_categories_card.dart';
+  static const String componentsUtils = 'lib/screens/product_categories/components/utils.dart';
   static const String configDebugModeAndFirstStart = 'lib/services/config/debug_mode_and_first_start.dart';
   static const String customDrawerCustomDrawer = 'lib/common/custom_drawer/custom_drawer.dart';
   static const String customMessengersCustomAlertDialog = 'lib/common/custom_messengers/custom_alert_dialog.dart';
@@ -116,10 +118,12 @@ class Assets {
   static const String loginLoginScreen = 'lib/screens/login/login_screen.dart';
   static const String logoStoreLogo = 'assets/logo/storeLogo.png';
   static const String logoStoreLogo2 = 'assets/logo/storeLogo2.png';
+  static const String miscellaneousCommunicationsUtils = 'lib/common/miscellaneous/communications_utils.dart';
   static const String miscellaneousEmptyPageIndicator = 'lib/common/miscellaneous/empty_page_indicator.dart';
   static const String miscellaneousFreightLogo = 'lib/common/miscellaneous/freight_logo.dart';
   static const String miscellaneousProductSearchFab = 'lib/common/miscellaneous/product_search_fab.dart';
   static const String miscellaneousSearchDialog = 'lib/common/miscellaneous/search_dialog.dart';
+  static const String miscellaneousTagForCards = 'lib/common/miscellaneous/tag_for_cards.dart';
   static const String modelsAddress = 'lib/models/address.dart';
   static const String modelsAdminOrdersManager = 'lib/models/admin_orders_manager.dart';
   static const String modelsAdminUsersManager = 'lib/models/admin_users_manager.dart';
@@ -152,9 +156,12 @@ class Assets {
   static const String modelsVersionManager = 'lib/models/version_manager.dart';
   static const String modelsWhoWeAreManager = 'lib/models/who_we_are_manager.dart';
   static const String ordersOrdersScreen = 'lib/screens/orders/orders_screen.dart';
+  static const String pageFlutterFlowMyCollectionModel = 'lib/screens/product_categories/components/page_flutter_flow/my_collection_model.dart';
+  static const String pageFlutterFlowSearchResulPage = 'lib/screens/product_categories/components/page_flutter_flow/search_resul_page.dart';
   static const String policyAndDocumentsPolicyAndDocumentsScreen = 'lib/screens/policy_and_documents/policy_and_documents_screen.dart';
   static const String productBestSellingBestSellingProductsScreen = 'lib/screens/product_best_selling/best_selling_products_screen.dart';
   static const String productCategoriesCategoriesScreen = 'lib/screens/product_categories/categories_screen.dart';
+  static const String productCategoriesCategoryProductScreen = 'lib/screens/product_categories/category_product_screen.dart';
   static const String productCategoriesFactoryListsCategoriesFactory = 'lib/helpers/product_categories_factory_lists/categories_factory.dart';
   static const String productCategoriesFactoryListsSectionCategory = 'lib/helpers/product_categories_factory_lists/section_category.dart';
   static const String productCategoriesFactoryListsSubCategoriesFactory = 'lib/helpers/product_categories_factory_lists/sub_categories_factory.dart';

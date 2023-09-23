@@ -1,5 +1,5 @@
 import 'package:brn_ecommerce/models/stores.dart';
-import 'package:brn_ecommerce/screens/stores/components/store_utils.dart';
+import 'package:brn_ecommerce/common/miscellaneous/communications_utils.dart';
 import 'package:flutter/material.dart';
 
 class StoreLocationWidget extends StatefulWidget {
@@ -37,10 +37,11 @@ class StoreLocationWidgetState extends State<StoreLocationWidget> {
           children: [
             IconButton(
               icon: const Icon(Icons.map_outlined),
-              onPressed: () => StoreUtils(
-                store: widget.store,
-                address: widget.store.address!,
-              ).openMap(context, _latitude, _longitude),
+              onPressed: () => CommunicationsUtils(
+                parameterClass1Of2: widget.store,
+                parameterClass2Of2: widget.store.address!,
+              ).openMap(context, _latitude, _longitude,
+                  widget.store.nameStore ?? '', widget.store.addressText ?? ''),
               color: Theme.of(context).primaryColor,
             ),
             const SizedBox(width: 8),
