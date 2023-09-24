@@ -305,7 +305,7 @@ class Product extends ChangeNotifier {
       final int totalAmount =
           matchingDetails.colorProducts!.fold(0, (a, b) => a + b.amount);
 
-      if (totalAmount != stock.stock || (categoryOfProduct != null && categoryOfProduct!.isNotEmpty)) {
+      if (totalAmount != stock.stock || (categoryOfProduct == null || categoryOfProduct!.isEmpty)) {
         isValid = false; // Inconsistency found
 
         final DocumentReference productRef =
