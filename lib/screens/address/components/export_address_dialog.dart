@@ -11,7 +11,7 @@ import 'package:gallery_saver/gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 
-import '../../../common/formated_fields/format_values.dart';
+import '../../../common/formatted_fields/format_values.dart';
 
 class ExportAddressDialog extends StatelessWidget {
   ExportAddressDialog(

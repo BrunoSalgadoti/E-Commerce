@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import '../../../common/formated_fields/format_values.dart';
+import '../../../common/formatted_fields/format_values.dart';
 
 class CepInputField extends StatefulWidget {
   const CepInputField({

@@ -1,5 +1,5 @@
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/formated_fields/format_values.dart';
+import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/models/stores.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/common/miscellaneous/communications_utils.dart';

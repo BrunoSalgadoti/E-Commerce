@@ -1,12 +1,12 @@
 import 'package:brn_ecommerce/common/button/custom_text_button.dart';
 import 'package:brn_ecommerce/common/custom_messengers/custom_alert_dialog.dart';
-import 'package:brn_ecommerce/common/formated_fields/format_timestamp.dart';
+import 'package:brn_ecommerce/common/formatted_fields/format_timestamp.dart';
 import 'package:brn_ecommerce/models/order_client.dart';
 import 'package:brn_ecommerce/screens/address/components/export_address_dialog.dart';
 import 'package:brn_ecommerce/screens/orders/components/order_product_tile.dart';
 import 'package:flutter/material.dart';
 
-import '../../../common/formated_fields/format_values.dart';
+import '../../../common/formatted_fields/format_values.dart';
 
 class OrderTile extends StatelessWidget {
   const OrderTile(this.orderClient, {Key? key, this.showControls = false})

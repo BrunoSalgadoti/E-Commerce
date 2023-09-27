@@ -3,7 +3,7 @@ import 'package:brn_ecommerce/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../common/formated_fields/format_values.dart';
+import '../../../common/formatted_fields/format_values.dart';
 
 class ProductsWidget extends StatelessWidget {
   const ProductsWidget({

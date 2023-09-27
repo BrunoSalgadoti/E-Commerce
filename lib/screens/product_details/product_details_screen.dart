@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 
-import '../../common/formated_fields/format_values.dart';
+import '../../common/formatted_fields/format_values.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({
@@ -142,7 +142,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               : Text(
                                   widget.product!.deleted
                                       ? 'Esgotado...!'
-                                      : 'Aguadando reposição de estoque...',
+                                      : 'Aguardando reposição de estoque...',
                                   style: TextStyle(
                                       fontSize: 15, color: Colors.grey[600]),
                                 )),
@@ -219,7 +219,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             .product!
                             .itemProducts![selectedSizeIndex ?? 0]
                             .colorProducts!
-                            .asMap() // Converter para Map<int, ColorsProducts>
+                            .asMap() // Convert to Map<int, ColorsProducts>
                             .entries
                             .map((entry) {
                           final index = entry.key;

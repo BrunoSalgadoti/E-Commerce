@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-import '../../../common/formated_fields/format_values.dart';
+import '../../../common/formatted_fields/format_values.dart';
 
 class ItemTile extends StatelessWidget {
   const ItemTile({Key? key, this.item}) : super(key: key);

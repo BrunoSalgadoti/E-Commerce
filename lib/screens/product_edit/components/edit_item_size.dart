@@ -6,7 +6,7 @@ import 'package:brn_ecommerce/models/details_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../common/formated_fields/format_values.dart';
+import '../../../common/formatted_fields/format_values.dart';
 
 class EditItemSize extends StatelessWidget {
   const EditItemSize({

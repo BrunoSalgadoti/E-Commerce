@@ -1,4 +1,4 @@
-import '../common/formated_fields/format_values.dart';
+import '../common/formatted_fields/format_values.dart';
 
 class Address {
   Address(

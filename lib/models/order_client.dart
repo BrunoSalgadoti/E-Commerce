@@ -5,7 +5,7 @@ import 'package:brn_ecommerce/services/development_monitoring/firebase_performan
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
-import '../common/formated_fields/format_values.dart';
+import '../common/formatted_fields/format_values.dart';
 import '../services/development_monitoring/monitoring_logger.dart';
 
 enum StatusOfOrders {
@@ -170,7 +170,7 @@ class OrderClient {
   String getBodyText(StatusOfOrders status) {
     switch (status) {
       case StatusOfOrders.transporting:
-        return 'Confrima que a mercadoria chegou '
+        return 'Confirma que a mercadoria chegou '
             'no destinatário Correto?\n'
             '\n---NÃO PODERÁ RETROCEDER o STATUS---';
       case StatusOfOrders.delivered:

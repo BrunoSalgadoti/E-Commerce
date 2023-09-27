@@ -1,7 +1,7 @@
 import 'package:brn_ecommerce/models/cart_product.dart';
 import 'package:flutter/material.dart';
 
-import '../../../common/formated_fields/format_values.dart';
+import '../../../common/formatted_fields/format_values.dart';
 
 class OrderProductTile extends StatelessWidget {
   const OrderProductTile(

@@ -2,7 +2,7 @@ import 'package:brn_ecommerce/screens/products_share/share_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../common/formated_fields/format_values.dart';
+import '../../../common/formatted_fields/format_values.dart';
 
 enum SocialMediaWeb { whatsapp }
 

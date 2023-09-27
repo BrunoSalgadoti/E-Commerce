@@ -11,7 +11,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../common/formated_fields/format_values.dart';
+import '../../common/formatted_fields/format_values.dart';
 
 class ShareProductScreen extends StatefulWidget {
   ShareProductScreen({Key? key, required this.product}) : super(key: key);
