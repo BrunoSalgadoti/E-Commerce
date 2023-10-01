@@ -237,6 +237,10 @@ class EditProductScreen extends StatelessWidget {
                                               .validate()) {
                                             formKey.currentState!.save();
 
+
+                                            //TODO: verificação ...
+                                            // (categoryOfProduct == null
+                                            // || categoryOfProduct!.isEmpty)
                                             try {
                                               await product.saveProduct();
                                               productManager

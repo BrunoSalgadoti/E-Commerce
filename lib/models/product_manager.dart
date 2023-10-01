@@ -140,6 +140,7 @@ class ProductManager extends ChangeNotifier {
             product.data().containsKey("description") &&
             product.data().containsKey("images") &&
             product.data().containsKey("categoryOfProduct") &&
+            product.data().containsKey("insertionDate") &&
             product.data().containsKey("details")) {
           allProducts.add(Product.fromDocument(product));
         }
@@ -176,10 +177,6 @@ class ProductManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setActiveFilterName(String name) {
-    activeFilterName = name;
-    notifyListeners();
-  }
 
   void setStatusFilter({StatusOfProducts? status, bool? enabled}) {
     if (enabled!) {
@@ -191,6 +188,11 @@ class ProductManager extends ChangeNotifier {
       setActiveFilterName("");
       filtersOn = false;
     }
+    notifyListeners();
+  }
+
+  void setActiveFilterName(String name) {
+    activeFilterName = name;
     notifyListeners();
   }
 

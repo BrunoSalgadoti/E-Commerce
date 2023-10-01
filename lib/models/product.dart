@@ -26,6 +26,7 @@ class Product extends ChangeNotifier {
     this.brand = "",
     this.freight,
     this.categoryOfProduct = "",
+    this.insertionDate,
   }) {
     images = images ?? [];
     itemProducts = itemProducts ?? [];
@@ -48,6 +49,7 @@ class Product extends ChangeNotifier {
     isValid = (document["isvalid"] ?? true) as bool;
     brand = document["brand"] as String? ?? "";
     freight = document["freight"] as bool;
+    insertionDate = document["insertionDate"] as Timestamp;
     categoryOfProduct = document["categoryOfProduct"] as String? ?? "";
     itemProducts = (document["details"] as List<dynamic>)
         .map((d) => DetailsProducts.fromMap(d as Map<String, dynamic>))
@@ -72,6 +74,7 @@ class Product extends ChangeNotifier {
   bool deleted = false;
   bool? isValid;
   String? categoryOfProduct;
+  Timestamp? insertionDate;
   List<String>? images;
   List<dynamic>? newImages;
   List<DetailsProducts>? itemProducts;
@@ -132,6 +135,20 @@ class Product extends ChangeNotifier {
     }
   }
 
+  Map<String, dynamic> toMap() {
+    return {
+      "name": name,
+      "brand": brand,
+      "freight": freight ?? true,
+      "description": description,
+      "details": exportDetailsList(),
+      "deleted": deleted,
+      "isvalid": isValid,
+      "categoryOfProduct": categoryOfProduct,
+      "insertionDate": Timestamp.now(),
+    };
+  }
+
   List<Map<String, dynamic>>? exportDetailsList() {
     return itemProducts!.map((details) => details.toMap()).toList();
   }
@@ -153,7 +170,8 @@ class Product extends ChangeNotifier {
       "details": exportDetailsList(),
       "deleted": deleted,
       "isvalid": isValid,
-      "categoryOfProduct": categoryOfProduct
+      "categoryOfProduct": categoryOfProduct,
+      "insertionDate": Timestamp.now(),
     };
 
     if (id == null) {
@@ -207,7 +225,8 @@ class Product extends ChangeNotifier {
 
     PerformanceMonitoring().stopTrace('save_product');
     if (!kReleaseMode) {
-      MonitoringLogger().logDebug('Debug message: Instance ending saveProduct');
+      MonitoringLogger()
+          .logDebug('Debug message: Instance ending saveProduct');
     }
   }
 
@@ -222,8 +241,10 @@ class Product extends ChangeNotifier {
           "stock": 0,
           "colors": details.colorProducts
               ?.map((color) => {
-                ...color.toMap(),
-            "amount": 0,}).toList(),
+                    ...color.toMap(),
+                    "amount": 0,
+                  })
+              .toList(),
         };
         detailsList.add(detailsData);
       }
@@ -239,6 +260,7 @@ class Product extends ChangeNotifier {
       "deleted": deleted,
       "isvalid": isValid,
       "categoryOfProduct": categoryOfProduct,
+      "insertionDate": Timestamp.now(),
     };
 
     // Deletes all images except the first one if there is more than one image
@@ -305,7 +327,7 @@ class Product extends ChangeNotifier {
       final int totalAmount =
           matchingDetails.colorProducts!.fold(0, (a, b) => a + b.amount);
 
-      if (totalAmount != stock.stock || (categoryOfProduct == null || categoryOfProduct!.isEmpty)) {
+      if (totalAmount != stock.stock) {
         isValid = false; // Inconsistency found
 
         final DocumentReference productRef =

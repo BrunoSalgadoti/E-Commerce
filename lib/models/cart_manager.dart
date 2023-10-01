@@ -44,7 +44,7 @@ class CartManager extends ChangeNotifier {
     items.clear();
     removeAddress();
 
-    if (users != null) {
+    if (users?.id != null) {
       _loadCartItems();
       _loadUserAddress();
     } else {
@@ -72,7 +72,8 @@ class CartManager extends ChangeNotifier {
     }
 
     if (users?.address != null &&
-        await calculateDelivery(users!.address!.lat!, users!.address!.long!)) {
+        await calculateDelivery(
+            users!.address!.lat!, users!.address!.long!)) {
       address = users!.address;
       notifyListeners();
     }
@@ -243,7 +244,8 @@ class CartManager extends ChangeNotifier {
 
   Future<bool> calculateDelivery(double lat, double long) async {
     if (!kReleaseMode) {
-      MonitoringLogger().logInfo('Info message: Start Calculate Delivery Cart');
+      MonitoringLogger()
+          .logInfo('Info message: Start Calculate Delivery Cart');
     }
 
     try {

@@ -2,12 +2,13 @@ import 'package:brn_ecommerce/models/admin_orders_manager.dart';
 import 'package:brn_ecommerce/models/admin_users_manager.dart';
 import 'package:brn_ecommerce/models/admin_users_search.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
+import 'package:brn_ecommerce/models/categories_of_products/product_category.dart';
 import 'package:brn_ecommerce/models/details_products.dart';
 import 'package:brn_ecommerce/models/home_manager.dart';
 import 'package:brn_ecommerce/models/orders_manager.dart';
 import 'package:brn_ecommerce/models/policy_and_documents.dart';
 import 'package:brn_ecommerce/models/product.dart';
-import 'package:brn_ecommerce/models/product_category_manager.dart';
+import 'package:brn_ecommerce/models/categories_of_products/product_category_manager.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:brn_ecommerce/models/stores.dart';
 import 'package:brn_ecommerce/models/stores_manager.dart';
@@ -37,11 +38,7 @@ class AppProviders extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => ProductManager(),
         ),
-        ChangeNotifierProxyProvider<UserManager, ProductCategoryManager>(
-          create: (_) => ProductCategoryManager(),
-          update: (_, userManager, productCategoryManager) =>
-          productCategoryManager!..verifyUser(userManager),
-        ),
+        ChangeNotifierProvider(create: (_) => ProductCategory()),
         ChangeNotifierProvider(
           create: (_) => DetailsProducts(stock: 0),
         ),
@@ -67,6 +64,11 @@ class AppProviders extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => StoresManager(),
         ),
+        ChangeNotifierProxyProvider<UserManager, ProductCategoryManager>(
+          create: (_) => ProductCategoryManager(),
+          update: (_, userManager, productCategoryManager) =>
+              productCategoryManager!..verifyUser(userManager),
+        ),
         ChangeNotifierProxyProvider<UserManager, CartManager>(
           create: (_) => CartManager(),
           update: (_, userManager, cartManager) =>
@@ -74,13 +76,14 @@ class AppProviders extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<UserManager, OrdersManager>(
           create: (_) => OrdersManager(),
-          update: (_, userManager, ordersManager) =>
-              ordersManager!..updateUser(userManager.users ?? Users(email: "")),
+          update: (_, userManager, ordersManager) => ordersManager!
+            ..updateUser(userManager.users ?? Users(email: "")),
         ),
         ChangeNotifierProxyProvider<UserManager, AdminUsersManager>(
           create: (_) => AdminUsersManager(),
           update: (_, userManager, adminUsersManager) =>
               adminUsersManager!..updateUser(userManager),
+          lazy: false,
         ),
         ChangeNotifierProxyProvider<UserManager, AdminOrdersManager>(
           create: (_) => AdminOrdersManager(),

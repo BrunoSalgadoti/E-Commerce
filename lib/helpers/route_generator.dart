@@ -1,6 +1,6 @@
 import 'package:brn_ecommerce/models/order_client.dart';
 import 'package:brn_ecommerce/models/product.dart';
-import 'package:brn_ecommerce/models/product_category.dart';
+import 'package:brn_ecommerce/models/categories_of_products/product_category.dart';
 import 'package:brn_ecommerce/models/stores.dart';
 import 'package:brn_ecommerce/screens/address/address_screen.dart';
 import 'package:brn_ecommerce/screens/base/base_screen.dart';
@@ -31,16 +31,15 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) => const CartScreen(), settings: settings);
       case "/category_screen":
-        return MaterialPageRoute(builder: (_) =>
-            CategoryProductScreen(
+        return MaterialPageRoute(
+            builder: (_) => CategoryProductScreen(
                 productCategory: settings.arguments as ProductCategory? ??
                     ProductCategory()),
             settings: settings);
       case "/product":
         return MaterialPageRoute(
-            builder: (_) =>
-                ProductDetailsScreen(
-                    product: settings.arguments as Product? ?? Product()),
+            builder: (_) => ProductDetailsScreen(
+                product: settings.arguments as Product? ?? Product()),
             settings: settings);
       case "/share_product":
         return MaterialPageRoute(
@@ -48,23 +47,20 @@ class RouteGenerator {
                 ShareProductScreen(product: settings.arguments as Product));
       case "/edit_product":
         return MaterialPageRoute(
-            builder: (_) =>
-                EditProductScreen(
-                    product: settings.arguments != null
-                        ? settings.arguments as Product
-                        : Product().cloneProduct()));
+            builder: (_) => EditProductScreen(
+                product: settings.arguments != null
+                    ? settings.arguments as Product
+                    : Product().cloneProduct()));
       case "/edit_stores":
         return MaterialPageRoute(
-            builder: (_) =>
-                EditStoresScreen(
-                    store: settings.arguments as Stores? ?? Stores()));
+            builder: (_) => EditStoresScreen(
+                store: settings.arguments as Stores? ?? Stores()));
       case "/select_product":
         return MaterialPageRoute(builder: (_) => const SelectProductScreen());
       case "/privacy_policy":
         return MaterialPageRoute(
-            builder: (_) =>
-                TermsAndPrivacyTextScreen(
-                    content: settings.arguments as String));
+            builder: (_) => TermsAndPrivacyTextScreen(
+                content: settings.arguments as String));
       case "/address":
         return MaterialPageRoute(builder: (_) => const AddressScreen());
       case "/checkout":

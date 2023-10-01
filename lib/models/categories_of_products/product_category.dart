@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
-import 'package:brn_ecommerce/models/product_sub_category.dart';
+import 'package:brn_ecommerce/models/categories_of_products/product_sub_category.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,7 +10,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class ProductCategory extends ChangeNotifier{
+class ProductCategory extends ChangeNotifier {
   ProductCategory({
     this.categoryID,
     this.categoryTitle,
@@ -36,9 +36,9 @@ class ProductCategory extends ChangeNotifier{
     categoryRealColor = getColorFromString(categoryColor ?? "");
     categoryImg = document["categoryImg"] as String? ?? "";
     categoryActivated = (document["categoryActivated"] ?? false) as bool;
-    // subCategoryList = (document["details"] as List<dynamic>)
-    //     .map((d) => SubCategory.fromMap(d as Map<String, dynamic>))
-    //     .toList();
+    subCategoryList = (document["subCategoryList"] as List<dynamic>)
+        .map((d) => SubCategory.fromMap(d as Map<String, dynamic>))
+        .toList();
 
     PerformanceMonitoring().stopTrace('categoryFromMap');
   }
@@ -46,9 +46,11 @@ class ProductCategory extends ChangeNotifier{
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseStorage storage = FirebaseStorage.instance;
 
-  DocumentReference get firestoreRef => firestore.doc("categories/$categoryID");
+  DocumentReference get firestoreRef =>
+      firestore.doc("categories/$categoryID");
 
-  Reference get storageRef => storage.ref().child("categories").child("$categoryID!");
+  Reference get storageRef =>
+      storage.ref().child("categories").child("$categoryID!");
 
   String? categoryID;
   String? categoryTitle;
@@ -57,6 +59,33 @@ class ProductCategory extends ChangeNotifier{
   dynamic categoryImg;
   bool? categoryActivated;
   List<SubCategory>? subCategoryList;
+
+  //TODO: Implementação em verificação
+  // Future<List<ProductCategory>> fetchCategories() async {
+  //   final categoriesQuery = await firestore.collection("categories").get();
+  //   final categories = categoriesQuery.docs.map((doc) {
+  //     final categoryData = doc.data() as Map<String, dynamic>;
+  //     final subCategoriesData = categoryData["subCategoryList"] as List<dynamic>;
+  //
+  //     // Mapeie os dados da categoria para um objeto ProductCategory
+  //     final productCategory = ProductCategory.fromDocument(doc);
+  //
+  //     // Preencha a lista de subcategorias com base nos dados obtidos
+  //     productCategory.subCategoryList = subCategoriesData
+  //         .map((subCatData) => SubCategory.fromMap(subCatData))
+  //         .toList();
+  //
+  //     return productCategory;
+  //   }).toList();
+  //
+  //   return categories;
+  // }
+
+  //TODO: implementar na interface para verificação
+  bool verifySubCategoriesIsNotEmpty() {
+    if (subCategoryList == [] || subCategoryList == null) return true;
+    return false;
+  }
 
   List<Map<String, dynamic>>? exportSubCategories() {
     return subCategoryList?.map((sub) => sub.toMap()).toList();
@@ -73,13 +102,14 @@ class ProductCategory extends ChangeNotifier{
     };
   }
 
-  Future<void> updateCategoryImage(dynamic image, [String? id]) async {
-    PerformanceMonitoring().startTrace('update-category-image', shouldStart: true);
+  Future<void> updateCategoryImage(dynamic image) async {
+    PerformanceMonitoring()
+        .startTrace('update-category-image', shouldStart: true);
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Starting file upload Category');
     }
 
-    if (categoryImg != null && categoryImg.contains("firebase")) {
+    if (categoryImg != null && categoryImg != "") {
       final oldImageRef = storage.refFromURL(categoryImg);
       await oldImageRef.delete();
     }
@@ -89,7 +119,7 @@ class ProductCategory extends ChangeNotifier{
       const String validCharacters =
           "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
       final trimmedString =
-      base64String?.replaceAll(RegExp("[^$validCharacters]"), "");
+          base64String?.replaceAll(RegExp("[^$validCharacters]"), "");
       if (base64String is String &&
           base64String.isNotEmpty &&
           base64String.length % 4 == 0) {
@@ -110,8 +140,7 @@ class ProductCategory extends ChangeNotifier{
         }
       }
     } else if (image is File) {
-      final UploadTask task =
-      storageRef.child("$categoryID!").putFile(image);
+      final UploadTask task = storageRef.child("$categoryID!").putFile(image);
       final TaskSnapshot snapshot = await task.whenComplete(() {});
       final String url = await snapshot.ref.getDownloadURL();
       image = url;

@@ -1,20 +1,41 @@
+import 'package:brn_ecommerce/common/cards/flexible_product_card.dart';
 import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/common/miscellaneous/search_dialog.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/filters_sliding_up_panel.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
-import 'package:brn_ecommerce/screens/products/components/product_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class ProductsScreen extends StatelessWidget {
+class ProductsScreen extends StatefulWidget {
   const ProductsScreen({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<ProductsScreen> createState() => _ProductsScreenState();
+}
+
+class _ProductsScreenState extends State<ProductsScreen> {
+  final PanelController panelController = PanelController();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      final productManager =
+          Provider.of<ProductManager>(context, listen: false);
+      productManager.disableFilter();
+      //TODO: Ajeitar ->  productManager.filtersOn = false;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final Set<StatusOfProducts> selectedStatus = <StatusOfProducts>{};
+
     return Scaffold(
       drawer: const CustomDrawer(),
       appBar: AppBar(
@@ -97,10 +118,13 @@ class ProductsScreen extends StatelessWidget {
       ),
       body: Consumer<ProductManager>(builder: (_, productManager, __) {
         final filteredProducts = productManager.filteredProducts;
-
         return Column(
           children: [
-            const FiltersSlidingUpPanel(),
+            FiltersSlidingUpPanel(
+              textOfSlidingUpPanel: null,
+              panelController: panelController,
+              selectedStatus: selectedStatus,
+            ),
             if (productManager.filtersOn == true)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -148,14 +172,22 @@ class ProductsScreen extends StatelessWidget {
                           )
                   else
                     Padding(
-                      padding: const EdgeInsets.only(top: 2, bottom: 10),
-                      child: ListView.builder(
+                      padding: const EdgeInsets.fromLTRB(10, 15, 20, 10),
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 0.0,
+                          mainAxisSpacing: 0.0,
+                          childAspectRatio: 0.7,
+                        ),
                         itemCount: filteredProducts.length,
                         itemBuilder: (_, index) {
-                          return ProductListTile(
+                          return FlexibleProductCard(
                             product: productManager.filtersOn == true
                                 ? filteredProducts.toList()[index]
                                 : filteredProducts.reversed.toList()[index],
+                            isVertical: true,
                           );
                         },
                       ),

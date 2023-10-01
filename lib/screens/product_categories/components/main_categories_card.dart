@@ -1,17 +1,19 @@
 import 'dart:io';
+
 import 'package:brn_ecommerce/common/button/custom_text_button.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
-import 'package:brn_ecommerce/models/product_category.dart';
+import 'package:brn_ecommerce/models/categories_of_products/product_category.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/screens/product_edit/components/image_source_sheet.dart';
 import 'package:brn_ecommerce/screens/product_edit/components/image_source_web.dart';
+import 'package:custom_universal_html/html.dart' as html;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
-import 'package:custom_universal_html/html.dart' as html;
+
 import '../../../common/custom_messengers/custom_scaffold_messenger.dart';
 
 class MainCategoriesCard extends StatefulWidget {
@@ -91,10 +93,10 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
     }
 
     void onImageSelected(File file) {
+      widget.productCategory?.updateCategoryImage(file);
       setState(() {
         widget.productCategory?.categoryImg = file;
       });
-      widget.productCategory?.updateCategoryImage(file);
       backScreen();
     }
 
@@ -107,10 +109,10 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
         backScreen();
       } else {
         File file = files.first;
+        widget.productCategory?.updateCategoryImage(file);
         setState(() {
           widget.productCategory?.categoryImg = file;
         });
-        widget.productCategory?.updateCategoryImage(file);
         backScreen();
       }
     }
@@ -127,10 +129,10 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
           html.FileReader reader = html.FileReader();
           reader.readAsDataUrl(file);
           reader.onLoadEnd.listen((event) {
+            widget.productCategory?.updateCategoryImage(file);
             setState(() {
               widget.productCategory?.categoryImg = file;
             });
-            widget.productCategory?.updateCategoryImage(reader.result);
             backScreen();
           });
         }
@@ -144,7 +146,6 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
         child: Consumer<UserManager>(builder: (_, userManager, __) {
           return Column(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -164,10 +165,16 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
                       width: double.infinity,
                       height: 142,
                       child: buildCategoryImage()),
-                  TagForCard(
-                      data: widget.productCategory?.categoryTitle ?? "",
-                      alignment: Alignment.bottomRight,
-                      backgroundColor: backgroundColor),
+                  Positioned(
+                    bottom: 20,
+                    left: 14,
+                    child: TagForCard(
+                        data: widget.productCategory?.categoryTitle ?? "",
+                        alignment: Alignment.bottomRight,
+                        backgroundColor: backgroundColor,
+                      containerWidth: 157,
+                    ),
+                  ),
                   userManager.adminEnable
                       ? Align(
                           alignment: Alignment.topLeft,

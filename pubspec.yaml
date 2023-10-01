@@ -36,7 +36,7 @@ dependencies:
   uuid: ^3.0.7
   dio: ^5.3.2
   brasil_fields: ^1.14.0
-  geolocator: ^10.0.1
+  geolocator: ^10.1.0
   sliding_up_panel: ^2.0.0+1
   screenshot: ^2.1.0
   http: ^0.13.3
@@ -90,9 +90,11 @@ dev_dependencies:
     sdk: flutter
   lint: ^2.1.2
   analyzer: ^6.2.0
-  logger: ^2.0.2
+  logger: ^2.0.2+1
   flutter_lints: ^2.0.3
   file: ^7.0.0
+  build_web_compilers: ^4.0.5
+  build_runner: ^2.4.6
 
 # The following section is specific to Flutter packages.
 flutter:
@@ -115,7 +117,6 @@ flutter:
     - lib/common/functions/
     - lib/common/custom_drawer/
     - lib/common/custom_drawer/components/
-    - lib/common/formated_fields/
     - lib/models/
     - lib/models/chearch_cep/
     - lib/helpers/

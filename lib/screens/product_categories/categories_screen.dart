@@ -1,7 +1,7 @@
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
-import 'package:brn_ecommerce/models/product_category_manager.dart';
+import 'package:brn_ecommerce/models/categories_of_products/product_category_manager.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/screens/product_categories/components/main_categories_card.dart';
 import 'package:flutter/material.dart';

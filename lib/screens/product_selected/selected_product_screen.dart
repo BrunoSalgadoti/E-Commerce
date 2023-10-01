@@ -3,12 +3,34 @@ import 'package:brn_ecommerce/common/sliding_up_panel/filters_sliding_up_panel.d
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-import '../../common/formated_fields/format_values.dart';
+import '../../common/formatted_fields/format_values.dart';
 import '../../common/miscellaneous/freight_logo.dart';
 
-class SelectProductScreen extends StatelessWidget {
-  const SelectProductScreen({Key? key}) : super(key: key);
+class SelectProductScreen extends StatefulWidget {
+  const SelectProductScreen({Key? key, this.productManager})
+      : super(key: key);
+
+  final ProductManager? productManager;
+
+  @override
+  State<SelectProductScreen> createState() => _SelectProductScreenState();
+}
+
+class _SelectProductScreenState extends State<SelectProductScreen> {
+  final PanelController panelController = PanelController();
+  final Set<StatusOfProducts> selectedStatus = <StatusOfProducts>{};
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      final productManager =
+          Provider.of<ProductManager>(context, listen: false);
+      productManager.disableFilter();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +45,12 @@ class SelectProductScreen extends StatelessWidget {
           final filteredProducts = productManager.filteredProducts;
 
           return Column(children: [
-            const FiltersSlidingUpPanel(),
+            FiltersSlidingUpPanel(
+              textOfSlidingUpPanel:
+                  'Procure um produto para vincular a foto...',
+              panelController: panelController,
+              selectedStatus: selectedStatus,
+            ),
             if (productManager.filtersOn == true)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -96,7 +123,8 @@ class SelectProductScreen extends StatelessWidget {
                               subtitle: Padding(
                                   padding: const EdgeInsets.only(top: 4),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.max,
