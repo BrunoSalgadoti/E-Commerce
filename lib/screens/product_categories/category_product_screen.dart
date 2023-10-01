@@ -56,10 +56,10 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
       final isMediumScreen =
           screenSize.width >= 600 && screenSize.width < 1200;
 
-      final List<Product> recentProducts =
+      final List<Product> recentProductsFromCategory =
           UtilsForCategory(productManager, widget.productCategory)
               .loadRecentProducts();
-      final List<Product> allProducts =
+      final List<Product> allProductsFromCategory =
           UtilsForCategory(productManager, widget.productCategory)
               .loadCategoryProducts();
       final categoryImage =
@@ -68,7 +68,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
 
       return Scaffold(
           backgroundColor: Colors.white,
-          body: allProducts.isEmpty
+          body: allProductsFromCategory.isEmpty
               ? const EmptyPageIndicator(
                   title: 'Carregando...',
                   titleColor: Colors.black,
@@ -190,8 +190,8 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                         scrollDirection: Axis.horizontal,
                                         autoPlay: true,
                                       ),
-                                      items:
-                                          recentProducts.map<Widget>((image) {
+                                      items: recentProductsFromCategory
+                                          .map<Widget>((image) {
                                         return Stack(
                                           fit: StackFit.expand,
                                           children: [
@@ -285,13 +285,13 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                                 MainAxisAlignment.spaceAround,
                                             children: [
                                               const Icon(Icons.filter_list,
-                                                size: 30),
+                                                  size: 30),
                                               FittedBox(
                                                 fit: BoxFit.scaleDown,
                                                 child:
                                                     DecoratedGoogleFontText(
                                                   'Seções de: '
-                                                      '${widget.productCategory.categoryTitle}',
+                                                  '${widget.productCategory.categoryTitle}',
                                                   fontMethod:
                                                       GoogleFonts.amaranth,
                                                   fillColor: Colors.black,
@@ -376,26 +376,16 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                 else
                                   Builder(
                                     builder: (context) {
-                                      //TODO: Corrigir filtro...
-                                      // final productsOfCategory = productManager
-                                      //     .allProducts
-                                      //     .where((p) =>
-                                      //         p.isValid! &&
-                                      //         p.hasStock &&
-                                      //         p.categoryOfProduct ==
-                                      //             widget.productCategory.categoryID)
-                                      //     .toList();
+                                      final categoryItens = allProductsFromCategory;
                                       return ListView.builder(
                                         padding: EdgeInsets.zero,
                                         primary: false,
                                         shrinkWrap: true,
-                                        itemCount: allProducts.length,
+                                        itemCount: categoryItens.length,
                                         itemBuilder: (context, index) {
-                                          //TODO: Corrigir filtro!!!!
-                                          // final departmentsItem =
-                                          //     productsOfCategory[index];
+                                          final categoryItens = allProductsFromCategory[index];
                                           return FlexibleProductCard(
-                                            product: allProducts[index],
+                                            product: categoryItens,
                                             isVertical: false,
                                           );
                                         },

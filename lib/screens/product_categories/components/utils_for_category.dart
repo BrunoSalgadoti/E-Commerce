@@ -29,10 +29,8 @@ class UtilsForCategory {
 
   // Load all products from the specific category
   List<Product> loadCategoryProducts() {
-    List<Product> allCategoryProducts = productManager.allProducts
+    List<Product> allCategoryProducts = productManager.filteredProducts
         .where((p) =>
-            p.isValid! &&
-            p.hasStock &&
             p.categoryOfProduct == productCategory.categoryID)
         .toList();
 
