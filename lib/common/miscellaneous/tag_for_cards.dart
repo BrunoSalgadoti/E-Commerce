@@ -10,8 +10,9 @@ class TagForCard<T> extends StatelessWidget {
     required this.alignment,
     required this.backgroundColor,
     this.containerWidth = 130,
+    this.containerHeight,
     this.alphaBackgroundColor = 90,
-    this.textFontSize = 18,
+    this.textFontSize,
     this.googleFonts = GoogleFonts.rancho,
   });
 
@@ -19,6 +20,7 @@ class TagForCard<T> extends StatelessWidget {
   final AlignmentGeometry alignment;
   final Color backgroundColor;
   final double? containerWidth;
+  final double? containerHeight;
   final int? alphaBackgroundColor;
   final double? textFontSize;
   final GoogleFontStaticMethod googleFonts;
@@ -26,22 +28,24 @@ class TagForCard<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color textColor = getTextColorBasedOnBackground(backgroundColor);
-    final Color borderColor = getBorderColorInvertedTextColor(backgroundColor);
+    final Color borderColor =
+        getBorderColorInvertedTextColor(backgroundColor);
 
     return Align(
       alignment: alignment,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 69, right: 7),
-        child: Container(
-          width: containerWidth,
-          decoration: BoxDecoration(
-            color: backgroundColor.withAlpha(alphaBackgroundColor ?? 90),
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(9.0),
-              bottomRight: Radius.circular(9.0),
-            ),
+      child: Container(
+        width: containerWidth,
+        height: containerHeight,
+        decoration: BoxDecoration(
+          color: backgroundColor.withAlpha(alphaBackgroundColor ?? 90),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(9.0),
+            bottomRight: Radius.circular(9.0),
           ),
-          padding: const EdgeInsets.all(7),
+        ),
+        padding: const EdgeInsets.all(7),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
           child: DecoratedGoogleFontText(
             data.toString(),
             fontMethod: googleFonts,

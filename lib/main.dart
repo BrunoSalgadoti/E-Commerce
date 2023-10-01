@@ -35,7 +35,7 @@ Future<void> main() async {
     ///to understand how it works!
     ///CAUTION: Understand the functionality before setting the
     ///variable to true
-    if (shouldStart == true) {
+    if (shouldStart == false) {
       Product product = Product();
       FirebaseAutomatedMapsUpdate<Product>(
         collectionPath: 'products',

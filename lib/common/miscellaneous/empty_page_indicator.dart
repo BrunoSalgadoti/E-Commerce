@@ -9,10 +9,18 @@ class EmptyPageIndicator extends StatefulWidget {
     required this.iconData,
     required this.image,
     this.duration = const Duration(seconds: 17),
+    this.iconColor,
+    this.iconSize,
+    this.titleSize,
+    this.titleColor,
   }) : super(key: key);
 
   final String title;
+  final double? titleSize;
+  final Color? titleColor;
   final IconData? iconData;
+  final Color? iconColor;
+  final double? iconSize;
   final String? image;
   final Duration? duration;
 
@@ -54,24 +62,24 @@ class EmptyPageIndicatorState extends State<EmptyPageIndicator> {
                 widget.image == null
                     ? Container()
                     : Image.asset(
-                  widget.image!,
-                  width: 180,
-                  height: 180,
-                ),
+                        widget.image!,
+                        width: 180,
+                        height: 180,
+                      ),
                 widget.iconData == null
                     ? Container()
                     : Icon(
-                  widget.iconData,
-                  size: 80.0,
-                  color: Colors.white,
-                ),
+                        widget.iconData,
+                        size: widget.iconSize ?? 80.0,
+                        color: widget.iconColor ?? Colors.white,
+                      ),
                 const SizedBox(height: 16),
                 Text(
                   widget.title,
-                  style: const TextStyle(
-                    fontSize: 20,
+                  style: TextStyle(
+                    fontSize: widget.iconSize ?? 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: widget.titleColor ?? Colors.white,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -80,20 +88,20 @@ class EmptyPageIndicatorState extends State<EmptyPageIndicator> {
           ),
           Visibility(
             visible: !_showFirst,
-            child: const Column(
+            child: Column(
               children: [
                 Icon(
                   Icons.wifi_sharp,
-                  size: 100.0,
-                  color: Colors.white,
+                  size: widget.iconSize ?? 100.0,
+                  color: widget.iconColor ?? Colors.white,
                 ),
                 Text(
                   'Verifique a sua conexão com a internet!\n'
-                      'Se o erro persistir entre em contato com a Loja',
+                  'Se o erro persistir entre em contato com a Loja',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: widget.titleColor ?? Colors.white,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -104,6 +112,7 @@ class EmptyPageIndicatorState extends State<EmptyPageIndicator> {
       ),
     );
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -112,4 +121,3 @@ class EmptyPageIndicatorState extends State<EmptyPageIndicator> {
     }
   }
 }
-

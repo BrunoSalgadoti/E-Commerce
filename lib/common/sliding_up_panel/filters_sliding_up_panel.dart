@@ -4,35 +4,48 @@ import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class FiltersSlidingUpPanel extends StatefulWidget {
-  const FiltersSlidingUpPanel({super.key});
+  const FiltersSlidingUpPanel({
+    Key? key,
+    required this.textOfSlidingUpPanel,
+    required this.panelController,
+    required this.selectedStatus,
+    this.paddingContentCheckbox,
+  }) : super(key: key);
+
+  final PanelController panelController;
+  final Set<StatusOfProducts> selectedStatus;
+  final String? textOfSlidingUpPanel;
+  final EdgeInsetsGeometry? paddingContentCheckbox;
 
   @override
-  State<FiltersSlidingUpPanel> createState() => _FiltersSlidingUpPanelState();
+  FiltersSlidingUpPanelState createState() => FiltersSlidingUpPanelState();
 }
 
-class _FiltersSlidingUpPanelState extends State<FiltersSlidingUpPanel> {
-  final PanelController _panelController = PanelController();
-  Set<StatusOfProducts> selectedStatus = <StatusOfProducts>{};
-
+class FiltersSlidingUpPanelState extends State<FiltersSlidingUpPanel>
+    with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
 
     return SlidingUpPanel(
-      controller: _panelController,
+      controller: widget.panelController,
       borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
+        bottomLeft: Radius.circular(10),
+        bottomRight: Radius.circular(10),
+      ),
       minHeight: 35,
-      maxHeight: 360,
+      maxHeight: 340,
       panel: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           GestureDetector(
             onTap: () {
-              if (_panelController.isPanelClosed) {
-                _panelController.open();
-              } else {
-                _panelController.close();
+              if (widget.panelController.isAttached) {
+                if (widget.panelController.isPanelClosed) {
+                  widget.panelController.open();
+                } else {
+                  widget.panelController.close();
+                }
               }
             },
             child: Container(
@@ -40,7 +53,9 @@ class _FiltersSlidingUpPanelState extends State<FiltersSlidingUpPanel> {
               color: Colors.transparent,
               alignment: Alignment.center,
               child: Text(
-                "F I L T R O S",
+                widget.textOfSlidingUpPanel == null
+                    ? 'F I L T R O S'
+                    : '${widget.textOfSlidingUpPanel}',
                 style: TextStyle(
                   color: primaryColor,
                   fontWeight: FontWeight.w800,
@@ -49,44 +64,49 @@ class _FiltersSlidingUpPanelState extends State<FiltersSlidingUpPanel> {
               ),
             ),
           ),
-          Consumer<ProductManager>(builder: (_, productManager, __) {
-            return Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: StatusOfProducts.values.map((s) {
-                  final isSelected = selectedStatus.contains(s);
+          Consumer<ProductManager>(
+            builder: (_, productManager, __) {
+              return Expanded(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: StatusOfProducts.values.map((s) {
+                        final isSelected = widget.selectedStatus.contains(s);
 
-                  return CheckboxListTile(
-                    title: Text(ProductManager.getStatusText(s)),
-                    dense: true,
-                    activeColor: primaryColor,
-                    value: isSelected,
-                    onChanged: (bool? v) {
-                      if (v != null) {
-                        setState(() {
-                          if (v) {
-                            if (selectedStatus.contains(s)) {
-                              selectedStatus.remove(s);
-                            } else {
-                              selectedStatus.clear();
-                              selectedStatus.add(s);
-                            }
-                          } else {
-                            selectedStatus.remove(s);
-                          }
-                          productManager.setStatusFilter(
-                            status: s,
-                            enabled: selectedStatus.contains(s),
-                          );
-                        });
-                        _panelController.close();
-                      }
-                    },
-                  );
-                }).toList(),
-              ),
-            );
-          })
+                        return Padding(
+                          padding: widget.paddingContentCheckbox ??
+                              const EdgeInsets.only(left: 0, right: 0),
+                          child: CheckboxListTile(
+                            title: Text(ProductManager.getStatusText(s)),
+                            dense: true,
+                            activeColor: primaryColor,
+                            value: isSelected,
+                            onChanged: (bool? v) {
+                              if (v != null) {
+                                setState(() {
+                                  if (v) {
+                                    if (widget.selectedStatus.contains(s)) {
+                                      widget.selectedStatus.remove(s);
+                                    } else {
+                                      widget.selectedStatus.clear();
+                                      widget.selectedStatus.add(s);
+                                    }
+                                  } else {
+                                    widget.selectedStatus.remove(s);
+                                  }
+                                  productManager.setStatusFilter(
+                                    status: s,
+                                    enabled:
+                                        widget.selectedStatus.contains(s),
+                                  );
+                                });
+                                widget.panelController.close();
+                              }
+                            },
+                          ),
+                        );
+                      }).toList()));
+            },
+          )
         ],
       ),
     );

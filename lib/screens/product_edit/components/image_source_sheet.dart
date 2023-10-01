@@ -54,8 +54,8 @@ class ImageSourceSheet extends StatelessWidget {
 
     Future<void> imgGallery() async {
       local = 'gallery';
-      final List<XFile> xfiles = await picker.pickMultiImage();
-      final List<File> files = xfiles.map((xfile) => File(xfile.path)).toList();
+      final List<XFile> xFile = await picker.pickMultiImage();
+      final List<File> files = xFile.map((xFile) => File(xFile.path)).toList();
       if (files.length == 1) {
         File file = files.first;
         editImage(file.path);

@@ -18,7 +18,7 @@ class SettingsDrawer extends StatelessWidget {
         ),
         const PopupMenuItem<String>(
           value: 'Opção2',
-          child: Text('Opção 2'),
+          child: Text('Configurações gerais'),
         ),
         // AAdd other menu options as needed
       ],

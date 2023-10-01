@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:brn_ecommerce/models/product_category.dart';
+import 'package:brn_ecommerce/models/categories_of_products/product_category.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
-import '../helpers/product_categories_factory_lists/categories_factory.dart';
+import '../../helpers/product_categories_factory_lists/categories_factory.dart';
 
 class ProductCategoryManager extends ChangeNotifier {
   ProductCategoryManager() {
@@ -65,7 +65,7 @@ class ProductCategoryManager extends ChangeNotifier {
   /// não precisam carregar todas as categorias.
   ///
   /// [userManager] é uma instância de [UserManager] que contém informações sobre o usuário.
-  void verifyUser(UserManager userManager) {
+  Future<void> verifyUser(UserManager userManager) async {
     _categoriesListener?.cancel();
     _categoriesList.clear();
     if (userManager.adminEnable) {
@@ -204,7 +204,11 @@ class ProductCategoryManager extends ChangeNotifier {
         // If it is empty or smaller than the factory list,
         // create categories or insert new categories from the factory list
         for (final category in categoriesFactoryList) {
-          if (categoriesQuery.docs.length < categoriesFactoryList.length) {
+          final categoryID = category.categoryID;
+          final categoryExists =
+              categoriesQuery.docs.any((doc) => doc.id == categoryID);
+
+          if (!categoryExists) {
             await firestore
                 .collection("categories")
                 .doc(category.categoryID)
@@ -236,12 +240,15 @@ class ProductCategoryManager extends ChangeNotifier {
           final data = category.toMap();
           final dbData = categoryRef.data();
 
-          if (!mapEquals(data, dbData)) {
-            await firestore
-                .collection("categories")
-                .doc(category.categoryID)
-                .update(data);
-          }
+          // Check and update only missing fields
+          data.forEach((key, value) {
+            if (!dbData.containsKey(key)) {
+              dbData[key] = value;
+            }
+          });
+
+          // Update the Firestore document with the merged data
+          await categoryRef.reference.set(dbData);
         }
       }
     }

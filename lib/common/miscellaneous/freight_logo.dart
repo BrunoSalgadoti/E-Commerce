@@ -8,20 +8,32 @@ class FreightLogo extends StatelessWidget {
     super.key,
     required this.product,
     this.positionedBottom = 0,
-    this.positionedRight = 0,
+    this.positionedRight,
+    this.positionedTop,
+    this.positionedLeft,
     this.containerHeight = 35,
     this.fontSize = 12,
-    this.iconSize =  23,
+    this.iconSize = 23,
     this.text = "Frete Gratis",
     this.containerWidth,
+    this.radiusTopLeft,
+    this.radiusTopRight,
+    this.radiusBottomRight,
+    this.radiusBottomLeft,
   });
 
   final Product product;
 
   final double? positionedBottom;
   final double? positionedRight;
+  final double? positionedLeft;
+  final double? positionedTop;
   final double? containerHeight;
   final double? containerWidth;
+  final Radius? radiusTopLeft;
+  final Radius? radiusTopRight;
+  final Radius? radiusBottomRight;
+  final Radius? radiusBottomLeft;
   final double? fontSize;
   final double? iconSize;
   final String? text;
@@ -32,13 +44,18 @@ class FreightLogo extends StatelessWidget {
       return Positioned(
         bottom: positionedBottom,
         right: positionedRight,
+        left: positionedLeft,
+        top: positionedTop,
         child: Container(
           height: containerHeight,
-            width: containerWidth,
-          decoration: const BoxDecoration(
-            color: Color.fromARGB(247, 151, 250, 194),
+          width: containerWidth,
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(247, 151, 250, 194),
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(9),
+              topLeft: radiusTopLeft ?? const Radius.circular(9),
+              topRight: radiusTopRight ?? Radius.zero,
+              bottomRight: radiusBottomRight ?? Radius.zero,
+              bottomLeft: radiusBottomLeft ?? Radius.zero,
             ),
           ),
           padding: const EdgeInsets.all(5),
@@ -48,7 +65,7 @@ class FreightLogo extends StatelessWidget {
                 const EdgeInsets.all(2),
               ),
               textStyle: MaterialStateProperty.all<TextStyle>(
-               TextStyle(fontSize: fontSize),
+                TextStyle(fontSize: fontSize),
               ),
             ),
             text: text,

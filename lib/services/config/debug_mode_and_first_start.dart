@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/models/product_category_manager.dart';
+import 'package:brn_ecommerce/models/categories_of_products/product_category_manager.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/models/version_manager.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -19,7 +19,8 @@ Future<void> debugModeAndFirstStart({required bool firstStart}) async {
     await versionManager.updateVersionInfo();
 
     // Pass all uncaught "fatal" errors from the framework to Crashlytics
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    FlutterError.onError =
+        FirebaseCrashlytics.instance.recordFlutterFatalError;
 
     // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
     PlatformDispatcher.instance.onError = (error, stack) {
