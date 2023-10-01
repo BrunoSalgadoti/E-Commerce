@@ -49,7 +49,6 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
 
     return Consumer2<ProductManager, ProductCategoryManager>(
         builder: (_, productManager, productCategoryManager, __) {
-
       //TODO:  Ajustar o layout com base no tamanho da tela
       final screenSize = MediaQuery.of(context).size;
       final isSmallScreen = screenSize.width < 600;
@@ -68,7 +67,8 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
 
       return Scaffold(
           backgroundColor: Colors.white,
-          body: allProductsFromCategory.isEmpty
+          body: allProductsFromCategory.isEmpty &&
+                  productManager.filtersOn == false
               ? const EmptyPageIndicator(
                   title: 'Carregando...',
                   titleColor: Colors.black,
@@ -266,7 +266,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                 ),
                                 FiltersSlidingUpPanel(
                                   textOfSlidingUpPanel:
-                                      'Filtre por produtos na Categoria...',
+                                      'FILTRAR: Produtos na Categoria...',
                                   panelController: panelController,
                                   selectedStatus: selectedStatus,
                                   paddingContentCheckbox:
@@ -360,30 +360,35 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                       ),
                                     ],
                                   ),
-                                if (productManager.filteredProducts.isEmpty)
+                                if (allProductsFromCategory.isEmpty)
                                   productManager.filtersOn == true
                                       ? const EmptyPageIndicator(
                                           title: 'Pesquisa não encontrada...',
                                           iconData: Icons.search_off,
                                           image: null,
                                           duration: null,
+                                          titleColor: Colors.black,
+                                          iconColor: Colors.black,
                                         )
                                       : const EmptyPageIndicator(
                                           title: 'Carregando Produtos...',
                                           image: "assets/images/await.gif",
                                           iconData: null,
+                                          titleColor: Colors.black,
                                         )
                                 else
                                   Builder(
                                     builder: (context) {
-                                      final categoryItens = allProductsFromCategory;
+                                      final categoryItens =
+                                          allProductsFromCategory;
                                       return ListView.builder(
                                         padding: EdgeInsets.zero,
                                         primary: false,
                                         shrinkWrap: true,
                                         itemCount: categoryItens.length,
                                         itemBuilder: (context, index) {
-                                          final categoryItens = allProductsFromCategory[index];
+                                          final categoryItens =
+                                              allProductsFromCategory[index];
                                           return FlexibleProductCard(
                                             product: categoryItens,
                                             isVertical: false,

@@ -151,7 +151,7 @@ class ProductCategoryManager extends ChangeNotifier {
     PerformanceMonitoring().stopTrace('setup-rt-updates-categories');
   }
 
-  List<ProductCategory> filteredCategories(
+  List<ProductCategory> filterCategoriesActivated(
       bool adminEnable, bool editingCategories) {
     final List<ProductCategory> categoriesActive = [];
 

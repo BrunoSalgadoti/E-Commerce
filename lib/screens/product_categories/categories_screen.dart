@@ -64,7 +64,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               ).then((value) async {
                                 if (value == 'Salvar') {
                                   await productCategoryManager.updateCategory();
-                                  productCategoryManager.filteredCategories(
+                                  productCategoryManager.filterCategoriesActivated(
                                       userManager.adminEnable, false);
                                   userManager.editingCategories = false;
                                 } else {
@@ -93,12 +93,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                         mainAxisSpacing: 10,
                       ),
                       itemCount: productCategoryManager
-                          .filteredCategories(userManager.adminEnable,
+                          .filterCategoriesActivated(userManager.adminEnable,
                               userManager.editingCategories)
                           .length,
                       itemBuilder: (context, index) {
                         final category =
-                            productCategoryManager.filteredCategories(
+                            productCategoryManager.filterCategoriesActivated(
                                 userManager.adminEnable,
                                 userManager.editingCategories)[index];
                         return GestureDetector(
