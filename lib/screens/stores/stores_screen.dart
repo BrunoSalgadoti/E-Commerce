@@ -2,7 +2,7 @@ import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/models/stores_manager.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
-import 'package:brn_ecommerce/screens/stores/components/sotore_card.dart';
+import 'package:brn_ecommerce/screens/stores/components/store_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

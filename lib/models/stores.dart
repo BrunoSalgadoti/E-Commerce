@@ -28,7 +28,8 @@ class Stores extends ChangeNotifier {
   });
 
   Stores.fromDocument(DocumentSnapshot document) {
-    PerformanceMonitoring().startTrace('stores-from-document', shouldStart: true);
+    PerformanceMonitoring()
+        .startTrace('stores-from-document', shouldStart: true);
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Instance beginning Stores.fromDocument');
     }
@@ -38,7 +39,8 @@ class Stores extends ChangeNotifier {
     emailStore = document.get("emailStore") as String? ?? "";
     phoneNumberStore = document.get("phoneNumberStore") as String? ?? "";
     imageStore = document.get("imageStore") as String? ?? "";
-    address = Address.fromMap(document.get("address") as Map<String, dynamic>);
+    address =
+        Address.fromMap(document.get("address") as Map<String, dynamic>);
     openingStores = OpeningStores.fromMap(
         document.get("openingStores") as Map<String, dynamic>);
     openingStoresFromTimeOfDay =
@@ -104,7 +106,7 @@ class Stores extends ChangeNotifier {
       "nameStore": nameStore,
       "emailStore": emailStore,
       "phoneNumberStore": unFormatPhone(phoneNumberStore ?? ""),
-      "imageStore": imageStore,
+      "imageStore": imageStore ?? "",
       "openingStores": openingStores?.toMap(),
       "address": address?.toMap(),
     };
@@ -172,7 +174,8 @@ class Stores extends ChangeNotifier {
   }
 
   Future<void> updateStoreImage(dynamic image, [String? storeId]) async {
-    PerformanceMonitoring().startTrace('update-store-image', shouldStart: true);
+    PerformanceMonitoring()
+        .startTrace('update-store-image', shouldStart: true);
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Starting file upload to Firebase Storage');
     }
