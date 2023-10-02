@@ -12,6 +12,7 @@ class SubCategoriesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      //TODO: Rota para a tela da seção
       onTap: () => debugPrint('${subCategory.subCategoryTitle}'),
       child: Card(
         semanticContainer: true,
