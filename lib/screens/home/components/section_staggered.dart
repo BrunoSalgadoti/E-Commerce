@@ -21,7 +21,8 @@ class SectionStaggered extends StatelessWidget {
       value: section,
       child: Container(
         margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        child:
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           SectionHeader(section: section),
           Consumer<Section>(
             builder: (_, section, __) {

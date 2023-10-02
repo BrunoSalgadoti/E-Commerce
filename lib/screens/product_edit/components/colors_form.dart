@@ -29,7 +29,8 @@ class ColorsForm extends StatelessWidget {
                 const Expanded(
                   child: Text(
                     'Adicione as cores deste produto!',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                 ),
                 CustomIconButton(

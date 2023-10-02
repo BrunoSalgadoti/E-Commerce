@@ -124,7 +124,8 @@ class AdminUsersSearch extends ChangeNotifier {
 
     final Uri emailLaunchUri = Uri(
         scheme: "mailto",
-        path: userEmail ?? emails.toString().replaceAll(RegExp(r"[\[\]]"), ""),
+        path:
+            userEmail ?? emails.toString().replaceAll(RegExp(r"[\[\]]"), ""),
         query: encodeQueryParameters(<String, String>{
           "subject": "BRN Info_DEV",
           "body": userName == null
@@ -191,7 +192,8 @@ class AdminUsersSearch extends ChangeNotifier {
                     CommunicationsUtils(parameterClass1Of2: user)
                         .openPhone(context, user.phoneNumber ?? '');
                     CommunicationsUtils(parameterClass1Of2: user)
-                        .alertForCall(context, 'Número telefônico indisponível!');
+                        .alertForCall(
+                            context, 'Número telefônico indisponível!');
                   },
                 ),
               ],
@@ -206,7 +208,8 @@ class AdminUsersSearch extends ChangeNotifier {
                               backgroundImage: AssetImage(
                                   'assets/images/userWithoutImage.png'))
                           : CircleAvatar(
-                              backgroundImage: NetworkImage(user.userPhotoURL!),
+                              backgroundImage:
+                                  NetworkImage(user.userPhotoURL!),
                             ),
                       const SizedBox(
                           height: 40,
@@ -270,7 +273,8 @@ class AdminUsersSearch extends ChangeNotifier {
                                   titleText: 'Enviar E-mail',
                                   titleSize: 18,
                                   titleColor: Colors.black,
-                                  bodyText: 'Escolha para quem deseja enviar\n '
+                                  bodyText:
+                                      'Escolha para quem deseja enviar\n '
                                       'o E-mail!',
                                   bodyWeight: FontWeight.normal,
                                   actions: [
@@ -317,10 +321,11 @@ class AdminUsersSearch extends ChangeNotifier {
                     backgroundColor: Colors.greenAccent,
                     icon: Icons.phone,
                     onPressed: (context) {
-                         CommunicationsUtils(parameterClass1Of2: user)
-                             .openPhone(context, user.phoneNumber ?? '');
-                         CommunicationsUtils(parameterClass1Of2: user)
-                             .alertForCall(context, 'Erro ao tentar abrir o telefone!' );
+                      CommunicationsUtils(parameterClass1Of2: user)
+                          .openPhone(context, user.phoneNumber ?? '');
+                      CommunicationsUtils(parameterClass1Of2: user)
+                          .alertForCall(
+                              context, 'Erro ao tentar abrir o telefone!');
                     }),
               ],
             ),

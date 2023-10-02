@@ -33,7 +33,8 @@ class _CardFrontState extends State<CardFront> {
   void onNumberChanged(String number) {
     setState(() {
       if (number.length < 4) {
-        containerColor = const Color(0xff727881); // Default color when invalid
+        containerColor =
+            const Color(0xff727881); // Default color when invalid
         detectedCardType =
             null; // Clears the detected card type when the number is invalid
       } else {
@@ -57,7 +58,8 @@ class _CardFrontState extends State<CardFront> {
     return Stack(alignment: Alignment.topRight, children: [
       Card(
         clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         elevation: 16,
         child: Container(
           padding: const EdgeInsets.all(16),

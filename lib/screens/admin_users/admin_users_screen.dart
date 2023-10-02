@@ -68,7 +68,8 @@ class AdminUsersScreen extends StatelessWidget {
                   return IconButton(
                       onPressed: () async {
                         adminUsersSearch.search = '';
-                        adminUsersSearch.filterList(adminUsersSearch.allUsers);
+                        adminUsersSearch
+                            .filterList(adminUsersSearch.allUsers);
                       },
                       icon: const Icon(Icons.close));
                 }

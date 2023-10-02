@@ -14,7 +14,8 @@ class TimeInputFormatter extends TextInputFormatter {
   }
 
   String _formatTime(String value) {
-    final digitsOnly = value.replaceAll(RegExp(r'\D'), ''); // Remove non-digits
+    final digitsOnly =
+        value.replaceAll(RegExp(r'\D'), ''); // Remove non-digits
 
     if (digitsOnly.isEmpty) {
       return '';

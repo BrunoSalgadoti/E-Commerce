@@ -23,7 +23,8 @@ class ShareProductScreen extends StatefulWidget {
     RenderRepaintBoundary boundary = repaintBoundaryKey.currentContext!
         .findRenderObject() as RenderRepaintBoundary;
     ui.Image image = await boundary.toImage();
-    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    ByteData? byteData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
     return byteData?.buffer.asUint8List();
   }
 
@@ -128,7 +129,8 @@ class ShareProductScreenState extends State<ShareProductScreen> {
                           width: 350,
                           height: 350,
                           child: Image(
-                            image: NetworkImage(widget.product!.images!.first),
+                            image:
+                                NetworkImage(widget.product!.images!.first),
                             fit: BoxFit.fill,
                           ),
                         ),

@@ -31,7 +31,8 @@ class SizesForm extends StatelessWidget {
                   flex: 1,
                   child: Text(
                     'Adicionar Item',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                 ),
                 CustomIconButton(

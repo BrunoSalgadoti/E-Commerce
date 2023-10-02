@@ -25,7 +25,7 @@ class ImagesForm extends StatelessWidget {
       initialValue: List.from(product!.images as Iterable),
       validator: (images) {
         if (images!.isEmpty) {
-          return 'Isira ao menos uma imagem!';
+          return 'Insira ao menos uma imagem!';
         }
         return null;
       },
@@ -142,15 +142,18 @@ class ImagesForm extends StatelessWidget {
                                 if (Platform.isAndroid) {
                                   showModalBottomSheet(
                                       context: context,
-                                      builder: (_) => buildImageSourceSheet());
+                                      builder: (_) =>
+                                          buildImageSourceSheet());
                                 } else if (Platform.isIOS) {
                                   showCupertinoModalPopup(
                                       context: context,
-                                      builder: (_) => buildImageSourceSheet());
+                                      builder: (_) =>
+                                          buildImageSourceSheet());
                                 } else {
                                   showDialog(
                                       context: context,
-                                      builder: (_) => buildImageSourceSheet());
+                                      builder: (_) =>
+                                          buildImageSourceSheet());
                                 }
                               })),
                 ),

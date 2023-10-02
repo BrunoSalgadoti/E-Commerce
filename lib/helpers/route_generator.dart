@@ -1,6 +1,6 @@
+import 'package:brn_ecommerce/models/categories_of_products/product_category.dart';
 import 'package:brn_ecommerce/models/order_client.dart';
 import 'package:brn_ecommerce/models/product.dart';
-import 'package:brn_ecommerce/models/categories_of_products/product_category.dart';
 import 'package:brn_ecommerce/models/stores.dart';
 import 'package:brn_ecommerce/screens/address/address_screen.dart';
 import 'package:brn_ecommerce/screens/base/base_screen.dart';

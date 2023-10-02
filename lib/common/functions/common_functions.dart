@@ -71,9 +71,9 @@ Future<void> sendEmailNotification({
 
 Future<void> reportNoFatalErrorToCrashlytics(
     {required String error,
-      String? reason,
-      required StackTrace stackTrace,
-      required String information}) async {
+    String? reason,
+    required StackTrace stackTrace,
+    required String information}) async {
   await FirebaseCrashlytics.instance.recordError(
     error,
     stackTrace,

@@ -79,7 +79,8 @@ class EditProductScreen extends StatelessWidget {
                           titleWeight: FontWeight.normal,
                           actions: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomTextButton(
                                     text: 'Sim',
@@ -200,7 +201,8 @@ class EditProductScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
                           MarkdownTextInput(
-                            (description) => product?.description = description,
+                            (description) =>
+                                product?.description = description,
                             product!.description ?? '',
                             label: 'Descrição',
                             maxLines: null,
@@ -236,7 +238,6 @@ class EditProductScreen extends StatelessWidget {
                                           if (formKey.currentState!
                                               .validate()) {
                                             formKey.currentState!.save();
-
 
                                             //TODO: verificação ...
                                             // (categoryOfProduct == null

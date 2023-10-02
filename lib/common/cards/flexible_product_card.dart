@@ -169,7 +169,7 @@ class FlexibleProductCard extends StatelessWidget {
                               width: 16,
                             ),
                             Expanded(
-                             child: Column(
+                                child: Column(
                               mainAxisAlignment:
                                   MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.start,

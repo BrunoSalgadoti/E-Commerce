@@ -26,8 +26,9 @@ class ItemTile extends StatelessWidget {
     return GestureDetector(
         onTap: () {
           if (item?.product != null) {
-            final product =
-                context.read<ProductManager>().findProductById(item!.product!);
+            final product = context
+                .read<ProductManager>()
+                .findProductById(item!.product!);
             if (product != null && product.isValid!) {
               Navigator.pushNamed(context, "/product", arguments: product);
             }
@@ -50,16 +51,17 @@ class ItemTile extends StatelessWidget {
                           bodyText: '',
                           content: product != null
                               ? ListTile(
-                                  contentPadding: EdgeInsets.zero,
-                                  leading: Image.network(product.images!.first),
+                            contentPadding: EdgeInsets.zero,
+                                  leading:
+                                      Image.network(product.images!.first),
                                   title: Text(product.name!),
                                   subtitle: !product.hasStock
                                       ? const Text(
                                           'Fora de Estoque...',
                                           style: TextStyle(color: Colors.red),
                                         )
-                                      : Text(
-                                          formattedRealText(product.basePrice)),
+                                      : Text(formattedRealText(
+                                          product.basePrice)),
                                 )
                               : const Text('Nenhum Item Vinculado'
                                   ' a Imagem!'),

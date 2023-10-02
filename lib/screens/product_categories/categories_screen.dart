@@ -41,7 +41,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     : userManager.adminEnable &&
                             userManager.editingCategories == true
                         ? CustomIconButton(
-                            padding: const EdgeInsets.only(right: 15, left: 15),
+                            padding:
+                                const EdgeInsets.only(right: 15, left: 15),
                             iconData: Icons.check,
                             color: Colors.white,
                             size: 38,
@@ -63,9 +64,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                 elevation: 8.0,
                               ).then((value) async {
                                 if (value == 'Salvar') {
-                                  await productCategoryManager.updateCategory();
-                                  productCategoryManager.filterCategoriesActivated(
-                                      userManager.adminEnable, false);
+                                  await productCategoryManager
+                                      .updateCategory();
+                                  productCategoryManager
+                                      .filterCategoriesActivated(
+                                          userManager.adminEnable, false);
                                   userManager.editingCategories = false;
                                 } else {
                                   userManager.editingCategories = false;
@@ -107,8 +110,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                   "/category_screen",
                                   arguments: category);
                             },
-                            child:
-                                MainCategoriesCard(productCategory: category));
+                            child: MainCategoriesCard(
+                                productCategory: category));
                       },
                     ),
                   ));

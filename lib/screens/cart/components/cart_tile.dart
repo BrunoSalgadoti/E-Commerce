@@ -30,7 +30,8 @@ class CartTile extends StatelessWidget {
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           clipBehavior: Clip.antiAlias,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
           child: Stack(
             children: [
               SizedBox(
@@ -53,7 +54,8 @@ class CartTile extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
                 child: Row(
                   children: [
                     const SizedBox(width: 100),
@@ -80,7 +82,8 @@ class CartTile extends StatelessWidget {
                                 ),
                               ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 2),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 2),
                               child: Text(
                                 'Tamanho: ${cartProduct?.size ?? ""}',
                                 style: const TextStyle(
@@ -88,7 +91,8 @@ class CartTile extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 2),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 2),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
@@ -133,7 +137,8 @@ class CartTile extends StatelessWidget {
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.bold),
                                   );
-                                } else if (cartProduct.unitQuantityStock != 0) {
+                                } else if (cartProduct.unitQuantityStock !=
+                                    0) {
                                   return Text(
                                     'Sem estoque suficiente!\n'
                                     'QTD Disponível com esta cor: '
@@ -154,8 +159,8 @@ class CartTile extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 0, left: 12),
-                      child:
-                          Consumer<CartProduct>(builder: (_, cartProduct, __) {
+                      child: Consumer<CartProduct>(
+                          builder: (_, cartProduct, __) {
                         return Column(
                           children: [
                             CustomIconButton(
@@ -210,7 +215,8 @@ class CartTile extends StatelessWidget {
                                                       icon: null,
                                                       fontColor: Colors.red,
                                                       onPressed: () {
-                                                        cartProduct.decrement();
+                                                        cartProduct
+                                                            .decrement();
                                                         Navigator.of(context)
                                                             .pop();
                                                       }),

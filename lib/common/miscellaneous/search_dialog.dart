@@ -17,7 +17,7 @@ class SearchDialog extends StatelessWidget {
             left: 5,
             right: 5,
             child: Card(
-            child: TextFormField(
+                child: TextFormField(
               initialValue: initialText,
               textInputAction: TextInputAction.search,
               autofocus: true,

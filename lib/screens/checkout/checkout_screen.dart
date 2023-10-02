@@ -78,7 +78,8 @@ class CheckoutScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation(Colors.white),
+                              valueColor:
+                                  AlwaysStoppedAnimation(Colors.white),
                             ),
                             SizedBox(height: 16),
                             Text(
@@ -111,27 +112,29 @@ class CheckoutScreen extends StatelessWidget {
                               if (formKey.currentState!.validate()) {
                                 debugPrint('enviar!!');
 
-
-
-
-                                checkoutManager.checkout(onStockFail: (error) {
+                                checkoutManager.checkout(
+                                    onStockFail: (error) {
                                   CustomScaffoldMessenger(
-                                      context: context,
-                                      message: '$error'
-                                  ).msn();
+                                          context: context, message: '$error')
+                                      .msn();
                                   Navigator.popUntil(
-                                      context, (route) => route.settings.name == "/cart");
+                                      context,
+                                      (route) =>
+                                          route.settings.name == "/cart");
                                 }, onSuccess: (order) {
-                                  Navigator.popUntil(context,
-                                          (route) => route.settings.name == "/product");
-                                  Navigator.pushReplacementNamed(context, "/sales_confirmation",
+                                  Navigator.popUntil(
+                                      context,
+                                      (route) =>
+                                          route.settings.name == "/product");
+                                  Navigator.pushReplacementNamed(
+                                      context, "/sales_confirmation",
                                       arguments: order);
                                 });
                               }
                             },
                           );
-                        },)
-
+                        },
+                      )
                     ],
                   ),
                 ),

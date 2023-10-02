@@ -159,7 +159,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 return;
                               }
                               if (!policyAndDocuments.agreedToPolicyTerms ||
-                                  !policyAndDocuments.agreedToTermsOfService) {
+                                  !policyAndDocuments
+                                      .agreedToTermsOfService) {
                                 CustomScaffoldMessenger(
                                   context: context,
                                   message:
@@ -173,7 +174,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 onFail: (error) {
                                   CustomScaffoldMessenger(
                                           context: context,
-                                          message: 'Falha ao cadastrar $error')
+                                          message:
+                                              'Falha ao cadastrar $error')
                                       .msn();
                                 },
                                 onSuccess: () {

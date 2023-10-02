@@ -41,7 +41,8 @@ class SectionList extends StatelessWidget {
                         itemBuilder: (_, index) {
                           if (index < section.items!.length) {
                             return ItemTile(
-                                item: section.items!.reversed.toList()[index]);
+                                item:
+                                    section.items!.reversed.toList()[index]);
                           } else {
                             return const AddTileWidget();
                           }

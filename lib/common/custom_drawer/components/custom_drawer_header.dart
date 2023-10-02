@@ -21,8 +21,8 @@ class CustomDrawerHeader extends StatelessWidget {
                   if (userManager.image != null) ...[
                     const Text(
                       'Loja Virtual:',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     Image.asset(
                       "assets/logo/storeLogo.png",
@@ -32,8 +32,8 @@ class CustomDrawerHeader extends StatelessWidget {
                   ] else
                     const Text(
                       'Loja Virtual:\n BRN Info_Dev',
-                      style:
-                          TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 34, fontWeight: FontWeight.bold),
                     ),
                   Text(
                     'Bem-Vindo(a)! ${userManager.users?.userName ?? ''}',

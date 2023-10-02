@@ -18,8 +18,10 @@ class VersionManager extends ChangeNotifier {
 
     _initPackageInfo();
     try {
-      final versionDoc =
-          await firestore.collection('versionApp').doc('currentVersion').get();
+      final versionDoc = await firestore
+          .collection('versionApp')
+          .doc('currentVersion')
+          .get();
       if (versionDoc.exists) {
         final storedVersion = versionDoc.data();
         final appVersion = _packageInfo.version;

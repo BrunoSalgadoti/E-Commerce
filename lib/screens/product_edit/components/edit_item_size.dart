@@ -36,7 +36,8 @@ class EditItemSize extends StatelessWidget {
               initialValue: detailsProducts?.size,
               labelText: 'Tamanho',
               validator: (value) => emptyValidator(value),
-              onChanged: (size) => detailsProducts?.size = size?.toUpperCase(),
+              onChanged: (size) =>
+                  detailsProducts?.size = size?.toUpperCase(),
             ),
           ),
           const SizedBox(
@@ -49,7 +50,8 @@ class EditItemSize extends StatelessWidget {
               labelText: 'Estoque',
               textInputType: TextInputType.number,
               validator: (stock) {
-                if (int.tryParse(stock!) == null || int.tryParse(stock)! < 0) {
+                if (int.tryParse(stock!) == null ||
+                    int.tryParse(stock)! < 0) {
                   return 'Valor Inválido';
                 }
                 return null;

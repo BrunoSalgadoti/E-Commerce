@@ -74,10 +74,10 @@ class CheckoutManager extends ChangeNotifier {
     bool shouldProceed = orderCounterCurrent > lastOrderId;
 
     if (!shouldProceed) {
-      // Throws an exception an errorr
+      // Throws an exception an error
       throw 'Entre em contato com a Loja:'
           '\n Informe-os que a verificação: "CCO" falhou!'
-          '\n Grato Pela Compreenção!';
+          '\n Grato Pela Compreensão!';
     }
   }
 
@@ -113,11 +113,11 @@ class CheckoutManager extends ChangeNotifier {
         Product product;
 
         if (productsToUpdate.any((p) => p.id == cartProduct.productId)) {
-          product =
-              productsToUpdate.firstWhere((p) => p.id == cartProduct.productId);
+          product = productsToUpdate
+              .firstWhere((p) => p.id == cartProduct.productId);
         } else {
-          final doc =
-              await tx.get(firestore.doc("products/${cartProduct.productId}"));
+          final doc = await tx
+              .get(firestore.doc("products/${cartProduct.productId}"));
           product = Product.fromDocument(doc);
         }
 

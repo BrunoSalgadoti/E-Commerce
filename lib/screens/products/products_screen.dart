@@ -158,7 +158,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
               child: Stack(
                 children: [
                   if (filteredProducts.isEmpty)
-                    productManager.filtersOn == true || productManager.search.isNotEmpty
+                    productManager.filtersOn == true ||
+                            productManager.search.isNotEmpty
                         ? const EmptyPageIndicator(
                             title: 'Pesquisa não encontrada...',
                             iconData: Icons.search_off,

@@ -6,6 +6,7 @@
 .DS_Store
 .atom/
 .buildlog/
+docs/dic_pt_br_android
 .history
 .svn/
 migrate_working_dir/
@@ -58,4 +59,15 @@ app.*.map.json
 /ios/Runner/*
 /docs/ others/
 /config.env
-/TODO/
+/lib/generated/l10n/intl_en.arb
+/lib/generated/l10n.dart
+/lib/generated/intl/messages_all.dart
+/lib/generated/intl/messages_en.dart
+/docs/dic_pt_br_android/
+/lib/generated/localizations.dart
+/lib/generated/l10n/
+/lib/generated/intl/
+/assets/
+/assets/docs/
+/lib/generated/localizations.dart
+/lib/generated/l10n/

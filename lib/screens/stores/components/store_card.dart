@@ -37,8 +37,8 @@ class StoreCard extends StatelessWidget {
                   child: Container(
                     decoration: const BoxDecoration(
                         color: Colors.white,
-                        borderRadius:
-                            BorderRadius.only(bottomLeft: Radius.circular(9))),
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(9))),
                     padding: const EdgeInsets.all(12),
                     child: Text(
                       store.statusText,
@@ -111,22 +111,22 @@ class StoreCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomIconButton(
-                          iconData: Icons.map_outlined,
-                          color: primaryColor,
-                          onTap: () {
-                            CommunicationsUtils(
-                                parameterClass1Of2: store,
-                                parameterClass2Of2: store.address!)
-                                .openMap(
-                              context,
-                              store.address!.lat!,
-                              store.address!.long!,
-                              store.nameStore ?? '',
-                              store.addressText ?? '',
-                            );
-                            CommunicationsUtils(parameterClass1Of2: store)
-                                .alertForMaps(context, '');
-                          }),
+                            iconData: Icons.map_outlined,
+                            color: primaryColor,
+                            onTap: () {
+                              CommunicationsUtils(
+                                      parameterClass1Of2: store,
+                                      parameterClass2Of2: store.address!)
+                                  .openMap(
+                                context,
+                                store.address!.lat!,
+                                store.address!.long!,
+                                store.nameStore ?? '',
+                                store.addressText ?? '',
+                              );
+                              CommunicationsUtils(parameterClass1Of2: store)
+                                  .alertForMaps(context, '');
+                            }),
                         CustomIconButton(
                             iconData: Icons.phone,
                             color: primaryColor,

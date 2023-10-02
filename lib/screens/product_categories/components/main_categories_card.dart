@@ -52,7 +52,8 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
                   setState(() {
                     selectedColor = color;
                     widget.productCategory?.categoryRealColor = color;
-                    widget.productCategory?.categoryColor = getHexColor(color);
+                    widget.productCategory?.categoryColor =
+                        getHexColor(color);
                   });
                 },
                 labelTypes: const [
@@ -143,7 +144,8 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
         clipBehavior: Clip.antiAlias,
         color: selectedColor ?? backgroundColor,
         elevation: 7,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
         child: Consumer<UserManager>(builder: (_, userManager, __) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -169,9 +171,9 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
                     bottom: 20,
                     left: 14,
                     child: TagForCard(
-                        data: widget.productCategory?.categoryTitle ?? "",
-                        alignment: Alignment.bottomRight,
-                        backgroundColor: backgroundColor,
+                      data: widget.productCategory?.categoryTitle ?? "",
+                      alignment: Alignment.bottomRight,
+                      backgroundColor: backgroundColor,
                       containerWidth: 157,
                     ),
                   ),

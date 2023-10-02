@@ -27,7 +27,7 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
     super.initState();
     Future.delayed(Duration.zero, () {
       final productManager =
-      Provider.of<ProductManager>(context, listen: false);
+          Provider.of<ProductManager>(context, listen: false);
       productManager.filtersOn = false;
       productManager.search = '';
     });

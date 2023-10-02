@@ -49,7 +49,8 @@ class _FooterDescriptionWidgetState extends State<FooterDescriptionWidget> {
               children: [
             if (userManager.adminEnable)
               Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                padding:
+                    const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                 child: MarkdownTextInput(
                   (customText) =>
                       whoWeAreManager.footerDescription = customText,
@@ -96,7 +97,8 @@ class _FooterDescriptionWidgetState extends State<FooterDescriptionWidget> {
               padding: const EdgeInsets.only(top: 80),
               child: FutureBuilder<void>(
                 future: Future.delayed(const Duration(seconds: 1)),
-                builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+                builder:
+                    (BuildContext context, AsyncSnapshot<void> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Text('Carregando...');
                   } else {

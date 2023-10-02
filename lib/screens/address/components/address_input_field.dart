@@ -20,10 +20,10 @@ class AddressInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartManager = context.watch<CartManager>();
     calculateShippingError() => CustomScaffoldMessenger(
-      context: context,
-      message: 'Verifique seu acesso a internet!',
-      duration: const Duration(milliseconds: 4500),
-    ).msn();
+          context: context,
+          message: 'Verifique seu acesso a internet!',
+          duration: const Duration(milliseconds: 4500),
+        ).msn();
 
     if (address.zipCode != null && cartManager.deliveryPrice == null) {
       return Column(

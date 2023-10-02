@@ -1,7 +1,6 @@
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:flutter/material.dart';
 
-
 class FreightForm extends StatelessWidget {
   const FreightForm({super.key, required this.product});
 

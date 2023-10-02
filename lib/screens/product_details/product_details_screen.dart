@@ -250,12 +250,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     (!detailsProducts
                                             .areAllColorsEmpty(product) &&
                                         product.selectedDetails != null &&
-                                        detailsProducts.selectedColors != null)
+                                        detailsProducts.selectedColors !=
+                                            null)
                                 ? () {
                                     if (userManager.isLoggedIn) {
-                                      context
-                                          .read<CartManager>()
-                                          .addToCart(product, detailsProducts);
+                                      context.read<CartManager>().addToCart(
+                                          product, detailsProducts);
                                       Navigator.pushNamed(context, "/cart");
                                     } else {
                                       Navigator.pushNamed(context, "/login");

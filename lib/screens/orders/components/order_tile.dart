@@ -138,7 +138,8 @@ class OrderTile extends StatelessWidget {
                                         actions: [
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                                MainAxisAlignment
+                                                    .spaceBetween,
                                             children: [
                                               CustomTextButton(
                                                 text: 'Sim',
@@ -200,7 +201,8 @@ class OrderTile extends StatelessWidget {
                                                       icon: null,
                                                       fontColor: Colors.red,
                                                       onPressed: () {
-                                                        orderClient?.advance!();
+                                                        orderClient
+                                                            ?.advance!();
                                                         Navigator.of(context)
                                                             .pop();
                                                       },

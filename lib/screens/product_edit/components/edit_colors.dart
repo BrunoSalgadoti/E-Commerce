@@ -26,7 +26,8 @@ class EditColorsState extends State<EditColors> {
   Color _selectedColor = Colors.transparent;
 
   void _showColorPicker() {
-    Color initialColor = widget.colorsProducts?.realColor ?? Colors.transparent;
+    Color initialColor =
+        widget.colorsProducts?.realColor ?? Colors.transparent;
 
     showDialog(
       context: context,

@@ -50,9 +50,11 @@ class _SubCategoriesWidgetState extends State<SubCategoriesWidget> {
             },
             itemBuilder: (context, pageIndex) {
               final startIndex = pageIndex * itemsPerPage;
-              final endIndex = (startIndex + itemsPerPage).clamp(0, totalItems);
+              final endIndex =
+                  (startIndex + itemsPerPage).clamp(0, totalItems);
 
-              final pageItems = widget.subCategories.sublist(startIndex, endIndex);
+              final pageItems =
+                  widget.subCategories.sublist(startIndex, endIndex);
 
               return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -78,8 +80,7 @@ class _SubCategoriesWidgetState extends State<SubCategoriesWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(totalPages, (index) {
-              return
-                Padding(
+              return Padding(
                 padding: const EdgeInsets.only(top: 5, right: 5),
                 child: Container(
                   decoration: BoxDecoration(

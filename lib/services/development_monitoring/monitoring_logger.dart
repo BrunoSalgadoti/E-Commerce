@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
 class MonitoringLogger {
-
   void logDebug(String message) {
     if (!kReleaseMode) {
       final logger = Logger();

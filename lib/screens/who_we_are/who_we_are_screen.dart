@@ -45,13 +45,14 @@ class WhoWeAreScreenState extends State<WhoWeAreScreen> {
         children: [
           ...[const TopDescriptionWidget()],
           Padding(
-            padding:
-                const EdgeInsets.only(top: 16, left: 30, right: 30, bottom: 16),
+            padding: const EdgeInsets.only(
+                top: 16, left: 30, right: 30, bottom: 16),
             child: Center(
               // Embed do vídeo do YouTube
               child: FutureBuilder<void>(
                 future: Future.delayed(const Duration(seconds: 6)),
-                builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+                builder:
+                    (BuildContext context, AsyncSnapshot<void> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Text('Carregando...');
                   } else {

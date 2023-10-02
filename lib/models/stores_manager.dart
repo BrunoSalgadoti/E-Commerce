@@ -58,8 +58,7 @@ class StoresManager extends ChangeNotifier {
   }
 
   Future<void> _setupRealTimeUpdates() async {
-    PerformanceMonitoring()
-        .startTrace('setup-rt-updates', shouldStart: true);
+    PerformanceMonitoring().startTrace('setup-rt-updates', shouldStart: true);
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Info message: _storesListener Start ');
     }

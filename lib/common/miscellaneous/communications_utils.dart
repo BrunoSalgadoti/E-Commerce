@@ -47,7 +47,8 @@ class CommunicationsUtils<T, U> {
 
   void alertForMaps(BuildContext context, String message) {
     if (message.isEmpty) {
-      message = 'Não foi encontrado nenhum APP de Mapas\n neste dispositivo!\n';
+      message =
+          'Não foi encontrado nenhum APP de Mapas\n neste dispositivo!\n';
     }
 
     if (hasError == true) {

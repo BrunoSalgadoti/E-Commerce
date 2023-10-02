@@ -57,8 +57,8 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     const Text(
                       'Entar com E-mail e Senha:',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 5),
                     CustomTextFormField(
@@ -148,8 +148,8 @@ class LoginScreen extends StatelessWidget {
                     ),
                     const Text(
                       'Ou entre com sua conta:',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 5),
                     userManager.loadingFace
@@ -162,7 +162,8 @@ class LoginScreen extends StatelessWidget {
                             child: loadingToButton
                                 ? null
                                 : CustomTextButton(
-                                    icon: const Icon(FontAwesomeIcons.facebook),
+                                    icon:
+                                        const Icon(FontAwesomeIcons.facebook),
                                     text: '   Entrar com Facebook',
                                     onPressed: () {
                                       userManager.loginOrSingUpWithFacebook(

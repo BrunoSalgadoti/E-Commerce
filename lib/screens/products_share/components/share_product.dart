@@ -61,7 +61,8 @@ class ShareProduct {
       SocialMedia.facebook:
           'https://www.facebook.com/sharer/sharer.php?t=$shareImage',
       SocialMedia.whatsapp: 'https://api.whatsapp.com/send?text=$shareImage',
-      SocialMedia.instagram: 'https://www.instagram.com/share?text=$shareImage',
+      SocialMedia.instagram:
+          'https://www.instagram.com/share?text=$shareImage',
     };
 
     final url = urls[socialPlatform];

@@ -16,7 +16,7 @@ import '../services/development_monitoring/monitoring_logger.dart';
 
 class UserManager extends ChangeNotifier {
   UserManager() {
-    if(isLoggedIn || _newUserAccount == true) {
+    if (isLoggedIn || _newUserAccount == true) {
       _loadCurrentUser();
     }
     _auth.setLanguageCode('pt-BR');
@@ -76,7 +76,8 @@ class UserManager extends ChangeNotifier {
     height: 15,
   );
 
-  Future<void> createAuxAndAdminsIfNotExists({required bool firstStart}) async {
+  Future<void> createAuxAndAdminsIfNotExists(
+      {required bool firstStart}) async {
     if (!kReleaseMode && firstStart == true) {
       MonitoringLogger()
           .logInfo('Info: Verifier createAuxAndAdminsIfNotExists');
@@ -193,7 +194,7 @@ class UserManager extends ChangeNotifier {
           onSuccess!();
           break;
         case LoginStatus.failed:
-          onFail!("Erro ao Logar com Facebbok! ${result.status}");
+          onFail!("Erro ao Logar com Facebook! ${result.status}");
           loadingFace = false;
           break;
         case LoginStatus.cancelled:
@@ -226,7 +227,8 @@ class UserManager extends ChangeNotifier {
 
         googleProvider
             .addScope('https://www.googleapis.com/auth/contacts.readonly');
-        googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
+        googleProvider
+            .setCustomParameters({'login_hint': 'user@example.com'});
         return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
       }
 
@@ -291,8 +293,9 @@ class UserManager extends ChangeNotifier {
     loading = true;
 
     try {
-      final UserCredential result = await _auth.createUserWithEmailAndPassword(
-          email: users.email, password: users.password!);
+      final UserCredential result =
+          await _auth.createUserWithEmailAndPassword(
+              email: users.email, password: users.password!);
 
       users.id = result.user!.uid;
       users.policyAndTerms = true;
@@ -331,12 +334,12 @@ class UserManager extends ChangeNotifier {
         notifyListeners();
       }
     } catch (error) {
-        reportNoFatalErrorToCrashlytics(
-            error: "$error",
-            stackTrace: StackTrace.current,
-            information: "Erro na Classe: UserManager no método _loadCurrentUser()"
-        );
-        MonitoringLogger().logError('Erro ao carregar CurrentUser: $error');
+      reportNoFatalErrorToCrashlytics(
+          error: "$error",
+          stackTrace: StackTrace.current,
+          information:
+              "Erro na Classe: UserManager no método _loadCurrentUser()");
+      MonitoringLogger().logError('Erro ao carregar CurrentUser: $error');
     }
     notifyListeners();
   }

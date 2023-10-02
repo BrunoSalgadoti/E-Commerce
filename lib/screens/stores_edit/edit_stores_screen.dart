@@ -48,7 +48,8 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                   color: Colors.white,
                   onTap: () {
                     StoreUtils(
-                            store: widget.store, address: widget.store.address!)
+                            store: widget.store,
+                            address: widget.store.address!)
                         .alertForDeleteStore(context);
                   }),
           ],
@@ -66,7 +67,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                 CustomTextFormField(
                   initialValue: widget.store.nameStore,
                   labelText: 'Nome da Loja',
-                  hintText: 'Nome da Faixada da Loja',
+                  hintText: 'Nome da Fachada da Loja',
                   isDense: false,
                   validator: emptyValidator,
                   onSaved: (value) => widget.store.nameStore = value,
@@ -114,7 +115,8 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                       return null;
                     }
                   },
-                  onSaved: (value) => widget.store.address?.complement = value,
+                  onSaved: (value) =>
+                      widget.store.address?.complement = value,
                 ),
                 textFieldSpaceBetweenHeight,
                 CustomTextFormField(
@@ -232,7 +234,8 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                 StoreLocationWidget(store: widget.store),
                 textFieldSpaceBetweenHeight,
                 CustomTextFormField(
-                  initialValue: '${widget.store.address?.lat.toString() ?? ""} '
+                  initialValue:
+                      '${widget.store.address?.lat.toString() ?? ""} '
                       '${widget.store.address?.long.toString() ?? ""}',
                   labelText: 'Nova Localização:',
                   hintText: 'Ex: -9.1234530, -37.1234168',
@@ -315,8 +318,8 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                                   return null;
                                 }
                               },
-                              onSaved: (value) =>
-                                  widget.store.openingStores?.saturday = value,
+                              onSaved: (value) => widget
+                                  .store.openingStores?.saturday = value,
                             )),
                       ],
                     ),
@@ -330,7 +333,8 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                               initialValue:
                                   widget.store.openingStores?.monday ?? "",
                               labelText: 'Abertura e Fechamento:',
-                              hintText: 'Ex: 14:00-18:00 ou Mantenha em Branco',
+                              hintText:
+                                  'Ex: 14:00-18:00 ou Mantenha em Branco',
                               isDense: false,
                               textInputType: TextInputType.number,
                               inputFormatters: [

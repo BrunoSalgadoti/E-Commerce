@@ -30,8 +30,7 @@ class UtilsForCategory {
   // Load all products from the specific category
   List<Product> loadCategoryProducts() {
     List<Product> allCategoryProducts = productManager.filteredProducts
-        .where((p) =>
-            p.categoryOfProduct == productCategory.categoryID)
+        .where((p) => p.categoryOfProduct == productCategory.categoryID)
         .toList();
 
     return allCategoryProducts;

@@ -81,7 +81,7 @@ class _AddressScreenState extends State<AddressScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             CustomButton(
-                              text: 'Regeitar',
+                              text: 'Rejeitar',
                               onPressed: () {
                                 backScreen();
                               },
@@ -91,7 +91,8 @@ class _AddressScreenState extends State<AddressScreen> {
                               onPressed: () async {
                                 if (policyAndDocuments.agreedToPolicyTerms ==
                                         false ||
-                                    policyAndDocuments.agreedToTermsOfService ==
+                                    policyAndDocuments
+                                            .agreedToTermsOfService ==
                                         false) {
                                   alertPolicyAndTerms();
                                 } else {

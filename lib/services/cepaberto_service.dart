@@ -22,7 +22,8 @@ class CepAbertoService {
         return Future.error('CEP Inválido');
       }
 
-      final CepAbertoAddress address = CepAbertoAddress.fromMap(response.data!);
+      final CepAbertoAddress address =
+          CepAbertoAddress.fromMap(response.data!);
 
       return address;
     } on DioException {

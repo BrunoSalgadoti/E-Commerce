@@ -85,7 +85,8 @@ class ExportAddressDialog extends StatelessWidget {
               if (!downloadStarted) {
                 /// If download didn't start, show a link for manual download
                 final downloadLink = html.AnchorElement(href: url)
-                  ..setAttribute("download", "${formattedOrderId(orderId)}.png")
+                  ..setAttribute(
+                      "download", "${formattedOrderId(orderId)}.png")
                   ..text = "Clique aqui para baixar a imagem";
 
                 /// Add the link to the DOM
@@ -97,9 +98,9 @@ class ExportAddressDialog extends StatelessWidget {
                 var image = value;
 
                 final dir = await getApplicationDocumentsDirectory();
-                final imagePath =
-                    await File('${dir.path}/ ${formattedOrderId(orderId)}.png')
-                        .create();
+                final imagePath = await File(
+                        '${dir.path}/ ${formattedOrderId(orderId)}.png')
+                    .create();
                 await imagePath.writeAsBytes(image!);
 
                 ///Save a widget Capture to a Gallery
