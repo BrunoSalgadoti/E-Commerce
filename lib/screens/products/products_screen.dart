@@ -27,8 +27,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
     Future.delayed(Duration.zero, () {
       final productManager =
           Provider.of<ProductManager>(context, listen: false);
-      productManager.disableFilter();
-      //TODO: Ajeitar ->  productManager.filtersOn = false;
+      productManager.filtersOn = false;
+      productManager.search = '';
     });
   }
 
@@ -53,7 +53,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         context: context,
                         builder: (_) => SearchDialog(
                               initialText: productManager.search,
-                              hintText: "Pesquise o produto desejado",
+                              hintText: "Pesquise o produto desejado...",
                             ));
                     if (search != null) {
                       productManager.search = search;
@@ -158,7 +158,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
               child: Stack(
                 children: [
                   if (filteredProducts.isEmpty)
-                    productManager.filtersOn == true
+                    productManager.filtersOn == true || productManager.search.isNotEmpty
                         ? const EmptyPageIndicator(
                             title: 'Pesquisa não encontrada...',
                             iconData: Icons.search_off,

@@ -60,58 +60,47 @@ class ProductManager extends ChangeNotifier {
   }
 
   List<Product> get filteredProducts {
-    final List<Product> filteredProducts = [];
+    List<Product> filteredProducts = List.from(allProducts);
 
-    if (filtered.isEmpty) {
-      filteredProducts.addAll(allProducts);
-    }
     if (search.isNotEmpty) {
-      filteredProducts.clear();
-      filteredProducts.addAll(allProducts
-          .where((p) => p.name!.toLowerCase().contains(search.toLowerCase())));
+      String searchQuery = search.toLowerCase();
+      filteredProducts = filteredProducts
+          .where((p) => p.name!.toLowerCase().contains(searchQuery))
+          .toList();
     }
+
     if (statusFilter.contains(StatusOfProducts.bestSellers)) {
-      filteredProducts.clear();
-      statusFilter = [];
       List<Product> bestSellingProducts =
           bestSellingProductsManager!.getBestSellingProducts(15);
-      filteredProducts.addAll(bestSellingProducts);
+      filteredProducts = filteredProducts
+          .where((product) => bestSellingProducts.contains(product))
+          .toList();
     }
 
     if (statusFilter.contains(StatusOfProducts.lowestPrice)) {
-      filteredProducts.clear();
-      statusFilter = [];
-      filteredProducts.addAll(
-          allProducts.where((product) => product.basePrice > 0).toList()
-            ..sort((a, b) => a.basePrice.compareTo(b.basePrice)));
+      filteredProducts = filteredProducts
+          .where((product) => product.basePrice > 0)
+          .toList()
+        ..sort((a, b) => a.basePrice.compareTo(b.basePrice));
     }
 
     if (statusFilter.contains(StatusOfProducts.brand)) {
-      filteredProducts.clear();
-      statusFilter = [];
-      filteredProducts
-          .addAll(allProducts.where((product) => product.brand.trim() != ""));
-      filteredProducts.sort((a, b) => a.brand.compareTo(b.brand));
+      filteredProducts = filteredProducts
+          .where((product) => product.brand.trim() != "")
+          .toList()
+        ..sort((a, b) => a.brand.compareTo(b.brand));
     }
 
     if (statusFilter.contains(StatusOfProducts.freight)) {
-      filteredProducts.clear();
-      statusFilter = [];
-      filteredProducts
-          .addAll(allProducts.where((product) => !product.freight!));
+      filteredProducts =
+          filteredProducts.where((product) => !product.freight!).toList();
     }
 
     if (statusFilter.contains(StatusOfProducts.sortedAZ)) {
-      filteredProducts.clear();
-      statusFilter = [];
-      filteredProducts.addAll(allProducts);
       filteredProducts.sort((a, b) => a.name!.compareTo(b.name!));
     }
 
     if (statusFilter.contains(StatusOfProducts.sortedZA)) {
-      filteredProducts.clear();
-      statusFilter = [];
-      filteredProducts.addAll(allProducts);
       filteredProducts.sort((a, b) => b.name!.compareTo(a.name!));
     }
 
@@ -176,7 +165,6 @@ class ProductManager extends ChangeNotifier {
     filteredProducts.clear();
     notifyListeners();
   }
-
 
   void setStatusFilter({StatusOfProducts? status, bool? enabled}) {
     if (enabled!) {
