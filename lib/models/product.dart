@@ -20,6 +20,7 @@ class Product extends ChangeNotifier {
     this.images,
     this.itemProducts,
     this.deleted = false,
+    this.advertising = false,
     this.isValid,
     this.errorMessage,
     this.details,
@@ -46,6 +47,7 @@ class Product extends ChangeNotifier {
     description = document["description"] as String? ?? "";
     images = List<String>.from(document["images"] as List<dynamic>);
     deleted = (document["deleted"] ?? false) as bool;
+    advertising = (document["advertising"] ?? false) as bool;
     isValid = (document["isvalid"] ?? true) as bool;
     brand = document["brand"] as String? ?? "";
     freight = document["freight"] as bool;
@@ -72,6 +74,7 @@ class Product extends ChangeNotifier {
   String brand = "";
   bool? freight;
   bool deleted = false;
+  bool advertising = false;
   bool? isValid;
   String? categoryOfProduct;
   Timestamp? insertionDate;
@@ -143,6 +146,7 @@ class Product extends ChangeNotifier {
       "description": description,
       "details": exportDetailsList(),
       "deleted": deleted,
+      "advertising": advertising,
       "isvalid": isValid,
       "categoryOfProduct": categoryOfProduct,
       "insertionDate": Timestamp.now(),
@@ -162,23 +166,11 @@ class Product extends ChangeNotifier {
 
     loading = true;
 
-    final Map<String, dynamic> data = {
-      "name": name,
-      "brand": brand,
-      "freight": freight ?? true,
-      "description": description,
-      "details": exportDetailsList(),
-      "deleted": deleted,
-      "isvalid": isValid,
-      "categoryOfProduct": categoryOfProduct,
-      "insertionDate": Timestamp.now(),
-    };
-
     if (id == null) {
-      final doc = await firestore.collection("products").add(data);
+      final doc = await firestore.collection("products").add(toMap());
       id = doc.id;
     } else {
-      await firestoreRef.update(data);
+      await firestoreRef.update(toMap());
     }
 
     final List<String> updateImages = [];
@@ -231,37 +223,21 @@ class Product extends ChangeNotifier {
   }
 
   Future<void> deleteProductWithZeroStockOneImage() async {
-    // Reset color stock keeping other details unchanged
-    List<Map<String, dynamic>> exportDetailsList() {
-      final List<Map<String, dynamic>> detailsList = [];
+    for (final details in itemProducts!) {
+      // Zero stock in every detail
+      details.stock = 0;
 
-      for (final details in itemProducts!) {
-        final Map<String, dynamic> detailsData = {
-          ...details.toMap(),
-          "stock": 0,
-          "colors": details.colorProducts
-              ?.map((color) => {
-                    ...color.toMap(),
-                    "amount": 0,
-                  })
-              .toList(),
-        };
-        detailsList.add(detailsData);
+      // Zeros the amount of colors in each detail
+      if (details.colorProducts != null) {
+        for (final color in details.colorProducts!) {
+          color.amount = 0;
+        }
       }
-      return detailsList;
     }
 
-    final Map<String, dynamic> data = {
-      "name": name,
-      "brand": brand,
-      "freight": freight,
-      "description": description,
-      "details": exportDetailsList(),
-      "deleted": deleted,
-      "isvalid": isValid,
-      "categoryOfProduct": categoryOfProduct,
-      "insertionDate": Timestamp.now(),
-    };
+    final List<Map<String, dynamic>> updatedDetailsList =
+        itemProducts!.map((details) => details.toMap()).toList();
+    await firestoreRef.update({"details": updatedDetailsList});
 
     // Deletes all images except the first one if there is more than one image
     if (images!.length > 1) {
@@ -280,15 +256,15 @@ class Product extends ChangeNotifier {
 
     // Remove images from Firebase Storage
     final List<String> imageUrls = List<String>.from(images!);
-    images = [imageUrls.first]; // Keeps only the first image
+    images = [imageUrls.first]; // Mantém apenas a primeira imagem
 
-    // Updates the product in the database with the updated images
+    // Updates the product in the database with a single image [0]
     await firestoreRef.update({
       "images": images,
     });
-
-    await firestoreRef.update(data);
+    await firestoreRef.update(toMap());
     await firestoreRef.update({"isvalid": false});
+
     notifyListeners();
   }
 
@@ -311,6 +287,7 @@ class Product extends ChangeNotifier {
       images: List.from(images!),
       itemProducts: itemProducts?.map((items) => items.clone()).toList(),
       deleted: deleted,
+      advertising: advertising,
       isValid: isValid,
       categoryOfProduct: categoryOfProduct,
     );
@@ -335,8 +312,8 @@ class Product extends ChangeNotifier {
 
         await productRef.update({"isvalid": false});
 
-        errorMessage = 'A quant. de ESTOQUE está diferente da de Cores!!!\n'
-            'Favor revisar o ESTOQUE e a quat. de CORES equivalentes ao Tamanho!\n'
+        errorMessage = 'A Qtd. de ESTOQUE está diferente da de Cores!!!\n'
+            'Favor revisar o ESTOQUE e a Qtd. de CORES equivalentes ao Tamanho!\n'
             'Tamanho: ${stock.size}, Estoque: ${stock.stock},'
             ' Total Cores: $totalAmount';
 

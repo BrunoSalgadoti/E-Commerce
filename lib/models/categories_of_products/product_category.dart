@@ -61,6 +61,7 @@ class ProductCategory extends ChangeNotifier {
   List<SubCategory>? subCategoryList;
 
   //TODO: Implementação em verificação
+
   // Future<List<ProductCategory>> fetchCategories() async {
   //   final categoriesQuery = await firestore.collection("categories").get();
   //   final categories = categoriesQuery.docs.map((doc) {
@@ -82,10 +83,11 @@ class ProductCategory extends ChangeNotifier {
   // }
 
   //TODO: implementar na interface para verificação
-  bool verifySubCategoriesIsNotEmpty() {
-    if (subCategoryList == [] || subCategoryList == null) return true;
-    return false;
-  }
+
+  // bool verifySubCategoriesIsNotEmpty() {
+  //   if (subCategoryList == [] || subCategoryList == null) return true;
+  //   return false;
+  // }
 
   List<Map<String, dynamic>>? exportSubCategories() {
     return subCategoryList?.map((sub) => sub.toMap()).toList();

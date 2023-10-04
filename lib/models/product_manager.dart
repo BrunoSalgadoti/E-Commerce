@@ -123,6 +123,7 @@ class ProductManager extends ChangeNotifier {
         // Make sure the document is complete before creating a Product instance
         if (product.data().containsKey("name") &&
             product.data().containsKey("deleted") &&
+            product.data().containsKey("advertising") &&
             product.data().containsKey("isvalid") &&
             product.data().containsKey("brand") &&
             product.data().containsKey("freight") &&

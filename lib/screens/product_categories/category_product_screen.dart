@@ -1,9 +1,7 @@
 import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/cards/flexible_product_card.dart';
 import 'package:brn_ecommerce/common/custom_text_form_field.dart';
-import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
-import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/filters_sliding_up_panel.dart';
 import 'package:brn_ecommerce/models/categories_of_products/product_category.dart';
 import 'package:brn_ecommerce/models/categories_of_products/product_category_manager.dart';
@@ -11,7 +9,6 @@ import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:brn_ecommerce/screens/product_categories/components/sub_categories_widget.dart';
 import 'package:brn_ecommerce/screens/product_categories/components/utils_for_category.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:decorated_text/decorated_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,7 +27,6 @@ class CategoryProductScreen extends StatefulWidget {
 
 class CategoryProductScreenState extends State<CategoryProductScreen> {
   final TextEditingController textController = TextEditingController();
-  final CarouselController carouselController = CarouselController();
   final PanelController panelController = PanelController();
 
   @override
@@ -199,98 +195,12 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                   ),
                                 if (productManager.search.isEmpty)
                                   SizedBox(
-                                    width: double.infinity,
-                                    height: 185,
-                                    child: CarouselSlider(
-                                        carouselController:
-                                            carouselController,
-                                        options: CarouselOptions(
-                                          initialPage: 0,
-                                          viewportFraction: 0.5,
-                                          disableCenter: true,
-                                          enlargeCenterPage: true,
-                                          enlargeFactor: 0.25,
-                                          enableInfiniteScroll: true,
-                                          scrollDirection: Axis.horizontal,
-                                          autoPlay: true,
-                                        ),
-                                        items: recentProductsFromCategory
-                                            .map<Widget>((image) {
-                                          return Stack(
-                                            fit: StackFit.expand,
-                                            children: [
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.all(5),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        const BorderRadius
-                                                            .only(
-                                                            topLeft: Radius
-                                                                .circular(30),
-                                                            bottomRight:
-                                                                Radius
-                                                                    .circular(
-                                                                        30)),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: Colors.grey
-                                                            .withOpacity(0.5),
-                                                        spreadRadius: 1.5,
-                                                        blurRadius: 4,
-                                                        offset: const Offset(
-                                                            0, 5),
-                                                      ),
-                                                    ]),
-                                                clipBehavior: Clip.antiAlias,
-                                                child: Image.network(
-                                                  image.images!.first,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10),
-                                                child: TagForCard(
-                                                    data: 'A partir:\n '
-                                                        '${formattedRealText(image.basePrice)}',
-                                                    googleFonts: GoogleFonts
-                                                        .akayaTelivigala,
-                                                    textFontSize: 16,
-                                                    alignment:
-                                                        Alignment.bottomLeft,
-                                                    backgroundColor:
-                                                        Colors.white,
-                                                    containerWidth: 90),
-                                              ),
-                                              Positioned(
-                                                bottom: 10,
-                                                right: 10,
-                                                child: Material(
-                                                    color: Theme.of(context)
-                                                        .primaryColor
-                                                        .withAlpha(90),
-                                                    child: IconButton(
-                                                        icon: const Icon(
-                                                            Icons.open_in_new,
-                                                            semanticLabel:
-                                                                'Visualizar Produto',
-                                                            size: 20,
-                                                            color:
-                                                                Colors.white),
-                                                        onPressed: () {
-                                                          //TODO: Rota para a tela do Produto
-                                                        })),
-                                              ),
-                                              Positioned(
-                                                bottom: 10,
-                                                right: 10,
-                                                child: Container(),
-                                              ),
-                                            ],
-                                          );
-                                        }).toList()),
-                                  ),
+                                      width: double.infinity,
+                                      height: 185,
+                                      child: UtilsForCategory(productManager,
+                                              widget.productCategory)
+                                          .carouselRecentProducts(context,
+                                              recentProductsFromCategory)),
                                 FiltersSlidingUpPanel(
                                   textOfSlidingUpPanel:
                                       'FILTRAR: Produtos na Categoria...',

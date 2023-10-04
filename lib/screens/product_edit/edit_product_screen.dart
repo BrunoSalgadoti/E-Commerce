@@ -27,14 +27,15 @@ class EditProductScreen extends StatelessWidget {
     final primaryColor = Theme.of(context).primaryColor;
     TextEditingController controller = TextEditingController();
 
-    saveProductError() => CustomScaffoldMessenger(
+    void saveProductError() => CustomScaffoldMessenger(
           context: context,
           message: 'Erro ao salvar/editar o Produto\n'
               'Revise os campos e tente novamente!\n'
               '\nSE O ERRO PERSISTIR CONTATE O SUPORTE',
         ).msn();
 
-    backScreen() => Navigator.of(context).pop();
+    void backScreen() => Navigator.of(context).pop();
+
     showAlertDialog() => showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -46,7 +47,7 @@ class EditProductScreen extends StatelessWidget {
                 text: 'Ciente!',
                 icon: null,
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  backScreen();
                 },
               ),
             ],
@@ -90,9 +91,8 @@ class EditProductScreen extends StatelessWidget {
                                       context
                                           .read<ProductManager>()
                                           .requestDelete(product!);
-                                      Navigator.of(context).pop();
-                                      Navigator.of(context).pop();
-                                      Navigator.of(context).pop();
+                                      backScreen();
+                                      backScreen();
                                     }),
                                 CustomTextButton(
                                   text: 'NÃO',
@@ -100,7 +100,7 @@ class EditProductScreen extends StatelessWidget {
                                   fontSize: 18,
                                   fontColor: Colors.green,
                                   onPressed: () {
-                                    Navigator.of(context).pop();
+                                    backScreen();
                                   },
                                 )
                               ],

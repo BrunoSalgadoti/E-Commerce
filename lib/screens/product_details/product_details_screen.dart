@@ -37,6 +37,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     selectedSizeIndex = widget.selectedSizeIndex;
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void updateSelectedSizeIndex(int index) {
     final detailsProducts = context.read<DetailsProducts>();
     final selectedSize = widget.product!.itemProducts![index];
@@ -90,7 +95,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     return IconButton(
                       icon: const Icon(Icons.edit),
                       onPressed: () {
-                        Navigator.pushNamed(context, "/edit_product",
+                        Navigator.pushReplacementNamed(
+                            context, "/edit_product",
                             arguments: widget.product);
                       },
                     );
