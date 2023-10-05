@@ -11,12 +11,11 @@ class FirebaseAutomatedMapsUpdate<T> {
   });
 
   /// Updates documents in Firestore with data from an object [T].
-  ///
-  /// This method retrieves the current data from the Firestore document, checks the presence
-  ///of missing properties and updates the Firestore document accordingly.
-  ///
+  /// This method retrieves the current data from the Firestore document,
+  /// checks the presence of missing properties and updates the Firestore document
+  /// accordingly.
   /// [object] is the object to be updated in Firestore.
-  ///
+  /// ________________________________________________________________________
   /// Example of use:
   /// ```dart
   /// EX: Product product = Product(); <- Class instance T,
@@ -37,11 +36,11 @@ class FirebaseAutomatedMapsUpdate<T> {
     // Get the current document data from Firestore
     final QuerySnapshot querySnapshot = await documentRef.get();
 
+      /// Check for missing properties and update the Firestore document
     for (final QueryDocumentSnapshot docSnapshot in querySnapshot.docs) {
       final Map<String, dynamic> currentData =
           docSnapshot.data() as Map<String, dynamic>;
 
-      // Check for missing properties and update the Firestore document
       objectMap.forEach((key, value) {
         if (!currentData.containsKey(key)) {
           currentData[key] = value;

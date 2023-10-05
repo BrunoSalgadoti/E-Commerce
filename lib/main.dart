@@ -14,7 +14,7 @@ import 'services/development_monitoring/firebase_performance.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Configured with the FlutterFire CLI
+  /// Configured with the FlutterFire CLI
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -22,20 +22,20 @@ Future<void> main() async {
   PerformanceMonitoring().startTrace('main', shouldStart: true);
 
   if (!kReleaseMode) {
-    bool shouldStart = false; //<- Change it! Only if you need to update
-    // Automatic fields in all documents of a class! (Default: false)
+    bool shouldStart = false; ///<- Change it! Only if you need to update
+    /// Automatic fields in all documents of a class! (Default: false)
 
-    // This code snippet will only run in debug mode and
-    // Some functions of this class are only activated if firstStart == true
+    /// This code snippet will only run in debug mode and
+    /// Some functions of this class are only activated if firstStart == true
     debugModeAndFirstStart(firstStart: false);
 
-    // This code snippet will only run in debug mode and
-    // with the variable shouldStart == true
     ///ATTENTION: See the documentation within the class
     ///to understand how it works!
     ///CAUTION: Understand the functionality before setting the
-    ///variable to true
-    if (shouldStart == false) {
+    ///variable to true.
+    // This code snippet will only run in debug mode and
+    // with the variable shouldStart == true
+    if (shouldStart == false) { /// <- Don´t Change it!
       Product product = Product();
       FirebaseAutomatedMapsUpdate<Product>(
         collectionPath: 'products',
@@ -44,7 +44,7 @@ Future<void> main() async {
     }
   }
 
-  // configure routing based on "history-based routing"
+  /// configure routing based on "history-based routing"
   setPathUrlStrategy();
 
   runApp(
