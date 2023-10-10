@@ -7,6 +7,7 @@ import 'package:brn_ecommerce/services/db_api/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 import 'services/development_monitoring/firebase_performance.dart';
@@ -22,7 +23,7 @@ Future<void> main() async {
   PerformanceMonitoring().startTrace('main', shouldStart: true);
 
   if (!kReleaseMode) {
-    bool shouldStart = false; ///<- Change it! Only if you need to update
+    bool shouldStart = false;///<- Change it! Only if you need to update
     /// Automatic fields in all documents of a class! (Default: false)
 
     /// This code snippet will only run in debug mode and
@@ -35,7 +36,7 @@ Future<void> main() async {
     ///variable to true.
     // This code snippet will only run in debug mode and
     // with the variable shouldStart == true
-    if (shouldStart == false) { /// <- Don´t Change it!
+    if (shouldStart == false) {/// <- Don´t Change it!
       Product product = Product();
       FirebaseAutomatedMapsUpdate<Product>(
         collectionPath: 'products',
@@ -47,10 +48,10 @@ Future<void> main() async {
   /// configure routing based on "history-based routing"
   setPathUrlStrategy();
 
+  await ScreenUtil.ensureScreenSize();
   runApp(
     const AppProviders(
-      child: MyApp(),
-    ),
-  );
+      child: MyApp()));
+
   PerformanceMonitoring().stopTrace('main');
 }

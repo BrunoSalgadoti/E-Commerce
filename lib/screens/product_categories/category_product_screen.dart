@@ -47,22 +47,24 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // ScreenUtil.init(context, designSize: const Size(360, 690));
+
     final Set<StatusOfProducts> selectedStatus = <StatusOfProducts>{};
 
     return Consumer2<ProductManager, ProductCategoryManager>(
         builder: (_, productManager, productCategoryManager, __) {
       //TODO:  Ajustar o layout com base no tamanho da tela
-      final screenSize = MediaQuery.of(context).size;
-      final isSmallScreen = screenSize.width < 600;
-      final isMediumScreen =
-          screenSize.width >= 600 && screenSize.width < 1200;
+      // final screenSize = MediaQuery.of(context).size;
+      // final isSmallScreen = screenSize.width < 600;
+      // final isMediumScreen =
+      //     screenSize.width >= 600 && screenSize.width < 1200;
 
       final List<Product> recentProductsFromCategory =
           UtilsForCategory(productManager, widget.productCategory)
               .loadRecentProducts();
       final categoryImage =
           UtilsForCategory(productManager, widget.productCategory)
-              .buildCategoryImage(isSmallScreen, isMediumScreen);
+              .buildCategoryImage();
 
       List<Product> allProductsFromCategory =
           UtilsForCategory(productManager, widget.productCategory)

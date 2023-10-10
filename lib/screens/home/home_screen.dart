@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
 import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/helpers/themes/factory_colors/another_colors.dart';
 import 'package:brn_ecommerce/models/home_manager.dart';
@@ -11,6 +12,7 @@ import 'package:brn_ecommerce/screens/home/components/section_staggered.dart';
 import 'package:brn_ecommerce/screens/who_we_are/who_we_are_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -23,6 +25,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context, designSize: const Size(360, 690));
+
     Color getGradientColorFirst([BuildContext? context]) {
       if (kIsWeb) {
         return const AnotherColors().homeGradientColor1Web;
@@ -156,17 +160,23 @@ class HomeScreen extends StatelessWidget {
                         homeManager: homeManager,
                       ));
                     }
+
+                    final List<Widget> bodyHome = [
+                      const AdvertisingWidget(),
+                      ...children,
+                    ];
+
                     return children.isEmpty
                         ? SliverList(
                             delegate: SliverChildListDelegate(emptyPage))
-                        : SliverList(
-                            delegate: SliverChildListDelegate(children),
-                          );
+                        :
+                    SliverList(
+                            delegate: SliverChildListDelegate(bodyHome));
                   },
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

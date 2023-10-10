@@ -5,6 +5,7 @@ import 'package:brn_ecommerce/screens/home/components/item_tile.dart';
 import 'package:brn_ecommerce/screens/home/components/section_header.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class SectionList extends StatelessWidget {
@@ -14,19 +15,22 @@ class SectionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context, designSize: const Size(360, 690));
+
     final homeManager = context.watch<HomeManager>();
     final ScrollController scrollController = ScrollController();
 
     return ChangeNotifierProvider.value(
       value: section,
       child: Container(
-        margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+        margin: const EdgeInsets.fromLTRB(16, 8, 16, 8).dg,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SectionHeader(section: section),
             SizedBox(
-                height: 150,
+                height:  kIsWeb ? 250.spMin : 150.spMin,
                 child: Consumer<Section>(
                   builder: (_, section, __) {
                     return Scrollbar(

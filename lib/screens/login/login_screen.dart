@@ -8,6 +8,7 @@ import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context, designSize: const Size(360, 690));
+
     final userManager = Provider.of<UserManager>(context);
 
     final loadingToTextFormField = !userManager.loading ||
@@ -39,27 +42,28 @@ class LoginScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Entrar'),
+        title: Text(
+          'Entrar',
+          style: TextStyle(fontSize: 17.spMin),
+        ),
         centerTitle: true,
       ),
       body: Center(
         child: Card(
           margin: kIsWeb
-              ? const EdgeInsets.symmetric(horizontal: 3)
-              : const EdgeInsets.symmetric(horizontal: 19, vertical: 19),
+              ? EdgeInsets.symmetric(horizontal: 3.r)
+              : EdgeInsets.symmetric(horizontal: 19.r, vertical: 19.r),
           child: SizedBox(
-            width: 380,
+            width: kIsWeb ? 480.spMin : 380.spMin,
             child: Form(
                 key: formKey,
                 child: ListView(
                   padding: const EdgeInsets.all(16),
                   shrinkWrap: true,
                   children: [
-                    const Text(
-                      'Entar com E-mail e Senha:',
-                      style: TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
+                    const Text('Entar com E-mail e Senha:',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 5),
                     CustomTextFormField(
                       controller: emailController,
@@ -95,7 +99,9 @@ class LoginScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerRight,
                       child: MaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          //TODO: Recuperar senha
+                        },
                         padding: EdgeInsets.zero,
                         child: const Text('Esqueci minha Senha!'),
                       ),

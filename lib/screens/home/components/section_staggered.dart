@@ -4,6 +4,7 @@ import 'package:brn_ecommerce/screens/home/components/add_tile_widget.dart';
 import 'package:brn_ecommerce/screens/home/components/item_tile.dart';
 import 'package:brn_ecommerce/screens/home/components/section_header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
@@ -15,14 +16,17 @@ class SectionStaggered extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context, designSize: const Size(360, 690));
+
     final homeManager = context.watch<HomeManager>();
 
     return ChangeNotifierProvider.value(
       value: section,
       child: Container(
-        margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-        child:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        margin: const EdgeInsets.fromLTRB(16, 8, 16, 8).dg,
+        child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
           SectionHeader(section: section),
           Consumer<Section>(
             builder: (_, section, __) {
