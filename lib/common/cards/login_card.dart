@@ -27,7 +27,7 @@ class LoginCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(0.8),
                 child: Text(
-                  'Necessário está Logado',
+                  'Você precisa estar logado.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 18,

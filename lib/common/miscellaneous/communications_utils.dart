@@ -17,7 +17,7 @@ class CommunicationsUtils<T, U> {
 
   void alertForCall(BuildContext context, String message) {
     if (message.isEmpty) {
-      message = 'Este dispositivo não suporta está função!';
+      message = 'Este dispositivo não suporta esta função!';
     }
 
     if (hasError == true) {
@@ -32,7 +32,7 @@ class CommunicationsUtils<T, U> {
 
   void alertForEmail(BuildContext context, String message) {
     if (message.isEmpty) {
-      message = 'Este dispositivo não suporta está função!';
+      message = 'Este dispositivo não suporta esta função!';
     }
 
     if (hasError == true) {

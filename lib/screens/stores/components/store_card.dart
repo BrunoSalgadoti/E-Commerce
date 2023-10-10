@@ -139,7 +139,7 @@ class StoreCard extends StatelessWidget {
                               CommunicationsUtils(parameterClass1Of2: store)
                                   .alertForCall(
                                 context,
-                                'Este dispositivo não suporta está função!\n'
+                                'Este dispositivo não suporta esta função!\n'
                                 'O Número da Loja é : '
                                 '${formattedPhoneNumber(store.phoneNumberStore)}',
                               );
@@ -153,7 +153,7 @@ class StoreCard extends StatelessWidget {
                               CommunicationsUtils(parameterClass1Of2: store)
                                   .alertForEmail(
                                 context,
-                                'Este dispositivo não suporta está função!\n'
+                                'Este dispositivo não suporta esta função!\n'
                                 'O E-mail da Loja é : ${store.emailStore}',
                               );
                             }),

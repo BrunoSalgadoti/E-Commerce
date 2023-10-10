@@ -22,13 +22,13 @@ class ItemTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeManager = context.watch<HomeManager>();
     backScreen() => Navigator.of(context).pop();
+    final product = context
+        .read<ProductManager>()
+        .findProductById(item?.product != null ? item!.product! : '');
 
     return GestureDetector(
         onTap: () {
           if (item?.product != null) {
-            final product = context
-                .read<ProductManager>()
-                .findProductById(item!.product!);
             if (product != null && product.isValid!) {
               Navigator.pushNamed(context, "/product", arguments: product);
             }
@@ -39,10 +39,6 @@ class ItemTile extends StatelessWidget {
                 showDialog(
                     context: context,
                     builder: (_) {
-                      final product = context
-                          .read<ProductManager>()
-                          .findProductById(
-                              item?.product != null ? item!.product! : '');
                       return CustomAlertDialog(
                           titleText: 'Editar Item',
                           titleColor: Colors.black,
@@ -51,7 +47,7 @@ class ItemTile extends StatelessWidget {
                           bodyText: '',
                           content: product != null
                               ? ListTile(
-                            contentPadding: EdgeInsets.zero,
+                                  contentPadding: EdgeInsets.zero,
                                   leading:
                                       Image.network(product.images!.first),
                                   title: Text(product.name!),

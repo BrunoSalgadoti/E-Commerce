@@ -29,7 +29,7 @@ class AddTileWidget extends StatelessWidget {
       if (files.length > 1) {
         CustomScaffoldMessenger(
           context: context,
-          message: 'Está seção não permite seleção de várias imagens',
+          message: 'Esta seção não permite a seleção de diversas imagens',
         ).msn();
         Navigator.of(context).pop();
       } else {
@@ -43,7 +43,7 @@ class AddTileWidget extends StatelessWidget {
       if (files.length > 1) {
         CustomScaffoldMessenger(
           context: context,
-          message: 'Está seção não permite seleção de várias imagens',
+          message: 'Esta seção não permite a seleção de diversas imagens',
         ).msn();
         Navigator.of(context).pop();
       } else {

@@ -6,7 +6,7 @@
 .DS_Store
 .atom/
 .buildlog/
-docs/dic_pt_br_android
+docs_ecommerce/dic_pt_br_android
 .history
 .svn/
 migrate_working_dir/
@@ -51,19 +51,19 @@ app.*.map.json
 /lib/services/db_api/
 /ios/
 /android/
-/TODO/
+/docs_ecommerce/TODO/
 /lib/services/db_api/firebase_options.dart
 /firebase.json
 /.firebaserc
 /.firebase/hosting.YnVpbGRcd2Vi.cache
 /ios/Runner/*
-/docs/ others/
+/docs_ecommerce/ others/
 /config.env
 /lib/generated/l10n/intl_en.arb
 /lib/generated/l10n.dart
 /lib/generated/intl/messages_all.dart
 /lib/generated/intl/messages_en.dart
-/docs/dic_pt_br_android/
+/docs_ecommerce/dic_pt_br_android/
 /lib/generated/localizations.dart
 /lib/generated/l10n/
 /lib/generated/intl/
@@ -71,3 +71,5 @@ app.*.map.json
 /assets/docs/
 /lib/generated/localizations.dart
 /lib/generated/l10n/
+/docs_ecommerce/exemplos/
+/docs_ecommerce/TODO/

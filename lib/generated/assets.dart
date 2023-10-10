@@ -7,6 +7,7 @@ class Assets {
   static const String adminSettingsAdminSettingScreen = 'lib/screens/admin_settings/admin_setting_screen.dart';
   static const String adminSettingsAdminSettingsEditScreen = 'lib/screens/admin_settings/admin_settings_edit_screen.dart';
   static const String adminUsersAdminUsersScreen = 'lib/screens/admin_users/admin_users_screen.dart';
+  static const String advertisingAdvertisingWidget = 'lib/common/advertising/advertising_widget.dart';
   static const String baseBaseScreen = 'lib/screens/base/base_screen.dart';
   static const String buttonCustomButton = 'lib/common/button/custom_button.dart';
   static const String buttonCustomIconButton = 'lib/common/button/custom_icon_button.dart';
@@ -27,9 +28,7 @@ class Assets {
   static const String componentsAddTileWidget = 'lib/screens/home/components/add_tile_widget.dart';
   static const String componentsAddressCard = 'lib/screens/address/components/address_card.dart';
   static const String componentsAddressInputField = 'lib/screens/address/components/address_input_field.dart';
-  static const String componentsAdvertisingCard = 'lib/screens/admin_settings/components/advertising_card.dart';
-  static const String componentsAdvertisingCarouselContent = 'lib/screens/admin_settings/components/advertising_carousel_content.dart';
-  static const String componentsAdvertisingWidget = 'lib/screens/admin_settings/components/advertising_widget.dart';
+  static const String componentsAdvertisingCard = 'lib/common/advertising/components/advertising_card.dart';
   static const String componentsCardBack = 'lib/screens/checkout/components/card_back.dart';
   static const String componentsCardFront = 'lib/screens/checkout/components/card_front.dart';
   static const String componentsCardIconColors = 'lib/screens/checkout/components/card_icon_colors.dart';
@@ -39,6 +38,7 @@ class Assets {
   static const String componentsCepInputField = 'lib/screens/address/components/cep_input_field.dart';
   static const String componentsColorsForm = 'lib/screens/product_edit/components/colors_form.dart';
   static const String componentsColorsWidget = 'lib/screens/products/components/colors_widget.dart';
+  static const String componentsContentType = 'lib/common/advertising/components/content_type.dart';
   static const String componentsCreditCardWidget = 'lib/screens/checkout/components/credit_card_widget.dart';
   static const String componentsCustomDrawerHeader = 'lib/common/custom_drawer/components/custom_drawer_header.dart';
   static const String componentsDrawerTitle = 'lib/common/custom_drawer/components/drawer_title.dart';
@@ -72,6 +72,7 @@ class Assets {
   static const String componentsTermsAndPrivacyTextScreen = 'lib/screens/policy_and_documents/components/terms_and_privacy_text_screen.dart';
   static const String componentsTermsOfServiceWidget = 'lib/screens/policy_and_documents/components/terms_of_service_widget.dart';
   static const String componentsTopDescriptionWidget = 'lib/screens/who_we_are/components/top_description_widget.dart';
+  static const String componentsUtilsForAdvertising = 'lib/common/advertising/components/utils_for_advertising.dart';
   static const String componentsUtilsForCategory = 'lib/screens/product_categories/components/utils_for_category.dart';
   static const String configDebugModeAndFirstStart = 'lib/services/config/debug_mode_and_first_start.dart';
   static const String configFirebaseAutomatedMapsUpdate = 'lib/services/config/firebase_automated_maps_update.dart';
@@ -95,6 +96,7 @@ class Assets {
   static const String functionsCommonFunctions = 'lib/common/functions/common_functions.dart';
   static const String generatedAssets = 'lib/generated/assets.dart';
   static const String generatedL10n = 'lib/generated/l10n.dart';
+  static const String generatedL10nIntlEn = 'lib/generated/l10n/intl_en.arb';
   static const String generatedLocalizations = 'lib/generated/localizations.dart';
   static const String helpersAppProviders = 'lib/helpers/app_providers.dart';
   static const String helpersExtensions = 'lib/helpers/extensions.dart';
@@ -127,9 +129,8 @@ class Assets {
   static const String imagesWaitingSales = 'assets/images/waitingSales.gif';
   static const String intlMessagesAll = 'lib/generated/intl/messages_all.dart';
   static const String intlMessagesEn = 'lib/generated/intl/messages_en.dart';
-  static const String intlMessagesMessages = 'lib/generated/intl/messages_messages.dart';
   static const String l10nIntlBr = 'lib/generated/l10n/intl_br.arb';
-  static const String l10nIntlEn = 'lib/generated/l10n/intl_en.arb';
+  static const String l10nIntlEn = 'lib/l10n/intl_en.arb';
   static const String l10nIntlMessages = 'lib/generated/l10n/intl_messages.arb';
   static const String libMain = 'lib/main.dart';
   static const String libMyApp = 'lib/my_app.dart';
@@ -146,6 +147,7 @@ class Assets {
   static const String modelsAdminOrdersManager = 'lib/models/admin_orders_manager.dart';
   static const String modelsAdminUsersManager = 'lib/models/admin_users_manager.dart';
   static const String modelsAdminUsersSearch = 'lib/models/admin_users_search.dart';
+  static const String modelsAdvertisingManager = 'lib/models/advertising_manager.dart';
   static const String modelsCartManager = 'lib/models/cart_manager.dart';
   static const String modelsCartProduct = 'lib/models/cart_product.dart';
   static const String modelsCheckoutManager = 'lib/models/checkout_manager.dart';

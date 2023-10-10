@@ -2,7 +2,9 @@ import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/custom_text_form_field.dart';
 import 'package:brn_ecommerce/models/home_manager.dart';
 import 'package:brn_ecommerce/models/section.dart';
+import 'package:decorated_text/decorated_text.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class SectionHeader extends StatelessWidget {
@@ -85,13 +87,15 @@ class SectionHeader extends StatelessWidget {
     } else {
       return Padding(
         padding: const EdgeInsets.all(8),
-        child: Text(
+        child: DecoratedGoogleFontText(
           section.name!,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w800,
-            fontSize: 18,
-          ),
+          fontMethod: GoogleFonts.mohave,
+              // .satisfy,
+          fillColor: Colors.black,
+          fontSize: 22,
+          fontWeight: FontWeight.w800,
+          borderWidth: 0.8,
+          borderColor: Theme.of(context).primaryColor,
         ),
       );
     }

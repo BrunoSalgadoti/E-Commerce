@@ -105,7 +105,7 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
       if (files.length > 1) {
         CustomScaffoldMessenger(
           context: context,
-          message: 'Está seção não permite seleção de várias imagens',
+          message: 'Esta seção não permite a seleção de diversas imagens',
         ).msn();
         backScreen();
       } else {
@@ -122,7 +122,7 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
       if (files.length > 1) {
         CustomScaffoldMessenger(
           context: context,
-          message: 'Está seção não permite seleção de várias imagens',
+          message: 'Esta seção não permite a seleção de diversas imagens',
         ).msn();
         backScreen();
       } else {
@@ -294,11 +294,13 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
                     Visibility(
                       visible: !userManager.editingCategories == true,
                       child: CustomTextButton(
-                        isSvg: true,
-                        imageAssetsTarget: 'assets/icons/smilingFace.svg',
+                        isSvg: false,
                         imageHeight: 35,
+                        icon:  Icon(Icons.label_important,
+                        color: textColor,
+                        ),
                         onPressed: null,
-                        text: 'Visite-me!',
+                        text: 'Acessar...',
                         fontColor: textColor,
                         fontSize: 14,
                         fontWeight: FontWeight.w800,

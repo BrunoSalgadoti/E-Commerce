@@ -2,13 +2,13 @@ import 'package:brn_ecommerce/models/product.dart';
 import 'package:flutter/foundation.dart';
 
 class ProductsBestSelling extends ChangeNotifier {
-  final List<Product> allProducts;
-  final int salesThreshold; // Sales margin for upgrade
-
   ProductsBestSelling({
     required this.allProducts,
     this.salesThreshold = 10,
   });
+
+  final List<Product> allProducts;
+  final int salesThreshold; // Sales margin for upgrade
 
   List<Product> getBestSellingProducts(int count) {
     final sortedProducts = allProducts.toList()

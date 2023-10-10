@@ -35,9 +35,16 @@ class CustomDrawer extends StatelessWidget {
                 title: "Início",
                 page: 0,
               ),
+              const Divider(thickness: 2),
+              const Text('P R O D U T O S:',
+                textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600),
+              ),
               const DrawerTitle(
                 iconData: Icons.list,
-                title: "Produtos",
+                title: "Listar todos",
                 page: 1,
               ),
               const DrawerTitle(
@@ -45,11 +52,19 @@ class CustomDrawer extends StatelessWidget {
                 title: "Por Categorias",
                 page: 2,
               ),
+              const Divider(thickness: 2),
+              const Text('Seções do Cliente:',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600),
+              ),
               const DrawerTitle(
                 iconData: Icons.playlist_add_check,
                 title: "Meus Pedidos",
                 page: 3,
               ),
+              const Divider(thickness: 2),
               const DrawerTitle(
                 iconData: Icons.location_on,
                 title: "Lojas",
@@ -65,7 +80,13 @@ class CustomDrawer extends StatelessWidget {
                   if (userManager.adminEnable) {
                     return const Column(
                       children: [
-                        Divider(),
+                        Divider(thickness: 3),
+                        Text('Área Administrativa:',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600),
+                        ),
                         DrawerTitle(
                           iconData: Icons.supervised_user_circle,
                           title: 'Clientes',
