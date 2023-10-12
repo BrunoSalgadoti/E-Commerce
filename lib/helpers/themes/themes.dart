@@ -1,4 +1,6 @@
+import 'package:brn_ecommerce/common/functions/init_screen_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'factory_colors/android_factory_colors.dart';
 import 'factory_colors/ios_factory_colos.dart';
@@ -13,17 +15,21 @@ class Themes with ChangeNotifier {
   late ThemeData themeIos;
   late ThemeData themeWeb;
 
-  Themes() {
-    _initializeThemes();
+  Themes(BuildContext context) {
+    _initializeThemes(context);
   }
 
-  void _initializeThemes() {
+  void _initializeThemes(BuildContext context) {
     themeAndroid = ThemeData(
       primaryColor: androidFactoryColors.primaryColor,
       scaffoldBackgroundColor: androidFactoryColors.scaffoldBackgroundColor,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       appBarTheme: AppBarTheme(
         backgroundColor: androidFactoryColors.appBarBackgroundColor,
+        titleTextStyle: TextStyle(
+            color: androidFactoryColors.appBarTextColor,
+            fontSize: customFontSizeResolver(18.0, ScreenUtil()),
+            fontWeight: FontWeight.w600),
         elevation: 0,
         iconTheme: IconThemeData(
           color: androidFactoryColors.iconColor,
@@ -73,6 +79,10 @@ class Themes with ChangeNotifier {
       visualDensity: VisualDensity.adaptivePlatformDensity,
       appBarTheme: AppBarTheme(
         backgroundColor: iosFactoryColors.appBarBackgroundColor,
+        titleTextStyle: TextStyle(
+            color: webFactoryColors.appBarTextColor,
+            fontSize: customFontSizeResolver(18, ScreenUtil()),
+            fontWeight: FontWeight.w600),
         elevation: 0,
         iconTheme: IconThemeData(
           color: iosFactoryColors.iconColor,
@@ -122,6 +132,10 @@ class Themes with ChangeNotifier {
       visualDensity: VisualDensity.adaptivePlatformDensity,
       appBarTheme: AppBarTheme(
         backgroundColor: webFactoryColors.appBarBackgroundColor,
+        titleTextStyle: TextStyle(
+            color: webFactoryColors.appBarTextColor,
+            fontSize: customFontSizeResolver(18, ScreenUtil()),
+            fontWeight: FontWeight.w600),
         elevation: 0,
         iconTheme: IconThemeData(
           color: webFactoryColors.iconColor,

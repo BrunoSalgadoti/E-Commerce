@@ -1,10 +1,10 @@
+import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/models/page_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DrawerTitle extends StatelessWidget {
-  const DrawerTitle(
-      {super.key, this.iconData, this.title, this.page, this.onTap});
+  const DrawerTitle({super.key, this.iconData, this.title, this.page, this.onTap});
 
   final IconData? iconData;
   final String? title;
@@ -14,7 +14,6 @@ class DrawerTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final int currentPage = context.watch<PageManager>().page;
-    final Color primaryColor = Theme.of(context).primaryColor;
 
     return InkWell(
       onTap: () {
@@ -29,14 +28,14 @@ class DrawerTitle extends StatelessWidget {
               child: Icon(
                 iconData!,
                 size: 32,
-                color: currentPage == page ? primaryColor : Colors.grey[700],
+                color: currentPage == page ? getEspecialColor() : Colors.grey[700],
               ),
             ),
             Text(
               title!,
               style: TextStyle(
                 fontSize: 16,
-                color: currentPage == page ? primaryColor : Colors.grey[700],
+                color: currentPage == page ? getEspecialColor() : Colors.grey[700],
               ),
             )
           ],

@@ -7,7 +7,9 @@ class IosFactoryColors {
     this.scaffoldBackgroundColor = const Color.fromARGB(255, 211, 119, 206),
     this.appBarBackgroundColor = const Color.fromARGB(255, 169, 40, 175),
     this.titleMediumColor = const Color.fromARGB(255, 23, 56, 68),
+    this.appBarTextColor = const Color.fromARGB(255, 23, 56, 68),
     this.iconColor = const Color.fromARGB(255, 231, 180, 243),
+    this.iconDrawerColor = const Color.fromARGB(255, 178, 103, 151),
     this.bodyLargeColor = const Color.fromARGB(255, 23, 56, 68),
     this.labelStyleColor = const Color.fromARGB(255, 23, 56, 68),
     this.focusedBorderColor = const Color.fromARGB(255, 245, 183, 219),
@@ -33,4 +35,6 @@ class IosFactoryColors {
   final Color disabledButtonColor;
   final Color cardColor;
   final Color cardShadowColor;
+  final Color iconDrawerColor;
+  final Color appBarTextColor;
 }

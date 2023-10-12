@@ -16,8 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class CategoryProductScreen extends StatefulWidget {
-  const CategoryProductScreen({Key? key, required this.productCategory})
-      : super(key: key);
+  const CategoryProductScreen({Key? key, required this.productCategory}) : super(key: key);
 
   final ProductCategory productCategory;
 
@@ -33,8 +32,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      final productManager =
-          Provider.of<ProductManager>(context, listen: false);
+      final productManager = Provider.of<ProductManager>(context, listen: false);
       productManager.filtersOn = false;
       productManager.search = '';
     });
@@ -47,28 +45,17 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // ScreenUtil.init(context, designSize: const Size(360, 690));
-
     final Set<StatusOfProducts> selectedStatus = <StatusOfProducts>{};
 
     return Consumer2<ProductManager, ProductCategoryManager>(
         builder: (_, productManager, productCategoryManager, __) {
-      //TODO:  Ajustar o layout com base no tamanho da tela
-      // final screenSize = MediaQuery.of(context).size;
-      // final isSmallScreen = screenSize.width < 600;
-      // final isMediumScreen =
-      //     screenSize.width >= 600 && screenSize.width < 1200;
-
       final List<Product> recentProductsFromCategory =
-          UtilsForCategory(productManager, widget.productCategory)
-              .loadRecentProducts();
+          UtilsForCategory(productManager, widget.productCategory).loadRecentProducts();
       final categoryImage =
-          UtilsForCategory(productManager, widget.productCategory)
-              .buildCategoryImage();
+          UtilsForCategory(productManager, widget.productCategory).buildCategoryImage();
 
       List<Product> allProductsFromCategory =
-          UtilsForCategory(productManager, widget.productCategory)
-              .loadCategoryProducts();
+          UtilsForCategory(productManager, widget.productCategory).loadCategoryProducts();
 
       void goSearch() {
         if (textController.text.isNotEmpty) {
@@ -100,8 +87,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                           Align(
                             alignment: Alignment.topCenter,
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(20, 30, 20, 0),
+                              padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
                               child: Column(children: [
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 13),
@@ -134,8 +120,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          15, 0, 15, 0),
+                                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                                       child: Row(
                                         children: [
                                           CustomIconButton(
@@ -146,28 +131,23 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        6, 6, 0, 0),
+                                                padding: const EdgeInsets.fromLTRB(6, 6, 0, 0),
                                                 child: CustomTextFormField(
                                                   controller: textController,
-                                                  focusedBorder:
-                                                      InputBorder.none,
+                                                  focusedBorder: InputBorder.none,
                                                   textFormFieldSize: 16,
                                                   obscureText: false,
                                                   hintText:
                                                       'Procurar produtos na categoria...',
                                                   hintSize: 16,
-                                                  onSubmitted: (value) =>
-                                                      goSearch,
+                                                  onSubmitted: (value) => goSearch,
                                                 )),
                                           ),
                                           CustomIconButton(
                                             iconData: Icons.close,
-                                            color:
-                                                productManager.search.isEmpty
-                                                    ? Colors.black
-                                                    : Colors.red,
+                                            color: productManager.search.isEmpty
+                                                ? Colors.black
+                                                : Colors.red,
                                             onTap: () {
                                               productManager.search = '';
                                               textController.clear();
@@ -182,8 +162,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                   const Align(
                                     alignment: Alignment(-1, 0),
                                     child: Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(10, 10, 0, 13),
+                                      padding: EdgeInsets.fromLTRB(10, 10, 0, 13),
                                       child: DecoratedGoogleFontText(
                                         'Adicionados Recentemente!',
                                         fontMethod: GoogleFonts.amaranth,
@@ -199,40 +178,32 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                   SizedBox(
                                       width: double.infinity,
                                       height: 185,
-                                      child: UtilsForCategory(productManager,
-                                              widget.productCategory)
-                                          .carouselRecentProducts(context,
-                                              recentProductsFromCategory)),
+                                      child: UtilsForCategory(
+                                              productManager, widget.productCategory)
+                                          .carouselRecentProducts(
+                                              context, recentProductsFromCategory)),
                                 FiltersSlidingUpPanel(
-                                  textOfSlidingUpPanel:
-                                      'FILTRAR: Produtos na Categoria...',
+                                  textOfSlidingUpPanel: 'FILTRAR: Produtos na Categoria...',
                                   panelController: panelController,
                                   selectedStatus: selectedStatus,
-                                  paddingContentCheckbox:
-                                      const EdgeInsets.only(right: 30),
+                                  paddingContentCheckbox: const EdgeInsets.only(right: 30),
                                 ),
-                                widget.productCategory.subCategoryList!
-                                        .isEmpty
+                                widget.productCategory.subCategoryList!.isEmpty
                                     ? Container()
                                     : Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 10),
+                                        padding: const EdgeInsets.only(top: 10),
                                         child: ExpansionTile(
                                           title: Row(
                                             mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
+                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                                             children: [
-                                              const Icon(Icons.filter_list,
-                                                  size: 28),
+                                              const Icon(Icons.filter_list, size: 28),
                                               FittedBox(
                                                 fit: BoxFit.scaleDown,
-                                                child:
-                                                    DecoratedGoogleFontText(
+                                                child: DecoratedGoogleFontText(
                                                   'Seções de: '
                                                   '${widget.productCategory.categoryTitle}',
-                                                  fontMethod:
-                                                      GoogleFonts.amaranth,
+                                                  fontMethod: GoogleFonts.amaranth,
                                                   fillColor: Colors.black,
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w800,
@@ -245,8 +216,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                           children: [
                                             SubCategoriesWidget(
                                               subCategories: widget
-                                                  .productCategory
-                                                  .subCategoryList!
+                                                  .productCategory.subCategoryList!
                                                   .toList(),
                                             ),
                                           ],
@@ -265,11 +235,9 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                               child: Column(children: [
                                 if (productManager.filtersOn == true)
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       const Text(
                                         'Filtro Ativo:',
@@ -303,8 +271,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                   productManager.filtersOn == true ||
                                           productManager.search.isNotEmpty
                                       ? EmptyPageIndicator(
-                                          title: productManager.filtersOn ==
-                                                  true
+                                          title: productManager.filtersOn == true
                                               ? 'Filtro sem retorno...'
                                               : 'Pesquisa não encontrada...',
                                           iconData: Icons.search_off,
@@ -322,16 +289,14 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                 else
                                   Builder(
                                     builder: (context) {
-                                      final categoryItens =
-                                          allProductsFromCategory;
+                                      final categoryItens = allProductsFromCategory;
                                       return ListView.builder(
                                         padding: EdgeInsets.zero,
                                         primary: false,
                                         shrinkWrap: true,
                                         itemCount: categoryItens.length,
                                         itemBuilder: (context, index) {
-                                          final categoryItens =
-                                              allProductsFromCategory[index];
+                                          final categoryItens = allProductsFromCategory[index];
                                           return FlexibleProductCard(
                                             product: categoryItens,
                                             isVertical: false,

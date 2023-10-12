@@ -62,5 +62,5 @@ request.
 
 ## Licença
 
-Este projeto está licenciado sob a Licença MIT - consulte o arquivo [LICENSE](./docs/LICENSE) para obter
+Este projeto está licenciado sob a Licença MIT - consulte o arquivo [LICENSE](./docs_ecommerce/LICENSE) para obter
 detalhes.

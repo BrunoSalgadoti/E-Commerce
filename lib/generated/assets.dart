@@ -94,6 +94,7 @@ class Assets {
   static const String formattedFieldsFormatValues = 'lib/common/formatted_fields/format_values.dart';
   static const String formattedFieldsTimeInputFormatter = 'lib/common/formatted_fields/time_input_formatter.dart';
   static const String functionsCommonFunctions = 'lib/common/functions/common_functions.dart';
+  static const String functionsInitScreenUtil = 'lib/common/functions/init_screen_util.dart';
   static const String generatedAssets = 'lib/generated/assets.dart';
   static const String generatedL10n = 'lib/generated/l10n.dart';
   static const String generatedL10nIntlEn = 'lib/generated/l10n/intl_en.arb';
@@ -114,7 +115,6 @@ class Assets {
   static const String iconsHipercard = 'assets/icons/hipercard.svg';
   static const String iconsLocked = 'assets/icons/locked.svg';
   static const String iconsMastercard = 'assets/icons/mastercard.svg';
-  static const String iconsSmilingFace = 'assets/icons/smilingFace.svg';
   static const String iconsUserWithoutImage = 'assets/icons/userWithoutImage.svg';
   static const String iconsVisa = 'assets/icons/visa.svg';
   static const String imagesAwait = 'assets/images/await.gif';
@@ -189,6 +189,7 @@ class Assets {
   static const String slidingUpPanelFiltersSlidingUpPanel = 'lib/common/sliding_up_panel/filters_sliding_up_panel.dart';
   static const String storesEditEditStoresScreen = 'lib/screens/stores_edit/edit_stores_screen.dart';
   static const String storesStoresScreen = 'lib/screens/stores/stores_screen.dart';
+  static const String themesGetAnotherColors = 'lib/helpers/themes/get_another_colors.dart';
   static const String themesGetThemeData = 'lib/helpers/themes/get_theme_data.dart';
   static const String themesThemes = 'lib/helpers/themes/themes.dart';
   static const String vignetteVignette = 'assets/vignette/vignette.mp3';

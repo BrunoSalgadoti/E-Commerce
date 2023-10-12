@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 ThemeData getThemeData(BuildContext context) {
-  final themes = Themes();
+  final themes = Themes(context);
 
   if (kIsWeb) {
     return themes.themeWeb;

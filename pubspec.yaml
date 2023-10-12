@@ -3,7 +3,7 @@ description: Loja Virtual BRN Info_Dev
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.2+48
+version: 1.0.2+49
 
 environment:
   sdk: '>=3.0.3 <4.0.0'
@@ -65,6 +65,8 @@ dependencies:
   google_fonts: ^4.0.4
   decorated_text: ^0.1.0
   flutter_screenutil: ^5.9.0
+#  //TODO: configurar go_router
+  #  go_router: ^7.1.1
 
 #Para Testar um front end feito no FlutterFlow
 #  cached_network_image: ^3.2.3
@@ -72,7 +74,6 @@ dependencies:
 #  flutter_animate: ^4.2.0+1
 #  flutter_cache_manager: ^3.3.1
 #  from_css_color: ^2.0.0
-#  go_router: ^7.1.1
 #  json_path: ^0.6.2
 #  mime_type: ^1.0.0
 #  page_transition: ^2.0.4

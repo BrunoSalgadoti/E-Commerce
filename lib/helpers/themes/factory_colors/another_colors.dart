@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class AnotherColors {
   const AnotherColors({
     // Gradient Colors of Home Screen Android
-    this.homeGradientColor1Android = const Color.fromARGB(255, 68, 63, 31),
-    this.homeGradientColor2Android = const Color.fromARGB(255, 250, 240, 164),
+    this.homeGradientColor1Android = const Color.fromARGB(255, 245, 250, 82),
+    this.homeGradientColor2Android = const Color.fromARGB(255, 255, 255, 255),
     // Gradient Colors of Home Screen IOS
     this.homeGradientColor1Ios = const Color.fromARGB(255, 169, 40, 175),
     this.homeGradientColor2Ios = const Color.fromARGB(255, 231, 180, 243),

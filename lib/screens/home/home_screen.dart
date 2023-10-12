@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
 import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
-import 'package:brn_ecommerce/helpers/themes/factory_colors/another_colors.dart';
+import 'package:brn_ecommerce/common/functions/init_screen_util.dart';
+import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/models/home_manager.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/screens/home/components/add_section_widget.dart';
@@ -10,9 +9,8 @@ import 'package:brn_ecommerce/screens/home/components/section_header.dart';
 import 'package:brn_ecommerce/screens/home/components/section_list.dart';
 import 'package:brn_ecommerce/screens/home/components/section_staggered.dart';
 import 'package:brn_ecommerce/screens/who_we_are/who_we_are_screen.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -25,64 +23,54 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, designSize: const Size(360, 690));
-
-    Color getGradientColorFirst([BuildContext? context]) {
-      if (kIsWeb) {
-        return const AnotherColors().homeGradientColor1Web;
-      } else if (Platform.isAndroid) {
-        return const AnotherColors().homeGradientColor1Android;
-      } else if (Platform.isIOS) {
-        return const AnotherColors().homeGradientColor1Ios;
-      } else {
-        return Colors.blue;
-      }
-    }
-
-    Color getGradientColorSecond([BuildContext? context]) {
-      if (kIsWeb) {
-        return const AnotherColors().homeGradientColor2Web;
-      } else if (Platform.isAndroid) {
-        return const AnotherColors().homeGradientColor2Android;
-      } else if (Platform.isIOS) {
-        return const AnotherColors().homeGradientColor2Ios;
-      } else {
-        return Colors.lightBlueAccent;
-      }
-    }
+    initScreenUtil(context);
 
     return Scaffold(
       drawer: const CustomDrawer(),
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [getGradientColorFirst(), getGradientColorSecond()],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+      body: Padding(
+        padding: kIsWeb ? const EdgeInsets.only(top: 0) : const EdgeInsets.only(top: 18),
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [getGradientColorFirst(), getGradientColorSecond()],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: kIsWeb
-                ? const EdgeInsets.all(0)
-                : const EdgeInsets.only(top: 1.8),
-            child: CustomScrollView(
+            CustomScrollView(
               slivers: [
+                SliverToBoxAdapter(
+                    child: Container(
+                  height: 60,
+                  width: double.infinity,
+                  color: Colors.white,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 1.8, 8, 7),
+                        child: Image.asset(
+                          "assets/logo/storeLogo.png",
+                          width: 75,
+                          height: 40,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
                 SliverAppBar(
+                  primary: false,
                   snap: true,
                   floating: true,
                   elevation: 4,
                   backgroundColor: Colors.white.withAlpha(100),
-                  flexibleSpace: FlexibleSpaceBar(
-                    title: Image.asset(
-                      "assets/logo/storeLogo2.png",
-                      width: 150,
-                      fit: BoxFit.fill,
-                    ),
-                    centerTitle: true,
-                  ),
+                  flexibleSpace: const FlexibleSpaceBar(),
                   actions: [
                     IconButton(
                       onPressed: () {
@@ -137,14 +125,13 @@ class HomeScreen extends StatelessWidget {
                     if (homeManager.loading) {
                       return const SliverToBoxAdapter(
                         child: LinearProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation(Colors.white),
+                          valueColor: AlwaysStoppedAnimation(Colors.yellow),
                           backgroundColor: Colors.transparent,
                         ),
                       );
                     }
                     final List<Widget> emptyPage = [const WhoWeAreScreen()];
-                    final List<Widget> children =
-                        homeManager.sections.map<Widget>((section) {
+                    final List<Widget> children = homeManager.sections.map<Widget>((section) {
                       switch (section.type) {
                         case 'List':
                           return SectionList(section: section);
@@ -167,17 +154,14 @@ class HomeScreen extends StatelessWidget {
                     ];
 
                     return children.isEmpty
-                        ? SliverList(
-                            delegate: SliverChildListDelegate(emptyPage))
-                        :
-                    SliverList(
-                            delegate: SliverChildListDelegate(bodyHome));
+                        ? SliverList(delegate: SliverChildListDelegate(emptyPage))
+                        : SliverList(delegate: SliverChildListDelegate(bodyHome));
                   },
                 ),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
