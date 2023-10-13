@@ -3,7 +3,7 @@ description: Loja Virtual BRN Info_Dev
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.2+49
+version: 1.0.3+01
 
 environment:
   sdk: '>=3.0.3 <4.0.0'
@@ -43,7 +43,7 @@ dependencies:
   http: ^0.13.3
   gallery_saver: ^2.3.2
   font_awesome_flutter: ^10.5.0
-  permission_handler: ^11.0.0
+  permission_handler: ^11.0.1
   share_plus: ^7.1.0
   markdown_editable_textinput: ^2.2.0
   flutter_markdown: ^0.6.17+3
@@ -94,6 +94,7 @@ dev_dependencies:
   file: ^7.0.0
   build_web_compilers: ^4.0.5
   build_runner: ^2.4.6
+  device_preview: ^1.1.0
 
 # The following section is specific to Flutter packages.
 flutter:

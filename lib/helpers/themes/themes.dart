@@ -21,6 +21,8 @@ class Themes with ChangeNotifier {
 
   void _initializeThemes(BuildContext context) {
     themeAndroid = ThemeData(
+      ///Material Data Theme Flutter 3
+      useMaterial3: true,
       primaryColor: androidFactoryColors.primaryColor,
       scaffoldBackgroundColor: androidFactoryColors.scaffoldBackgroundColor,
       visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -74,6 +76,8 @@ class Themes with ChangeNotifier {
     );
 
     themeIos = ThemeData(
+      ///Material Data Theme Flutter 3
+      useMaterial3: true,
       primaryColor: iosFactoryColors.primaryColor,
       scaffoldBackgroundColor: iosFactoryColors.scaffoldBackgroundColor,
       visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -127,6 +131,8 @@ class Themes with ChangeNotifier {
     );
 
     themeWeb = ThemeData(
+      ///Material Data Theme Flutter 3
+      useMaterial3: true,
       primaryColor: webFactoryColors.primaryColor,
       scaffoldBackgroundColor: webFactoryColors.scaffoldBackgroundColor,
       visualDensity: VisualDensity.adaptivePlatformDensity,

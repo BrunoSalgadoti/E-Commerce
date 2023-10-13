@@ -12,7 +12,7 @@ import 'package:url_strategy/url_strategy.dart';
 
 import 'services/development_monitoring/firebase_performance.dart';
 
-//Package installed in Dev_Dependencies
+// Package installed in Dev_Dependencies
 // ignore: depend_on_referenced_packages
 import 'package:device_preview/device_preview.dart';
 
@@ -53,6 +53,7 @@ Future<void> main() async {
   }
 
   /// configure routing based on "history-based routing"
+  /// TODO: substituir por go_router
   setPathUrlStrategy();
 
   await ScreenUtil.ensureScreenSize();
@@ -62,7 +63,7 @@ Future<void> main() async {
   // With a single emulator we can simulate various screen sizes, languages and other
   // screen size and font settings... (To test responsiveness)
   runApp(kDebugMode
-      ? DevicePreview(builder: (_) => const AppProviders(child: MyApp()))
+      ? DevicePreview(builder: (_) => const AppProviders(child: MyApp()), enabled: true)
       : const AppProviders(child: MyApp()));
 
   PerformanceMonitoring().stopTrace('main');

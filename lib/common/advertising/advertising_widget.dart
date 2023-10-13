@@ -96,48 +96,52 @@ class AdvertisingWidgetState extends State<AdvertisingWidget> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   if (kIsWeb)
-                    FloatingActionButton(
-                      heroTag: 'previousButton',
-                      mini: true,
-                      onPressed: () {
-                        if (_currentPage > 0) {
-                          _pageController.previousPage(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.ease,
-                          );
-                        }
-                      },
-                      backgroundColor: Colors.white,
-                      elevation: 4.0.r,
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.black,
-                        size: customFontSizeResolver(14.0, ScreenUtil()),
+                    Center(
+                      child: FloatingActionButton(
+                        heroTag: 'previousButton',
+                        mini: true,
+                        onPressed: () {
+                          if (_currentPage > 0) {
+                            _pageController.previousPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.ease,
+                            );
+                          }
+                        },
+                        backgroundColor: Colors.white,
+                        elevation: 4.0.r,
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.black,
+                          size: customFontSizeResolver(14.0, ScreenUtil()),
+                        ),
                       ),
                     ),
                   if (kIsWeb)
-                    FloatingActionButton(
-                      heroTag: 'nextButton',
-                      mini: true,
-                      onPressed: () {
-                        if (_currentPage < cardContents.length + imageContents.length - 1) {
-                          _pageController.nextPage(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.ease,
-                          );
-                        } else {
-                          _pageController.jumpToPage(0);
-                        }
-                      },
-                      backgroundColor: Colors.white,
-                      elevation: 4.0,
-                      child: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.black,
-                        size: customFontSizeResolver(14.0, ScreenUtil()),
+                    Center(
+                      child: FloatingActionButton(
+                        heroTag: 'nextButton',
+                        mini: true,
+                        onPressed: () {
+                          if (_currentPage < cardContents.length + imageContents.length - 1) {
+                            _pageController.nextPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.ease,
+                            );
+                          } else {
+                            _pageController.jumpToPage(0);
+                          }
+                        },
+                        backgroundColor: Colors.white,
+                        elevation: 4.0,
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          color: Colors.black,
+                          size: customFontSizeResolver(14.0, ScreenUtil()),
+                        ),
                       ),
                     ),
                 ],
