@@ -5,12 +5,16 @@ import 'package:brn_ecommerce/services/config/debug_mode_and_first_start.dart';
 import 'package:brn_ecommerce/services/config/firebase_automated_maps_update.dart';
 import 'package:brn_ecommerce/services/db_api/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart' show kReleaseMode;
+import 'package:flutter/foundation.dart' show kDebugMode, kReleaseMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 import 'services/development_monitoring/firebase_performance.dart';
+
+//Package installed in Dev_Dependencies
+// ignore: depend_on_referenced_packages
+import 'package:device_preview/device_preview.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +27,9 @@ Future<void> main() async {
   PerformanceMonitoring().startTrace('main', shouldStart: true);
 
   if (!kReleaseMode) {
-    bool shouldStart = false;///<- Change it! Only if you need to update
+    bool shouldStart = false;
+
+    ///<- Change it! Only if you need to update
     /// Automatic fields in all documents of a class! (Default: false)
 
     /// This code snippet will only run in debug mode and
@@ -36,7 +42,8 @@ Future<void> main() async {
     ///variable to true.
     // This code snippet will only run in debug mode and
     // with the variable shouldStart == true
-    if (shouldStart == false) {/// <- Don´t Change it!
+    if (shouldStart == false) {
+      /// <- Don´t Change it!
       Product product = Product();
       FirebaseAutomatedMapsUpdate<Product>(
         collectionPath: 'products',
@@ -49,9 +56,14 @@ Future<void> main() async {
   setPathUrlStrategy();
 
   await ScreenUtil.ensureScreenSize();
-  runApp(
-    const AppProviders(
-      child: MyApp()));
+
+  /// Package configuration: Device Preview
+  /// "Multiple Emulators in a single Emulator, Ios, Mac, Windows, Android, Linux"
+  // With a single emulator we can simulate various screen sizes, languages and other
+  // screen size and font settings... (To test responsiveness)
+  runApp(kDebugMode
+      ? DevicePreview(builder: (_) => const AppProviders(child: MyApp()))
+      : const AppProviders(child: MyApp()));
 
   PerformanceMonitoring().stopTrace('main');
 }
