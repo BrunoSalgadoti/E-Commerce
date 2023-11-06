@@ -9,8 +9,7 @@ import 'package:flutter/material.dart';
 import '../../../common/formatted_fields/format_values.dart';
 
 class OrderTile extends StatelessWidget {
-  const OrderTile(this.orderClient, {Key? key, this.showControls = false})
-      : super(key: key);
+  const OrderTile(this.orderClient, {super.key, this.showControls = false});
 
   final OrderClient? orderClient;
   final bool showControls;
@@ -23,10 +22,9 @@ class OrderTile extends StatelessWidget {
     final orderId = orderClient?.orderId;
     final price = orderClient?.price ?? 0.0;
 
-    final verificationNextStatusText =
-        orderClient!.status == StatusOfOrders.transporting ||
-            orderClient!.status == StatusOfOrders.delivered ||
-            orderClient!.status == StatusOfOrders.keepingReturn;
+    final verificationNextStatusText = orderClient!.status == StatusOfOrders.transporting ||
+        orderClient!.status == StatusOfOrders.delivered ||
+        orderClient!.status == StatusOfOrders.keepingReturn;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -89,8 +87,7 @@ class OrderTile extends StatelessWidget {
                   ),
                   Text(
                     '${orderClient!.totalQuantity}',
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   )
                 ],
               ),
@@ -137,9 +134,7 @@ class OrderTile extends StatelessWidget {
                                         titleWeight: FontWeight.normal,
                                         actions: [
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               CustomTextButton(
                                                 text: 'Sim',
@@ -193,18 +188,15 @@ class OrderTile extends StatelessWidget {
                                               actions: [
                                                 Row(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                      MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     CustomTextButton(
                                                       text: 'Sim',
                                                       icon: null,
                                                       fontColor: Colors.red,
                                                       onPressed: () {
-                                                        orderClient
-                                                            ?.advance!();
-                                                        Navigator.of(context)
-                                                            .pop();
+                                                        orderClient?.advance!();
+                                                        Navigator.of(context).pop();
                                                       },
                                                     ),
                                                     CustomTextButton(
@@ -213,8 +205,7 @@ class OrderTile extends StatelessWidget {
                                                       fontSize: 18,
                                                       fontColor: Colors.green,
                                                       onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
+                                                        Navigator.of(context).pop();
                                                       },
                                                     )
                                                   ],

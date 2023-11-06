@@ -41,10 +41,7 @@ class _CepInputFieldState extends State<CepInputField> {
             controller: cepController,
             labelText: 'CEP',
             hintText: '00.000-000',
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-              CepInputFormatter()
-            ],
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly, CepInputFormatter()],
             textInputType: TextInputType.number,
             validator: (value) {
               if (value?.length != 10) {
@@ -64,9 +61,7 @@ class _CepInputFieldState extends State<CepInputField> {
                         await cartManager.getAddress(cepController.text);
                       } catch (error) {
                         // ignore: use_build_context_synchronously
-                        CustomScaffoldMessenger(
-                                context: context, message: '$error')
-                            .msn();
+                        CustomScaffoldMessenger(context: context, message: '$error').msn();
                       }
                     }
                   }

@@ -4,17 +4,15 @@ import 'package:brn_ecommerce/my_app.dart';
 import 'package:brn_ecommerce/services/config/debug_mode_and_first_start.dart';
 import 'package:brn_ecommerce/services/config/firebase_automated_maps_update.dart';
 import 'package:brn_ecommerce/services/db_api/firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart' show kDebugMode, kReleaseMode;
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:url_strategy/url_strategy.dart';
-
-import 'services/development_monitoring/firebase_performance.dart';
-
 // Package installed in Dev_Dependencies
 // ignore: depend_on_referenced_packages
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart' show kDebugMode, kReleaseMode;
+import 'package:flutter/material.dart';
+import 'package:url_strategy/url_strategy.dart';
+
+import 'services/development_monitoring/firebase_performance.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,10 +25,8 @@ Future<void> main() async {
   PerformanceMonitoring().startTrace('main', shouldStart: true);
 
   if (!kReleaseMode) {
-    bool shouldStart = false;
-
-    ///<- Change it! Only if you need to update
-    /// Automatic fields in all documents of a class! (Default: false)
+    bool shouldStart = false; //<- Change it! Only if you need to update...
+    /// automatic fields in all documents of a class! (Default: false)
 
     /// This code snippet will only run in debug mode and
     /// Some functions of this class are only activated if firstStart == true
@@ -43,7 +39,7 @@ Future<void> main() async {
     // This code snippet will only run in debug mode and
     // with the variable shouldStart == true
     if (shouldStart == false) {
-      /// <- Don´t Change it!
+      // <- Don´t Change it!
       Product product = Product();
       FirebaseAutomatedMapsUpdate<Product>(
         collectionPath: 'products',
@@ -56,14 +52,15 @@ Future<void> main() async {
   /// TODO: substituir por go_router
   setPathUrlStrategy();
 
-  await ScreenUtil.ensureScreenSize();
-
   /// Package configuration: Device Preview
   /// "Multiple Emulators in a single Emulator, Ios, Mac, Windows, Android, Linux"
   // With a single emulator we can simulate various screen sizes, languages and other
   // screen size and font settings... (To test responsiveness)
   runApp(kDebugMode
-      ? DevicePreview(builder: (_) => const AppProviders(child: MyApp()), enabled: true)
+      ? DevicePreview(
+          builder: (_) => const AppProviders(child: MyApp()),
+          enabled: false) // <- Change this if you won´t START...
+      // ...DevicePreview for TRUE or FALSE to DISABLED
       : const AppProviders(child: MyApp()));
 
   PerformanceMonitoring().stopTrace('main');

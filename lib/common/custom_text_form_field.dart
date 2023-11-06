@@ -47,8 +47,7 @@ class CustomTextFormField extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.focusNode,
     this.onSubmitted,
-  }) : textInputAction =
-            onSubmitted == null ? TextInputAction.done : TextInputAction.next;
+  }) : textInputAction = onSubmitted == null ? TextInputAction.done : TextInputAction.next;
 
   final String? title;
   final String? initialValue;

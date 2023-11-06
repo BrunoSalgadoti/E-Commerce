@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AddressScreen extends StatefulWidget {
-  const AddressScreen({Key? key}) : super(key: key);
+  const AddressScreen({super.key});
 
   @override
   State<AddressScreen> createState() => _AddressScreenState();
@@ -37,7 +37,7 @@ class _AddressScreenState extends State<AddressScreen> {
       return;
     }
 
-    String messenger = 'Foi verificado em nosso sistema que esta '
+    String messenger = 'Foi verificado em nosso sistema que está '
         'conta de usuário\n'
         'ainda não aceitou a nossa Política de '
         'privacidade e o nosso Termos de Uso'
@@ -53,14 +53,13 @@ class _AddressScreenState extends State<AddressScreen> {
       body: ListView(
         children: [
           const AddressCard(),
-          Consumer3<CartManager, PolicyAndDocuments, VersionManager>(builder:
-              (_, cartManager, policyAndDocuments, versionManager, __) {
+          Consumer3<CartManager, PolicyAndDocuments, VersionManager>(
+              builder: (_, cartManager, policyAndDocuments, versionManager, __) {
             final userManager = Provider.of<UserManager>(context);
             final currentUser = userManager.users;
 
             void checkPolicyAndTerms() {
-              if (currentUser!.policyAndTerms == false ||
-                  currentUser.policyAndTerms == null) {
+              if (currentUser!.policyAndTerms == false || currentUser.policyAndTerms == null) {
                 showDialog(
                   context: context,
                   barrierDismissible: false,
@@ -89,11 +88,8 @@ class _AddressScreenState extends State<AddressScreen> {
                             CustomButton(
                               text: 'Prosseguir',
                               onPressed: () async {
-                                if (policyAndDocuments.agreedToPolicyTerms ==
-                                        false ||
-                                    policyAndDocuments
-                                            .agreedToTermsOfService ==
-                                        false) {
+                                if (policyAndDocuments.agreedToPolicyTerms == false ||
+                                    policyAndDocuments.agreedToTermsOfService == false) {
                                   alertPolicyAndTerms();
                                 } else {
                                   currentUser.policyAndTerms = true;
@@ -132,13 +128,14 @@ class _AddressScreenState extends State<AddressScreen> {
                               // Refresh the web page and clear cache
                               html.window.location.reload();
                             } else {
+                              //TODO: Quando publicado
                               // Redirect to app store for updating the app
                               // Example for Android:
                               // launch('https://play.google.com/store/apps/details?id=com.example.app');
                               // Example for iOS:
                               // launch('https://apps.apple.com/app/id<your_app_id>');
                             }
-                            Navigator.pop(context);
+                            backScreen();
                           },
                         )
                       ],
@@ -152,7 +149,7 @@ class _AddressScreenState extends State<AddressScreen> {
             }
 
             return PriceCard(
-              buttonText: 'Ir ao Pagamento',
+              buttonText: 'Prosseguir para Pagamento',
               onPressed: cartManager.isAddressValid
                   ? () async {
                       userManager.loading = true;

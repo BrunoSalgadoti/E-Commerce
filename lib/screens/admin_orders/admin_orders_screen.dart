@@ -10,8 +10,8 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class AdminOrdersScreen extends StatefulWidget {
   const AdminOrdersScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<AdminOrdersScreen> createState() => _AdminOrdersScreenState();
@@ -125,8 +125,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                         activeColor: primaryColor,
                         value: adminOrdersManager.statusFilter.contains(s),
                         onChanged: (v) {
-                          adminOrdersManager.setStatusFilter(
-                              status: s, enabled: v);
+                          adminOrdersManager.setStatusFilter(status: s, enabled: v);
                         });
                   }).toList(),
                 )),

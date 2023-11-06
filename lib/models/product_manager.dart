@@ -64,23 +64,19 @@ class ProductManager extends ChangeNotifier {
 
     if (search.isNotEmpty) {
       String searchQuery = search.toLowerCase();
-      filteredProducts = filteredProducts
-          .where((p) => p.name!.toLowerCase().contains(searchQuery))
-          .toList();
+      filteredProducts =
+          filteredProducts.where((p) => p.name!.toLowerCase().contains(searchQuery)).toList();
     }
 
     if (statusFilter.contains(StatusOfProducts.bestSellers)) {
       List<Product> bestSellingProducts =
           bestSellingProductsManager!.getBestSellingProducts(15);
-      filteredProducts = filteredProducts
-          .where((product) => bestSellingProducts.contains(product))
-          .toList();
+      filteredProducts =
+          filteredProducts.where((product) => bestSellingProducts.contains(product)).toList();
     }
 
     if (statusFilter.contains(StatusOfProducts.lowestPrice)) {
-      filteredProducts = filteredProducts
-          .where((product) => product.basePrice > 0)
-          .toList()
+      filteredProducts = filteredProducts.where((product) => product.basePrice > 0).toList()
         ..sort((a, b) => a.basePrice.compareTo(b.basePrice));
     }
 
@@ -92,8 +88,7 @@ class ProductManager extends ChangeNotifier {
     }
 
     if (statusFilter.contains(StatusOfProducts.freight)) {
-      filteredProducts =
-          filteredProducts.where((product) => !product.freight!).toList();
+      filteredProducts = filteredProducts.where((product) => !product.freight!).toList();
     }
 
     if (statusFilter.contains(StatusOfProducts.sortedAZ)) {

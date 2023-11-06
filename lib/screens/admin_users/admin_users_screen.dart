@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AdminUsersScreen extends StatelessWidget {
-  const AdminUsersScreen({Key? key}) : super(key: key);
+  const AdminUsersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +38,7 @@ class AdminUsersScreen extends StatelessWidget {
                         child: Text(
                           adminUsersSearch.search,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontSize: 23, fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
                         )),
                   );
                 });
@@ -68,8 +67,7 @@ class AdminUsersScreen extends StatelessWidget {
                   return IconButton(
                       onPressed: () async {
                         adminUsersSearch.search = '';
-                        adminUsersSearch
-                            .filterList(adminUsersSearch.allUsers);
+                        adminUsersSearch.filterList(adminUsersSearch.allUsers);
                       },
                       icon: const Icon(Icons.close));
                 }

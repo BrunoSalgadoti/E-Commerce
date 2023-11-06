@@ -1,6 +1,5 @@
 import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
 import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
-import 'package:brn_ecommerce/common/functions/init_screen_util.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/models/home_manager.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
@@ -15,16 +14,14 @@ import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
-    Key? key,
+    super.key,
     this.sectionHeader,
-  }) : super(key: key);
+  });
 
   final SectionHeader? sectionHeader;
 
   @override
   Widget build(BuildContext context) {
-    initScreenUtil(context);
-
     return Scaffold(
       drawer: const CustomDrawer(),
       body: Padding(

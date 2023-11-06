@@ -30,9 +30,8 @@ class AdminUsersManager with ChangeNotifier {
       MonitoringLogger().logInfo('Info message: Instance  _listenToUsers');
     }
 
-    QuerySnapshot<Map<String, dynamic>> snapshot = await firestore
-        .collection("users")
-        .get(const GetOptions(source: Source.cache));
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await firestore.collection("users").get(const GetOptions(source: Source.cache));
     if (snapshot.metadata.isFromCache) {
       // If data is retrieved from the cache, update the UI...
       // immediately with cached data
@@ -41,8 +40,7 @@ class AdminUsersManager with ChangeNotifier {
     }
     // Listen to the stream for real-time updates and update...
     // the UI when necessary
-    _subscription =
-        firestore.collection("users").snapshots().listen((snapshot) async {
+    _subscription = firestore.collection("users").snapshots().listen((snapshot) async {
       userList = snapshot.docs.map((d) => Users.fromDocument(d)).toList();
       notifyListeners();
     });
@@ -54,8 +52,7 @@ class AdminUsersManager with ChangeNotifier {
   void dispose() {
     _subscription?.cancel();
     if (!kReleaseMode) {
-      MonitoringLogger()
-          .logInfo('Info message: Instance  $_subscription CANCELADO');
+      MonitoringLogger().logInfo('Info message: Instance  $_subscription CANCELADO');
     }
     super.dispose();
   }

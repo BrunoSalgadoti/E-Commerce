@@ -1,3 +1,4 @@
+import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
 import 'package:brn_ecommerce/common/cards/price_card.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
@@ -6,13 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({Key? key}) : super(key: key);
+  const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Carrinho'),
+        title: const Text('Meu Carrinho'),
         centerTitle: true,
       ),
       body: Consumer<CartManager>(builder: (_, cartManager, __) {
@@ -29,6 +30,7 @@ class CartScreen extends StatelessWidget {
 
         return ListView(
           children: [
+            const AdvertisingWidget(),
             Column(
               children: cartManager.items
                   .map((cartProduct) => CartTile(
@@ -37,7 +39,7 @@ class CartScreen extends StatelessWidget {
                   .toList(),
             ),
             PriceCard(
-                buttonText: 'Ir à Entrega',
+                buttonText: 'Continuar para Entrega',
                 onPressed: cartManager.isCartValid
                     ? () {
                         Navigator.pushNamed(context, "/address");

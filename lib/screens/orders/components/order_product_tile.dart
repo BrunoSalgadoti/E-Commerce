@@ -6,23 +6,21 @@ import '../../../common/formatted_fields/format_values.dart';
 class OrderProductTile extends StatelessWidget {
   const OrderProductTile(
     this.cartProduct, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final CartProduct? cartProduct;
 
   @override
   Widget build(BuildContext context) {
-    final fixedOrUnityPrice =
-        cartProduct?.fixedPrice ?? cartProduct?.unitPrice ?? 0.0;
-    final imageNotAvailable = cartProduct!.product?.images == null ||
-        cartProduct!.product!.images!.isEmpty;
+    final fixedOrUnityPrice = cartProduct?.fixedPrice ?? cartProduct?.unitPrice ?? 0.0;
+    final imageNotAvailable =
+        cartProduct!.product?.images == null || cartProduct!.product!.images!.isEmpty;
 
     return GestureDetector(
       onTap: () {
         if (!imageNotAvailable) {
-          Navigator.pushNamed(context, "/product",
-              arguments: cartProduct?.product);
+          Navigator.pushNamed(context, "/product", arguments: cartProduct?.product);
         }
       },
       child: Container(
@@ -79,8 +77,7 @@ class OrderProductTile extends StatelessWidget {
                             decoration: BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
-                                  color: cartProduct!.realColorFromCart ==
-                                          Colors.transparent
+                                  color: cartProduct!.realColorFromCart == Colors.transparent
                                       ? Colors.grey.withOpacity(0.0)
                                       : Colors.grey.withOpacity(0.5),
                                   spreadRadius: 2,
@@ -90,8 +87,7 @@ class OrderProductTile extends StatelessWidget {
                               ],
                             ),
                             child: Container(
-                              color: cartProduct?.realColorFromCart ??
-                                  Colors.transparent,
+                              color: cartProduct?.realColorFromCart ?? Colors.transparent,
                             ),
                           ),
                         ],
@@ -110,8 +106,7 @@ class OrderProductTile extends StatelessWidget {
               children: [
                 Text(
                   '${cartProduct?.quantity}',
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const Text(
                   'QTD.',

@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class CategoryProductScreen extends StatefulWidget {
-  const CategoryProductScreen({Key? key, required this.productCategory}) : super(key: key);
+  const CategoryProductScreen({super.key, required this.productCategory});
 
   final ProductCategory productCategory;
 
@@ -87,7 +87,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                           Align(
                             alignment: Alignment.topCenter,
                             child: Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
+                              padding: const EdgeInsets.fromLTRB(20, 30, 30, 0),
                               child: Column(children: [
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 13),
@@ -135,11 +135,11 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                                 child: CustomTextFormField(
                                                   controller: textController,
                                                   focusedBorder: InputBorder.none,
-                                                  textFormFieldSize: 16,
+                                                  textFormFieldSize: 14,
                                                   obscureText: false,
                                                   hintText:
                                                       'Procurar produtos na categoria...',
-                                                  hintSize: 16,
+                                                  hintSize: 14,
                                                   onSubmitted: (value) => goSearch,
                                                 )),
                                           ),
@@ -177,27 +177,29 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                 if (productManager.search.isEmpty)
                                   SizedBox(
                                       width: double.infinity,
-                                      height: 185,
                                       child: UtilsForCategory(
                                               productManager, widget.productCategory)
                                           .carouselRecentProducts(
                                               context, recentProductsFromCategory)),
                                 FiltersSlidingUpPanel(
-                                  textOfSlidingUpPanel: 'FILTRAR: Produtos na Categoria...',
-                                  panelController: panelController,
-                                  selectedStatus: selectedStatus,
-                                  paddingContentCheckbox: const EdgeInsets.only(right: 30),
-                                ),
+                                    textOfSlidingUpPanel: 'FILTRAR: Produtos na Categoria...',
+                                    panelController: panelController,
+                                    selectedStatus: selectedStatus,
+                                    paddingContentCheckbox: const EdgeInsets.only(
+                                      right: 30,
+                                    )),
                                 widget.productCategory.subCategoryList!.isEmpty
                                     ? Container()
                                     : Padding(
-                                        padding: const EdgeInsets.only(top: 10),
+                                        padding: const EdgeInsets.only(
+                                          top: 10,
+                                        ),
                                         child: ExpansionTile(
                                           title: Row(
                                             mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                            mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
-                                              const Icon(Icons.filter_list, size: 28),
+                                              const Icon(Icons.filter_list, size: 20),
                                               FittedBox(
                                                 fit: BoxFit.scaleDown,
                                                 child: DecoratedGoogleFontText(
@@ -235,7 +237,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                               child: Column(children: [
                                 if (productManager.filtersOn == true)
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [

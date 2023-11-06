@@ -1,9 +1,6 @@
 class SubCategory {
   SubCategory(
-      {this.subCategoryID,
-      this.subCategoryTitle,
-      this.iconSubCategories,
-      this.productID});
+      {this.subCategoryID, this.subCategoryTitle, this.iconSubCategories, this.productID});
 
   String? subCategoryID;
   String? subCategoryTitle;

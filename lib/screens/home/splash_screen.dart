@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     if (mounted) {
-      // Abre o áudio com autoStart: false para evitar a reprodução automática
+      // Open audio with autoStart: false to prevent autoplay
       assetsAudioPlayer.open(
         Audio("assets/vignette/vignette.mp3"),
         autoStart: kIsWeb ? false : true,
@@ -88,8 +88,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void dispose() {
-    assetsAudioPlayer.stop();
-    assetsAudioPlayer.dispose();
-    super.dispose();
+    if (mounted) {
+      assetsAudioPlayer.stop();
+      assetsAudioPlayer.dispose();
+      super.dispose();
+    }
   }
 }

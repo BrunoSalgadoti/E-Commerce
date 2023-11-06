@@ -47,8 +47,7 @@ class CommunicationsUtils<T, U> {
 
   void alertForMaps(BuildContext context, String message) {
     if (message.isEmpty) {
-      message =
-          'Não foi encontrado nenhum APP de Mapas\n neste dispositivo!\n';
+      message = 'Não foi encontrado nenhum APP de Mapas\n neste dispositivo!\n';
     }
 
     if (hasError == true) {
@@ -61,8 +60,8 @@ class CommunicationsUtils<T, U> {
     }
   }
 
-  Future<void> openMap(BuildContext context, double lat, double long,
-      String title, String description) async {
+  Future<void> openMap(
+      BuildContext context, double lat, double long, String title, String description) async {
     closeModal() => Navigator.pop(context);
     showModalContext() => context;
 

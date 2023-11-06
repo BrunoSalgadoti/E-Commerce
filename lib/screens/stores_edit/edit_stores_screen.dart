@@ -17,7 +17,7 @@ import 'package:provider/provider.dart';
 import '../../helpers/validators.dart';
 
 class EditStoresScreen extends StatefulWidget {
-  const EditStoresScreen({Key? key, required this.store}) : super(key: key);
+  const EditStoresScreen({super.key, required this.store});
 
   final Stores store;
 
@@ -37,9 +37,8 @@ class EditStoresScreenState extends State<EditStoresScreen> {
       value: widget.store,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.store.id != null
-              ? 'Editar dados da Loja'
-              : 'Adicionar nova Loja'),
+          title:
+              Text(widget.store.id != null ? 'Editar dados da Loja' : 'Adicionar nova Loja'),
           centerTitle: true,
           actions: [
             if (widget.store.id != null)
@@ -47,9 +46,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                   iconData: Icons.delete,
                   color: Colors.white,
                   onTap: () {
-                    StoreUtils(
-                            store: widget.store,
-                            address: widget.store.address!)
+                    StoreUtils(store: widget.store, address: widget.store.address!)
                         .alertForDeleteStore(context);
                   }),
           ],
@@ -83,8 +80,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                         hintText: 'EX: Rua/Av. ...',
                         isDense: false,
                         validator: emptyValidator,
-                        onSaved: (value) =>
-                            widget.store.address?.street = value,
+                        onSaved: (value) => widget.store.address?.street = value,
                       ),
                     ),
                     textFieldSpaceBetweenWidth,
@@ -96,8 +92,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                         hintText: 'ou "S/N"',
                         isDense: false,
                         validator: emptyValidator,
-                        onSaved: (value) =>
-                            widget.store.address?.number = value,
+                        onSaved: (value) => widget.store.address?.number = value,
                       ),
                     ),
                   ],
@@ -115,8 +110,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                       return null;
                     }
                   },
-                  onSaved: (value) =>
-                      widget.store.address?.complement = value,
+                  onSaved: (value) => widget.store.address?.complement = value,
                 ),
                 textFieldSpaceBetweenHeight,
                 CustomTextFormField(
@@ -136,8 +130,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                           labelText: 'Cidade:',
                           validator: emptyValidator,
                           isDense: false,
-                          onSaved: (value) =>
-                              widget.store.address?.city = value,
+                          onSaved: (value) => widget.store.address?.city = value,
                         )),
                     textFieldSpaceBetweenWidth,
                     Expanded(
@@ -156,8 +149,8 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                               return null;
                             }
                           },
-                          onSaved: (value) => widget.store.address?.state =
-                              value?.toUpperCase(),
+                          onSaved: (value) =>
+                              widget.store.address?.state = value?.toUpperCase(),
                         ))
                   ],
                 ),
@@ -167,8 +160,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                     Expanded(
                         flex: 2,
                         child: CustomTextFormField(
-                          initialValue: formattedPhoneNumber(
-                              widget.store.phoneNumberStore),
+                          initialValue: formattedPhoneNumber(widget.store.phoneNumberStore),
                           labelText: 'Telefone:',
                           hintText: 'Ex: (00) 90000-0000',
                           isDense: false,
@@ -183,15 +175,14 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                               return null;
                             }
                           },
-                          onSaved: (value) => widget.store.phoneNumberStore =
-                              unFormatPhone(value!),
+                          onSaved: (value) =>
+                              widget.store.phoneNumberStore = unFormatPhone(value!),
                         )),
                     textFieldSpaceBetweenWidth,
                     Expanded(
                       flex: 1,
                       child: CustomTextFormField(
-                        initialValue:
-                            formattedZipcode(widget.store.address?.zipCode),
+                        initialValue: formattedZipcode(widget.store.address?.zipCode),
                         labelText: 'CEP:',
                         hintText: 'Ex: 00.000-000',
                         textInputType: TextInputType.number,
@@ -207,8 +198,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                             return null;
                           }
                         },
-                        onSaved: (value) =>
-                            widget.store.address?.zipCode = value,
+                        onSaved: (value) => widget.store.address?.zipCode = value,
                       ),
                     ),
                   ],
@@ -234,8 +224,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                 StoreLocationWidget(store: widget.store),
                 textFieldSpaceBetweenHeight,
                 CustomTextFormField(
-                  initialValue:
-                      '${widget.store.address?.lat.toString() ?? ""} '
+                  initialValue: '${widget.store.address?.lat.toString() ?? ""} '
                       '${widget.store.address?.long.toString() ?? ""}',
                   labelText: 'Nova Localização:',
                   hintText: 'Ex: -9.1234530, -37.1234168',
@@ -271,8 +260,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                         Expanded(
                           flex: 5,
                           child: CustomTextFormField(
-                            initialValue:
-                                widget.store.openingStores?.monFri ?? "",
+                            initialValue: widget.store.openingStores?.monFri ?? "",
                             labelText: 'Abertura e Fechamento:',
                             hintText: 'Ex: 08:00-18:00',
                             isDense: false,
@@ -288,8 +276,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                                 return null;
                               }
                             },
-                            onSaved: (value) =>
-                                widget.store.openingStores?.monFri = value,
+                            onSaved: (value) => widget.store.openingStores?.monFri = value,
                           ),
                         ),
                       ],
@@ -301,8 +288,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                         Expanded(
                             flex: 5,
                             child: CustomTextFormField(
-                              initialValue:
-                                  widget.store.openingStores?.saturday ?? "",
+                              initialValue: widget.store.openingStores?.saturday ?? "",
                               labelText: 'Abertura e Fechamento:',
                               hintText: 'Ex: 09:00-12:00',
                               isDense: false,
@@ -318,8 +304,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                                   return null;
                                 }
                               },
-                              onSaved: (value) => widget
-                                  .store.openingStores?.saturday = value,
+                              onSaved: (value) => widget.store.openingStores?.saturday = value,
                             )),
                       ],
                     ),
@@ -330,11 +315,9 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                         Expanded(
                             flex: 5,
                             child: CustomTextFormField(
-                              initialValue:
-                                  widget.store.openingStores?.monday ?? "",
+                              initialValue: widget.store.openingStores?.monday ?? "",
                               labelText: 'Abertura e Fechamento:',
-                              hintText:
-                                  'Ex: 14:00-18:00 ou Mantenha em Branco',
+                              hintText: 'Ex: 14:00-18:00 ou Mantenha em Branco',
                               isDense: false,
                               textInputType: TextInputType.number,
                               inputFormatters: [
@@ -348,8 +331,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                                   return null;
                                 }
                               },
-                              onSaved: (value) =>
-                                  widget.store.openingStores?.monday = value,
+                              onSaved: (value) => widget.store.openingStores?.monday = value,
                             )),
                       ],
                     ),

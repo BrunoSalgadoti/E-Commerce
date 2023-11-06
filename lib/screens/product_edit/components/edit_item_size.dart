@@ -10,13 +10,13 @@ import '../../../common/formatted_fields/format_values.dart';
 
 class EditItemSize extends StatelessWidget {
   const EditItemSize({
-    Key? key,
+    super.key,
     this.detailsProducts,
     this.onRemove,
     this.onAdd,
     this.onMoveUp,
     this.onMoveDown,
-  }) : super(key: key);
+  });
 
   final DetailsProducts? detailsProducts;
   final VoidCallback? onRemove;
@@ -36,8 +36,7 @@ class EditItemSize extends StatelessWidget {
               initialValue: detailsProducts?.size,
               labelText: 'Tamanho',
               validator: (value) => emptyValidator(value),
-              onChanged: (size) =>
-                  detailsProducts?.size = size?.toUpperCase(),
+              onChanged: (size) => detailsProducts?.size = size?.toUpperCase(),
             ),
           ),
           const SizedBox(
@@ -50,14 +49,12 @@ class EditItemSize extends StatelessWidget {
               labelText: 'Estoque',
               textInputType: TextInputType.number,
               validator: (stock) {
-                if (int.tryParse(stock!) == null ||
-                    int.tryParse(stock)! < 0) {
+                if (int.tryParse(stock!) == null || int.tryParse(stock)! < 0) {
                   return 'Valor Inválido';
                 }
                 return null;
               },
-              onChanged: (stock) =>
-                  detailsProducts?.stock = int.tryParse(stock!) ?? 0,
+              onChanged: (stock) => detailsProducts?.stock = int.tryParse(stock!) ?? 0,
             ),
           ),
           const SizedBox(width: 5),

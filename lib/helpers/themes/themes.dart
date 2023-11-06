@@ -1,6 +1,4 @@
-import 'package:brn_ecommerce/common/functions/init_screen_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'factory_colors/android_factory_colors.dart';
 import 'factory_colors/ios_factory_colos.dart';
@@ -30,7 +28,7 @@ class Themes with ChangeNotifier {
         backgroundColor: androidFactoryColors.appBarBackgroundColor,
         titleTextStyle: TextStyle(
             color: androidFactoryColors.appBarTextColor,
-            fontSize: customFontSizeResolver(18.0, ScreenUtil()),
+            fontSize: 18,
             fontWeight: FontWeight.w600),
         elevation: 0,
         iconTheme: IconThemeData(
@@ -85,7 +83,7 @@ class Themes with ChangeNotifier {
         backgroundColor: iosFactoryColors.appBarBackgroundColor,
         titleTextStyle: TextStyle(
             color: webFactoryColors.appBarTextColor,
-            fontSize: customFontSizeResolver(18, ScreenUtil()),
+            fontSize: 18,
             fontWeight: FontWeight.w600),
         elevation: 0,
         iconTheme: IconThemeData(
@@ -140,7 +138,7 @@ class Themes with ChangeNotifier {
         backgroundColor: webFactoryColors.appBarBackgroundColor,
         titleTextStyle: TextStyle(
             color: webFactoryColors.appBarTextColor,
-            fontSize: customFontSizeResolver(18, ScreenUtil()),
+            fontSize: 18,
             fontWeight: FontWeight.w600),
         elevation: 0,
         iconTheme: IconThemeData(

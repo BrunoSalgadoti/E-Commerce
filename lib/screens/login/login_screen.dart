@@ -3,12 +3,12 @@ import 'package:brn_ecommerce/common/button/custom_text_button.dart';
 import 'package:brn_ecommerce/common/button/custom_text_button_styles.dart';
 import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/common/custom_text_form_field.dart';
+import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -24,17 +24,11 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, designSize: const Size(360, 690));
-
     final userManager = Provider.of<UserManager>(context);
-
-    final loadingToTextFormField = !userManager.loading ||
-        userManager.loadingGoogle ||
-        userManager.loadingFace;
-
-    final loadingToButton = userManager.loading ||
-        userManager.loadingGoogle ||
-        userManager.loadingFace;
+    final loadingToTextFormField =
+        !userManager.loading || userManager.loadingGoogle || userManager.loadingFace;
+    final loadingToButton =
+        userManager.loading || userManager.loadingGoogle || userManager.loadingFace;
 
     messengerToOnFail(error) {
       CustomScaffoldMessenger(context: context, message: error).msn();
@@ -42,28 +36,27 @@ class LoginScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Entrar',
-          style: TextStyle(fontSize: 17.spMin),
+          style: TextStyle(fontSize: 16),
         ),
         centerTitle: true,
       ),
       body: Center(
         child: Card(
           margin: kIsWeb
-              ? EdgeInsets.symmetric(horizontal: 3.r)
-              : EdgeInsets.symmetric(horizontal: 19.r, vertical: 19.r),
+              ? const EdgeInsets.symmetric(horizontal: 3)
+              : const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           child: SizedBox(
-            width: kIsWeb ? 480.spMin : 380.spMin,
+            width: kIsWeb ? 400 : 460,
             child: Form(
                 key: formKey,
                 child: ListView(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(22),
                   shrinkWrap: true,
                   children: [
                     const Text('Entar com E-mail e Senha:',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold)),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 5),
                     CustomTextFormField(
                       controller: emailController,
@@ -115,16 +108,14 @@ class LoginScreen extends StatelessWidget {
                         child: Text(
                           'Não tem conta? Cadastre-se!',
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor,
+                            color: getEspecialColor(),
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 8,
-                    ),
+                    const SizedBox(height: 8),
                     CustomButton(
                       text: 'Entrar',
                       onPressed: loadingToButton
@@ -149,64 +140,54 @@ class LoginScreen extends StatelessWidget {
                       indent: 2,
                       thickness: 1.5,
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const Text(
-                      'Ou entre com sua conta:',
-                      style: TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
+                    const SizedBox(height: 5),
+                    const Text('Ou entre com sua conta:',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 5),
                     userManager.loadingFace
                         ? SpinKitChasingDots(
                             color: Theme.of(context).primaryColor,
-                            size: 30.0,
+                            size: 30,
                           )
                         : SizedBox(
-                            height: 40,
+                            height: 48,
                             child: loadingToButton
                                 ? null
                                 : CustomTextButton(
-                                    icon:
-                                        const Icon(FontAwesomeIcons.facebook),
+                                    icon: const Icon(FontAwesomeIcons.facebook),
                                     text: '   Entrar com Facebook',
                                     onPressed: () {
-                                      userManager.loginOrSingUpWithFacebook(
-                                          onFail: (error) {
+                                      userManager.loginOrSingUpWithFacebook(onFail: (error) {
                                         messengerToOnFail(error);
                                       }, onSuccess: () {
                                         Navigator.of(context).pop();
                                       });
                                     },
-                                    style: CustomTextButtonStyles
-                                        .buttonStyleFacebook),
+                                    style: CustomTextButtonStyles.buttonStyleFacebook),
                           ),
                     const SizedBox(height: 10),
                     userManager.loadingGoogle
                         ? SpinKitChasingDots(
                             color: Theme.of(context).primaryColor,
-                            size: 30.0, // Tamanho do indicador
+                            size: 30, // Tamanho do indicador
                           )
                         : SizedBox(
-                            height: 37,
+                            height: 48,
                             child: loadingToButton
                                 ? null
                                 : CustomTextButton(
-                                    imageAssetsTarget:
-                                        "assets/icons/googleLogo.svg",
-                                    text: '   Entrar com Google',
+                                    imageAssetsTarget: "assets/icons/googleLogo.svg",
+                                    text: '  Entrar com Google',
                                     isSvg: true,
+                                    imageHeight: 20,
                                     onPressed: () {
-                                      userManager.loginOrSingUpWithGoogle(
-                                          onFail: (error) {
+                                      userManager.loginOrSingUpWithGoogle(onFail: (error) {
                                         messengerToOnFail(error);
                                       }, onSuccess: () {
                                         Navigator.of(context).pop();
                                       });
                                     },
-                                    style: CustomTextButtonStyles
-                                        .buttonStyleGoogle),
+                                    style: CustomTextButtonStyles.buttonStyleGoogle),
                           )
                   ],
                 )),

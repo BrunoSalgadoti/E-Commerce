@@ -18,10 +18,7 @@ class VersionManager extends ChangeNotifier {
 
     _initPackageInfo();
     try {
-      final versionDoc = await firestore
-          .collection('versionApp')
-          .doc('currentVersion')
-          .get();
+      final versionDoc = await firestore.collection('versionApp').doc('currentVersion').get();
       if (versionDoc.exists) {
         final storedVersion = versionDoc.data();
         final appVersion = _packageInfo.version;
@@ -30,8 +27,7 @@ class VersionManager extends ChangeNotifier {
         final storedBuildNumber = storedVersion?['buildNumber'] as String?;
 
         // Compare appVersion and buildNumber with stored values
-        if (appVersion == storedAppVersion &&
-            buildNumber == storedBuildNumber) {
+        if (appVersion == storedAppVersion && buildNumber == storedBuildNumber) {
           // Version is up-to-date
           compatibleVersion = true;
         } else {
@@ -63,10 +59,7 @@ class VersionManager extends ChangeNotifier {
         'buildNumber': buildNumber,
       };
 
-      await firestore
-          .collection('versionApp')
-          .doc('currentVersion')
-          .set(versionData);
+      await firestore.collection('versionApp').doc('currentVersion').set(versionData);
     }
   }
 }

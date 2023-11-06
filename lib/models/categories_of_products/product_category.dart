@@ -46,11 +46,9 @@ class ProductCategory extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseStorage storage = FirebaseStorage.instance;
 
-  DocumentReference get firestoreRef =>
-      firestore.doc("categories/$categoryID");
+  DocumentReference get firestoreRef => firestore.doc("categories/$categoryID");
 
-  Reference get storageRef =>
-      storage.ref().child("categories").child("$categoryID!");
+  Reference get storageRef => storage.ref().child("categories").child("$categoryID!");
 
   String? categoryID;
   String? categoryTitle;
@@ -105,8 +103,7 @@ class ProductCategory extends ChangeNotifier {
   }
 
   Future<void> updateCategoryImage(dynamic image) async {
-    PerformanceMonitoring()
-        .startTrace('update-category-image', shouldStart: true);
+    PerformanceMonitoring().startTrace('update-category-image', shouldStart: true);
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Starting file upload Category');
     }
@@ -120,18 +117,13 @@ class ProductCategory extends ChangeNotifier {
       final base64String = image?.split(',').last;
       const String validCharacters =
           "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
-      final trimmedString =
-          base64String?.replaceAll(RegExp("[^$validCharacters]"), "");
-      if (base64String is String &&
-          base64String.isNotEmpty &&
-          base64String.length % 4 == 0) {
+      final trimmedString = base64String?.replaceAll(RegExp("[^$validCharacters]"), "");
+      if (base64String is String && base64String.isNotEmpty && base64String.length % 4 == 0) {
         try {
           final List<int> bytes = base64.decode(trimmedString!);
           final Uint8List uint8ListBytes = Uint8List.fromList(bytes);
           final metadata = SettableMetadata(contentType: "image/jpeg");
-          final task = storageRef
-              .child("$categoryID!")
-              .putData(uint8ListBytes, metadata);
+          final task = storageRef.child("$categoryID!").putData(uint8ListBytes, metadata);
           final snapshot = await task.whenComplete(() {});
           final url = await snapshot.ref.getDownloadURL();
           image = url;

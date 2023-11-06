@@ -36,18 +36,15 @@ class ProductCategoryManager extends ChangeNotifier {
 
     for (final category in _categoriesList) {
       // Check if the category already exists in the database
-      final categoryRef = categoriesQuery.docs
-          .firstWhere((doc) => doc.id == category.categoryID);
+      final categoryRef =
+          categoriesQuery.docs.firstWhere((doc) => doc.id == category.categoryID);
 
       // If it exists, check if any attributes are different and update
       final data = category.toMap();
       final dbData = categoryRef.data();
 
       if (!mapEquals(data, dbData)) {
-        await firestore
-            .collection("categories")
-            .doc(category.categoryID)
-            .update(data);
+        await firestore.collection("categories").doc(category.categoryID).update(data);
       }
     }
   }
@@ -92,9 +89,8 @@ class ProductCategoryManager extends ChangeNotifier {
     if (snapshot.metadata.isFromCache) {
       // If data is retrieved from the cache, update the UI...
       // immediately with cached data
-      _categoriesList = snapshot.docs
-          .map((category) => ProductCategory.fromDocument(category))
-          .toList();
+      _categoriesList =
+          snapshot.docs.map((category) => ProductCategory.fromDocument(category)).toList();
       notifyListeners();
     }
 
@@ -104,29 +100,25 @@ class ProductCategoryManager extends ChangeNotifier {
         .where("categoryActivated", isEqualTo: true)
         .snapshots()
         .listen((event) {
-      _categoriesList =
-          event.docs.map((s) => ProductCategory.fromDocument(s)).toList();
+      _categoriesList = event.docs.map((s) => ProductCategory.fromDocument(s)).toList();
       notifyListeners();
     });
   }
 
   Future<void> _loadAllCategories() async {
-    PerformanceMonitoring()
-        .startTrace('_loadCategoriesList', shouldStart: true);
+    PerformanceMonitoring().startTrace('_loadCategoriesList', shouldStart: true);
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Info _loadAllCategories');
     }
 
     // Starts trying to get data from cache
-    QuerySnapshot<Map<String, dynamic>> snapshot = await firestore
-        .collection("categories")
-        .get(const GetOptions(source: Source.cache));
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await firestore.collection("categories").get(const GetOptions(source: Source.cache));
 
     if (snapshot.metadata.isFromCache) {
       // If data is retrieved from the cache, update the UI...
       // immediately with cached data
-      _categoriesList =
-          snapshot.docs.map((s) => ProductCategory.fromDocument(s)).toList();
+      _categoriesList = snapshot.docs.map((s) => ProductCategory.fromDocument(s)).toList();
       notifyListeners();
     }
 
@@ -134,35 +126,30 @@ class ProductCategoryManager extends ChangeNotifier {
   }
 
   Future<void> _setupRealTimeUpdatesAllCategories() async {
-    PerformanceMonitoring()
-        .startTrace('setup-rt-updates-categories', shouldStart: true);
+    PerformanceMonitoring().startTrace('setup-rt-updates-categories', shouldStart: true);
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Info message: _categoriesListener Start ');
     }
 
     // Configure real-time update listener
-    _categoriesListener =
-        firestore.collection("categories").snapshots().listen((event) {
-      _categoriesList =
-          event.docs.map((s) => ProductCategory.fromDocument(s)).toList();
+    _categoriesListener = firestore.collection("categories").snapshots().listen((event) {
+      _categoriesList = event.docs.map((s) => ProductCategory.fromDocument(s)).toList();
       notifyListeners();
     });
 
     PerformanceMonitoring().stopTrace('setup-rt-updates-categories');
   }
 
-  List<ProductCategory> filterCategoriesActivated(
-      bool adminEnable, bool editingCategories) {
+  List<ProductCategory> filterCategoriesActivated(bool adminEnable, bool editingCategories) {
     final List<ProductCategory> categoriesActive = [];
 
     if (adminEnable == true && editingCategories == true) {
       categoriesActive.addAll(_categoriesList.toList()
         ..sort((a, b) => a.categoryTitle!.compareTo(b.categoryTitle!)));
     } else {
-      categoriesActive.addAll(_categoriesList
-          .where((category) => category.categoryActivated!)
-          .toList()
-        ..sort((a, b) => a.categoryTitle!.compareTo(b.categoryTitle!)));
+      categoriesActive.addAll(
+          _categoriesList.where((category) => category.categoryActivated!).toList()
+            ..sort((a, b) => a.categoryTitle!.compareTo(b.categoryTitle!)));
     }
 
     return categoriesActive;
@@ -191,8 +178,7 @@ class ProductCategoryManager extends ChangeNotifier {
   /// como parte da configuração inicial da loja ou atualização requerida pelo Dono Da Loja.
   /// Certifique-se de entender bem seu comportamento antes de usá-la, pois ela pode afetar
   /// as categorias no Firestore.
-  Future<void> createProductCategoriesIfNotExists(
-      {required bool firstStart}) async {
+  Future<void> createProductCategoriesIfNotExists({required bool firstStart}) async {
     if (!kReleaseMode && firstStart == true) {
       MonitoringLogger().logInfo('Info: Creating Categories');
 
@@ -205,8 +191,7 @@ class ProductCategoryManager extends ChangeNotifier {
         // create categories or insert new categories from the factory list
         for (final category in categoriesFactoryList) {
           final categoryID = category.categoryID;
-          final categoryExists =
-              categoriesQuery.docs.any((doc) => doc.id == categoryID);
+          final categoryExists = categoriesQuery.docs.any((doc) => doc.id == categoryID);
 
           if (!categoryExists) {
             await firestore
@@ -218,23 +203,19 @@ class ProductCategoryManager extends ChangeNotifier {
           // the firebase list
           if (categoriesQuery.docs.length > categoriesFactoryList.length) {
             final docsToDelete = categoriesQuery.docs.where(
-              (doc) => !categoriesFactoryList
-                  .any((category) => category.categoryID == doc.id),
+              (doc) => !categoriesFactoryList.any((category) => category.categoryID == doc.id),
             );
 
             for (final docToDelete in docsToDelete) {
-              await firestore
-                  .collection("categories")
-                  .doc(docToDelete.id)
-                  .delete();
+              await firestore.collection("categories").doc(docToDelete.id).delete();
             }
           }
         }
       } else {
         for (final category in categoriesFactoryList) {
           // Check if the category already exists in the database
-          final categoryRef = categoriesQuery.docs
-              .firstWhere((doc) => doc.id == category.categoryID);
+          final categoryRef =
+              categoriesQuery.docs.firstWhere((doc) => doc.id == category.categoryID);
 
           // If it exists, check if any attributes are different and update
           final data = category.toMap();

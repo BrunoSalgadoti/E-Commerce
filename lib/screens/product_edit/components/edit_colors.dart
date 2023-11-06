@@ -8,11 +8,11 @@ import '../../../common/functions/common_functions.dart';
 
 class EditColors extends StatefulWidget {
   const EditColors({
-    Key? key,
+    super.key,
     this.colorsProducts,
     this.onRemove,
     this.onColorChanged,
-  }) : super(key: key);
+  });
 
   final ColorsProducts? colorsProducts;
   final VoidCallback? onRemove;
@@ -26,8 +26,7 @@ class EditColorsState extends State<EditColors> {
   Color _selectedColor = Colors.transparent;
 
   void _showColorPicker() {
-    Color initialColor =
-        widget.colorsProducts?.realColor ?? Colors.transparent;
+    Color initialColor = widget.colorsProducts?.realColor ?? Colors.transparent;
 
     showDialog(
       context: context,
@@ -45,11 +44,7 @@ class EditColorsState extends State<EditColors> {
                   widget.colorsProducts?.color = getHexColor(color);
                 });
               },
-              labelTypes: const [
-                ColorLabelType.rgb,
-                ColorLabelType.hsv,
-                ColorLabelType.hsl
-              ],
+              labelTypes: const [ColorLabelType.rgb, ColorLabelType.hsv, ColorLabelType.hsl],
               pickerAreaHeightPercent: 0.8,
             ),
           ),
@@ -97,8 +92,7 @@ class EditColorsState extends State<EditColors> {
               labelText: 'Qtd./cor?',
               textInputType: TextInputType.number,
               validator: (amount) {
-                if (int.tryParse(amount!) == null ||
-                    int.tryParse(amount)! < 0) {
+                if (int.tryParse(amount!) == null || int.tryParse(amount)! < 0) {
                   return 'Valor Inválido';
                 }
                 return null;

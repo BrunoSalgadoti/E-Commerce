@@ -160,8 +160,7 @@ class CartProduct extends ChangeNotifier {
 
   bool get hasAmount {
     if (product != null && product!.deleted) return false;
-    final amount =
-        detailsProductsFindValues?.findAmountByColor(color)?.amount;
+    final amount = detailsProductsFindValues?.findAmountByColor(color)?.amount;
     if (amount == null) return false;
     return amount >= quantity!;
   }

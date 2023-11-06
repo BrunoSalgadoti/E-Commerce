@@ -6,7 +6,7 @@ import 'package:brn_ecommerce/screens/product_edit/components/edit_item_size.dar
 import 'package:flutter/material.dart';
 
 class SizesForm extends StatelessWidget {
-  const SizesForm({Key? key, this.product}) : super(key: key);
+  const SizesForm({super.key, this.product});
 
   final Product? product;
 
@@ -31,8 +31,7 @@ class SizesForm extends StatelessWidget {
                   flex: 1,
                   child: Text(
                     'Adicionar Item',
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                 ),
                 CustomIconButton(

@@ -47,8 +47,7 @@ class WhoWeAreManager extends ChangeNotifier {
       "footerDescription": footerDescription,
     };
 
-    final DocumentReference docRef =
-        firestore.collection("whoweare").doc("descriptions");
+    final DocumentReference docRef = firestore.collection("whoweare").doc("descriptions");
 
     await docRef.set(data);
 

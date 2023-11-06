@@ -76,11 +76,9 @@ class UserManager extends ChangeNotifier {
     height: 15,
   );
 
-  Future<void> createAuxAndAdminsIfNotExists(
-      {required bool firstStart}) async {
+  Future<void> createAuxAndAdminsIfNotExists({required bool firstStart}) async {
     if (!kReleaseMode && firstStart == true) {
-      MonitoringLogger()
-          .logInfo('Info: Verifier createAuxAndAdminsIfNotExists');
+      MonitoringLogger().logInfo('Info: Verifier createAuxAndAdminsIfNotExists');
 
       // Check if the "admins" collection is empty
       final adminsQuery = await firestore.collection("admins").limit(1).get();
@@ -97,8 +95,7 @@ class UserManager extends ChangeNotifier {
       final deliveryDoc = firestore.collection("aux").doc("delivery");
       final doc = await deliveryDoc.get();
       if (!doc.exists) {
-        final delivery =
-            Delivery(); // Create a new instance of the Delivery class
+        final delivery = Delivery(); // Create a new instance of the Delivery class
         await deliveryDoc.set(delivery.toMap());
       }
 
@@ -113,9 +110,7 @@ class UserManager extends ChangeNotifier {
   }
 
   Future<void> signInWithEmailAndPassword(
-      {required Users users,
-      required Function onFail,
-      required Function onSuccess}) async {
+      {required Users users, required Function onFail, required Function onSuccess}) async {
     PerformanceMonitoring().startTrace('sign-in-email', shouldStart: true);
 
     _newUserAccount = true;
@@ -225,10 +220,8 @@ class UserManager extends ChangeNotifier {
       if (kIsWeb) {
         GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
-        googleProvider
-            .addScope('https://www.googleapis.com/auth/contacts.readonly');
-        googleProvider
-            .setCustomParameters({'login_hint': 'user@example.com'});
+        googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+        googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
         return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
       }
 
@@ -237,16 +230,14 @@ class UserManager extends ChangeNotifier {
       // Realize authentication for the Google
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser != null) {
-        final GoogleSignInAuthentication googleAuth =
-            await googleUser.authentication;
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
         final AuthCredential credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,
         );
 
-        final UserCredential userCredential =
-            await _auth.signInWithCredential(credential);
+        final UserCredential userCredential = await _auth.signInWithCredential(credential);
         final User? user = userCredential.user;
 
         if (user != null) {
@@ -285,17 +276,14 @@ class UserManager extends ChangeNotifier {
   }
 
   Future<void> singUpWithEmailAndPassword(
-      {required Users users,
-      required Function onFail,
-      required Function onSuccess}) async {
+      {required Users users, required Function onFail, required Function onSuccess}) async {
     PerformanceMonitoring().startTrace('sing-up-email', shouldStart: true);
 
     loading = true;
 
     try {
-      final UserCredential result =
-          await _auth.createUserWithEmailAndPassword(
-              email: users.email, password: users.password!);
+      final UserCredential result = await _auth.createUserWithEmailAndPassword(
+          email: users.email, password: users.password!);
 
       users.id = result.user!.uid;
       users.policyAndTerms = true;
@@ -326,8 +314,7 @@ class UserManager extends ChangeNotifier {
             await firestore.collection("users").doc(currentUser.uid).get();
         users = Users.fromDocument(docUsers);
 
-        final docAdmin =
-            await firestore.collection("admins").doc(users?.id).get();
+        final docAdmin = await firestore.collection("admins").doc(users?.id).get();
         if (docAdmin.exists) {
           users?.admin = true;
         }
@@ -337,8 +324,7 @@ class UserManager extends ChangeNotifier {
       reportNoFatalErrorToCrashlytics(
           error: "$error",
           stackTrace: StackTrace.current,
-          information:
-              "Erro na Classe: UserManager no método _loadCurrentUser()");
+          information: "Erro na Classe: UserManager no método _loadCurrentUser()");
       MonitoringLogger().logError('Erro ao carregar CurrentUser: $error');
     }
     notifyListeners();

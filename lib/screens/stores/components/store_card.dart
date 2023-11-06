@@ -30,15 +30,13 @@ class StoreCard extends StatelessWidget {
           children: [
             Stack(
               children: [
-                SizedBox(
-                    width: double.infinity, height: 230, child: storeImage),
+                SizedBox(width: double.infinity, height: 230, child: storeImage),
                 Align(
                   alignment: Alignment.topRight,
                   child: Container(
                     decoration: const BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(9))),
+                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(9))),
                     padding: const EdgeInsets.all(12),
                     child: Text(
                       store.statusText,
@@ -62,8 +60,7 @@ class StoreCard extends StatelessWidget {
                             size: 40,
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, "/edit_stores",
-                                arguments: store);
+                            Navigator.pushNamed(context, "/edit_stores", arguments: store);
                           },
                         );
                       } else {
@@ -76,8 +73,7 @@ class StoreCard extends StatelessWidget {
             ),
             Container(
               height: 180,
-              padding: const EdgeInsets.only(
-                  top: 9, right: 13, left: 13, bottom: 12),
+              padding: const EdgeInsets.only(top: 9, right: 13, left: 13, bottom: 12),
               child: Row(
                 children: [
                   Expanded(
@@ -131,13 +127,9 @@ class StoreCard extends StatelessWidget {
                             iconData: Icons.phone,
                             color: primaryColor,
                             onTap: () {
-                              CommunicationsUtils(parameterClass1Of2: store)
-                                  .openPhone(
-                                      context,
-                                      unFormatPhone(
-                                          store.phoneNumberStore ?? ''));
-                              CommunicationsUtils(parameterClass1Of2: store)
-                                  .alertForCall(
+                              CommunicationsUtils(parameterClass1Of2: store).openPhone(
+                                  context, unFormatPhone(store.phoneNumberStore ?? ''));
+                              CommunicationsUtils(parameterClass1Of2: store).alertForCall(
                                 context,
                                 'Este dispositivo não suporta esta função!\n'
                                 'O Número da Loja é : '
@@ -150,8 +142,7 @@ class StoreCard extends StatelessWidget {
                             onTap: () {
                               CommunicationsUtils(parameterClass1Of2: store)
                                   .openEmail(context, store.emailStore ?? '');
-                              CommunicationsUtils(parameterClass1Of2: store)
-                                  .alertForEmail(
+                              CommunicationsUtils(parameterClass1Of2: store).alertForEmail(
                                 context,
                                 'Este dispositivo não suporta esta função!\n'
                                 'O E-mail da Loja é : ${store.emailStore}',

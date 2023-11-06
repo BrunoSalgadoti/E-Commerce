@@ -27,10 +27,7 @@ class TermsAndPrivacyTextScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-              SizedBox(
-                  width: maxWidth,
-                  height: maxHeight,
-                  child: Markdown(data: content)),
+              SizedBox(width: maxWidth, height: maxHeight, child: Markdown(data: content)),
             ])));
   }
 }

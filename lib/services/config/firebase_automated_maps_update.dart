@@ -36,10 +36,9 @@ class FirebaseAutomatedMapsUpdate<T> {
     // Get the current document data from Firestore
     final QuerySnapshot querySnapshot = await documentRef.get();
 
-      /// Check for missing properties and update the Firestore document
+    /// Check for missing properties and update the Firestore document
     for (final QueryDocumentSnapshot docSnapshot in querySnapshot.docs) {
-      final Map<String, dynamic> currentData =
-          docSnapshot.data() as Map<String, dynamic>;
+      final Map<String, dynamic> currentData = docSnapshot.data() as Map<String, dynamic>;
 
       objectMap.forEach((key, value) {
         if (!currentData.containsKey(key)) {

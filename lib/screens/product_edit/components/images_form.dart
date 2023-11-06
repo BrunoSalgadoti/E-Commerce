@@ -11,10 +11,10 @@ import 'package:flutter/material.dart';
 
 class ImagesForm extends StatelessWidget {
   const ImagesForm({
-    Key? key,
+    super.key,
     this.product,
     this.imageSourceSheet,
-  }) : super(key: key);
+  });
 
   final Product? product;
   final ImageSourceSheet? imageSourceSheet;
@@ -126,8 +126,7 @@ class ImagesForm extends StatelessWidget {
                               ),
                               onPressed: () {
                                 showDialog(
-                                    context: context,
-                                    builder: (_) => buildImageSourceSheet());
+                                    context: context, builder: (_) => buildImageSourceSheet());
                               }),
                         )
                       : Material(
@@ -142,18 +141,15 @@ class ImagesForm extends StatelessWidget {
                                 if (Platform.isAndroid) {
                                   showModalBottomSheet(
                                       context: context,
-                                      builder: (_) =>
-                                          buildImageSourceSheet());
+                                      builder: (_) => buildImageSourceSheet());
                                 } else if (Platform.isIOS) {
                                   showCupertinoModalPopup(
                                       context: context,
-                                      builder: (_) =>
-                                          buildImageSourceSheet());
+                                      builder: (_) => buildImageSourceSheet());
                                 } else {
                                   showDialog(
                                       context: context,
-                                      builder: (_) =>
-                                          buildImageSourceSheet());
+                                      builder: (_) => buildImageSourceSheet());
                                 }
                               })),
                 ),

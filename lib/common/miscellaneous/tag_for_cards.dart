@@ -28,8 +28,7 @@ class TagForCard<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color textColor = getTextColorBasedOnBackground(backgroundColor);
-    final Color borderColor =
-        getBorderColorInvertedTextColor(backgroundColor);
+    final Color borderColor = getBorderColorInvertedTextColor(backgroundColor);
 
     return Align(
       alignment: alignment,

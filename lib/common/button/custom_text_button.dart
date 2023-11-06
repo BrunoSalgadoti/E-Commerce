@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomTextButton extends StatelessWidget {
   const CustomTextButton({
-    Key? key,
+    super.key,
     this.fontColor,
     required this.onPressed,
     this.text,
@@ -16,7 +16,7 @@ class CustomTextButton extends StatelessWidget {
     this.imageHeight = 28,
     this.isSvg = false,
     this.imageColor,
-  }) : super(key: key);
+  });
 
   final String? text;
   final String? imageAssetsTarget;

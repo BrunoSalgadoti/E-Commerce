@@ -28,8 +28,7 @@ class Stores extends ChangeNotifier {
   });
 
   Stores.fromDocument(DocumentSnapshot document) {
-    PerformanceMonitoring()
-        .startTrace('stores-from-document', shouldStart: true);
+    PerformanceMonitoring().startTrace('stores-from-document', shouldStart: true);
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Instance beginning Stores.fromDocument');
     }
@@ -39,13 +38,11 @@ class Stores extends ChangeNotifier {
     emailStore = document.get("emailStore") as String? ?? "";
     phoneNumberStore = document.get("phoneNumberStore") as String? ?? "";
     imageStore = document.get("imageStore") as String? ?? "";
-    address =
-        Address.fromMap(document.get("address") as Map<String, dynamic>);
-    openingStores = OpeningStores.fromMap(
-        document.get("openingStores") as Map<String, dynamic>);
+    address = Address.fromMap(document.get("address") as Map<String, dynamic>);
+    openingStores =
+        OpeningStores.fromMap(document.get("openingStores") as Map<String, dynamic>);
     openingStoresFromTimeOfDay =
-        (document.get("openingStores") as Map<String, dynamic>)
-            .map((key, value) {
+        (document.get("openingStores") as Map<String, dynamic>).map((key, value) {
       final timesString = value as String;
 
       if (timesString.isNotEmpty) {
@@ -174,8 +171,7 @@ class Stores extends ChangeNotifier {
   }
 
   Future<void> updateStoreImage(dynamic image, [String? storeId]) async {
-    PerformanceMonitoring()
-        .startTrace('update-store-image', shouldStart: true);
+    PerformanceMonitoring().startTrace('update-store-image', shouldStart: true);
     if (!kReleaseMode) {
       MonitoringLogger().logInfo('Starting file upload to Firebase Storage');
     }
@@ -189,18 +185,13 @@ class Stores extends ChangeNotifier {
       final base64String = image?.split(',').last;
       const String validCharacters =
           "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
-      final trimmedString =
-          base64String?.replaceAll(RegExp("[^$validCharacters]"), "");
-      if (base64String is String &&
-          base64String.isNotEmpty &&
-          base64String.length % 4 == 0) {
+      final trimmedString = base64String?.replaceAll(RegExp("[^$validCharacters]"), "");
+      if (base64String is String && base64String.isNotEmpty && base64String.length % 4 == 0) {
         try {
           final List<int> bytes = base64.decode(trimmedString!);
           final Uint8List uint8ListBytes = Uint8List.fromList(bytes);
           final metadata = SettableMetadata(contentType: "image/jpeg");
-          final task = storageRef
-              .child(const Uuid().v4())
-              .putData(uint8ListBytes, metadata);
+          final task = storageRef.child(const Uuid().v4()).putData(uint8ListBytes, metadata);
           final snapshot = await task.whenComplete(() {});
           final url = await snapshot.ref.getDownloadURL();
           image = url;
@@ -211,8 +202,7 @@ class Stores extends ChangeNotifier {
         }
       }
     } else if (image is File) {
-      final UploadTask task =
-          storageRef.child(const Uuid().v4()).putFile(image);
+      final UploadTask task = storageRef.child(const Uuid().v4()).putFile(image);
       final TaskSnapshot snapshot = await task.whenComplete(() {});
       final String url = await snapshot.ref.getDownloadURL();
       image = url;

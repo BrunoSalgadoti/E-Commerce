@@ -5,12 +5,12 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class FiltersSlidingUpPanel extends StatefulWidget {
   const FiltersSlidingUpPanel({
-    Key? key,
+    super.key,
     required this.textOfSlidingUpPanel,
     required this.panelController,
     required this.selectedStatus,
     this.paddingContentCheckbox,
-  }) : super(key: key);
+  });
 
   final PanelController panelController;
   final Set<StatusOfProducts> selectedStatus;
@@ -95,8 +95,7 @@ class FiltersSlidingUpPanelState extends State<FiltersSlidingUpPanel>
                                   }
                                   productManager.setStatusFilter(
                                     status: s,
-                                    enabled:
-                                        widget.selectedStatus.contains(s),
+                                    enabled: widget.selectedStatus.contains(s),
                                   );
                                 });
                                 widget.panelController.close();

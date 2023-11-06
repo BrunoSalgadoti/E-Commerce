@@ -26,8 +26,7 @@ class Users {
     Map<String, dynamic> dataMap = document.data() as Map<String, dynamic>;
 
     if (dataMap.containsKey("address")) {
-      address =
-          Address.fromMap(document.get("address") as Map<String, dynamic>);
+      address = Address.fromMap(document.get("address") as Map<String, dynamic>);
     }
   }
 
@@ -45,8 +44,7 @@ class Users {
 
   Address? address;
 
-  DocumentReference get firestoreRef =>
-      FirebaseFirestore.instance.doc("users/$id");
+  DocumentReference get firestoreRef => FirebaseFirestore.instance.doc("users/$id");
 
   CollectionReference get cartReference => firestoreRef.collection("cart");
 

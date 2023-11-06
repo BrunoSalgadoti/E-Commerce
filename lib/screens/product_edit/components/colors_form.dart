@@ -5,7 +5,7 @@ import 'package:brn_ecommerce/screens/product_edit/components/edit_colors.dart';
 import 'package:flutter/material.dart';
 
 class ColorsForm extends StatelessWidget {
-  const ColorsForm({Key? key, this.detailsProducts}) : super(key: key);
+  const ColorsForm({super.key, this.detailsProducts});
 
   final DetailsProducts? detailsProducts;
 
@@ -29,8 +29,7 @@ class ColorsForm extends StatelessWidget {
                 const Expanded(
                   child: Text(
                     'Adicione as cores deste produto!',
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                 ),
                 CustomIconButton(

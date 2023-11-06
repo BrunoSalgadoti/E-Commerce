@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SearchDialog extends StatelessWidget {
-  const SearchDialog(
-      {Key? key, required this.initialText, required this.hintText})
-      : super(key: key);
+  const SearchDialog({super.key, required this.initialText, required this.hintText});
 
   final String initialText;
   final String hintText;

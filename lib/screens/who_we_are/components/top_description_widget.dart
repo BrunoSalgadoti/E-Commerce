@@ -47,8 +47,7 @@ class _TopDescriptionWidgetState extends State<TopDescriptionWidget> {
               padding: const EdgeInsets.only(bottom: 80),
               child: FutureBuilder<void>(
                 future: Future.delayed(const Duration(seconds: 1)),
-                builder:
-                    (BuildContext context, AsyncSnapshot<void> snapshot) {
+                builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Text('Carregando...');
                   } else {
@@ -81,8 +80,7 @@ class _TopDescriptionWidgetState extends State<TopDescriptionWidget> {
             ),
             if (userManager.adminEnable)
               Padding(
-                padding:
-                    const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                 child: MarkdownTextInput(
                   (customText) => whoWeAreManager.topDescription = customText,
                   whoWeAreManager.topDescription ?? adminCustomText,

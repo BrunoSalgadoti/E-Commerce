@@ -43,8 +43,7 @@ class ShareProduct {
     return widgetImage;
   }
 
-  Future<void> shareProductOnMobly(
-      BuildContext context, SocialMedia socialPlatform) async {
+  Future<void> shareProductOnMobile(BuildContext context, SocialMedia socialPlatform) async {
     Uint8List? capturedImage = await saveWidgetImage();
 
     final shareImage = capturedImage;
@@ -58,11 +57,9 @@ class ShareProduct {
 
     // Treat URL if opened by browser
     final defaultUrls = {
-      SocialMedia.facebook:
-          'https://www.facebook.com/sharer/sharer.php?t=$shareImage',
+      SocialMedia.facebook: 'https://www.facebook.com/sharer/sharer.php?t=$shareImage',
       SocialMedia.whatsapp: 'https://api.whatsapp.com/send?text=$shareImage',
-      SocialMedia.instagram:
-          'https://www.instagram.com/share?text=$shareImage',
+      SocialMedia.instagram: 'https://www.instagram.com/share?text=$shareImage',
     };
 
     final url = urls[socialPlatform];
@@ -71,8 +68,7 @@ class ShareProduct {
       if (url != null) {
         if (await canLaunchUrl(Uri.parse(url))) {
           await launchUrl(Uri.parse(url));
-        } else if (defaultUrl != null &&
-            await canLaunchUrl(Uri.parse(defaultUrl))) {
+        } else if (defaultUrl != null && await canLaunchUrl(Uri.parse(defaultUrl))) {
           await launchUrl(Uri.parse(defaultUrl));
         }
       }

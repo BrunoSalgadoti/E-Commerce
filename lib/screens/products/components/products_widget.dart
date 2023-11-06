@@ -7,10 +7,10 @@ import '../../../common/formatted_fields/format_values.dart';
 
 class ProductsWidget extends StatelessWidget {
   const ProductsWidget({
-    Key? key,
+    super.key,
     this.details,
     this.onSizeSelected,
-  }) : super(key: key);
+  });
 
   final DetailsProducts? details;
   final Function(int)? onSizeSelected;

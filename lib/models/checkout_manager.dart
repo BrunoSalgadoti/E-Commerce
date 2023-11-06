@@ -24,8 +24,7 @@ class CheckoutManager extends ChangeNotifier {
     this.cartManager = cartManager;
   }
 
-  Future<void> checkout(
-      {required Function onStockFail, required Function onSuccess}) async {
+  Future<void> checkout({required Function onStockFail, required Function onSuccess}) async {
     loading = true;
 
     try {
@@ -57,8 +56,7 @@ class CheckoutManager extends ChangeNotifier {
         await firestore.doc("aux/orderCounter").get();
     final orderCounterCurrent = orderCounterSnapshot.get("current") as int;
 
-    final QuerySnapshot ordersSnapshot =
-        await firestore.collection("orders").get();
+    final QuerySnapshot ordersSnapshot = await firestore.collection("orders").get();
 
     int lastOrderId = 0;
 
@@ -95,8 +93,7 @@ class CheckoutManager extends ChangeNotifier {
       });
       return result["orderId"] as int;
     } catch (error) {
-      return Future.error(
-          'Falha ao gerar número do pedido!: ${error.toString()}');
+      return Future.error('Falha ao gerar número do pedido!: ${error.toString()}');
     }
   }
 
@@ -113,11 +110,9 @@ class CheckoutManager extends ChangeNotifier {
         Product product;
 
         if (productsToUpdate.any((p) => p.id == cartProduct.productId)) {
-          product = productsToUpdate
-              .firstWhere((p) => p.id == cartProduct.productId);
+          product = productsToUpdate.firstWhere((p) => p.id == cartProduct.productId);
         } else {
-          final doc = await tx
-              .get(firestore.doc("products/${cartProduct.productId}"));
+          final doc = await tx.get(firestore.doc("products/${cartProduct.productId}"));
           product = Product.fromDocument(doc);
         }
 
@@ -145,12 +140,11 @@ class CheckoutManager extends ChangeNotifier {
       }
 
       for (final product in productsToUpdate) {
-        tx.update(firestore.doc("products/${product.id}"),
-            {"details": product.exportDetailsList()});
+        tx.update(
+            firestore.doc("products/${product.id}"), {"details": product.exportDetailsList()});
       }
 
-      MonitoringStockMin.checkMinimumStock(
-          productsToUpdate, productsWithoutStock);
+      MonitoringStockMin.checkMinimumStock(productsToUpdate, productsWithoutStock);
     });
   }
 }

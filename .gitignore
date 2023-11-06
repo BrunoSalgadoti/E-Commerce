@@ -69,7 +69,5 @@ app.*.map.json
 /lib/generated/intl/
 /assets/
 /assets/docs/
-/lib/generated/localizations.dart
-/lib/generated/l10n/
 /docs_ecommerce/exemplos/
-/docs_ecommerce/TODO/
+/lib/generated/assets.dart

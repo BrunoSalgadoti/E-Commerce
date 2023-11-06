@@ -7,8 +7,8 @@ import '../../common/formatted_fields/format_values.dart';
 class SalesConfirmationScreen extends StatelessWidget {
   const SalesConfirmationScreen(
     this.orderClient, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final OrderClient? orderClient;
 
@@ -41,8 +41,7 @@ class SalesConfirmationScreen extends StatelessWidget {
                     Text(
                       formattedOrderId(orderId),
                       style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Theme.of(context).primaryColor),
+                          fontWeight: FontWeight.w600, color: Theme.of(context).primaryColor),
                     ),
                     Text(
                       formattedRealText(price),

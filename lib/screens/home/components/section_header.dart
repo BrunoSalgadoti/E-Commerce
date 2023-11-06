@@ -9,9 +9,9 @@ import 'package:provider/provider.dart';
 
 class SectionHeader extends StatelessWidget {
   const SectionHeader({
-    Key? key,
+    super.key,
     required this.section,
-  }) : super(key: key);
+  });
 
   final Section section;
 
@@ -22,8 +22,7 @@ class SectionHeader extends StatelessWidget {
     if (homeManager.editing) {
       final int sectionIndex = homeManager.sections.indexOf(section);
       final bool isFirstSection = sectionIndex == 0;
-      final bool isLastSection =
-          sectionIndex == homeManager.sections.length - 1;
+      final bool isLastSection = sectionIndex == homeManager.sections.length - 1;
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,7 +89,7 @@ class SectionHeader extends StatelessWidget {
         child: DecoratedGoogleFontText(
           section.name!,
           fontMethod: GoogleFonts.mohave,
-              // .satisfy,
+          // .satisfy,
           fillColor: Colors.black,
           fontSize: 22,
           fontWeight: FontWeight.w800,

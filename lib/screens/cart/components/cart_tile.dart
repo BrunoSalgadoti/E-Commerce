@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import '../../../common/formatted_fields/format_values.dart';
 
 class CartTile extends StatelessWidget {
-  const CartTile({Key? key, required this.cartProduct}) : super(key: key);
+  const CartTile({super.key, required this.cartProduct});
 
   final CartProduct? cartProduct;
 
@@ -24,14 +24,12 @@ class CartTile extends StatelessWidget {
       value: cartProduct,
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, "/product",
-              arguments: cartProduct?.product);
+          Navigator.pushNamed(context, "/product", arguments: cartProduct?.product);
         },
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           clipBehavior: Clip.antiAlias,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
           child: Stack(
             children: [
               SizedBox(
@@ -54,8 +52,7 @@ class CartTile extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
                 child: Row(
                   children: [
                     const SizedBox(width: 100),
@@ -67,38 +64,31 @@ class CartTile extends StatelessWidget {
                           children: [
                             Text(
                               cartProduct?.product?.name ?? "",
-                              style: const TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w500),
+                              style:
+                                  const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                             ),
-                            if (cartProduct?.brand != null &&
-                                cartProduct?.brand != "")
+                            if (cartProduct?.brand != null && cartProduct?.brand != "")
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 7),
+                                padding: const EdgeInsets.symmetric(vertical: 7),
                                 child: Text(
                                   'Marca: ${cartProduct?.brand ?? ""}',
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w300),
+                                  style: const TextStyle(fontWeight: FontWeight.w300),
                                 ),
                               ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 2),
+                              padding: const EdgeInsets.symmetric(vertical: 2),
                               child: Text(
                                 'Tamanho: ${cartProduct?.size ?? ""}',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w300),
+                                style: const TextStyle(fontWeight: FontWeight.w300),
                               ),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 2),
+                              padding: const EdgeInsets.symmetric(vertical: 2),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  cartProduct!.realColorFromCart ==
-                                          Colors.transparent
+                                  cartProduct!.realColorFromCart == Colors.transparent
                                       ? const Text('Cor: Cor do produto')
                                       : const Text('Cor: '),
                                   Container(
@@ -107,8 +97,7 @@ class CartTile extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       boxShadow: [
                                         BoxShadow(
-                                          color: cartProduct!
-                                                      .realColorFromCart ==
+                                          color: cartProduct!.realColorFromCart ==
                                                   Colors.transparent
                                               ? Colors.grey.withOpacity(0.0)
                                               : Colors.grey.withOpacity(0.5),
@@ -119,8 +108,8 @@ class CartTile extends StatelessWidget {
                                       ],
                                     ),
                                     child: Container(
-                                      color: cartProduct?.realColorFromCart ??
-                                          Colors.transparent,
+                                      color:
+                                          cartProduct?.realColorFromCart ?? Colors.transparent,
                                     ),
                                   ),
                                 ],
@@ -128,8 +117,7 @@ class CartTile extends StatelessWidget {
                             ),
                             Consumer<CartProduct>(
                               builder: (_, cartProduct, __) {
-                                if (cartProduct.hasStock &&
-                                    cartProduct.hasAmount) {
+                                if (cartProduct.hasStock && cartProduct.hasAmount) {
                                   return Text(
                                     formattedRealText(cartProduct.unitPrice),
                                     style: TextStyle(
@@ -137,16 +125,14 @@ class CartTile extends StatelessWidget {
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.bold),
                                   );
-                                } else if (cartProduct.unitQuantityStock !=
-                                    0) {
+                                } else if (cartProduct.unitQuantityStock != 0) {
                                   return Text(
                                     'Sem estoque suficiente!\n'
                                     'QTD Disponível com esta cor: '
                                     '${cartProduct.unitQuantityAmount}\n'
                                     'QTD Disponível deste tamanho: '
                                     '${cartProduct.unitQuantityStock}',
-                                    style: const TextStyle(
-                                        color: Colors.red, fontSize: 12),
+                                    style: const TextStyle(color: Colors.red, fontSize: 12),
                                   );
                                 } else {
                                   return const Text('Estoque Esgotado!');
@@ -159,27 +145,21 @@ class CartTile extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 0, left: 12),
-                      child: Consumer<CartProduct>(
-                          builder: (_, cartProduct, __) {
+                      child: Consumer<CartProduct>(builder: (_, cartProduct, __) {
                         return Column(
                           children: [
                             CustomIconButton(
                               iconData: cartProduct.quantity! >
                                           cartProduct.unitQuantityStock ||
-                                      cartProduct.quantity! >
-                                          cartProduct.unitQuantityAmount
+                                      cartProduct.quantity! > cartProduct.unitQuantityAmount
                                   ? Icons.not_interested
                                   : Icons.add,
-                              onTap: cartProduct.quantity! >
-                                          cartProduct.unitQuantityStock ||
-                                      cartProduct.quantity! >
-                                          cartProduct.unitQuantityAmount
+                              onTap: cartProduct.quantity! > cartProduct.unitQuantityStock ||
+                                      cartProduct.quantity! > cartProduct.unitQuantityAmount
                                   ? () {}
                                   : cartProduct.increment,
-                              color: cartProduct.quantity! >
-                                          cartProduct.unitQuantityStock ||
-                                      cartProduct.quantity! >
-                                          cartProduct.unitQuantityAmount
+                              color: cartProduct.quantity! > cartProduct.unitQuantityStock ||
+                                      cartProduct.quantity! > cartProduct.unitQuantityAmount
                                   ? Colors.red
                                   : Theme.of(context).primaryColor,
                             ),
@@ -188,37 +168,31 @@ class CartTile extends StatelessWidget {
                               style: const TextStyle(fontSize: 20),
                             ),
                             CustomIconButton(
-                              iconData: cartProduct.quantity! == 1
-                                  ? Icons.delete
-                                  : Icons.remove,
+                              iconData:
+                                  cartProduct.quantity! == 1 ? Icons.delete : Icons.remove,
                               onTap: cartProduct.quantity! <= 1
                                   ? () {
                                       showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
                                           return CustomAlertDialog(
-                                            titleText:
-                                                'Confirmação de Exclusão',
-                                            bodyText:
-                                                'Deseja realmente deletar\n '
+                                            titleText: 'Confirmação de Exclusão',
+                                            bodyText: 'Deseja realmente deletar\n '
                                                 '${cartProduct.product!.name}'
                                                 '${cartProduct.size} '
                                                 'do carrinho?',
                                             actions: [
                                               Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                    MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   CustomTextButton(
                                                       text: 'Sim',
                                                       icon: null,
                                                       fontColor: Colors.red,
                                                       onPressed: () {
-                                                        cartProduct
-                                                            .decrement();
-                                                        Navigator.of(context)
-                                                            .pop();
+                                                        cartProduct.decrement();
+                                                        Navigator.of(context).pop();
                                                       }),
                                                   CustomTextButton(
                                                     text: 'NÃO',
@@ -226,8 +200,7 @@ class CartTile extends StatelessWidget {
                                                     fontSize: 18,
                                                     fontColor: Colors.green,
                                                     onPressed: () {
-                                                      Navigator.of(context)
-                                                          .pop();
+                                                      Navigator.of(context).pop();
                                                     },
                                                   )
                                                 ],

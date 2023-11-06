@@ -19,8 +19,7 @@ Future<void> debugModeAndFirstStart({required bool firstStart}) async {
     await versionManager.updateVersionInfo();
 
     // Pass all uncaught "fatal" errors from the framework to Crashlytics
-    FlutterError.onError =
-        FirebaseCrashlytics.instance.recordFlutterFatalError;
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
     // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
     PlatformDispatcher.instance.onError = (error, stack) {
@@ -58,7 +57,6 @@ Future<void> debugModeAndFirstStart({required bool firstStart}) async {
     /// CASO:  [firstStart = true] - no main.dart.
     // This code snippet will only run in debug mode and case [firstStart = true]
     // - in main.dart
-    ProductCategoryManager()
-        .createProductCategoriesIfNotExists(firstStart: firstStart);
+    ProductCategoryManager().createProductCategoriesIfNotExists(firstStart: firstStart);
   }
 }

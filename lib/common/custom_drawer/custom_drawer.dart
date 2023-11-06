@@ -7,7 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({Key? key}) : super(key: key);
+  const CustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +36,10 @@ class CustomDrawer extends StatelessWidget {
                 page: 0,
               ),
               const Divider(thickness: 2),
-              const Text('P R O D U T O S:',
+              const Text(
+                'P R O D U T O S:',
                 textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               ),
               const DrawerTitle(
                 iconData: Icons.list,
@@ -53,11 +52,10 @@ class CustomDrawer extends StatelessWidget {
                 page: 2,
               ),
               const Divider(thickness: 2),
-              const Text('Seções do Cliente:',
+              const Text(
+                'Seções do Cliente:',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               ),
               const DrawerTitle(
                 iconData: Icons.playlist_add_check,
@@ -81,11 +79,10 @@ class CustomDrawer extends StatelessWidget {
                     return const Column(
                       children: [
                         Divider(thickness: 3),
-                        Text('Área Administrativa:',
+                        Text(
+                          'Área Administrativa:',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600),
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                         ),
                         DrawerTitle(
                           iconData: Icons.supervised_user_circle,

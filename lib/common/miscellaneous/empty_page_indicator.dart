@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class EmptyPageIndicator extends StatefulWidget {
   const EmptyPageIndicator({
-    Key? key,
+    super.key,
     required this.title,
     required this.iconData,
     required this.image,
@@ -13,7 +13,7 @@ class EmptyPageIndicator extends StatefulWidget {
     this.iconSize,
     this.titleSize,
     this.titleColor,
-  }) : super(key: key);
+  });
 
   final String title;
   final double? titleSize;

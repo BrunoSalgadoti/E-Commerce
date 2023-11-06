@@ -4,8 +4,7 @@ import 'package:brn_ecommerce/models/section.dart';
 import 'package:flutter/material.dart';
 
 class AddSectionWidget extends StatelessWidget {
-  const AddSectionWidget({Key? key, required this.homeManager})
-      : super(key: key);
+  const AddSectionWidget({super.key, required this.homeManager});
 
   final HomeManager homeManager;
 

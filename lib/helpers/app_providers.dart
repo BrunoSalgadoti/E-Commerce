@@ -71,13 +71,12 @@ class AppProviders extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<UserManager, CartManager>(
           create: (_) => CartManager(),
-          update: (_, userManager, cartManager) =>
-              cartManager!..updateUser(userManager),
+          update: (_, userManager, cartManager) => cartManager!..updateUser(userManager),
         ),
         ChangeNotifierProxyProvider<UserManager, OrdersManager>(
           create: (_) => OrdersManager(),
-          update: (_, userManager, ordersManager) => ordersManager!
-            ..updateUser(userManager.users ?? Users(email: "")),
+          update: (_, userManager, ordersManager) =>
+              ordersManager!..updateUser(userManager.users ?? Users(email: "")),
         ),
         ChangeNotifierProxyProvider<UserManager, AdminUsersManager>(
           create: (_) => AdminUsersManager(),
@@ -87,8 +86,8 @@ class AppProviders extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<UserManager, AdminOrdersManager>(
           create: (_) => AdminOrdersManager(),
-          update: (_, userManager, adminOrdersManager) => adminOrdersManager!
-            ..updateAdmin(adminEnable: userManager.adminEnable),
+          update: (_, userManager, adminOrdersManager) =>
+              adminOrdersManager!..updateAdmin(adminEnable: userManager.adminEnable),
         ),
       ],
       child: child,

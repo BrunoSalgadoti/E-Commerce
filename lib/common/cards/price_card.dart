@@ -6,10 +6,10 @@ import 'package:provider/provider.dart';
 
 class PriceCard extends StatelessWidget {
   const PriceCard({
-    Key? key,
+    super.key,
     required this.buttonText,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final String buttonText;
   final VoidCallback? onPressed;
@@ -39,20 +39,13 @@ class PriceCard extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Subtotal'),
-                Text(formattedRealText(productsPrice))
-              ],
+              children: [const Text('Subtotal'), Text(formattedRealText(productsPrice))],
             ),
             const Divider(),
-            if (deliveryPrice != null &&
-                cartManager.hasFreeShippingProduct) ...[
+            if (deliveryPrice != null && cartManager.hasFreeShippingProduct) ...[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Entrega'),
-                  Text(formattedRealText(deliveryPrice))
-                ],
+                children: [const Text('Entrega'), Text(formattedRealText(deliveryPrice))],
               ),
               const Divider(),
             ] else ...[
@@ -74,8 +67,7 @@ class PriceCard extends StatelessWidget {
                 ),
                 Text(
                   formattedRealText(totalPrice),
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 16),
+                  style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16),
                 )
               ],
             ),

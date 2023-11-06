@@ -8,8 +8,7 @@ import 'package:brn_ecommerce/services/development_monitoring/firebase_performan
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart'
-    show ChangeNotifier, kIsWeb, kReleaseMode;
+import 'package:flutter/foundation.dart' show ChangeNotifier, kIsWeb, kReleaseMode;
 import 'package:uuid/uuid.dart';
 
 class Product extends ChangeNotifier {
@@ -38,8 +37,7 @@ class Product extends ChangeNotifier {
     PerformanceMonitoring().startTrace('product-document', shouldStart: true);
 
     if (!kReleaseMode) {
-      MonitoringLogger()
-          .logInfo('Debug message: Instance Product.fromDocument');
+      MonitoringLogger().logInfo('Debug message: Instance Product.fromDocument');
     }
 
     id = document.id;
@@ -160,8 +158,7 @@ class Product extends ChangeNotifier {
   Future<void> saveProduct() async {
     PerformanceMonitoring().startTrace('save_product', shouldStart: true);
     if (!kReleaseMode) {
-      MonitoringLogger()
-          .logDebug('Debug message: Instance starting saveProduct');
+      MonitoringLogger().logDebug('Debug message: Instance starting saveProduct');
     }
 
     loading = true;
@@ -182,9 +179,7 @@ class Product extends ChangeNotifier {
           final List<int> bytes = base64.decode(newImage.split(',').last);
           final Uint8List uint8ListBytes = Uint8List.fromList(bytes);
           final metadata = SettableMetadata(contentType: "image/jpeg");
-          final task = storageRef
-              .child(const Uuid().v4())
-              .putData(uint8ListBytes, metadata);
+          final task = storageRef.child(const Uuid().v4()).putData(uint8ListBytes, metadata);
           final snapshot = await task.whenComplete(() {});
           final url = await snapshot.ref.getDownloadURL();
           updateImages.add(url);
@@ -217,8 +212,7 @@ class Product extends ChangeNotifier {
 
     PerformanceMonitoring().stopTrace('save_product');
     if (!kReleaseMode) {
-      MonitoringLogger()
-          .logDebug('Debug message: Instance ending saveProduct');
+      MonitoringLogger().logDebug('Debug message: Instance ending saveProduct');
     }
   }
 
@@ -301,8 +295,7 @@ class Product extends ChangeNotifier {
       final matchingDetails =
           detailsProducts.firstWhere((details) => details.size == stock.size);
 
-      final int totalAmount =
-          matchingDetails.colorProducts!.fold(0, (a, b) => a + b.amount);
+      final int totalAmount = matchingDetails.colorProducts!.fold(0, (a, b) => a + b.amount);
 
       if (totalAmount != stock.stock) {
         isValid = false; // Inconsistency found

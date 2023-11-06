@@ -72,8 +72,7 @@ class CartManager extends ChangeNotifier {
     }
 
     if (users?.address != null &&
-        await calculateDelivery(
-            users!.address!.lat!, users!.address!.long!)) {
+        await calculateDelivery(users!.address!.lat!, users!.address!.long!)) {
       address = users!.address;
       notifyListeners();
     }
@@ -132,16 +131,13 @@ class CartManager extends ChangeNotifier {
 
   void _updateCartProduct(CartProduct cartProduct) {
     if (cartProduct.id != null) {
-      users!.cartReference
-          .doc(cartProduct.id)
-          .update(cartProduct.toCartItemMap());
+      users!.cartReference.doc(cartProduct.id).update(cartProduct.toCartItemMap());
       users!.firestoreRef.update({"favourite": true});
     }
 
     hasFreeShippingProduct;
     if (hasFreeShippingProduct) {
-      calculateDelivery(
-          users?.address?.lat ?? 0.00, users?.address?.long ?? 0.00);
+      calculateDelivery(users?.address?.lat ?? 0.00, users?.address?.long ?? 0.00);
     }
     notifyListeners();
   }
@@ -203,8 +199,7 @@ class CartManager extends ChangeNotifier {
       final cepAbertoService = CepAbertoService();
 
       try {
-        final cepAbertoAddress =
-            await cepAbertoService.getAddressFromZipCode(cep);
+        final cepAbertoAddress = await cepAbertoService.getAddressFromZipCode(cep);
 
         address = Address(
           zipCode: cepAbertoAddress.cep,
@@ -244,8 +239,7 @@ class CartManager extends ChangeNotifier {
 
   Future<bool> calculateDelivery(double lat, double long) async {
     if (!kReleaseMode) {
-      MonitoringLogger()
-          .logInfo('Info message: Start Calculate Delivery Cart');
+      MonitoringLogger().logInfo('Info message: Start Calculate Delivery Cart');
     }
 
     try {
@@ -258,8 +252,7 @@ class CartManager extends ChangeNotifier {
 
       final maximumDeliveryDistance = doc.get("maxKm") as num;
 
-      double distanceClient =
-          Geolocator.distanceBetween(latStore, longStore, lat, long);
+      double distanceClient = Geolocator.distanceBetween(latStore, longStore, lat, long);
 
       // Converting distance from M to KM
       distanceClient /= 1000.0;

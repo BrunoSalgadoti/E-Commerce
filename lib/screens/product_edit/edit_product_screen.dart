@@ -58,8 +58,7 @@ class EditProductScreen extends StatelessWidget {
       value: product,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-              product!.id != null ? 'Editar Produto' : 'Adicionar Produto'),
+          title: Text(product!.id != null ? 'Editar Produto' : 'Adicionar Produto'),
           centerTitle: true,
           actions: [
             if (product!.id != null)
@@ -80,17 +79,14 @@ class EditProductScreen extends StatelessWidget {
                           titleWeight: FontWeight.normal,
                           actions: [
                             Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomTextButton(
                                     text: 'Sim',
                                     icon: null,
                                     fontColor: Colors.red,
                                     onPressed: () {
-                                      context
-                                          .read<ProductManager>()
-                                          .requestDelete(product!);
+                                      context.read<ProductManager>().requestDelete(product!);
                                       backScreen();
                                       backScreen();
                                     }),
@@ -201,8 +197,7 @@ class EditProductScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
                           MarkdownTextInput(
-                            (description) =>
-                                product?.description = description,
+                            (description) => product?.description = description,
                             product!.description ?? '',
                             label: 'Descrição',
                             maxLines: null,
@@ -235,8 +230,7 @@ class EditProductScreen extends StatelessWidget {
                                   onPressed: product.loading
                                       ? null
                                       : () async {
-                                          if (formKey.currentState!
-                                              .validate()) {
+                                          if (formKey.currentState!.validate()) {
                                             formKey.currentState!.save();
 
                                             //TODO: verificação ...
@@ -244,15 +238,12 @@ class EditProductScreen extends StatelessWidget {
                                             // || categoryOfProduct!.isEmpty)
                                             try {
                                               await product.saveProduct();
-                                              productManager
-                                                  .updateProducts(product);
+                                              productManager.updateProducts(product);
 
                                               // Check the consistency of
                                               // quantities and stocks
-                                              await product
-                                                  .checkAmountsAndStocksConsistency(
-                                                      product.id!,
-                                                      product.itemProducts!);
+                                              await product.checkAmountsAndStocksConsistency(
+                                                  product.id!, product.itemProducts!);
                                               if (product.isValid == false) {
                                                 product.loading = false;
                                                 showAlertDialog();

@@ -45,8 +45,7 @@ class City {
 class State {
   final String code;
 
-  State.fromMap(Map<String, dynamic> map)
-      : code = map["sigla"] as String? ?? "";
+  State.fromMap(Map<String, dynamic> map) : code = map["sigla"] as String? ?? "";
 
   @override
   String toString() {

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
   const CustomIconButton({
-    Key? key,
+    super.key,
     required this.iconData,
     this.onTap,
     this.color,
     this.size,
     this.padding = const EdgeInsets.fromLTRB(8, 8, 10, 8),
-  }) : super(key: key);
+  });
 
   final IconData iconData;
   final VoidCallback? onTap;

@@ -5,32 +5,29 @@ import 'package:brn_ecommerce/screens/home/components/item_tile.dart';
 import 'package:brn_ecommerce/screens/home/components/section_header.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class SectionList extends StatelessWidget {
-  const SectionList({Key? key, required this.section}) : super(key: key);
+  const SectionList({super.key, required this.section});
 
   final Section section;
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, designSize: const Size(360, 690));
-
     final homeManager = context.watch<HomeManager>();
     final ScrollController scrollController = ScrollController();
 
     return ChangeNotifierProvider.value(
       value: section,
       child: Container(
-        margin: const EdgeInsets.fromLTRB(16, 8, 16, 8).dg,
+        margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SectionHeader(section: section),
             SizedBox(
-                height:  kIsWeb ? 250.spMin : 150.spMin,
+                height: kIsWeb ? 250 : 150,
                 child: Consumer<Section>(
                   builder: (_, section, __) {
                     return Scrollbar(
@@ -44,9 +41,7 @@ class SectionList extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (_, index) {
                           if (index < section.items!.length) {
-                            return ItemTile(
-                                item:
-                                    section.items!.reversed.toList()[index]);
+                            return ItemTile(item: section.items!.reversed.toList()[index]);
                           } else {
                             return const AddTileWidget();
                           }

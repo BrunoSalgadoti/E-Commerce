@@ -30,27 +30,23 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   : const Text('Produtos por Categorias'),
               centerTitle: true,
               actions: [
-                userManager.adminEnable &&
-                        userManager.editingCategories == false
+                userManager.adminEnable && userManager.editingCategories == false
                     ? CustomIconButton(
                         padding: const EdgeInsets.only(right: 15, left: 15),
                         iconData: Icons.edit,
                         onTap: () {
                           userManager.editingCategories = true;
                         })
-                    : userManager.adminEnable &&
-                            userManager.editingCategories == true
+                    : userManager.adminEnable && userManager.editingCategories == true
                         ? CustomIconButton(
-                            padding:
-                                const EdgeInsets.only(right: 15, left: 15),
+                            padding: const EdgeInsets.only(right: 15, left: 15),
                             iconData: Icons.check,
                             color: Colors.white,
                             size: 38,
                             onTap: () {
                               showMenu(
                                 context: context,
-                                position:
-                                    const RelativeRect.fromLTRB(80, 80, 0, 0),
+                                position: const RelativeRect.fromLTRB(80, 80, 0, 0),
                                 items: [
                                   const PopupMenuItem(
                                     value: 'Salvar',
@@ -64,11 +60,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                 elevation: 8.0,
                               ).then((value) async {
                                 if (value == 'Salvar') {
-                                  await productCategoryManager
-                                      .updateCategory();
-                                  productCategoryManager
-                                      .filterCategoriesActivated(
-                                          userManager.adminEnable, false);
+                                  await productCategoryManager.updateCategory();
+                                  productCategoryManager.filterCategoriesActivated(
+                                      userManager.adminEnable, false);
                                   userManager.editingCategories = false;
                                 } else {
                                   userManager.editingCategories = false;
@@ -86,32 +80,28 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     iconData: null,
                   )
                 : Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
                     child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        childAspectRatio: 3 / 3,
+                      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
+                        maxCrossAxisExtent: 255,
+                        mainAxisExtent: 230,
                       ),
                       itemCount: productCategoryManager
-                          .filterCategoriesActivated(userManager.adminEnable,
-                              userManager.editingCategories)
+                          .filterCategoriesActivated(
+                              userManager.adminEnable, userManager.editingCategories)
                           .length,
                       itemBuilder: (context, index) {
-                        final category =
-                            productCategoryManager.filterCategoriesActivated(
-                                userManager.adminEnable,
-                                userManager.editingCategories)[index];
+                        final category = productCategoryManager.filterCategoriesActivated(
+                            userManager.adminEnable, userManager.editingCategories)[index];
                         return GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushNamed(
-                                  "/category_screen",
-                                  arguments: category);
-                            },
-                            child: MainCategoriesCard(
-                                productCategory: category));
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed("/category_screen", arguments: category);
+                          },
+                          child: MainCategoriesCard(productCategory: category),
+                        );
                       },
                     ),
                   ));

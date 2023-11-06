@@ -14,7 +14,7 @@ import 'package:transparent_image/transparent_image.dart';
 import '../../../common/formatted_fields/format_values.dart';
 
 class ItemTile extends StatelessWidget {
-  const ItemTile({Key? key, this.item}) : super(key: key);
+  const ItemTile({super.key, this.item});
 
   final SectionItem? item;
 
@@ -48,16 +48,14 @@ class ItemTile extends StatelessWidget {
                           content: product != null
                               ? ListTile(
                                   contentPadding: EdgeInsets.zero,
-                                  leading:
-                                      Image.network(product.images!.first),
+                                  leading: Image.network(product.images!.first),
                                   title: Text(product.name!),
                                   subtitle: !product.hasStock
                                       ? const Text(
                                           'Fora de Estoque...',
                                           style: TextStyle(color: Colors.red),
                                         )
-                                      : Text(formattedRealText(
-                                          product.basePrice)),
+                                      : Text(formattedRealText(product.basePrice)),
                                 )
                               : const Text('Nenhum Item Vinculado'
                                   ' a Imagem!'),
@@ -72,9 +70,7 @@ class ItemTile extends StatelessWidget {
                                   Navigator.of(context).pop();
                                 }),
                             CustomButton(
-                                text: product != null
-                                    ? 'Desvincular'
-                                    : 'Vincular',
+                                text: product != null ? 'Desvincular' : 'Vincular',
                                 buttonColor: Colors.transparent,
                                 textColor: Colors.blue,
                                 elevation: 0,
@@ -84,8 +80,7 @@ class ItemTile extends StatelessWidget {
                                     Navigator.of(context).pop();
                                   } else {
                                     final Product product =
-                                        await Navigator.pushNamed(
-                                                context, '/select_product')
+                                        await Navigator.pushNamed(context, '/select_product')
                                             as Product;
                                     item?.product = product.id;
                                     backScreen();

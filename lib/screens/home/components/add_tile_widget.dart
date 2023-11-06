@@ -13,8 +13,8 @@ import 'package:provider/provider.dart';
 
 class AddTileWidget extends StatelessWidget {
   const AddTileWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

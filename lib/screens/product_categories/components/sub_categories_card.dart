@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class SubCategoriesCard extends StatelessWidget {
   const SubCategoriesCard({
-    Key? key,
+    super.key,
     required this.subCategory,
-  }) : super(key: key);
+  });
 
   final SubCategory subCategory;
 
@@ -23,8 +23,7 @@ class SubCategoriesCard extends StatelessWidget {
           ),
           child: Column(
             children: [
-              subCategory.iconSubCategories == null ||
-                      subCategory.iconSubCategories == ""
+              subCategory.iconSubCategories == null || subCategory.iconSubCategories == ""
                   ? const Icon(
                       Icons.star,
                       size: 38,

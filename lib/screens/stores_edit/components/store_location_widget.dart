@@ -3,8 +3,7 @@ import 'package:brn_ecommerce/models/stores.dart';
 import 'package:flutter/material.dart';
 
 class StoreLocationWidget extends StatefulWidget {
-  const StoreLocationWidget({Key? key, required this.store})
-      : super(key: key);
+  const StoreLocationWidget({super.key, required this.store});
 
   final Stores store;
 
@@ -41,11 +40,7 @@ class StoreLocationWidgetState extends State<StoreLocationWidget> {
                 onPressed: () => CommunicationsUtils(
                       parameterClass1Of2: widget.store,
                       parameterClass2Of2: widget.store.address!,
-                    ).openMap(
-                        context,
-                        _latitude,
-                        _longitude,
-                        widget.store.nameStore ?? '',
+                    ).openMap(context, _latitude, _longitude, widget.store.nameStore ?? '',
                         widget.store.addressText ?? ''),
                 color: Theme.of(context).primaryColor),
             const SizedBox(width: 8),

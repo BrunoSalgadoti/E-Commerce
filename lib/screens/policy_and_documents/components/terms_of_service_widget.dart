@@ -15,8 +15,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
 
   @override
   void initState() {
-    final policyAndDocuments =
-        Provider.of<PolicyAndDocuments>(context, listen: false);
+    final policyAndDocuments = Provider.of<PolicyAndDocuments>(context, listen: false);
     agreedToTermsOfService = policyAndDocuments.agreedToPolicyTerms;
     super.initState();
   }

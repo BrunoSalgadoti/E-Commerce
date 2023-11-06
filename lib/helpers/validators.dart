@@ -1,10 +1,9 @@
 bool emailValid(String email) {
-  final RegExp regex = RegExp(
-      r"^(([^<>()[\]\\.,;:\s@\']+(\.[^<>()[\]\\.,;:\s@\']+)*)|(\'.+\'))@((\[[0-9]"
-      r"{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$");
+  final RegExp regex =
+      RegExp(r"^(([^<>()[\]\\.,;:\s@\']+(\.[^<>()[\]\\.,;:\s@\']+)*)|(\'.+\'))@((\[[0-9]"
+          r"{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$");
 
   return regex.hasMatch(email);
 }
 
-String? emptyValidator(String? text) =>
-    text!.trim().isEmpty ? 'Campo Obrigatório' : null;
+String? emptyValidator(String? text) => text!.trim().isEmpty ? 'Campo Obrigatório' : null;

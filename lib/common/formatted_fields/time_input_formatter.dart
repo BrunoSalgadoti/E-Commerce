@@ -3,8 +3,7 @@ import 'package:flutter/services.dart';
 class TimeInputFormatter extends TextInputFormatter {
   // Personal Time Formatter -> (00:00-00:00)
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     final formattedValue = _formatTime(newValue.text);
 
     return newValue.copyWith(
@@ -14,8 +13,7 @@ class TimeInputFormatter extends TextInputFormatter {
   }
 
   String _formatTime(String value) {
-    final digitsOnly =
-        value.replaceAll(RegExp(r'\D'), ''); // Remove non-digits
+    final digitsOnly = value.replaceAll(RegExp(r'\D'), ''); // Remove non-digits
 
     if (digitsOnly.isEmpty) {
       return '';
@@ -28,10 +26,8 @@ class TimeInputFormatter extends TextInputFormatter {
     }
   }
 
-  TextSelection _updateCursorPosition(
-      String value, TextSelection oldSelection) {
-    final int newPosition =
-        oldSelection.baseOffset + value.length - oldSelection.extentOffset;
+  TextSelection _updateCursorPosition(String value, TextSelection oldSelection) {
+    final int newPosition = oldSelection.baseOffset + value.length - oldSelection.extentOffset;
 
     return TextSelection.collapsed(offset: newPosition);
   }

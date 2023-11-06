@@ -11,8 +11,8 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<ProductsScreen> createState() => _ProductsScreenState();
@@ -25,8 +25,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      final productManager =
-          Provider.of<ProductManager>(context, listen: false);
+      final productManager = Provider.of<ProductManager>(context, listen: false);
       productManager.filtersOn = false;
       productManager.search = '';
     });
@@ -65,8 +64,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       child: Text(
                         productManager.search,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 23, fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
                       )),
                 );
               });
@@ -158,8 +156,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
               child: Stack(
                 children: [
                   if (filteredProducts.isEmpty)
-                    productManager.filtersOn == true ||
-                            productManager.search.isNotEmpty
+                    productManager.filtersOn == true || productManager.search.isNotEmpty
                         ? const EmptyPageIndicator(
                             title: 'Pesquisa não encontrada...',
                             iconData: Icons.search_off,
@@ -173,14 +170,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           )
                   else
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 15, 20, 10),
+                      padding: const EdgeInsets.fromLTRB(15, 30, 15, 40),
                       child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 0.0,
-                          mainAxisSpacing: 0.0,
-                          childAspectRatio: 0.7,
+                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                          childAspectRatio: 1 / 2,
+                          crossAxisSpacing: 5,
+                          mainAxisSpacing: 5,
+                          maxCrossAxisExtent: 185,
+                          // mainAxisExtent: 300,
                         ),
                         itemCount: filteredProducts.length,
                         itemBuilder: (_, index) {
@@ -199,8 +196,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
           ],
         );
       }),
-      floatingActionButton:
-          Consumer<UserManager>(builder: (_, userManager, __) {
+      floatingActionButton: Consumer<UserManager>(builder: (_, userManager, __) {
         return FloatingActionButton(
           backgroundColor: Colors.white,
           foregroundColor: Theme.of(context).primaryColor,

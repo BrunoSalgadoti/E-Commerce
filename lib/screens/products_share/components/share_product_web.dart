@@ -12,11 +12,9 @@ class ShareProductWeb {
   ShareProductScreen shareProductScreen;
   String urlShare = 'https://brn-ecommerce.web.app/';
 
-  Future<void> shareProductOnWeb(
-      BuildContext context, SocialMediaWeb socialPlatform) async {
+  Future<void> shareProductOnWeb(BuildContext context, SocialMediaWeb socialPlatform) async {
     try {
-      String productName =
-          'A Loja Virtual BRN Info-Dev\n Convida você a conferir '
+      String productName = 'A Loja Virtual BRN Info-Dev\n Convida você a conferir '
           'uma de nossas Super Promoções!'
           '\n\n ${shareProductScreen.product!.name}';
       String sharedImageUrl = '\n **Confira a foto do produto**: \n '
@@ -40,8 +38,7 @@ class ShareProductWeb {
 
       // Treat URL if opened by browser
       final defaultUrls = {
-        SocialMediaWeb.whatsapp:
-            'https://api.whatsapp.com/send?text=$shareLink',
+        SocialMediaWeb.whatsapp: 'https://api.whatsapp.com/send?text=$shareLink',
       };
 
       final url = urls[socialPlatform];
@@ -50,8 +47,7 @@ class ShareProductWeb {
         if (url != null) {
           if (await canLaunchUrl(Uri.parse(url))) {
             await launchUrl(Uri.parse(url));
-          } else if (defaultUrl != null &&
-              await canLaunchUrl(Uri.parse(defaultUrl))) {
+          } else if (defaultUrl != null && await canLaunchUrl(Uri.parse(defaultUrl))) {
             await launchUrl(Uri.parse(defaultUrl));
           }
         }

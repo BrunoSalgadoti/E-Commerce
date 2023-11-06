@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 
 class ColorsWidget extends StatelessWidget {
   const ColorsWidget({
-    Key? key,
+    super.key,
     this.colorsProducts,
     required this.selectedSizeIndex,
-  }) : super(key: key);
+  });
 
   final ColorsProducts? colorsProducts;
   final int? selectedSizeIndex;
@@ -21,8 +21,7 @@ class ColorsWidget extends StatelessWidget {
 
         Color color;
         if (!colorsProducts!.hasAmount ||
-            colorsProducts!.realColor ==
-                colorsProducts!.realColor?.withAlpha(0)) {
+            colorsProducts!.realColor == colorsProducts!.realColor?.withAlpha(0)) {
           color = Colors.red.withAlpha(70);
         } else if (selected) {
           color = Theme.of(context).primaryColor;
@@ -44,8 +43,7 @@ class ColorsWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                   color: color,
                   child: colorsProducts!.hasAmount
                       ? const Text(

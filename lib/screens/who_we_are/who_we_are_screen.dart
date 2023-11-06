@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class WhoWeAreScreen extends StatefulWidget {
-  const WhoWeAreScreen({Key? key}) : super(key: key);
+  const WhoWeAreScreen({super.key});
 
   @override
   WhoWeAreScreenState createState() => WhoWeAreScreenState();
@@ -45,14 +45,12 @@ class WhoWeAreScreenState extends State<WhoWeAreScreen> {
         children: [
           ...[const TopDescriptionWidget()],
           Padding(
-            padding: const EdgeInsets.only(
-                top: 16, left: 30, right: 30, bottom: 16),
+            padding: const EdgeInsets.only(top: 16, left: 30, right: 30, bottom: 16),
             child: Center(
               // Embed do vídeo do YouTube
               child: FutureBuilder<void>(
                 future: Future.delayed(const Duration(seconds: 6)),
-                builder:
-                    (BuildContext context, AsyncSnapshot<void> snapshot) {
+                builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Text('Carregando...');
                   } else {

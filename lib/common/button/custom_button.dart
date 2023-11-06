@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:brn_ecommerce/helpers/themes/factory_colors/android_factory_colors.dart';
 import 'package:brn_ecommerce/helpers/themes/factory_colors/ios_factory_colos.dart';
 import 'package:brn_ecommerce/helpers/themes/factory_colors/web_factory_colors.dart';
+import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
@@ -13,7 +14,7 @@ import 'package:provider/provider.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
     this.textColor,
@@ -21,7 +22,7 @@ class CustomButton extends StatelessWidget {
     this.shadowColor = Colors.white24,
     this.elevation = 08,
     this.buttonColor,
-  }) : super(key: key);
+  });
 
   final String text;
   final VoidCallback? onPressed;
@@ -57,17 +58,8 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    const buttonHeight = 38;
-    const maxFontSize = 14.0;
-
-    double adjustedFontSize = maxFontSize;
-    if (screenHeight < buttonHeight) {
-      adjustedFontSize = maxFontSize * (screenHeight / buttonHeight);
-    }
-
     return SizedBox(
-        height: 38,
+        height: 48,
         child: ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
@@ -76,22 +68,17 @@ class CustomButton extends StatelessWidget {
                 shadowColor: shadowColor,
                 elevation: elevation,
                 padding: const EdgeInsets.fromLTRB(32, 10, 32, 10),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(7))),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7))),
             child: Consumer3<UserManager, Product, CartManager>(
               builder: (_, userManager, product, cartManager, __) {
-                return userManager.loading ||
-                        product.loading ||
-                        cartManager.loading
+                return userManager.loading || product.loading || cartManager.loading
                     ? SpinKitThreeInOut(
-                        color: Theme.of(context).primaryColor,
-                        size: 25.0,
+                        color: getEspecialColor(),
+                        size: 25,
                       )
                     : Text(
                         text,
-                        style: TextStyle(
-                            color: textColor ?? getTextColor(),
-                            fontSize: adjustedFontSize),
+                        style: TextStyle(color: textColor ?? getTextColor(), fontSize: 15),
                       );
               },
             )));

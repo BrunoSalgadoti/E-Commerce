@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   const CustomAlertDialog({
-    Key? key,
+    super.key,
     required this.titleText,
     required this.bodyText,
     required this.actions,
@@ -16,7 +16,7 @@ class CustomAlertDialog extends StatelessWidget {
     this.titleAlign = TextAlign.center,
     this.bodyAlign = TextAlign.center,
     this.contentPadding,
-  }) : super(key: key);
+  });
 
   final String? titleText;
   final String? bodyText;

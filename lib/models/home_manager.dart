@@ -23,11 +23,7 @@ class HomeManager extends ChangeNotifier {
       MonitoringLogger().logInfo('Info message: Starting listen Sections');
     }
 
-    firestore
-        .collection("home")
-        .orderBy("position")
-        .snapshots()
-        .listen((snapshot) {
+    firestore.collection("home").orderBy("position").snapshots().listen((snapshot) {
       _sections.clear();
       for (final DocumentSnapshot document in snapshot.docs) {
         _sections.add(Section.fromDocument(document));

@@ -10,8 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AddressInputField extends StatelessWidget {
-  const AddressInputField(
-      {super.key, required this.address, required this.delivery});
+  const AddressInputField({super.key, required this.address, required this.delivery});
 
   final Address address;
   final Delivery delivery;

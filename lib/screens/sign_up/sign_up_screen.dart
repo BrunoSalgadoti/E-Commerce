@@ -13,7 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({super.key});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -54,8 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         const Center(
                           child: Text(
                             'Cadastro',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w800),
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
                           ),
                         ),
                         const SizedBox(height: 18),
@@ -138,8 +137,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               return null;
                             }
                           },
-                          onSaved: (password) =>
-                              users.confirmPassword = password!,
+                          onSaved: (password) => users.confirmPassword = password!,
                         ),
                         textFieldSpaceBetweenHeight,
                         ...[const PolicyAndDocumentsScreen()],
@@ -152,19 +150,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               if (users.password != users.confirmPassword) {
                                 CustomScaffoldMessenger(
                                   context: context,
-                                  message:
-                                      'Confirmação de Senha não confere! Tente '
+                                  message: 'Confirmação de Senha não confere! Tente '
                                       'Redigitar a Senha e a confirmação da Senha',
                                 ).msn();
                                 return;
                               }
                               if (!policyAndDocuments.agreedToPolicyTerms ||
-                                  !policyAndDocuments
-                                      .agreedToTermsOfService) {
+                                  !policyAndDocuments.agreedToTermsOfService) {
                                 CustomScaffoldMessenger(
                                   context: context,
-                                  message:
-                                      'É necessário Concordar com a Política de '
+                                  message: 'É necessário Concordar com a Política de '
                                       'privacidade e nossos Termos de Serviço',
                                 ).msn();
                                 return;
@@ -174,8 +169,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 onFail: (error) {
                                   CustomScaffoldMessenger(
                                           context: context,
-                                          message:
-                                              'Falha ao cadastrar $error')
+                                          message: 'Falha ao cadastrar $error')
                                       .msn();
                                 },
                                 onSuccess: () {

@@ -8,14 +8,7 @@ import 'package:flutter/foundation.dart';
 import '../common/formatted_fields/format_values.dart';
 import '../services/development_monitoring/monitoring_logger.dart';
 
-enum StatusOfOrders {
-  canceled,
-  preparing,
-  transporting,
-  delivered,
-  keepingReturn,
-  returned
-}
+enum StatusOfOrders { canceled, preparing, transporting, delivered, keepingReturn, returned }
 
 class OrderClient {
   OrderClient.fromCartManager(CartManager cartManager) {
@@ -50,8 +43,7 @@ class OrderClient {
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  DocumentReference get firestoreRef =>
-      firestore.collection("orders").doc(orderId);
+  DocumentReference get firestoreRef => firestore.collection("orders").doc(orderId);
 
   void updateFromDocument(DocumentSnapshot doc) {
     status = StatusOfOrders.values[doc["status"] as int];

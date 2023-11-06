@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 
 class ImageSourceWeb extends StatefulWidget {
   const ImageSourceWeb({
-    Key? key,
+    super.key,
     this.onImageSelectedWeb,
-  }) : super(key: key);
+  });
 
   final Function(List<html.File>)? onImageSelectedWeb;
 

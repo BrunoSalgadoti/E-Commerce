@@ -9,11 +9,11 @@ import 'package:image_picker/image_picker.dart';
 
 class ImageSourceSheet extends StatelessWidget {
   ImageSourceSheet({
-    Key? key,
+    super.key,
     this.onImageSelected,
     required this.onImageSelectedList,
     this.local,
-  }) : super(key: key);
+  });
 
   final ImagePicker picker = ImagePicker();
 
@@ -55,8 +55,7 @@ class ImageSourceSheet extends StatelessWidget {
     Future<void> imgGallery() async {
       local = 'gallery';
       final List<XFile> xFile = await picker.pickMultiImage();
-      final List<File> files =
-          xFile.map((xFile) => File(xFile.path)).toList();
+      final List<File> files = xFile.map((xFile) => File(xFile.path)).toList();
       if (files.length == 1) {
         File file = files.first;
         editImage(file.path);

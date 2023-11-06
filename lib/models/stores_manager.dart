@@ -26,9 +26,8 @@ class StoresManager extends ChangeNotifier {
   Future<void> _loadStoreList() async {
     PerformanceMonitoring().startTrace('load-store-list', shouldStart: true);
 
-    QuerySnapshot<Map<String, dynamic>> snapshot = await firestore
-        .collection("stores")
-        .get(const GetOptions(source: Source.cache));
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await firestore.collection("stores").get(const GetOptions(source: Source.cache));
 
     if (snapshot.metadata.isFromCache) {
       // If data is retrieved from the cache, update the UI...
@@ -64,8 +63,7 @@ class StoresManager extends ChangeNotifier {
     }
 
     // Configure real-time update listener
-    _storesListener =
-        firestore.collection("stores").snapshots().listen((event) {
+    _storesListener = firestore.collection("stores").snapshots().listen((event) {
       storesList = event.docs.map((s) => Stores.fromDocument(s)).toList();
       notifyListeners();
     });
@@ -79,8 +77,7 @@ class StoresManager extends ChangeNotifier {
     _timer?.cancel();
     _storesListener?.cancel();
     if (!kReleaseMode) {
-      MonitoringLogger()
-          .logInfo('Info: ${_storesListener?.cancel()} ListenerCancel ');
+      MonitoringLogger().logInfo('Info: ${_storesListener?.cancel()} ListenerCancel ');
     }
   }
 }

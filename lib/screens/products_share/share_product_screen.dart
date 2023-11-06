@@ -14,17 +14,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../common/formatted_fields/format_values.dart';
 
 class ShareProductScreen extends StatefulWidget {
-  ShareProductScreen({Key? key, required this.product}) : super(key: key);
+  ShareProductScreen({super.key, required this.product});
 
   final Product? product;
   final GlobalKey repaintBoundaryKey = GlobalKey();
 
   Future<Uint8List?> captureImage() async {
-    RenderRepaintBoundary boundary = repaintBoundaryKey.currentContext!
-        .findRenderObject() as RenderRepaintBoundary;
+    RenderRepaintBoundary boundary =
+        repaintBoundaryKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
     ui.Image image = await boundary.toImage();
-    ByteData? byteData =
-        await image.toByteData(format: ui.ImageByteFormat.png);
+    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     return byteData?.buffer.asUint8List();
   }
 
@@ -65,7 +64,7 @@ class ShareProductScreenState extends State<ShareProductScreen> {
   Future<void> _shareProduct() async {
     final shareProduct = ShareProduct(widget);
     try {
-      await shareProduct.shareProductOnMobly(context, SocialMedia.whatsapp);
+      await shareProduct.shareProductOnMobile(context, SocialMedia.whatsapp);
     } catch (error) {
       rethrow;
     }
@@ -129,8 +128,7 @@ class ShareProductScreenState extends State<ShareProductScreen> {
                           width: 350,
                           height: 350,
                           child: Image(
-                            image:
-                                NetworkImage(widget.product!.images!.first),
+                            image: NetworkImage(widget.product!.images!.first),
                             fit: BoxFit.fill,
                           ),
                         ),

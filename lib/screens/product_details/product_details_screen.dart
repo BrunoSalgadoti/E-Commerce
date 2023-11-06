@@ -16,10 +16,10 @@ import '../../common/formatted_fields/format_values.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({
-    Key? key,
+    super.key,
     this.product,
     this.selectedSizeIndex,
-  }) : super(key: key);
+  });
 
   final Product? product;
   final int? selectedSizeIndex;
@@ -50,8 +50,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       selectedSizeIndex = index;
     });
 
-    final transparentColorProduct =
-        selectedSize.colorProducts!.firstWhereOrNull(
+    final transparentColorProduct = selectedSize.colorProducts!.firstWhereOrNull(
       (colors) => colors.realColor == Colors.transparent,
     );
 
@@ -95,8 +94,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     return IconButton(
                       icon: const Icon(Icons.edit),
                       onPressed: () {
-                        Navigator.pushReplacementNamed(
-                            context, "/edit_product",
+                        Navigator.pushReplacementNamed(context, "/edit_product",
                             arguments: widget.product);
                       },
                     );
@@ -134,23 +132,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     children: [
                       Text(
                         widget.product!.name ?? '',
-                        style: const TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.w600),
+                        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
                       ),
                       Padding(
                           padding: const EdgeInsets.only(top: 8),
                           child: widget.product!.hasStock
                               ? Text(
                                   'A partir de: ',
-                                  style: TextStyle(
-                                      fontSize: 15, color: Colors.grey[600]),
+                                  style: TextStyle(fontSize: 15, color: Colors.grey[600]),
                                 )
                               : Text(
                                   widget.product!.deleted
                                       ? 'Esgotado...!'
                                       : 'Aguardando reposição de estoque...',
-                                  style: TextStyle(
-                                      fontSize: 15, color: Colors.grey[600]),
+                                  style: TextStyle(fontSize: 15, color: Colors.grey[600]),
                                 )),
                       widget.product!.hasStock
                           ? Text(
@@ -175,8 +170,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         padding: EdgeInsets.only(top: 16, bottom: 8),
                         child: Text(
                           'Descrição',
-                          style: TextStyle(
-                              fontSize: 17, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                         ),
                       ),
                       MarkdownBody(
@@ -187,8 +181,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         padding: EdgeInsets.only(top: 16, bottom: 8),
                         child: Text(
                           'Tamanhos',
-                          style: TextStyle(
-                              fontSize: 17, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Wrap(
@@ -206,14 +199,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         padding: const EdgeInsets.only(top: 16, bottom: 8),
                         child: Visibility(
                           visible: (widget.product!.deleted ||
-                                  detailsProducts
-                                      .areAllColorsEmpty(widget.product))
+                                  detailsProducts.areAllColorsEmpty(widget.product))
                               ? false
                               : true,
                           child: const Text(
                             'Cor(es) do Produto:',
-                            style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -222,16 +213,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         runSpacing: 8,
                         alignment: WrapAlignment.spaceEvenly,
                         children: widget
-                            .product!
-                            .itemProducts![selectedSizeIndex ?? 0]
-                            .colorProducts!
+                            .product!.itemProducts![selectedSizeIndex ?? 0].colorProducts!
                             .asMap() // Convert to Map<int, ColorsProducts>
                             .entries
                             .map((entry) {
                           final index = entry.key;
                           final colorProduct = entry.value;
-                          return detailsProducts
-                                  .areAllColorsEmpty(widget.product)
+                          return detailsProducts.areAllColorsEmpty(widget.product)
                               ? Container()
                               : ColorsWidget(
                                   key: ValueKey(index),
@@ -250,18 +238,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             text: userManager.isLoggedIn
                                 ? 'Adicionar ao Carrinho'
                                 : 'Entre para Comprar',
-                            onPressed: (detailsProducts
-                                            .areAllColorsEmpty(product) &&
+                            onPressed: (detailsProducts.areAllColorsEmpty(product) &&
                                         product.selectedDetails != null) ||
-                                    (!detailsProducts
-                                            .areAllColorsEmpty(product) &&
+                                    (!detailsProducts.areAllColorsEmpty(product) &&
                                         product.selectedDetails != null &&
-                                        detailsProducts.selectedColors !=
-                                            null)
+                                        detailsProducts.selectedColors != null)
                                 ? () {
                                     if (userManager.isLoggedIn) {
-                                      context.read<CartManager>().addToCart(
-                                          product, detailsProducts);
+                                      context
+                                          .read<CartManager>()
+                                          .addToCart(product, detailsProducts);
                                       Navigator.pushNamed(context, "/cart");
                                     } else {
                                       Navigator.pushNamed(context, "/login");

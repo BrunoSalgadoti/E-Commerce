@@ -11,10 +11,7 @@ class AdminOrdersManager extends ChangeNotifier {
   final List<OrderClient> _orders = [];
 
   Users? userFilter;
-  List<StatusOfOrders> statusFilter = [
-    StatusOfOrders.preparing,
-    StatusOfOrders.transporting
-  ];
+  List<StatusOfOrders> statusFilter = [StatusOfOrders.preparing, StatusOfOrders.transporting];
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -36,8 +33,7 @@ class AdminOrdersManager extends ChangeNotifier {
       output = output.where((o) => o.userId == userFilter!.id).toList();
     }
 
-    return output =
-        output.where((o) => statusFilter.contains(o.status)).toList();
+    return output = output.where((o) => statusFilter.contains(o.status)).toList();
   }
 
   Future<void> _listenToOrders() async {
@@ -47,16 +43,14 @@ class AdminOrdersManager extends ChangeNotifier {
 
     PerformanceMonitoring().startTrace('listen-orders', shouldStart: true);
 
-    _subscription =
-        firestore.collection("orders").snapshots().listen((events) {
+    _subscription = firestore.collection("orders").snapshots().listen((events) {
       for (final change in events.docChanges) {
         switch (change.type) {
           case DocumentChangeType.added:
             _orders.add(OrderClient.fromDocument(change.doc));
             break;
           case DocumentChangeType.modified:
-            final modOrder = _orders
-                .firstWhere((element) => element.orderId == change.doc.id);
+            final modOrder = _orders.firstWhere((element) => element.orderId == change.doc.id);
             modOrder.updateFromDocument(change.doc);
             break;
           case DocumentChangeType.removed:

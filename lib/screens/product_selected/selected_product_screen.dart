@@ -9,8 +9,7 @@ import '../../common/formatted_fields/format_values.dart';
 import '../../common/miscellaneous/freight_logo.dart';
 
 class SelectProductScreen extends StatefulWidget {
-  const SelectProductScreen({Key? key, this.productManager})
-      : super(key: key);
+  const SelectProductScreen({super.key, this.productManager});
 
   final ProductManager? productManager;
 
@@ -26,8 +25,7 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      final productManager =
-          Provider.of<ProductManager>(context, listen: false);
+      final productManager = Provider.of<ProductManager>(context, listen: false);
       productManager.filtersOn = false;
       productManager.search = '';
     });
@@ -47,8 +45,7 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
 
           return Column(children: [
             FiltersSlidingUpPanel(
-              textOfSlidingUpPanel:
-                  'Procure um produto para vincular a foto...',
+              textOfSlidingUpPanel: 'Procure um produto para vincular a foto...',
               panelController: panelController,
               selectedStatus: selectedStatus,
             ),
@@ -104,8 +101,7 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
                         return Card(
                           clipBehavior: Clip.antiAlias,
                           elevation: 7,
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 6),
+                          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                           child: Stack(children: [
                             FreightLogo(product: product, text: null),
                             Image.network(
@@ -124,10 +120,8 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
                               subtitle: Padding(
                                   padding: const EdgeInsets.only(top: 4),
                                   child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       if (product.brand != "")

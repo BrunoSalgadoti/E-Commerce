@@ -66,25 +66,20 @@ class AdminUsersSearch extends ChangeNotifier {
     PerformanceMonitoring().startTrace('listen-users', shouldStart: true);
 
     // Start by fetching data from cache
-    firestore
-        .collection("users")
-        .get(const GetOptions(source: Source.cache))
-        .then((snapshot) {
+    firestore.collection("users").get(const GetOptions(source: Source.cache)).then((snapshot) {
       if (snapshot.metadata.isFromCache) {
         allUsers = snapshot.docs.map((d) => Users.fromDocument(d)).toList();
-        allUsers.sort((a, b) =>
-            a.userName!.toLowerCase().compareTo(b.userName!.toLowerCase()));
+        allUsers
+            .sort((a, b) => a.userName!.toLowerCase().compareTo(b.userName!.toLowerCase()));
         filterList(allUsers);
         notifyListeners();
       }
     });
 
     // Listen to the stream for real-time updates and update the UI when necessary
-    _subscription =
-        firestore.collection("users").snapshots().listen((snapshot) {
+    _subscription = firestore.collection("users").snapshots().listen((snapshot) {
       allUsers = snapshot.docs.map((d) => Users.fromDocument(d)).toList();
-      allUsers.sort((a, b) =>
-          a.userName!.toLowerCase().compareTo(b.userName!.toLowerCase()));
+      allUsers.sort((a, b) => a.userName!.toLowerCase().compareTo(b.userName!.toLowerCase()));
       filterList(allUsers);
       notifyListeners();
     });
@@ -104,10 +99,8 @@ class AdminUsersSearch extends ChangeNotifier {
       filteredUsers.addAll(allUsers);
     } else {
       userFilteredSendEmail = true;
-      filteredUsers.addAll(allUsers.where((u) => u.userName!
-          .toString()
-          .toLowerCase()
-          .contains(search.toString().toLowerCase())));
+      filteredUsers.addAll(allUsers.where((u) =>
+          u.userName!.toString().toLowerCase().contains(search.toString().toLowerCase())));
     }
 
     filterList(filteredUsers);
@@ -124,8 +117,7 @@ class AdminUsersSearch extends ChangeNotifier {
 
     final Uri emailLaunchUri = Uri(
         scheme: "mailto",
-        path:
-            userEmail ?? emails.toString().replaceAll(RegExp(r"[\[\]]"), ""),
+        path: userEmail ?? emails.toString().replaceAll(RegExp(r"[\[\]]"), ""),
         query: encodeQueryParameters(<String, String>{
           "subject": "BRN Info_DEV",
           "body": userName == null
@@ -192,8 +184,7 @@ class AdminUsersSearch extends ChangeNotifier {
                     CommunicationsUtils(parameterClass1Of2: user)
                         .openPhone(context, user.phoneNumber ?? '');
                     CommunicationsUtils(parameterClass1Of2: user)
-                        .alertForCall(
-                            context, 'Número telefônico indisponível!');
+                        .alertForCall(context, 'Número telefônico indisponível!');
                   },
                 ),
               ],
@@ -205,11 +196,10 @@ class AdminUsersSearch extends ChangeNotifier {
                     children: <Widget>[
                       user.userPhotoURL == "" || user.userPhotoURL == null
                           ? const CircleAvatar(
-                              backgroundImage: AssetImage(
-                                  'assets/images/userWithoutImage.png'))
-                          : CircleAvatar(
                               backgroundImage:
-                                  NetworkImage(user.userPhotoURL!),
+                                  AssetImage('assets/images/userWithoutImage.png'))
+                          : CircleAvatar(
+                              backgroundImage: NetworkImage(user.userPhotoURL!),
                             ),
                       const SizedBox(
                           height: 40,
@@ -223,8 +213,8 @@ class AdminUsersSearch extends ChangeNotifier {
                     ],
                   ),
                   title: Text(user.userName!,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w800, color: Colors.white)),
+                      style:
+                          const TextStyle(fontWeight: FontWeight.w800, color: Colors.white)),
                   subtitle: Text(
                     "${user.email}\nTel.: ${user.phoneNumber ?? ""}",
                     style: const TextStyle(fontSize: 16, color: Colors.white),
@@ -273,23 +263,20 @@ class AdminUsersSearch extends ChangeNotifier {
                                   titleText: 'Enviar E-mail',
                                   titleSize: 18,
                                   titleColor: Colors.black,
-                                  bodyText:
-                                      'Escolha para quem deseja enviar\n '
+                                  bodyText: 'Escolha para quem deseja enviar\n '
                                       'o E-mail!',
                                   bodyWeight: FontWeight.normal,
                                   actions: [
                                     SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           CustomTextButton(
                                             text: 'Este Contato',
                                             icon: null,
                                             onPressed: () {
-                                              _sendEmail(
-                                                  user.email, user.userName);
+                                              _sendEmail(user.email, user.userName);
                                               Navigator.of(context).pop();
                                             },
                                           ),
@@ -324,8 +311,7 @@ class AdminUsersSearch extends ChangeNotifier {
                       CommunicationsUtils(parameterClass1Of2: user)
                           .openPhone(context, user.phoneNumber ?? '');
                       CommunicationsUtils(parameterClass1Of2: user)
-                          .alertForCall(
-                              context, 'Erro ao tentar abrir o telefone!');
+                          .alertForCall(context, 'Erro ao tentar abrir o telefone!');
                     }),
               ],
             ),
@@ -334,13 +320,10 @@ class AdminUsersSearch extends ChangeNotifier {
               return ListTile(
                 leading: user.userPhotoURL == "" || user.userPhotoURL == null
                     ? const CircleAvatar(
-                        backgroundImage:
-                            AssetImage('assets/images/userWithoutImage.png'))
-                    : CircleAvatar(
-                        backgroundImage: NetworkImage(user.userPhotoURL!)),
+                        backgroundImage: AssetImage('assets/images/userWithoutImage.png'))
+                    : CircleAvatar(backgroundImage: NetworkImage(user.userPhotoURL!)),
                 title: Text(user.userName!,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w800, color: Colors.white)),
+                    style: const TextStyle(fontWeight: FontWeight.w800, color: Colors.white)),
                 subtitle: Text(
                   "${user.email}\nTel.: ${user.phoneNumber ?? ""}",
                   style: const TextStyle(fontSize: 16, color: Colors.white),

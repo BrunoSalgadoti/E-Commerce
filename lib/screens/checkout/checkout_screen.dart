@@ -9,8 +9,8 @@ import 'package:provider/provider.dart';
 
 class CheckoutScreen extends StatelessWidget {
   CheckoutScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -22,8 +22,7 @@ class CheckoutScreen extends StatelessWidget {
 
     return ChangeNotifierProxyProvider<CartManager, CheckoutManager>(
       create: (_) => CheckoutManager(),
-      update: (_, cartManager, checkoutManager) =>
-          checkoutManager!..updateCart(cartManager),
+      update: (_, cartManager, checkoutManager) => checkoutManager!..updateCart(cartManager),
       lazy: false,
       child: Scaffold(
         body: GestureDetector(
@@ -39,8 +38,7 @@ class CheckoutScreen extends StatelessWidget {
                 backgroundColor: Colors.green,
                 flexibleSpace: FlexibleSpaceBar(
                   title: Text('Pagamento Seguro!',
-                      style: TextStyle(
-                          fontSize: fontSize, fontWeight: FontWeight.bold)),
+                      style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold)),
 
                   // centerTitle: true,
                 ),
@@ -48,8 +46,7 @@ class CheckoutScreen extends StatelessWidget {
                   const SizedBox(width: 150),
                   CustomTextButton(
                     style: ButtonStyle(
-                        padding: MaterialStateProperty.all<EdgeInsets>(
-                            EdgeInsets.zero)),
+                        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero)),
                     imageAssetsTarget: 'assets/icons/locked.svg',
                     imageWidth: iconSize,
                     imageHeight: iconSize,
@@ -58,8 +55,7 @@ class CheckoutScreen extends StatelessWidget {
                   ),
                   CustomTextButton(
                     style: ButtonStyle(
-                        padding: MaterialStateProperty.all<EdgeInsets>(
-                            EdgeInsets.zero)),
+                        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero)),
                     imageAssetsTarget: 'assets/icons/firebase.svg',
                     imageWidth: iconSize,
                     imageHeight: iconSize,
@@ -78,8 +74,7 @@ class CheckoutScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation(Colors.white),
+                              valueColor: AlwaysStoppedAnimation(Colors.white),
                             ),
                             SizedBox(height: 16),
                             Text(
@@ -112,20 +107,14 @@ class CheckoutScreen extends StatelessWidget {
                               if (formKey.currentState!.validate()) {
                                 debugPrint('enviar!!');
 
-                                checkoutManager.checkout(
-                                    onStockFail: (error) {
-                                  CustomScaffoldMessenger(
-                                          context: context, message: '$error')
+                                checkoutManager.checkout(onStockFail: (error) {
+                                  CustomScaffoldMessenger(context: context, message: '$error')
                                       .msn();
                                   Navigator.popUntil(
-                                      context,
-                                      (route) =>
-                                          route.settings.name == "/cart");
+                                      context, (route) => route.settings.name == "/cart");
                                 }, onSuccess: (order) {
                                   Navigator.popUntil(
-                                      context,
-                                      (route) =>
-                                          route.settings.name == "/product");
+                                      context, (route) => route.settings.name == "/product");
                                   Navigator.pushReplacementNamed(
                                       context, "/sales_confirmation",
                                       arguments: order);

@@ -8,8 +8,8 @@ import 'package:provider/provider.dart';
 
 class AddressCard extends StatelessWidget {
   const AddressCard({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

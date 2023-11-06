@@ -8,8 +8,7 @@ import 'package:brn_ecommerce/services/development_monitoring/firebase_performan
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart'
-    show ChangeNotifier, kDebugMode, kIsWeb;
+import 'package:flutter/foundation.dart' show ChangeNotifier, kDebugMode, kIsWeb;
 import 'package:uuid/uuid.dart';
 
 class Section extends ChangeNotifier {
@@ -86,8 +85,7 @@ class Section extends ChangeNotifier {
         final base64String = item.image.split(',').last;
         const String validCharacters =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
-        final trimmedString =
-            base64String.replaceAll(RegExp("[^$validCharacters]"), "");
+        final trimmedString = base64String.replaceAll(RegExp("[^$validCharacters]"), "");
         if (base64String is String &&
             base64String.isNotEmpty &&
             base64String.length % 4 == 0) {
@@ -95,9 +93,7 @@ class Section extends ChangeNotifier {
             final List<int> bytes = base64.decode(trimmedString);
             final Uint8List uint8ListBytes = Uint8List.fromList(bytes);
             final metadata = SettableMetadata(contentType: "image/jpeg");
-            final task = storageRef
-                .child(const Uuid().v4())
-                .putData(uint8ListBytes, metadata);
+            final task = storageRef.child(const Uuid().v4()).putData(uint8ListBytes, metadata);
             final snapshot = await task.whenComplete(() {});
             final url = await snapshot.ref.getDownloadURL();
             item.image = url;
@@ -118,8 +114,7 @@ class Section extends ChangeNotifier {
 
     for (final original in originalItems!) {
       try {
-        if (!items!.contains(original) &&
-            (original.image as String).contains("firebase")) {
+        if (!items!.contains(original) && (original.image as String).contains("firebase")) {
           final ref = storage.refFromURL(original.image as String);
           await ref.delete();
         }

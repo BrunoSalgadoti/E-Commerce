@@ -37,8 +37,7 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
     void backScreen() => Navigator.of(context).pop();
 
     void showColorPicker() {
-      Color initialColor =
-          widget.productCategory?.categoryRealColor ?? Colors.transparent;
+      Color initialColor = widget.productCategory?.categoryRealColor ?? Colors.transparent;
 
       showDialog(
         context: context,
@@ -52,15 +51,10 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
                   setState(() {
                     selectedColor = color;
                     widget.productCategory?.categoryRealColor = color;
-                    widget.productCategory?.categoryColor =
-                        getHexColor(color);
+                    widget.productCategory?.categoryColor = getHexColor(color);
                   });
                 },
-                labelTypes: const [
-                  ColorLabelType.rgb,
-                  ColorLabelType.hsv,
-                  ColorLabelType.hsl
-                ],
+                labelTypes: const [ColorLabelType.rgb, ColorLabelType.hsv, ColorLabelType.hsl],
                 pickerAreaHeightPercent: 0.8,
               ),
             ),
@@ -81,15 +75,12 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
       if (widget.productCategory?.categoryImg != null &&
           widget.productCategory?.categoryImg != "") {
         if (widget.productCategory!.categoryImg is File) {
-          return Image.file(widget.productCategory!.categoryImg as File,
-              fit: BoxFit.cover);
+          return Image.file(widget.productCategory!.categoryImg as File, fit: BoxFit.cover);
         } else {
-          return Image.network(widget.productCategory!.categoryImg!,
-              fit: BoxFit.cover);
+          return Image.network(widget.productCategory!.categoryImg!, fit: BoxFit.cover);
         }
       } else {
-        return Image.asset('assets/images/CategoriesBackground.jpg',
-            fit: BoxFit.cover);
+        return Image.asset('assets/images/CategoriesBackground.jpg', fit: BoxFit.cover);
       }
     }
 
@@ -144,15 +135,16 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
         clipBehavior: Clip.antiAlias,
         color: selectedColor ?? backgroundColor,
         elevation: 7,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
         child: Consumer<UserManager>(builder: (_, userManager, __) {
           return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.max,
             children: [
               Stack(
                 children: [
+                  // Container da foto
                   Container(
                       decoration: BoxDecoration(
                         boxShadow: [
@@ -165,18 +157,22 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
                         ],
                       ),
                       width: double.infinity,
-                      height: 142,
+                      height: 167,
                       child: buildCategoryImage()),
                   Positioned(
                     bottom: 20,
                     left: 14,
+                    right: 10,
                     child: TagForCard(
                       data: widget.productCategory?.categoryTitle ?? "",
                       alignment: Alignment.bottomRight,
                       backgroundColor: backgroundColor,
-                      containerWidth: 157,
+                      containerHeight: 60,
+                      containerWidth: 198,
                     ),
                   ),
+
+                  // Visibilidade somente para ADM
                   userManager.adminEnable
                       ? Align(
                           alignment: Alignment.topLeft,
@@ -186,7 +182,7 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
                               icon: const Icon(
                                 Icons.change_circle_outlined,
                                 color: Colors.black,
-                                size: 38,
+                                size: 28,
                               ),
                               text: 'Trocar\n Foto',
                               fontColor: Colors.black,
@@ -195,32 +191,28 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
                                   showDialog(
                                       context: context,
                                       builder: (context) => ImageSourceWeb(
-                                            onImageSelectedWeb:
-                                                onImageSelectedWeb,
+                                            onImageSelectedWeb: onImageSelectedWeb,
                                           ));
                                 } else if (Platform.isAndroid) {
                                   showModalBottomSheet(
                                       context: context,
                                       builder: (context) => ImageSourceSheet(
                                             onImageSelected: onImageSelected,
-                                            onImageSelectedList:
-                                                onImageSelectedList,
+                                            onImageSelectedList: onImageSelectedList,
                                           ));
                                 } else if (Platform.isIOS) {
                                   showCupertinoModalPopup(
                                       context: context,
                                       builder: (context) => ImageSourceSheet(
                                             onImageSelected: onImageSelected,
-                                            onImageSelectedList:
-                                                onImageSelectedList,
+                                            onImageSelectedList: onImageSelectedList,
                                           ));
                                 } else {
                                   showDialog(
                                       context: context,
                                       builder: (context) => ImageSourceSheet(
                                             onImageSelected: onImageSelected,
-                                            onImageSelectedList:
-                                                onImageSelectedList,
+                                            onImageSelectedList: onImageSelectedList,
                                           ));
                                 }
                               },
@@ -234,13 +226,10 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
                           child: Visibility(
                             visible: userManager.editingCategories == true,
                             child: Switch(
-                              value:
-                                  widget.productCategory?.categoryActivated ==
-                                      true,
+                              value: widget.productCategory?.categoryActivated == true,
                               onChanged: (newValue) {
                                 setState(() {
-                                  widget.productCategory?.categoryActivated =
-                                      newValue;
+                                  widget.productCategory?.categoryActivated = newValue;
                                 });
                               },
                             ),
@@ -256,7 +245,7 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
                                 text: '${widget.productCategory?.categoryID}',
                                 fontColor: textColor,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                                fontSize: 18,
                                 onPressed: null),
                           ),
                         )
@@ -264,10 +253,12 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
                 ],
               ),
               SizedBox(
-                height: 35,
+                height: 50,
+                width: 75,
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     userManager.adminEnable
                         ? Align(
@@ -278,11 +269,11 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
                                 icon: Icon(
                                   Icons.color_lens_rounded,
                                   color: textColor,
-                                  size: 25,
+                                  size: 14,
                                 ),
                                 text: 'Trocar Cor',
                                 fontColor: textColor,
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w800,
                                 onPressed: () {
                                   showColorPicker();
@@ -295,14 +286,15 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
                       visible: !userManager.editingCategories == true,
                       child: CustomTextButton(
                         isSvg: false,
-                        imageHeight: 35,
-                        icon:  Icon(Icons.label_important,
-                        color: textColor,
+                        imageHeight: 14,
+                        icon: Icon(
+                          Icons.label_important,
+                          color: textColor,
                         ),
                         onPressed: null,
                         text: 'Acessar...',
                         fontColor: textColor,
-                        fontSize: 14,
+                        fontSize: 13.0,
                         fontWeight: FontWeight.w800,
                       ),
                     )

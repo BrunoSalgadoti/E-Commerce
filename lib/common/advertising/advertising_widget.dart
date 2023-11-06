@@ -3,16 +3,14 @@ import 'dart:async';
 import 'package:brn_ecommerce/common/advertising/components/advertising_card.dart';
 import 'package:brn_ecommerce/common/advertising/components/content_type.dart';
 import 'package:brn_ecommerce/common/advertising/components/utils_for_advertising.dart';
-import 'package:brn_ecommerce/common/functions/init_screen_util.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class AdvertisingWidget extends StatefulWidget {
-  const AdvertisingWidget({Key? key}) : super(key: key);
+  const AdvertisingWidget({super.key});
 
   @override
   AdvertisingWidgetState createState() => AdvertisingWidgetState();
@@ -59,8 +57,6 @@ class AdvertisingWidgetState extends State<AdvertisingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    initScreenUtil(context); // It will use the size of the MediaQuery.
-
     final Product product = context.watch<Product>();
     final ProductManager productManager = context.watch<ProductManager>();
 
@@ -73,7 +69,7 @@ class AdvertisingWidgetState extends State<AdvertisingWidget> {
 
     return SizedBox(
       width: double.infinity,
-      height: sizeOfPropriety(300, ScreenUtil()),
+      height: 300,
       child: Column(
         children: [
           Expanded(
@@ -112,11 +108,11 @@ class AdvertisingWidgetState extends State<AdvertisingWidget> {
                           }
                         },
                         backgroundColor: Colors.white,
-                        elevation: 4.0.r,
-                        child: Icon(
+                        elevation: 4.0,
+                        child: const Icon(
                           Icons.arrow_back_ios,
                           color: Colors.black,
-                          size: customFontSizeResolver(14.0, ScreenUtil()),
+                          size: 14,
                         ),
                       ),
                     ),
@@ -137,10 +133,10 @@ class AdvertisingWidgetState extends State<AdvertisingWidget> {
                         },
                         backgroundColor: Colors.white,
                         elevation: 4.0,
-                        child: Icon(
+                        child: const Icon(
                           Icons.arrow_forward_ios,
                           color: Colors.black,
-                          size: customFontSizeResolver(14.0, ScreenUtil()),
+                          size: 14,
                         ),
                       ),
                     ),

@@ -24,20 +24,17 @@ String unFormatPhone(String formattedValue) {
 }
 
 String formattedRealText(num real) {
-  final currencyReal =
-      UtilBrasilFields.obterReal(real.toDouble(), moeda: true, decimal: 2);
+  final currencyReal = UtilBrasilFields.obterReal(real.toDouble(), moeda: true, decimal: 2);
   return currencyReal;
 }
 
 String formattedRealTextFormFiled(num real) {
-  final currencyReal =
-      UtilBrasilFields.obterReal(real.toDouble(), moeda: false, decimal: 2);
+  final currencyReal = UtilBrasilFields.obterReal(real.toDouble(), moeda: false, decimal: 2);
   return currencyReal;
 }
 
 String unFormattedReal(String formattedValue) {
-  final unformattedValue =
-      formattedValue.replaceAll(".", "").replaceAll(",", ".");
+  final unformattedValue = formattedValue.replaceAll(".", "").replaceAll(",", ".");
   return unformattedValue;
 }
 

@@ -15,8 +15,7 @@ class _PrivacyPolicyWidgetState extends State<PrivacyPolicyWidget> {
 
   @override
   void initState() {
-    final policyAndDocuments =
-        Provider.of<PolicyAndDocuments>(context, listen: false);
+    final policyAndDocuments = Provider.of<PolicyAndDocuments>(context, listen: false);
     agreedToPolicyTerms = policyAndDocuments.agreedToPolicyTerms;
     super.initState();
   }
