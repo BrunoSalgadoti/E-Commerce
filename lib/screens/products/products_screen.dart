@@ -3,6 +3,7 @@ import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/common/miscellaneous/search_dialog.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/filters_sliding_up_panel.dart';
+import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:flutter/material.dart';
@@ -34,10 +35,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
   @override
   Widget build(BuildContext context) {
     final Set<StatusOfProducts> selectedStatus = <StatusOfProducts>{};
-
     return Scaffold(
       drawer: const CustomDrawer(),
       appBar: AppBar(
+        toolbarHeight: 40,
         title: Consumer<ProductManager>(
           builder: (_, productManager, __) {
             if (productManager.search.isEmpty) {
@@ -45,29 +46,26 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   ? const Text("Filtro Ativo!")
                   : const Text("Todos os Produtos");
             } else {
-              return LayoutBuilder(builder: (_, constraints) {
-                return GestureDetector(
-                  onTap: () async {
-                    final search = await showDialog<String>(
-                        context: context,
-                        builder: (_) => SearchDialog(
-                              initialText: productManager.search,
-                              hintText: "Pesquise o produto desejado...",
-                            ));
-                    if (search != null) {
-                      productManager.search = search;
-                    }
-                  },
-                  child: Container(
-                      color: const Color.fromARGB(16, 255, 255, 255),
-                      width: constraints.biggest.width,
-                      child: Text(
-                        productManager.search,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
-                      )),
-                );
-              });
+              return GestureDetector(
+                onTap: () async {
+                  final search = await showDialog<String>(
+                      context: context,
+                      builder: (_) => SearchDialog(
+                            initialText: productManager.search,
+                            hintText: "Pesquise o produto desejado...",
+                          ));
+                  if (search != null) {
+                    productManager.search = search;
+                  }
+                },
+                child: Container(
+                    color: const Color.fromARGB(16, 255, 255, 255),
+                    child: Text(
+                      productManager.search,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    )),
+              );
             }
           },
         ),
@@ -116,84 +114,90 @@ class _ProductsScreenState extends State<ProductsScreen> {
       ),
       body: Consumer<ProductManager>(builder: (_, productManager, __) {
         final filteredProducts = productManager.filteredProducts;
-        return Column(
-          children: [
-            FiltersSlidingUpPanel(
-              textOfSlidingUpPanel: null,
-              panelController: panelController,
-              selectedStatus: selectedStatus,
-            ),
-            if (productManager.filtersOn == true)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  const Text(
-                    "Filtro Ativo:",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                      color: Colors.redAccent,
-                    ),
-                  ),
-                  Text(
-                    "${productManager.activeFilterName}",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () {
-                      productManager.disableFilter();
-                    },
-                  ),
-                ],
-              ),
-            Expanded(
-              child: Stack(
-                children: [
-                  if (filteredProducts.isEmpty)
-                    productManager.filtersOn == true || productManager.search.isNotEmpty
-                        ? const EmptyPageIndicator(
-                            title: 'Pesquisa não encontrada...',
-                            iconData: Icons.search_off,
-                            image: null,
-                            duration: null,
-                          )
-                        : const EmptyPageIndicator(
-                            title: "Carregando Produtos...",
-                            image: "assets/images/await.gif",
-                            iconData: null,
-                          )
-                  else
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(15, 30, 15, 40),
-                      child: GridView.builder(
-                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                          childAspectRatio: 1 / 2,
-                          crossAxisSpacing: 5,
-                          mainAxisSpacing: 5,
-                          maxCrossAxisExtent: 185,
-                          // mainAxisExtent: 300,
+        return Align(
+          alignment: Alignment.center,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                FiltersSlidingUpPanel(
+                  textOfSlidingUpPanel: null,
+                  panelController: panelController,
+                  selectedStatus: selectedStatus,
+                ),
+                if (productManager.filtersOn == true)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        "Filtro Ativo:",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                          color: Colors.redAccent,
                         ),
-                        itemCount: filteredProducts.length,
-                        itemBuilder: (_, index) {
-                          return FlexibleProductCard(
-                            product: productManager.filtersOn == true
-                                ? filteredProducts.toList()[index]
-                                : filteredProducts.reversed.toList()[index],
-                            isVertical: true,
-                          );
+                      ),
+                      Text(
+                        "${productManager.activeFilterName}",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          productManager.disableFilter();
                         },
                       ),
-                    ),
-                ],
-              ),
+                    ],
+                  ),
+                Expanded(
+                  child: Stack(
+                    children: [
+                      if (filteredProducts.isEmpty)
+                        productManager.filtersOn == true || productManager.search.isNotEmpty
+                            ? const EmptyPageIndicator(
+                                title: 'Pesquisa não encontrada...',
+                                iconData: Icons.search_off,
+                                image: null,
+                                duration: null,
+                              )
+                            : const EmptyPageIndicator(
+                                title: "Carregando Produtos...",
+                                image: "assets/images/await.gif",
+                                iconData: null,
+                              )
+                      else
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(15, 30, 15, 40),
+                          child: GridView.builder(
+                            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 260,
+                              mainAxisExtent: 318,
+                              crossAxisSpacing: 15,
+                              mainAxisSpacing: 10,
+                            ),
+                            itemCount: filteredProducts.length,
+                            itemBuilder: (_, index) {
+                              return FlexibleProductCard(
+                                product: productManager.filtersOn == true
+                                    ? filteredProducts.toList()[index]
+                                    : filteredProducts.reversed.toList()[index],
+                                isVertical: true,
+                              );
+                            },
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         );
       }),
       floatingActionButton: Consumer<UserManager>(builder: (_, userManager, __) {
