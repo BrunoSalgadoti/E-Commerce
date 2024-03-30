@@ -1,6 +1,6 @@
-import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/button/custom_text_button.dart';
-import 'package:brn_ecommerce/common/custom_messengers/custom_alert_dialog.dart';
+import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
+import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/common/miscellaneous/freight_logo.dart';
 import 'package:brn_ecommerce/models/cart_product.dart';
 import 'package:brn_ecommerce/models/product.dart';
@@ -64,8 +64,7 @@ class CartTile extends StatelessWidget {
                           children: [
                             Text(
                               cartProduct?.product?.name ?? "",
-                              style:
-                                  const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                             ),
                             if (cartProduct?.brand != null && cartProduct?.brand != "")
                               Padding(
@@ -97,10 +96,10 @@ class CartTile extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       boxShadow: [
                                         BoxShadow(
-                                          color: cartProduct!.realColorFromCart ==
-                                                  Colors.transparent
-                                              ? Colors.grey.withOpacity(0.0)
-                                              : Colors.grey.withOpacity(0.5),
+                                          color:
+                                              cartProduct!.realColorFromCart == Colors.transparent
+                                                  ? Colors.grey.withOpacity(0.0)
+                                                  : Colors.grey.withOpacity(0.5),
                                           spreadRadius: 2,
                                           blurRadius: 4,
                                           offset: const Offset(0, 2),
@@ -108,8 +107,7 @@ class CartTile extends StatelessWidget {
                                       ],
                                     ),
                                     child: Container(
-                                      color:
-                                          cartProduct?.realColorFromCart ?? Colors.transparent,
+                                      color: cartProduct?.realColorFromCart ?? Colors.transparent,
                                     ),
                                   ),
                                 ],
@@ -149,8 +147,7 @@ class CartTile extends StatelessWidget {
                         return Column(
                           children: [
                             CustomIconButton(
-                              iconData: cartProduct.quantity! >
-                                          cartProduct.unitQuantityStock ||
+                              iconData: cartProduct.quantity! > cartProduct.unitQuantityStock ||
                                       cartProduct.quantity! > cartProduct.unitQuantityAmount
                                   ? Icons.not_interested
                                   : Icons.add,
@@ -168,48 +165,39 @@ class CartTile extends StatelessWidget {
                               style: const TextStyle(fontSize: 20),
                             ),
                             CustomIconButton(
-                              iconData:
-                                  cartProduct.quantity! == 1 ? Icons.delete : Icons.remove,
+                              iconData: cartProduct.quantity! == 1 ? Icons.delete : Icons.remove,
                               onTap: cartProduct.quantity! <= 1
-                                  ? () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return CustomAlertDialog(
-                                            titleText: 'Confirmação de Exclusão',
-                                            bodyText: 'Deseja realmente deletar\n '
-                                                '${cartProduct.product!.name}'
-                                                '${cartProduct.size} '
-                                                'do carrinho?',
-                                            actions: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  CustomTextButton(
-                                                      text: 'Sim',
-                                                      icon: null,
-                                                      fontColor: Colors.red,
-                                                      onPressed: () {
-                                                        cartProduct.decrement();
-                                                        Navigator.of(context).pop();
-                                                      }),
-                                                  CustomTextButton(
-                                                    text: 'NÃO',
-                                                    icon: null,
-                                                    fontSize: 18,
-                                                    fontColor: Colors.green,
-                                                    onPressed: () {
-                                                      Navigator.of(context).pop();
-                                                    },
-                                                  )
-                                                ],
+                                  ? () => CustomAlertDialogAdaptive(
+                                        titleText: 'Confirmação de Exclusão',
+                                        bodyText: 'Deseja realmente deletar\n '
+                                            '${cartProduct.product!.name}'
+                                            '${cartProduct.size} '
+                                            'do carrinho?',
+                                        actions: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              CustomTextButton(
+                                                  text: 'Sim',
+                                                  icon: null,
+                                                  fontColor: Colors.red,
+                                                  onPressed: () {
+                                                    cartProduct.decrement();
+                                                    Navigator.of(context).pop();
+                                                  }),
+                                              CustomTextButton(
+                                                text: 'NÃO',
+                                                icon: null,
+                                                fontSize: 18,
+                                                fontColor: Colors.green,
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
                                               )
                                             ],
-                                          );
-                                        },
-                                      );
-                                    }
+                                          )
+                                        ],
+                                      ).alertContent(context)
                                   : cartProduct.decrement,
                               color: cartProduct.quantity! > 1
                                   ? Theme.of(context).primaryColor

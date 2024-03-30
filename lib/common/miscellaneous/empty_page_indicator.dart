@@ -2,7 +2,29 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+/// # Widget for displaying an empty page indicator with alternating content (Folder: common/miscellaneous)
+/// ## EmptyPageIndicator
+/// A widget that displays different content based on a timer, providing visual feedback to the user.
+///
+/// This widget is stateful, allowing for dynamic content changes based on a specified duration.
 class EmptyPageIndicator extends StatefulWidget {
+  /// Creates an [EmptyPageIndicator] widget with the specified parameters.
+  ///
+  /// The [title] parameter is required and represents the title text to be displayed.
+  ///
+  /// The [iconData] parameter is the icon data to be displayed.
+  ///
+  /// The [image] parameter is the image path to be displayed.
+  ///
+  /// The [duration] parameter is the duration for switching between indicators, defaulting to 17 seconds.
+  ///
+  /// The [iconColor] parameter sets the color of the icon.
+  ///
+  /// The [iconSize] parameter sets the size of the icon.
+  ///
+  /// The [titleSize] parameter sets the size of the title text.
+  ///
+  /// The [titleColor] parameter sets the color of the title text.
   const EmptyPageIndicator({
     super.key,
     required this.title,
@@ -15,21 +37,40 @@ class EmptyPageIndicator extends StatefulWidget {
     this.titleColor,
   });
 
+  /// The title text to be displayed.
   final String title;
+
+  /// The size of the title text.
   final double? titleSize;
+
+  /// The color of the title text.
   final Color? titleColor;
+
+  /// The icon data to be displayed.
   final IconData? iconData;
+
+  /// The color of the icon.
   final Color? iconColor;
+
+  /// The size of the icon.
   final double? iconSize;
+
+  /// The image path to be displayed.
   final String? image;
+
+  /// The duration for switching between indicators.
   final Duration? duration;
 
   @override
   EmptyPageIndicatorState createState() => EmptyPageIndicatorState();
 }
 
+/// The state class for the [EmptyPageIndicator] widget.
 class EmptyPageIndicatorState extends State<EmptyPageIndicator> {
+  /// Flag to track which content to show.
   bool _showFirst = true;
+
+  /// Timer for switching between indicators.
   Timer? _timer;
 
   @override

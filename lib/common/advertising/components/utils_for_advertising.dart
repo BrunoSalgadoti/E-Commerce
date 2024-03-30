@@ -2,7 +2,11 @@ import 'package:brn_ecommerce/common/advertising/components/content_type.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 
+/// ## UtilsForAdvertising (Folder: common/advertising/components)
+/// ### Components of Advertising Widget
+/// Utility class for loading content from the ADs carousel
 class UtilsForAdvertising {
+  /// Method for loading advertising products
   List<AdvertisingCarouselContent> loadAdvertisingProducts(ProductManager productManager) {
     List<AdvertisingCarouselContent> cardContents = [];
 
@@ -21,6 +25,7 @@ class UtilsForAdvertising {
     return cardContents;
   }
 
+  /// Method to load images selected by the administrator
   List<AdvertisingCarouselContent> loadAdminSelectedImages() {
     List<AdvertisingCarouselContent> imageContents = [];
 

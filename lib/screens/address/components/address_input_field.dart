@@ -1,6 +1,6 @@
-import 'package:brn_ecommerce/common/button/custom_button.dart';
-import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
-import 'package:brn_ecommerce/common/custom_text_form_field.dart';
+import 'package:brn_ecommerce/common/buttons/custom_button.dart';
+import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
+import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
@@ -22,7 +22,7 @@ class AddressInputField extends StatelessWidget {
           context: context,
           message: 'Verifique seu acesso a internet!',
           duration: const Duration(milliseconds: 4500),
-        ).msn();
+        ).alertScaffold();
 
     if (address.zipCode != null && cartManager.deliveryPrice == null) {
       return Column(

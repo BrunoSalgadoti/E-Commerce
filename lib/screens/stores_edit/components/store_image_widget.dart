@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
+import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/models/stores.dart';
 import 'package:brn_ecommerce/screens/product_edit/components/image_source_sheet.dart';
 import 'package:brn_ecommerce/screens/product_edit/components/image_source_web.dart';
@@ -32,7 +32,7 @@ class StoreImageWidget extends StatelessWidget {
         CustomScaffoldMessenger(
           context: context,
           message: 'Esta seção não permite a seleção de diversas imagens',
-        ).msn();
+        ).alertScaffold();
         backScreen();
       } else {
         File file = files.first;
@@ -46,7 +46,7 @@ class StoreImageWidget extends StatelessWidget {
         CustomScaffoldMessenger(
           context: context,
           message: 'Esta seção não permite a seleção de diversas imagens',
-        ).msn();
+        ).alertScaffold();
         backScreen();
       } else {
         for (html.File file in files) {

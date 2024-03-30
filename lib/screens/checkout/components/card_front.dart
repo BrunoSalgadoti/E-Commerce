@@ -1,5 +1,5 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:brn_ecommerce/common/custom_text_form_field.dart';
+import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/screens/checkout/components/card_icon_colors.dart';
 import 'package:brn_ecommerce/screens/checkout/components/card_icon_types.dart';

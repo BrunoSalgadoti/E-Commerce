@@ -60,10 +60,6 @@ class ImagesForm extends StatelessWidget {
             return ImageSourceWeb(
               onImageSelectedWeb: onImageSelectedWeb,
             );
-          } else if (imageSourceSheet?.local == 'gallery') {
-            return ImageSourceSheet(
-              onImageSelectedList: onImageSelectedList,
-            );
           } else {
             return ImageSourceSheet(
               onImageSelected: onImageSelected,
@@ -140,16 +136,13 @@ class ImagesForm extends StatelessWidget {
                               onPressed: () {
                                 if (Platform.isAndroid) {
                                   showModalBottomSheet(
-                                      context: context,
-                                      builder: (_) => buildImageSourceSheet());
+                                      context: context, builder: (_) => buildImageSourceSheet());
                                 } else if (Platform.isIOS) {
                                   showCupertinoModalPopup(
-                                      context: context,
-                                      builder: (_) => buildImageSourceSheet());
+                                      context: context, builder: (_) => buildImageSourceSheet());
                                 } else {
                                   showDialog(
-                                      context: context,
-                                      builder: (_) => buildImageSourceSheet());
+                                      context: context, builder: (_) => buildImageSourceSheet());
                                 }
                               })),
                 ),

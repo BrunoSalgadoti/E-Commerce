@@ -69,8 +69,7 @@ class ProductManager extends ChangeNotifier {
     }
 
     if (statusFilter.contains(StatusOfProducts.bestSellers)) {
-      List<Product> bestSellingProducts =
-          bestSellingProductsManager!.getBestSellingProducts(15);
+      List<Product> bestSellingProducts = bestSellingProductsManager!.getBestSellingProducts(15);
       filteredProducts =
           filteredProducts.where((product) => bestSellingProducts.contains(product)).toList();
     }
@@ -81,9 +80,7 @@ class ProductManager extends ChangeNotifier {
     }
 
     if (statusFilter.contains(StatusOfProducts.brand)) {
-      filteredProducts = filteredProducts
-          .where((product) => product.brand.trim() != "")
-          .toList()
+      filteredProducts = filteredProducts.where((product) => product.brand.trim() != "").toList()
         ..sort((a, b) => a.brand.compareTo(b.brand));
     }
 
@@ -111,6 +108,7 @@ class ProductManager extends ChangeNotifier {
     _subscription = firestore
         .collection("products")
         .where("deleted", isEqualTo: false)
+        .where("isvalid", isEqualTo: true)
         .snapshots()
         .listen((event) {
       allProducts.clear();

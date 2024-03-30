@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/common/custom_text_form_field.dart';
+import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

@@ -9,8 +9,8 @@ class AnotherColors {
     this.homeGradientColor1Ios = const Color.fromARGB(255, 169, 40, 175),
     this.homeGradientColor2Ios = const Color.fromARGB(255, 231, 180, 243),
     // Gradient Colors of Home Screen WEB
-    this.homeGradientColor1Web = const Color.fromARGB(255, 23, 56, 68),
-    this.homeGradientColor2Web = const Color.fromARGB(255, 162, 225, 225),
+    this.homeGradientColor1Web = const Color.fromARGB(255, 162, 225, 225),
+    this.homeGradientColor2Web = const Color.fromARGB(255, 217, 217, 217),
   });
 
   final Color homeGradientColor1Android;

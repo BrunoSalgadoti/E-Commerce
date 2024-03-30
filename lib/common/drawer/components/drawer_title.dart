@@ -1,8 +1,11 @@
-import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
+import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
 import 'package:brn_ecommerce/models/page_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// ## DrawerTitle (Folder: common/drawer/components)
+/// ### Components of Drawer Widget
+/// Widget that represents a title item in the app drawer with an icon and text.
 class DrawerTitle extends StatelessWidget {
   const DrawerTitle({super.key, this.iconData, this.title, this.page, this.onTap});
 
@@ -31,11 +34,16 @@ class DrawerTitle extends StatelessWidget {
                 color: currentPage == page ? getEspecialColor() : Colors.grey[700],
               ),
             ),
-            Text(
-              title!,
-              style: TextStyle(
-                fontSize: 16,
-                color: currentPage == page ? getEspecialColor() : Colors.grey[700],
+            Flexible(
+              fit: FlexFit.loose,
+              child: Text(
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                title!,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: currentPage == page ? getEspecialColor() : Colors.grey[700],
+                ),
               ),
             )
           ],

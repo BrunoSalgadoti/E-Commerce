@@ -34,8 +34,7 @@ class ViaCepAddress {
     this.ibge,
   });
 
-  factory ViaCepAddress.fromMap(Map<String, dynamic> map,
-      {double? latitude, double? longitude}) {
+  factory ViaCepAddress.fromMap(Map<String, dynamic> map, {double? latitude, double? longitude}) {
     return ViaCepAddress(
       longitude: longitude,
       latitude: latitude,

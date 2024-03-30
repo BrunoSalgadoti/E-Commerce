@@ -1,6 +1,26 @@
 import 'package:flutter/material.dart';
 
+/// ## CustomScaffoldMessenger (Folder: common/messengers)
+/// Widget that encapsulates the logic for showing a custom Snackbar message using ScaffoldMessenger.
 class CustomScaffoldMessenger extends StatelessWidget {
+  /// Create a CustomScaffoldMessenger widget.
+  ///
+  /// The parameters [context] and [message] are required.
+  ///
+  /// The parameter [backgroundColor] sets the background color of the Snackbar.
+  ///
+  /// The parameter [duration] sets the duration for which the Snackbar is displayed.
+  ///
+  /// The parameter [behavior] sets the behavior of the Snackbar.
+  ///
+  /// The parameter [borderRadius] sets the border radius for the Snackbar.
+  ///
+  /// The parameter [margin] sets the margin around the Snackbar.
+  ///
+  /// The parameter [textStyle] sets the style of the text in the Snackbar.
+  ///
+  /// The parameter [iconColor] sets the color of the icon in the Snackbar.
+
   const CustomScaffoldMessenger({
     super.key,
     required this.context,
@@ -24,7 +44,10 @@ class CustomScaffoldMessenger extends StatelessWidget {
   final TextStyle textStyle;
   final Color iconColor;
 
-  void msn() {
+  /// Method to show the Snackbar message.
+  ///
+  /// This method checks if the message is not empty and then shows a Snackbar using ScaffoldMessenger.
+  dynamic alertScaffold() {
     if (message.isNotEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

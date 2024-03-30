@@ -86,9 +86,7 @@ class Section extends ChangeNotifier {
         const String validCharacters =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
         final trimmedString = base64String.replaceAll(RegExp("[^$validCharacters]"), "");
-        if (base64String is String &&
-            base64String.isNotEmpty &&
-            base64String.length % 4 == 0) {
+        if (base64String is String && base64String.isNotEmpty && base64String.length % 4 == 0) {
           try {
             final List<int> bytes = base64.decode(trimmedString);
             final Uint8List uint8ListBytes = Uint8List.fromList(bytes);
@@ -104,8 +102,7 @@ class Section extends ChangeNotifier {
           }
         }
       } else if (item.image is File) {
-        final UploadTask task =
-            storageRef.child(const Uuid().v4()).putFile(item.image as File);
+        final UploadTask task = storageRef.child(const Uuid().v4()).putFile(item.image as File);
         final TaskSnapshot snapshot = await task.whenComplete(() {});
         final String url = await snapshot.ref.getDownloadURL();
         item.image = url;

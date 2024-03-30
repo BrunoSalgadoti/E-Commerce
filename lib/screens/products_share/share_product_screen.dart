@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 
-import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
+import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/screens/products_share/components/share_product.dart';
 import 'package:brn_ecommerce/screens/products_share/components/share_product_web.dart';
@@ -38,14 +38,14 @@ class ShareProductScreenState extends State<ShareProductScreen> {
         CustomScaffoldMessenger(
           context: context,
           message: 'Erro ao compartilhar: $error',
-        ).msn();
+        ).alertScaffold();
       });
     } else {
       _shareProduct().then((value) {}).catchError((error) {
         CustomScaffoldMessenger(
           context: context,
           message: 'Erro ao compartilhar: $error',
-        ).msn();
+        ).alertScaffold();
       });
     }
   }

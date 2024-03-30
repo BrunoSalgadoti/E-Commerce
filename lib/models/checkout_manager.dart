@@ -52,8 +52,7 @@ class CheckoutManager extends ChangeNotifier {
   }
 
   Future<void> _checkConsistenceOfCounterAndOrders() async {
-    final DocumentSnapshot orderCounterSnapshot =
-        await firestore.doc("aux/orderCounter").get();
+    final DocumentSnapshot orderCounterSnapshot = await firestore.doc("aux/orderCounter").get();
     final orderCounterCurrent = orderCounterSnapshot.get("current") as int;
 
     final QuerySnapshot ordersSnapshot = await firestore.collection("orders").get();
@@ -125,9 +124,8 @@ class CheckoutManager extends ChangeNotifier {
           productsWithoutStock.add(product);
         } else {
           details.stock -= cartProduct.quantity!;
-          details.colorProducts
-              ?.firstWhere((color) => color.color == cartProduct.color)
-              .amount -= cartProduct.quantity!;
+          details.colorProducts?.firstWhere((color) => color.color == cartProduct.color).amount -=
+              cartProduct.quantity!;
           details.sellers += cartProduct.quantity!;
           productsToUpdate.add(product);
         }

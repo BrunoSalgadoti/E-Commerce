@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../development_monitoring/firebase_performance.dart';
+
 /// Class that facilitates automated updating of documents in Firestore.
 class FirebaseAutomatedMapsUpdate<T> {
   final String collectionPath;
@@ -28,6 +30,8 @@ class FirebaseAutomatedMapsUpdate<T> {
   /// Developed in partnership with ChatGPT (That the Systems Dev Analyst
   /// of the Company BRN Info_Dev affectionately calls her Lia).
   Future<void> updateDocument(T object) async {
+    PerformanceMonitoring().startTrace('autoMapsUpdate', shouldStart: true);
+
     final Map<String, dynamic> objectMap = toMap(object);
 
     // Get a reference to the Firestore document
@@ -49,5 +53,6 @@ class FirebaseAutomatedMapsUpdate<T> {
       // Update the Firestore document
       await docSnapshot.reference.set(currentData);
     }
+    PerformanceMonitoring().stopTrace('autoMapsUpdate');
   }
 }

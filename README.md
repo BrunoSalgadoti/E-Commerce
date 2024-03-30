@@ -1,4 +1,4 @@
-# BRN E-commerce
+# BRN Info_Dev eCommerce
 
 <img src="assets/images/brnInfoDev.png" alt="Em Construção" style="width: 300px; height: 200px;">
 
@@ -64,3 +64,7 @@ request.
 
 Este projeto está licenciado sob a Licença MIT - consulte o arquivo [LICENSE](./docs_ecommerce/LICENSE) para obter
 detalhes.
+
+## Desenvolvido pelo Analista e Dev. Bruno Salgado.
+### Contato: suporte@brninfodev.com
+## Copyright 2024.

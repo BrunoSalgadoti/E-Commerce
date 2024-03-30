@@ -3,12 +3,16 @@ import 'dart:async';
 import 'package:brn_ecommerce/common/advertising/components/advertising_card.dart';
 import 'package:brn_ecommerce/common/advertising/components/content_type.dart';
 import 'package:brn_ecommerce/common/advertising/components/utils_for_advertising.dart';
+import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// # Widgets of the advertising reused in the project (Folder: common/advertising)
+/// ## AdvertisingWidget
+/// Stateful widget to display an ad carousel (PageView)
 class AdvertisingWidget extends StatefulWidget {
   const AdvertisingWidget({super.key});
 
@@ -20,9 +24,8 @@ class AdvertisingWidgetState extends State<AdvertisingWidget> {
   final ProductManager productManager = ProductManager();
   final PageController _pageController = PageController();
 
-  late Timer _timer;
-
-  int _currentPage = 0;
+  late Timer _timer; // Timer for automatic carousel control
+  int _currentPage = 0; // Carousel Home
 
   @override
   void initState() {
@@ -33,6 +36,7 @@ class AdvertisingWidgetState extends State<AdvertisingWidget> {
       });
     });
 
+    /// Starts the timer to automatically advance the carousel pages
     _timer = Timer.periodic(const Duration(seconds: 9), (timer) {
       if (_currentPage <
           UtilsForAdvertising().loadAdvertisingProducts(productManager).length +
@@ -50,121 +54,135 @@ class AdvertisingWidgetState extends State<AdvertisingWidget> {
 
   @override
   void dispose() {
-    _pageController.dispose();
-    _timer.cancel(); // Cancel Timer on disposal
+    _pageController.dispose(); // Releases the page controller
+    _timer.cancel(); // Cancels the timer when the state ends
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Product product = context.watch<Product>();
+    final Product product = context.watch<Product>(); // Product obtained from context
     final ProductManager productManager = context.watch<ProductManager>();
 
-    final List<AdvertisingCarouselContent> cardContents =
-        UtilsForAdvertising().loadAdvertisingProducts(productManager).toList();
-    final List<AdvertisingCarouselContent> imageContents =
-        UtilsForAdvertising().loadAdminSelectedImages().toList();
-    final totalItems = cardContents.length + imageContents.length - 1;
-    final totalPages = totalItems.ceil();
+    final List<AdvertisingCarouselContent> cardContents = UtilsForAdvertising()
+        .loadAdvertisingProducts(productManager)
+        .toList(); // Carousel content (product cards)
+    final List<AdvertisingCarouselContent> imageContents = UtilsForAdvertising()
+        .loadAdminSelectedImages()
+        .toList(); // Carousel content (selected images)
+    final totalItems = cardContents.length + imageContents.length - 1; //Total items in the carousel
+    final totalPages = totalItems.ceil(); // Total number of pages in the carousel
 
-    return SizedBox(
-      width: double.infinity,
-      height: 300,
-      child: Column(
+    return LayoutBuilder(builder: (context, constraints) {
+      return Column(
         children: [
-          Expanded(
-            child: Stack(children: [
-              PageView(
-                controller: _pageController,
-                padEnds: true,
-                children: [
-                  ...cardContents.map<Widget>((content) {
-                    if (content.type == ContentType.productCard) {
-                      return AdvertisingCard(product: content.product!);
-                    } else {
-                      return AdvertisingCard(product: product);
-                    }
-                  }),
-                  ...imageContents.map<Widget>(
-                    (content) => Image.network(content.imageUrl!),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if (kIsWeb)
-                    Center(
-                      child: FloatingActionButton(
-                        heroTag: 'previousButton',
-                        mini: true,
-                        onPressed: () {
-                          if (_currentPage > 0) {
-                            _pageController.previousPage(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.ease,
-                            );
-                          }
-                        },
-                        backgroundColor: Colors.white,
-                        elevation: 4.0,
-                        child: const Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.black,
-                          size: 14,
+          SizedBox(
+            height: constraints.maxWidth < mobileBreakpoint
+                ? 280
+                : constraints.maxWidth >= wildBreakpoint
+                    ? 580
+                    : 390,
+            width: double.infinity,
+            child: AspectRatio(
+              aspectRatio: 1.0,
+              child: Stack(children: [
+                PageView(
+                  controller: _pageController,
+                  padEnds: true,
+                  children: [
+                    ...cardContents.map<Widget>((content) {
+                      if (content.type == ContentType.productCard) {
+                        return AdvertisingCard(product: content.product!);
+                      } else {
+                        return AdvertisingCard(product: product);
+                      }
+                    }),
+                    ...imageContents.map<Widget>(
+                      (content) => Image.network(content.imageUrl!),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if (kIsWeb)
+                      Center(
+                        child: FloatingActionButton(
+                          heroTag: 'previousButton',
+                          mini: true,
+                          onPressed: () {
+                            if (_currentPage > 0) {
+                              _pageController.previousPage(
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.ease,
+                              );
+                            }
+                          },
+                          backgroundColor: Colors.white,
+                          elevation: 4.0,
+                          child: const FittedBox(
+                            child: Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.black,
+                              size: 14,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  if (kIsWeb)
-                    Center(
-                      child: FloatingActionButton(
-                        heroTag: 'nextButton',
-                        mini: true,
-                        onPressed: () {
-                          if (_currentPage < cardContents.length + imageContents.length - 1) {
-                            _pageController.nextPage(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.ease,
-                            );
-                          } else {
-                            _pageController.jumpToPage(0);
-                          }
-                        },
-                        backgroundColor: Colors.white,
-                        elevation: 4.0,
-                        child: const Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.black,
-                          size: 14,
+                    if (kIsWeb)
+                      Center(
+                        child: FloatingActionButton(
+                          heroTag: 'nextButton',
+                          mini: true,
+                          onPressed: () {
+                            if (_currentPage < cardContents.length + imageContents.length - 1) {
+                              _pageController.nextPage(
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.ease,
+                              );
+                            } else {
+                              _pageController.jumpToPage(0);
+                            }
+                          },
+                          backgroundColor: Colors.white,
+                          elevation: 4.0,
+                          child: const FittedBox(
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.black,
+                              size: 14,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                ],
-              ),
-            ]),
+                  ],
+                ),
+              ]),
+            ),
           ),
           if (totalPages > 1)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(totalPages, (index) {
-                return Padding(
-                  padding: const EdgeInsets.only(right: 3),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _currentPage == index
-                          ? Theme.of(context).primaryColor
-                          : Colors.white12,
+            FittedBox(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(totalPages, (index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 3),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color:
+                            _currentPage == index ? Theme.of(context).primaryColor : Colors.white12,
+                      ),
+                      width: 9,
+                      height: 9,
                     ),
-                    width: 6,
-                    height: 6,
-                  ),
-                );
-              }),
+                  );
+                }),
+              ),
             ),
         ],
-      ),
-    );
+      );
+    });
   }
 }

@@ -3,21 +3,21 @@ import 'package:brn_ecommerce/models/categories_of_products/product_sub_category
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-/// Lista de categorias de produtos de fábrica.
+/// List of factory product categories.
 ///
-/// Essa lista é usada para criar ou atualizar categorias de produtos no Firebase
-/// Firestore durante o processo de inicialização do aplicativo. Ela é usada
-/// principalmente em uma função de desenvolvedor para definir as categorias
-/// iniciais ou atualizar as existentes.
+/// This list is used to create or update product categories in Firebase
+/// Firestore during the application launch process. It is used
+/// mainly in a developer role to define the categories
+/// initials or update existing ones.
 ///
-/// ATENÇÃO: Modificar esta lista pode ter impacto direto na estrutura da loja
-/// online, incluindo a criação, atualização e exclusão de categorias e subcategorias.
-/// Se a loja já estiver em uso, modificações nesta lista devem ser feitas com
-/// cuidado, levando em consideração o impacto nos produtos associados às categorias.
+/// [ATTENTION] Modifying this list may have a direct impact on the store structure
+/// online, including creating, updating and deleting categories and subcategories.
+/// If the store is already in use, modifications to this list must be made with
+/// care, taking into account the impact on products associated with the categories.
 ///
-/// Esta lista é condicionalmente populada com categorias apenas quando o aplicativo
-/// é executado em modo de desenvolvimento (kReleaseMode = false). No modo de produção,
-/// a lista será vazia.
+/// This list is conditionally populated with categories only when the application
+/// runs in development mode (kReleaseMode = false). In production mode,
+/// the list will be empty.
 
 List<ProductCategory> categoriesFactoryList = kReleaseMode
     ? []

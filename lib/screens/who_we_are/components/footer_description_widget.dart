@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/common/button/custom_text_button.dart';
+import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:brn_ecommerce/models/who_we_are_manager.dart';
 import 'package:flutter/material.dart';
@@ -38,8 +38,7 @@ class _FooterDescriptionWidgetState extends State<FooterDescriptionWidget> {
         "da sua Empresa como CNPJ, Telefone, Endereço, etc..."
         "\n Clique no ícone da vassoura e comece!";
 
-    return Consumer2<WhoWeAreManager, UserManager>(
-        builder: (_, whoWeAreManager, userManager, __) {
+    return Consumer2<WhoWeAreManager, UserManager>(builder: (_, whoWeAreManager, userManager, __) {
       return Center(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

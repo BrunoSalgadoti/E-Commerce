@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 
+/// ## SearchDialog (Folder: common/messengers)
+/// A custom search dialog for inputting search queries.
 class SearchDialog extends StatelessWidget {
+  /// Creates a search dialog with the specified [initialText] and [hintText].
+  ///
+  /// The [initialText] parameter is the text initially displayed in the search field.
+  ///
+  /// The [hintText] parameter is the hint text displayed in the search field when it's empty.
   const SearchDialog({super.key, required this.initialText, required this.hintText});
 
+  /// The initial text displayed in the search field.
   final String initialText;
+
+  /// The hint text displayed in the search field when it's empty.
   final String hintText;
 
   @override
@@ -16,10 +26,10 @@ class SearchDialog extends StatelessWidget {
             right: 5,
             child: Card(
                 child: TextFormField(
-              initialValue: initialText,
-              textInputAction: TextInputAction.search,
-              autofocus: true,
-              decoration: InputDecoration(
+                  initialValue: initialText,
+                  textInputAction: TextInputAction.search,
+                  autofocus: true,
+                  decoration: InputDecoration(
                   hintText: hintText,
                   border: InputBorder.none,
                   contentPadding: const EdgeInsets.symmetric(vertical: 15),

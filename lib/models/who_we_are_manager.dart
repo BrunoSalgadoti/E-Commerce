@@ -26,11 +26,7 @@ class WhoWeAreManager extends ChangeNotifier {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   void _subscribeToDescriptions() {
-    firestore
-        .collection("whoweare")
-        .doc("descriptions")
-        .snapshots()
-        .listen((DocumentSnapshot doc) {
+    firestore.collection("whoweare").doc("descriptions").snapshots().listen((DocumentSnapshot doc) {
       if (doc.exists) {
         footerDescription = doc["footerDescription"] as String?;
         topDescription = doc["topDescription"] as String?;

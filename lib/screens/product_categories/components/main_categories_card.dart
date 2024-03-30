@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:brn_ecommerce/common/button/custom_text_button.dart';
+import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
+import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
 import 'package:brn_ecommerce/models/categories_of_products/product_category.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
@@ -13,8 +14,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
-
-import '../../../common/custom_messengers/custom_scaffold_messenger.dart';
 
 class MainCategoriesCard extends StatefulWidget {
   const MainCategoriesCard({
@@ -97,7 +96,7 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
         CustomScaffoldMessenger(
           context: context,
           message: 'Esta seção não permite a seleção de diversas imagens',
-        ).msn();
+        ).alertScaffold();
         backScreen();
       } else {
         File file = files.first;
@@ -114,7 +113,7 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
         CustomScaffoldMessenger(
           context: context,
           message: 'Esta seção não permite a seleção de diversas imagens',
-        ).msn();
+        ).alertScaffold();
         backScreen();
       } else {
         for (html.File file in files) {

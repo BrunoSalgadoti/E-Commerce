@@ -5,13 +5,13 @@ import 'package:brn_ecommerce/helpers/themes/get_theme_data.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class BrnEcommerce extends StatelessWidget {
+  const BrnEcommerce({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Ecommerce BRN Info_Dev",
+      title: "BRN Info_Dev - eCommerce",
       theme: getThemeData(context),
       // Adding Device Preview references.
       builder: DevicePreview.appBuilder,

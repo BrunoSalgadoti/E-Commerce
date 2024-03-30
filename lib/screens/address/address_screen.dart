@@ -1,7 +1,7 @@
-import 'package:brn_ecommerce/common/button/custom_button.dart';
+import 'package:brn_ecommerce/common/buttons/custom_button.dart';
 import 'package:brn_ecommerce/common/cards/price_card.dart';
-import 'package:brn_ecommerce/common/custom_messengers/custom_alert_dialog.dart';
-import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
+import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
+import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/models/policy_and_documents.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
@@ -14,14 +14,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddressScreen extends StatefulWidget {
+class AddressScreen extends StatelessWidget {
   const AddressScreen({super.key});
 
-  @override
-  State<AddressScreen> createState() => _AddressScreenState();
-}
-
-class _AddressScreenState extends State<AddressScreen> {
   @override
   Widget build(BuildContext context) {
     goToScreen() => Navigator.pushNamed(context, "/checkout");
@@ -33,7 +28,7 @@ class _AddressScreenState extends State<AddressScreen> {
         message: 'É necessário Concordar com a Política'
             ' de privacidade e nossos '
             'Termos de Serviço',
-      ).msn();
+      ).alertScaffold();
       return;
     }
 
@@ -60,50 +55,48 @@ class _AddressScreenState extends State<AddressScreen> {
 
             void checkPolicyAndTerms() {
               if (currentUser!.policyAndTerms == false || currentUser.policyAndTerms == null) {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    return CustomAlertDialog(
-                      titleText: 'A T E N Ç Ã O!',
-                      bodyText: messenger,
-                      actions: [
-                        const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            PrivacyPolicyWidget(),
-                            TermsOfServiceWidget(),
-                          ],
+                CustomAlertDialogAdaptive(
+                  titleText: 'A T E N Ç Ã O!',
+                  bodyText: messenger,
+                  actions: [
+                    const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        PrivacyPolicyWidget(),
+                        TermsOfServiceWidget(),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CustomButton(
+                          text: 'Rejeitar',
+                          widthButton: 100,
+                          heightButton: 40,
+                          onPressed: () {
+                            backScreen();
+                          },
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            CustomButton(
-                              text: 'Rejeitar',
-                              onPressed: () {
-                                backScreen();
-                              },
-                            ),
-                            CustomButton(
-                              text: 'Prosseguir',
-                              onPressed: () async {
-                                if (policyAndDocuments.agreedToPolicyTerms == false ||
-                                    policyAndDocuments.agreedToTermsOfService == false) {
-                                  alertPolicyAndTerms();
-                                } else {
-                                  currentUser.policyAndTerms = true;
-                                  await currentUser.updateUserData();
-                                  goToScreen();
-                                }
-                              },
-                            ),
-                          ],
+                        CustomButton(
+                          text: 'Aceitar',
+                          widthButton: 100,
+                          heightButton: 40,
+                          onPressed: () async {
+                            if (policyAndDocuments.agreedToPolicyTerms == false ||
+                                policyAndDocuments.agreedToTermsOfService == false) {
+                              alertPolicyAndTerms();
+                            } else {
+                              currentUser.policyAndTerms = true;
+                              await currentUser.updateUserData();
+                              goToScreen();
+                            }
+                          },
                         ),
                       ],
-                    );
-                  },
-                );
+                    ),
+                  ],
+                ).alertContent(context);
               } else {
                 goToScreen();
               }
@@ -111,37 +104,33 @@ class _AddressScreenState extends State<AddressScreen> {
 
             void checkAndHandleVersion() {
               if (!versionManager.compatibleVersion) {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    return CustomAlertDialog(
-                      titleText: 'Atualização Necessária!',
-                      bodyText: 'Por favor, para continuar: \n'
-                          'é necessário atualizar o aplicativo para a '
-                          'versão mais recente!',
-                      actions: [
-                        CustomButton(
-                          text: 'Atualizar',
-                          onPressed: () {
-                            if (kIsWeb) {
-                              // Refresh the web page and clear cache
-                              html.window.location.reload();
-                            } else {
-                              //TODO: Quando publicado
-                              // Redirect to app store for updating the app
-                              // Example for Android:
-                              // launch('https://play.google.com/store/apps/details?id=com.example.app');
-                              // Example for iOS:
-                              // launch('https://apps.apple.com/app/id<your_app_id>');
-                            }
-                            backScreen();
-                          },
-                        )
-                      ],
-                    );
-                  },
-                );
+                CustomAlertDialogAdaptive(
+                  titleText: 'Atualização Necessária!',
+                  bodyText: 'Por favor, para continuar: \n'
+                      'é necessário atualizar o aplicativo para a '
+                      'versão mais recente!',
+                  actions: [
+                    CustomButton(
+                      text: 'Atualizar',
+                      widthButton: 100,
+                      heightButton: 40,
+                      onPressed: () {
+                        if (kIsWeb) {
+                          // Refresh the web page and clear cache
+                          html.window.location.reload();
+                        } else {
+                          //TODO: Quando publicado
+                          // Redirect to app store for updating the app
+                          // Example for Android:
+                          // launch('https://play.google.com/store/apps/details?id=com.example.app');
+                          // Example for iOS:
+                          // launch('https://apps.apple.com/app/id<your_app_id>');
+                        }
+                        backScreen();
+                      },
+                    )
+                  ],
+                ).alertContent(context);
                 userManager.loading = false;
               } else {
                 checkPolicyAndTerms();

@@ -1,9 +1,9 @@
-import 'package:brn_ecommerce/common/button/custom_button.dart';
-import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/button/custom_text_button.dart';
-import 'package:brn_ecommerce/common/custom_messengers/custom_alert_dialog.dart';
-import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
-import 'package:brn_ecommerce/common/custom_text_form_field.dart';
+import 'package:brn_ecommerce/common/buttons/custom_button.dart';
+import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
+import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
+import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
+import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:brn_ecommerce/screens/product_edit/components/freight_form.dart';
@@ -32,27 +32,23 @@ class EditProductScreen extends StatelessWidget {
           message: 'Erro ao salvar/editar o Produto\n'
               'Revise os campos e tente novamente!\n'
               '\nSE O ERRO PERSISTIR CONTATE O SUPORTE',
-        ).msn();
+        ).alertScaffold();
 
     void backScreen() => Navigator.of(context).pop();
 
-    showAlertDialog() => showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CustomAlertDialog(
-            titleText: 'Valores não correspondentes!',
-            bodyText: product!.errorMessage,
-            actions: [
-              CustomTextButton(
-                text: 'Ciente!',
-                icon: null,
-                onPressed: () {
-                  backScreen();
-                },
-              ),
-            ],
-          );
-        });
+    void showAlertDialog() => CustomAlertDialogAdaptive(
+          titleText: 'Valores não correspondentes!',
+          bodyText: product!.errorMessage,
+          actions: [
+            CustomTextButton(
+              text: 'Ciente!',
+              icon: null,
+              onPressed: () {
+                backScreen();
+              },
+            ),
+          ],
+        ).alertContent(context);
 
     return ChangeNotifierProvider.value(
       value: product,
@@ -63,49 +59,42 @@ class EditProductScreen extends StatelessWidget {
           actions: [
             if (product!.id != null)
               CustomIconButton(
-                iconData: Icons.delete,
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return CustomAlertDialog(
-                          titleText: 'Atenção!',
-                          bodyText: 'Realmente deseja deletar este produto?\n'
-                              '\nProduto: ${product!.name ?? ''};\n'
-                              '\nQtd. ${product!.totalStock}\n'
-                              '\n---ESTÁ AÇÃO NÃO PODERÁ SER DESFEITA---\n',
-                          bodyAlign: TextAlign.start,
-                          bodyWeight: FontWeight.normal,
-                          titleWeight: FontWeight.normal,
-                          actions: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomTextButton(
-                                    text: 'Sim',
-                                    icon: null,
-                                    fontColor: Colors.red,
-                                    onPressed: () {
-                                      context.read<ProductManager>().requestDelete(product!);
-                                      backScreen();
-                                      backScreen();
-                                    }),
-                                CustomTextButton(
-                                  text: 'NÃO',
+                  iconData: Icons.delete,
+                  onTap: () => CustomAlertDialogAdaptive(
+                        titleText: 'Atenção!',
+                        bodyText: 'Realmente deseja deletar este produto?\n'
+                            '\nProduto: ${product!.name ?? ''};\n'
+                            '\nQtd. ${product!.totalStock}\n'
+                            '\n---ESTÁ AÇÃO NÃO PODERÁ SER DESFEITA---\n',
+                        bodyAlign: TextAlign.start,
+                        bodyWeight: FontWeight.normal,
+                        titleWeight: FontWeight.normal,
+                        actions: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CustomTextButton(
+                                  text: 'Sim',
                                   icon: null,
-                                  fontSize: 18,
-                                  fontColor: Colors.green,
+                                  fontColor: Colors.red,
                                   onPressed: () {
+                                    context.read<ProductManager>().requestDelete(product!);
                                     backScreen();
-                                  },
-                                )
-                              ],
-                            )
-                          ],
-                        );
-                      });
-                },
-              )
+                                    backScreen();
+                                  }),
+                              CustomTextButton(
+                                text: 'NÃO',
+                                icon: null,
+                                fontSize: 18,
+                                fontColor: Colors.green,
+                                onPressed: () {
+                                  backScreen();
+                                },
+                              )
+                            ],
+                          )
+                        ],
+                      ).alertContent(context))
           ],
         ),
         backgroundColor: Colors.white,

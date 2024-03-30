@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:brn_ecommerce/common/button/custom_text_button.dart';
+import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -11,16 +11,13 @@ class ImageSourceSheet extends StatelessWidget {
   ImageSourceSheet({
     super.key,
     this.onImageSelected,
-    required this.onImageSelectedList,
-    this.local,
+    this.onImageSelectedList,
   });
 
   final ImagePicker picker = ImagePicker();
 
   final Function(File)? onImageSelected;
   final Function(List<File>)? onImageSelectedList;
-
-  String? local = '';
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +50,6 @@ class ImageSourceSheet extends StatelessWidget {
     }
 
     Future<void> imgGallery() async {
-      local = 'gallery';
       final List<XFile> xFile = await picker.pickMultiImage();
       final List<File> files = xFile.map((xFile) => File(xFile.path)).toList();
       if (files.length == 1) {

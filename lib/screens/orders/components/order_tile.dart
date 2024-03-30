@@ -1,5 +1,5 @@
-import 'package:brn_ecommerce/common/button/custom_text_button.dart';
-import 'package:brn_ecommerce/common/custom_messengers/custom_alert_dialog.dart';
+import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
+import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_timestamp.dart';
 import 'package:brn_ecommerce/models/order_client.dart';
 import 'package:brn_ecommerce/screens/address/components/export_address_dialog.dart';
@@ -125,40 +125,36 @@ class OrderTile extends StatelessWidget {
                               fontColor: Colors.red,
                               onPressed: () {
                                 orderClient?.status = StatusOfOrders.canceled;
-                                showDialog<StatusOfOrders>(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return CustomAlertDialog(
-                                        titleText: 'Atenção!',
-                                        bodyText: orderClient!.bodyText,
-                                        titleWeight: FontWeight.normal,
-                                        actions: [
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              CustomTextButton(
-                                                text: 'Sim',
-                                                icon: null,
-                                                fontColor: Colors.red,
-                                                onPressed: () {
-                                                  orderClient?.cancelStatus();
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                              CustomTextButton(
-                                                text: 'NÃO',
-                                                icon: null,
-                                                fontSize: 18,
-                                                fontColor: Colors.green,
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      );
-                                    });
+                                CustomAlertDialogAdaptive(
+                                  titleText: 'A T E N Ç Ã O!',
+                                  bodyText: orderClient!.bodyText,
+                                  titleWeight: FontWeight.normal,
+                                  actions: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        CustomTextButton(
+                                          text: 'Sim',
+                                          icon: null,
+                                          fontColor: Colors.red,
+                                          onPressed: () {
+                                            orderClient?.cancelStatus();
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        CustomTextButton(
+                                          text: 'NÃO',
+                                          icon: null,
+                                          fontSize: 18,
+                                          fontColor: Colors.green,
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ).alertContent(context);
                               },
                             ),
                             Column(
@@ -179,40 +175,35 @@ class OrderTile extends StatelessWidget {
                                   text: null,
                                   icon: const Icon(Icons.arrow_forward),
                                   onPressed: verificationNextStatusText
-                                      ? () => showDialog<StatusOfOrders>(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return CustomAlertDialog(
-                                              titleText: 'A T E N Ç Ã O!',
-                                              bodyText: orderClient!.bodyText,
-                                              actions: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    CustomTextButton(
-                                                      text: 'Sim',
-                                                      icon: null,
-                                                      fontColor: Colors.red,
-                                                      onPressed: () {
-                                                        orderClient?.advance!();
-                                                        Navigator.of(context).pop();
-                                                      },
-                                                    ),
-                                                    CustomTextButton(
-                                                      text: 'NÃO',
-                                                      icon: null,
-                                                      fontSize: 18,
-                                                      fontColor: Colors.green,
-                                                      onPressed: () {
-                                                        Navigator.of(context).pop();
-                                                      },
-                                                    )
-                                                  ],
-                                                )
-                                              ],
-                                            );
-                                          })
+                                      ? () => CustomAlertDialogAdaptive(
+                                            titleText: 'A T E N Ç Ã O!',
+                                            bodyText: orderClient!.bodyText,
+                                            actions: [
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  CustomTextButton(
+                                                    text: 'Sim',
+                                                    icon: null,
+                                                    fontColor: Colors.red,
+                                                    onPressed: () {
+                                                      orderClient?.advance!();
+                                                      Navigator.of(context).pop();
+                                                    },
+                                                  ),
+                                                  CustomTextButton(
+                                                    text: 'NÃO',
+                                                    icon: null,
+                                                    fontSize: 18,
+                                                    fontColor: Colors.green,
+                                                    onPressed: () {
+                                                      Navigator.of(context).pop();
+                                                    },
+                                                  )
+                                                ],
+                                              )
+                                            ],
+                                          ).alertContent(context)
                                       : orderClient?.advance,
                                 ),
                               ],
@@ -221,15 +212,10 @@ class OrderTile extends StatelessWidget {
                               text: 'Endereço',
                               icon: null,
                               fontColor: Theme.of(context).primaryColor,
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (_) => ExportAddressDialog(
-                                    orderClient?.address,
-                                    orderClient,
-                                  ),
-                                );
-                              },
+                              onPressed: () => ExportAddressDialog(
+                                address: orderClient?.address,
+                                orderClient: orderClient,
+                              ).alertForShowAddress(context),
                             ),
                           ],
                         )

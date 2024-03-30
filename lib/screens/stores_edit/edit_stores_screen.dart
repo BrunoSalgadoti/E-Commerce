@@ -1,7 +1,7 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:brn_ecommerce/common/button/custom_button.dart';
-import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/custom_text_form_field.dart';
+import 'package:brn_ecommerce/common/buttons/custom_button.dart';
+import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/formatted_fields/time_input_formatter.dart';
 import 'package:brn_ecommerce/models/address.dart';
@@ -37,8 +37,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
       value: widget.store,
       child: Scaffold(
         appBar: AppBar(
-          title:
-              Text(widget.store.id != null ? 'Editar dados da Loja' : 'Adicionar nova Loja'),
+          title: Text(widget.store.id != null ? 'Editar dados da Loja' : 'Adicionar nova Loja'),
           centerTitle: true,
           actions: [
             if (widget.store.id != null)
@@ -149,8 +148,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                               return null;
                             }
                           },
-                          onSaved: (value) =>
-                              widget.store.address?.state = value?.toUpperCase(),
+                          onSaved: (value) => widget.store.address?.state = value?.toUpperCase(),
                         ))
                   ],
                 ),
@@ -160,7 +158,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                     Expanded(
                         flex: 2,
                         child: CustomTextFormField(
-                          initialValue: formattedPhoneNumber(widget.store.phoneNumberStore),
+                          initialValue: formattedPhoneNumber(widget.store.phoneNumberStore ?? "0000000000"),
                           labelText: 'Telefone:',
                           hintText: 'Ex: (00) 90000-0000',
                           isDense: false,
@@ -175,14 +173,13 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                               return null;
                             }
                           },
-                          onSaved: (value) =>
-                              widget.store.phoneNumberStore = unFormatPhone(value!),
+                          onSaved: (value) => widget.store.phoneNumberStore = unFormatPhone(value!),
                         )),
                     textFieldSpaceBetweenWidth,
                     Expanded(
                       flex: 1,
                       child: CustomTextFormField(
-                        initialValue: formattedZipcode(widget.store.address?.zipCode),
+                        initialValue: formattedZipcode(widget.store.address?.zipCode ?? "00.000-000"),
                         labelText: 'CEP:',
                         hintText: 'Ex: 00.000-000',
                         textInputType: TextInputType.number,

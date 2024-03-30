@@ -68,10 +68,12 @@ class AppProviders extends StatelessWidget {
           create: (_) => ProductCategoryManager(),
           update: (_, userManager, productCategoryManager) =>
               productCategoryManager!..verifyUser(userManager),
+          lazy: false,
         ),
         ChangeNotifierProxyProvider<UserManager, CartManager>(
           create: (_) => CartManager(),
           update: (_, userManager, cartManager) => cartManager!..updateUser(userManager),
+          lazy: false,
         ),
         ChangeNotifierProxyProvider<UserManager, OrdersManager>(
           create: (_) => OrdersManager(),

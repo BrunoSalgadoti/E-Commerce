@@ -28,7 +28,7 @@ class Address {
     number = map["number"] as String;
     complement = map["complement"] as String;
     district = map["district"] as String;
-    zipCode = map["zipCode"] as String? ?? "00000000";
+    zipCode = map["zipCode"] as String? ?? "00.000-000";
     city = map["city"] as String;
     state = map["state"] as String;
     lat = map["lat"] as double;
@@ -41,7 +41,7 @@ class Address {
       "number": number,
       "complement": complement,
       "district": district,
-      "zipCode": unFormattedZipcode(zipCode ?? ""),
+      "zipCode": unFormattedZipcode(zipCode ?? "00.000-000"),
       "city": city,
       "state": state,
       "lat": lat,

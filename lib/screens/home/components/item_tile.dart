@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:brn_ecommerce/common/button/custom_button.dart';
-import 'package:brn_ecommerce/common/custom_messengers/custom_alert_dialog.dart';
+import 'package:brn_ecommerce/common/buttons/custom_button.dart';
+import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/models/home_manager.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
@@ -22,9 +22,8 @@ class ItemTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeManager = context.watch<HomeManager>();
     backScreen() => Navigator.of(context).pop();
-    final product = context
-        .read<ProductManager>()
-        .findProductById(item?.product != null ? item!.product! : '');
+    final product =
+        context.read<ProductManager>().findProductById(item?.product != null ? item!.product! : '');
 
     return GestureDetector(
         onTap: () {
@@ -34,61 +33,76 @@ class ItemTile extends StatelessWidget {
             }
           }
         },
-        onLongPress: homeManager.editing
-            ? () {
-                showDialog(
-                    context: context,
-                    builder: (_) {
-                      return CustomAlertDialog(
-                          titleText: 'Editar Item',
-                          titleColor: Colors.black,
-                          titleSize: 18,
-                          titleWeight: FontWeight.normal,
-                          bodyText: '',
-                          content: product != null
-                              ? ListTile(
-                                  contentPadding: EdgeInsets.zero,
-                                  leading: Image.network(product.images!.first),
-                                  title: Text(product.name!),
-                                  subtitle: !product.hasStock
-                                      ? const Text(
-                                          'Fora de Estoque...',
-                                          style: TextStyle(color: Colors.red),
-                                        )
-                                      : Text(formattedRealText(product.basePrice)),
-                                )
-                              : const Text('Nenhum Item Vinculado'
-                                  ' a Imagem!'),
-                          actions: [
-                            CustomButton(
-                                text: 'Excluir',
-                                buttonColor: Colors.transparent,
-                                textColor: Colors.red,
-                                elevation: 0,
-                                onPressed: () {
-                                  context.read<Section>().removeItem(item!);
+        onLongPress: () => homeManager.editing
+            ? CustomAlertDialogAdaptive(
+                titleText: 'Editar Item',
+                titleColor: Colors.black,
+                titleSize: 18,
+                titleWeight: FontWeight.normal,
+                bodyText: '',
+                content: product != null
+                    ? ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: Image.network(product.images!.first),
+                        title: Text(product.name!),
+                        subtitle: !product.hasStock
+                            ? const Text(
+                                'Fora de Estoque...',
+                                style: TextStyle(color: Colors.red),
+                              )
+                            : Text(formattedRealText(product.basePrice)),
+                      )
+                    : const Text('Nenhum Item Vinculado'
+                        ' a Imagem!'),
+                actions: [
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CustomButton(
+                              text: 'Excluir',
+                              widthButton: 100,
+                              heightButton: 40,
+                              buttonColor: Colors.transparent,
+                              textColor: Colors.red,
+                              elevation: 0,
+                              onPressed: () {
+                                context.read<Section>().removeItem(item!);
+                                Navigator.of(context).pop();
+                              }),
+                          CustomButton(
+                              text: product != null ? 'Desvincular' : 'Vincular',
+                              widthButton: 120,
+                              heightButton: 40,
+                              buttonColor: Colors.transparent,
+                              textColor: Colors.blue,
+                              elevation: 0,
+                              onPressed: () async {
+                                if (product != null) {
+                                  item?.product = null;
                                   Navigator.of(context).pop();
-                                }),
-                            CustomButton(
-                                text: product != null ? 'Desvincular' : 'Vincular',
-                                buttonColor: Colors.transparent,
-                                textColor: Colors.blue,
-                                elevation: 0,
-                                onPressed: () async {
-                                  if (product != null) {
-                                    item?.product = null;
-                                    Navigator.of(context).pop();
-                                  } else {
-                                    final Product product =
-                                        await Navigator.pushNamed(context, '/select_product')
-                                            as Product;
-                                    item?.product = product.id;
-                                    backScreen();
-                                  }
-                                })
-                          ]);
-                    });
-              }
+                                } else {
+                                  final Product product =
+                                      await Navigator.pushNamed(context, '/select_product')
+                                          as Product;
+                                  item?.product = product.id;
+                                  backScreen();
+                                }
+                              }),
+                          CustomButton(
+                              text: 'Voltar',
+                              widthButton: 100,
+                              heightButton: 40,
+                              buttonColor: Colors.transparent,
+                              textColor: Colors.blue,
+                              elevation: 0,
+                              onPressed: () => Navigator.of(context).pop())
+                        ]),
+                  )
+                ],
+              ).alertContent(context)
             : null,
         child: AspectRatio(
             aspectRatio: 1,
@@ -96,11 +110,11 @@ class ItemTile extends StatelessWidget {
                 ? FadeInImage.memoryNetwork(
                     placeholder: kTransparentImage,
                     image: item!.image as String,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   )
                 : Image.file(
                     item!.image as File,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   )));
   }
 }

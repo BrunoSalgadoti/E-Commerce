@@ -2,6 +2,9 @@ import 'package:brn_ecommerce/models/page_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// ## SettingsDrawer (Folder: common/drawer/components)
+/// ### Components of CustomDrawer Widget
+///Drawer area related to administrative settings in a PopupMenuItem (from the gear icon)
 class SettingsDrawer extends StatelessWidget {
   const SettingsDrawer({super.key});
 
@@ -10,7 +13,7 @@ class SettingsDrawer extends StatelessWidget {
     return PopupMenuButton<String>(
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
         const PopupMenuItem<String>(
-          //TODO: Settings
+          //TODO: ADD more itens Settings
           value: 'Opção1',
           child: Text(
             'Gerenciar Categorias',
@@ -20,14 +23,15 @@ class SettingsDrawer extends StatelessWidget {
           value: 'Opção2',
           child: Text('Configurações gerais'),
         ),
-        // AAdd other menu options as needed
+
+        // Add other menu options as needed
       ],
       onSelected: (String value) {
         if (value == 'Opção1') {
           context.read<PageManager>().setPage(2);
         }
       },
-      // Add the conditions for the other selected options
+      // Add the conditions for the other selected options for ADM
       child: const SizedBox(
         height: 60,
         child: Row(
@@ -40,10 +44,13 @@ class SettingsDrawer extends StatelessWidget {
               ),
             ),
             SizedBox(width: 4),
-            Text(
-              'Configurações',
-              style: TextStyle(
-                fontSize: 16,
+            Flexible(
+              fit: FlexFit.loose,
+              child: Text(
+                'Configurações',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
               ),
             ),
           ],

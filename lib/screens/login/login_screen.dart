@@ -1,9 +1,9 @@
-import 'package:brn_ecommerce/common/button/custom_button.dart';
-import 'package:brn_ecommerce/common/button/custom_text_button.dart';
-import 'package:brn_ecommerce/common/button/custom_text_button_styles.dart';
-import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
-import 'package:brn_ecommerce/common/custom_text_form_field.dart';
-import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
+import 'package:brn_ecommerce/common/buttons/custom_button.dart';
+import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
+import 'package:brn_ecommerce/common/buttons/custom_text_button_styles.dart';
+import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
+import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
+import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/models/users.dart';
 import 'package:brn_ecommerce/models/users_manager.dart';
@@ -17,9 +17,7 @@ class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
   final TextEditingController emailController = TextEditingController();
-
   final TextEditingController passwordController = TextEditingController();
-
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
@@ -30,20 +28,16 @@ class LoginScreen extends StatelessWidget {
     final loadingToButton =
         userManager.loading || userManager.loadingGoogle || userManager.loadingFace;
 
-    messengerToOnFail(error) {
-      CustomScaffoldMessenger(context: context, message: error).msn();
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           'Entrar',
-          style: TextStyle(fontSize: 16),
         ),
         centerTitle: true,
       ),
       body: Center(
         child: Card(
+          elevation: 5,
           margin: kIsWeb
               ? const EdgeInsets.symmetric(horizontal: 3)
               : const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
@@ -83,7 +77,7 @@ class LoginScreen extends StatelessWidget {
                       obscureText: true,
                       validator: (value) {
                         if (value!.length < 7) {
-                          return 'Campo Obrigatório';
+                          return 'Senha inválida (Campo obrigatório!)';
                         } else {
                           return null;
                         }
@@ -128,7 +122,8 @@ class LoginScreen extends StatelessWidget {
                                       password: passwordController.text,
                                     ),
                                     onFail: (error) {
-                                      messengerToOnFail(error);
+                                      CustomScaffoldMessenger(context: context, message: error)
+                                          .alertScaffold();
                                     },
                                     onSuccess: () {
                                       Navigator.of(context).pop();
@@ -158,7 +153,8 @@ class LoginScreen extends StatelessWidget {
                                     text: '   Entrar com Facebook',
                                     onPressed: () {
                                       userManager.loginOrSingUpWithFacebook(onFail: (error) {
-                                        messengerToOnFail(error);
+                                        CustomScaffoldMessenger(context: context, message: error)
+                                            .alertScaffold();
                                       }, onSuccess: () {
                                         Navigator.of(context).pop();
                                       });
@@ -182,7 +178,8 @@ class LoginScreen extends StatelessWidget {
                                     imageHeight: 20,
                                     onPressed: () {
                                       userManager.loginOrSingUpWithGoogle(onFail: (error) {
-                                        messengerToOnFail(error);
+                                        CustomScaffoldMessenger(context: context, message: error)
+                                            .alertScaffold();
                                       }, onSuccess: () {
                                         Navigator.of(context).pop();
                                       });

@@ -36,8 +36,7 @@ class ProductCategoryManager extends ChangeNotifier {
 
     for (final category in _categoriesList) {
       // Check if the category already exists in the database
-      final categoryRef =
-          categoriesQuery.docs.firstWhere((doc) => doc.id == category.categoryID);
+      final categoryRef = categoriesQuery.docs.firstWhere((doc) => doc.id == category.categoryID);
 
       // If it exists, check if any attributes are different and update
       final data = category.toMap();
@@ -144,8 +143,8 @@ class ProductCategoryManager extends ChangeNotifier {
     final List<ProductCategory> categoriesActive = [];
 
     if (adminEnable == true && editingCategories == true) {
-      categoriesActive.addAll(_categoriesList.toList()
-        ..sort((a, b) => a.categoryTitle!.compareTo(b.categoryTitle!)));
+      categoriesActive.addAll(
+          _categoriesList.toList()..sort((a, b) => a.categoryTitle!.compareTo(b.categoryTitle!)));
     } else {
       categoriesActive.addAll(
           _categoriesList.where((category) => category.categoryActivated!).toList()
@@ -194,10 +193,7 @@ class ProductCategoryManager extends ChangeNotifier {
           final categoryExists = categoriesQuery.docs.any((doc) => doc.id == categoryID);
 
           if (!categoryExists) {
-            await firestore
-                .collection("categories")
-                .doc(category.categoryID)
-                .set(category.toMap());
+            await firestore.collection("categories").doc(category.categoryID).set(category.toMap());
           }
           // deletes fiestore categories if the factory list is smaller than
           // the firebase list

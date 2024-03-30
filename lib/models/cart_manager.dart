@@ -60,9 +60,8 @@ class CartManager extends ChangeNotifier {
 
     final QuerySnapshot cartSnap = await users!.cartReference.get();
 
-    items = cartSnap.docs
-        .map((d) => CartProduct.fromDocument(d)..addListener(_onItemUpdate))
-        .toList();
+    items =
+        cartSnap.docs.map((d) => CartProduct.fromDocument(d)..addListener(_onItemUpdate)).toList();
     notifyListeners();
   }
 
@@ -90,9 +89,7 @@ class CartManager extends ChangeNotifier {
       final cartProduct = CartProduct.fromProduct(product, detailsProducts);
       cartProduct.addListener(_onItemUpdate);
       items.add(cartProduct);
-      users!.cartReference
-          .add(cartProduct.toCartItemMap())
-          .then((doc) => cartProduct.id = doc.id);
+      users!.cartReference.add(cartProduct.toCartItemMap()).then((doc) => cartProduct.id = doc.id);
       _onItemUpdate();
     }
   }

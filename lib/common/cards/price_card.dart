@@ -1,10 +1,17 @@
-import 'package:brn_ecommerce/common/button/custom_button.dart';
+import 'package:brn_ecommerce/common/buttons/custom_button.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// ## PriceCard
+/// Widget that displays a summary of the order with subtotal, delivery cost, and total price.
 class PriceCard extends StatelessWidget {
+  /// Create a PriceCard widget.
+  ///
+  /// The parameter [buttonText] is required and represents the text displayed on the button.
+  ///
+  /// The parameter [onPressed] is a function called when the button is pressed.
   const PriceCard({
     super.key,
     required this.buttonText,
@@ -12,7 +19,7 @@ class PriceCard extends StatelessWidget {
   });
 
   final String buttonText;
-  final VoidCallback? onPressed;
+  final VoidCallback? onPressed; // Function called when the button is pressed.
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +40,7 @@ class PriceCard extends StatelessWidget {
               textAlign: TextAlign.start,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
-                fontSize: 16,
+                fontSize: 18,
               ),
             ),
             const SizedBox(height: 12),
@@ -51,7 +58,17 @@ class PriceCard extends StatelessWidget {
             ] else ...[
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text('Entrega'), Text('Frete Grátis')],
+                children: [
+                  Text('Entrega'),
+                  Text(
+                    'Frete Grátis',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.green,
+                      fontSize: 14,
+                    ),
+                  )
+                ],
               ),
               const Divider(),
             ],
@@ -62,7 +79,7 @@ class PriceCard extends StatelessWidget {
                 const Text(
                   'Total',
                   style: TextStyle(
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(

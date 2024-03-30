@@ -116,14 +116,15 @@ class UserManager extends ChangeNotifier {
     _newUserAccount = true;
     loading = true;
     try {
-      final UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: users.email, password: users.password!);
+      final UserCredential result =
+          await _auth.signInWithEmailAndPassword(email: users.email, password: users.password!);
 
       await _loadCurrentUser(user: result.user);
 
       onSuccess();
     } on FirebaseAuthException catch (error) {
       onFail(getErrorString(error.code));
+      debugPrint(' \n \n ################### \n \n${error.code.toString()}  \n \n ################### \n \n \n');
     }
     loading = false;
     PerformanceMonitoring().stopTrace('sign-in-email');
@@ -154,8 +155,7 @@ class UserManager extends ChangeNotifier {
           final AccessToken accessToken = result.accessToken!;
 
           // Converte o token de acesso em uma credencial do Firebase
-          final OAuthCredential credential =
-              FacebookAuthProvider.credential(accessToken.token);
+          final OAuthCredential credential = FacebookAuthProvider.credential(accessToken.token);
 
           // Converts the access token to a Firebase credential
           final UserCredential userCredential =
@@ -202,6 +202,7 @@ class UserManager extends ChangeNotifier {
       }
     } on FirebaseAuthException catch (error) {
       onFail!(getErrorString(error.code));
+      debugPrint(' \n \n ################### \n \n${error.code.toString()}  \n \n ################### \n \n \n');
       loadingFace = false;
     }
     PerformanceMonitoring().stopTrace('login-facebook');
@@ -270,6 +271,7 @@ class UserManager extends ChangeNotifier {
       }
     } on FirebaseAuthException catch (error) {
       onFail!(getErrorString(error.code));
+      debugPrint(' \n \n ################### \n \n${error.code.toString()}  \n \n ################### \n \n \n');
       loadingGoogle = false;
     }
     PerformanceMonitoring().stopTrace('login-google');
@@ -282,8 +284,8 @@ class UserManager extends ChangeNotifier {
     loading = true;
 
     try {
-      final UserCredential result = await _auth.createUserWithEmailAndPassword(
-          email: users.email, password: users.password!);
+      final UserCredential result =
+          await _auth.createUserWithEmailAndPassword(email: users.email, password: users.password!);
 
       users.id = result.user!.uid;
       users.policyAndTerms = true;
@@ -294,6 +296,7 @@ class UserManager extends ChangeNotifier {
       onSuccess();
     } on FirebaseAuthException catch (error) {
       onFail(getErrorString(error.code));
+      debugPrint(' \n \n ################### \n \n${error.code.toString()}  \n \n ################### \n \n \n');
     }
     loading = false;
 

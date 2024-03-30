@@ -4,7 +4,7 @@ class WebFactoryColors {
   const WebFactoryColors({
     Key? key,
     this.primaryColor = const Color.fromARGB(255, 96, 136, 159),
-    this.scaffoldBackgroundColor = const Color.fromARGB(255, 88, 115, 124),
+    this.scaffoldBackgroundColor = const Color.fromARGB(255, 255, 255, 255),
     this.appBarBackgroundColor = const Color.fromARGB(255, 23, 56, 68),
     this.titleMediumColor = const Color.fromARGB(255, 253, 253, 253),
     this.appBarTextColor = const Color.fromARGB(255, 160, 196, 215),

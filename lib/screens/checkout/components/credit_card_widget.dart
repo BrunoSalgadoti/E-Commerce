@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/common/button/custom_text_button.dart';
+import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/screens/checkout/components/card_back.dart';
 import 'package:brn_ecommerce/screens/checkout/components/card_front.dart';
 import 'package:flip_card/flip_card.dart';

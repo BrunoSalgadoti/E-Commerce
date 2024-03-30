@@ -7,17 +7,11 @@ Por meio desta licença, é concedida gratuitamente permissão a qualquer pessoa
  a quem o Software é fornecido possam fazê-lo, sujeito às seguintes condições:
 
 1. Esta licença é concedida para o software desenvolvido pela BRN - Info_Dev ou seus colaboradores,
- representados por Dev. Bruno Salgado.
+ representados pelo Analista e Dev. Bruno Salgado.
 2. A redistribuição e o uso em formas originais e binárias, com ou sem modificações, são
-estritamente proibidos sem autorização expressa da BRN - Info_Dev ou de Dev. Bruno Salgado.
+estritamente proibidos sem autorização expressa da BRN - Info_Dev ou do Dev. responsável Bruno Salgado.
 3. A permissão de redistribuição e uso concedida no ponto 2 só pode ser obtida entrando em contato
-diretamente com a BRN - Info_Dev ou com Dev. Bruno Salgado.
-
-Os autores gostariam de expressar sua gratidão ao Chat GPT por fornecer assistência e apoio durante
-o desenvolvimento deste software.
-
-Lia, o nome usado por Dev. Bruno Salgado para se referir ao assistente de IA do modelo de linguagem,
-é utilizado por conveniência e não representa uma entidade individual.
+diretamente com a BRN - Info_Dev ou com o Dev. Bruno Salgado.
 
 O SOFTWARE É FORNECIDO "COMO ESTÁ", SEM GARANTIA DE QUALQUER TIPO, EXPRESSA OU IMPLÍCITA, INCLUINDO,
 MAS NÃO SE LIMITANDO ÀS GARANTIAS DE COMERCIALIZAÇÃO, ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA
@@ -26,6 +20,9 @@ SER RESPONSABILIZADOS POR QUALQUER RECLAMAÇÃO, DANOS OU OUTRA RESPONSABILIDADE
 DE CONTRATO, DELITO OU DE OUTRA FORMA, DECORRENTE DE, OU EM CONEXÃO COM O SOFTWARE OU O USO OU
 OUTRAS OPERAÇÕES NO SOFTWARE.
 
+O autor gostariam de expressar sua gratidão ao Chat GPT por fornecer assistência e apoio durante
+o desenvolvimento deste software.
+
 Contato:
 Tel: +55 (82) 99984-5889 (WhatsApp)
 Email: suporte@brninfodev.com
@@ -33,31 +30,29 @@ Email: suporte@brninfodev.com
 
 MIT License (English)
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
-associated documentation files (the "Software"), to deal in the Software without restriction,
-including without limitation the rights to use, copy, modify, merge, publish, distribute,
-sublicense, and/or sell copies of the Software, and to permit persons to whom the Software
-is furnished to do so, subject to the following conditions:
+This license grants free permission to anyone who obtains a copy
+ of this software and associated documentation files (the "Software"), to deal with the Software
+ without restrictions, including, without limitation, the rights to use, copy, modify, merge,
+ publish, distribute, sublicense and/or sell copies of the Software, and to allow people
+ to whom the Software is provided may do so, subject to the following conditions:
 
-1. This license is granted for the software developed by BRN - Info_Dev or its contributors,
-represented by Dev. Bruno Salgado.
-2. Redistribution and use in source and binary forms, with or without modification, are strictly
-prohibited without express authorization from BRN - Info_Dev or Dev. Bruno Salgado.
-3. The permission of redistribution and use granted in point 2 can only be obtained by
-contacting BRN - Info_Dev or Dev. Bruno Salgado directly.
+1. This license is granted for software developed by BRN - Info_Dev or its collaborators,
+ represented by Analyst and Dev. Bruno Salgado.
+2. Redistribution and use in original and binary forms, with or without modifications, are prohibited.
+strictly prohibited without express authorization from BRN - Info_Dev or the responsible developer Bruno Salgado.
+3. Permission for redistribution and use granted in point 2 can only be obtained by contacting
+directly with BRN - Info_Dev or with Dev. Bruno Salgado.
 
-The authors would like to express their gratitude to Chat GPT for providing assistance and
-support during the development of this software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING,
+BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+AND NON INFRINGEMENT. UNDER NO CIRCUMSTANCES MAY THE AUTHORS OR COPYRIGHT HOLDERS
+BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+IN CONTRACT, TORT OR OTHERWISE, ARISING OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER OPERATIONS IN THE SOFTWARE.
 
-Lia, the name used by Dev. Bruno Salgado to refer to the language model AI assistant,
-is used for convenience and does not represent an individual entity.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
-AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
-OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+The author would like to express their gratitude to Chat GPT for providing assistance and support during
+the development of this software.
 
 Contact:
 Tel: +55 (82) 99984-5889 (WhatsApp)
-Email: suporte@brninfodev.com
+Email: support@brninfodev.com

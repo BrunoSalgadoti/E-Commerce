@@ -3,29 +3,33 @@ import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
 class MonitoringLogger {
+
+  // Variable that, if set to TRUE, DISABLES all PROJECT Monitoring.
+  final stopAllLoggers = true;
+
   void logDebug(String message) {
-    if (!kReleaseMode) {
+    if (!kReleaseMode && stopAllLoggers == false) {
       final logger = Logger();
       logger.d(message);
     }
   }
 
   void logInfo(String message) {
-    if (!kReleaseMode) {
+    if (!kReleaseMode && stopAllLoggers == false) {
       final logger = Logger();
       logger.i(message);
     }
   }
 
   void logWarning(String message) {
-    if (!kReleaseMode) {
+    if (!kReleaseMode && stopAllLoggers == false) {
       final logger = Logger();
       logger.w(message);
     }
   }
 
   void logError(String message) {
-    if (!kReleaseMode) {
+    if (!kReleaseMode && stopAllLoggers == false) {
       final logger = Logger();
       logger.e(message);
     }

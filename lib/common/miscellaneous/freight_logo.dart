@@ -1,9 +1,43 @@
-import 'package:brn_ecommerce/common/button/custom_text_button.dart';
+import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+/// # Widget for displaying a Freight Logo based on product freight status (Folder: common/miscellaneous)
+/// ## FreightLogo
+/// A widget that displays a "Frete Gratis" logo if the product has free shipping.
+///
+/// This widget conditionally displays the logo based on the freight status of the product.
 class FreightLogo extends StatelessWidget {
+  /// Creates a [FreightLogo] widget with the specified parameters.
+  ///
+  /// The [product] parameter is required and represents the product associated with the logo.
+  ///
+  /// The [positionedBottom] parameter sets the bottom position of the logo.
+  ///
+  /// The [positionedRight] parameter sets the right position of the logo.
+  ///
+  /// The [positionedLeft] parameter sets the left position of the logo.
+  ///
+  /// The [positionedTop] parameter sets the top position of the logo.
+  ///
+  /// The [containerHeight] parameter sets the height of the logo container.
+  ///
+  /// The [containerWidth] parameter sets the width of the logo container.
+  ///
+  /// The [radiusTopLeft] parameter sets the top left radius of the logo container.
+  ///
+  /// The [radiusTopRight] parameter sets the top right radius of the logo container.
+  ///
+  /// The [radiusBottomRight] parameter sets the bottom right radius of the logo container.
+  ///
+  /// The [radiusBottomLeft] parameter sets the bottom left radius of the logo container.
+  ///
+  /// The [fontSize] parameter sets the font size of the text inside the logo.
+  ///
+  /// The [iconSize] parameter sets the size of the icon inside the logo.
+  ///
+  /// The [text] parameter sets the text to be displayed inside the logo.
   const FreightLogo({
     super.key,
     required this.product,
@@ -21,9 +55,7 @@ class FreightLogo extends StatelessWidget {
     this.radiusBottomRight,
     this.radiusBottomLeft,
   });
-
   final Product product;
-
   final double? positionedBottom;
   final double? positionedRight;
   final double? positionedLeft;

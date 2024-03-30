@@ -27,9 +27,7 @@ class Themes with ChangeNotifier {
       appBarTheme: AppBarTheme(
         backgroundColor: androidFactoryColors.appBarBackgroundColor,
         titleTextStyle: TextStyle(
-            color: androidFactoryColors.appBarTextColor,
-            fontSize: 18,
-            fontWeight: FontWeight.w600),
+            color: androidFactoryColors.appBarTextColor, fontSize: 18, fontWeight: FontWeight.w600),
         elevation: 0,
         iconTheme: IconThemeData(
           color: androidFactoryColors.iconColor,
@@ -82,9 +80,7 @@ class Themes with ChangeNotifier {
       appBarTheme: AppBarTheme(
         backgroundColor: iosFactoryColors.appBarBackgroundColor,
         titleTextStyle: TextStyle(
-            color: webFactoryColors.appBarTextColor,
-            fontSize: 18,
-            fontWeight: FontWeight.w600),
+            color: webFactoryColors.appBarTextColor, fontSize: 18, fontWeight: FontWeight.w600),
         elevation: 0,
         iconTheme: IconThemeData(
           color: iosFactoryColors.iconColor,
@@ -137,9 +133,7 @@ class Themes with ChangeNotifier {
       appBarTheme: AppBarTheme(
         backgroundColor: webFactoryColors.appBarBackgroundColor,
         titleTextStyle: TextStyle(
-            color: webFactoryColors.appBarTextColor,
-            fontSize: 18,
-            fontWeight: FontWeight.w600),
+            color: webFactoryColors.appBarTextColor, fontSize: 18, fontWeight: FontWeight.w600),
         elevation: 0,
         iconTheme: IconThemeData(
           color: webFactoryColors.iconColor,

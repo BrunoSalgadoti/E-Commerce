@@ -39,8 +39,7 @@ class Stores extends ChangeNotifier {
     phoneNumberStore = document.get("phoneNumberStore") as String? ?? "";
     imageStore = document.get("imageStore") as String? ?? "";
     address = Address.fromMap(document.get("address") as Map<String, dynamic>);
-    openingStores =
-        OpeningStores.fromMap(document.get("openingStores") as Map<String, dynamic>);
+    openingStores = OpeningStores.fromMap(document.get("openingStores") as Map<String, dynamic>);
     openingStoresFromTimeOfDay =
         (document.get("openingStores") as Map<String, dynamic>).map((key, value) {
       final timesString = value as String;

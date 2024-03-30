@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
+import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/models/section.dart';
 import 'package:brn_ecommerce/models/section_item.dart';
 import 'package:brn_ecommerce/screens/product_edit/components/image_source_sheet.dart';
@@ -30,7 +30,7 @@ class AddTileWidget extends StatelessWidget {
         CustomScaffoldMessenger(
           context: context,
           message: 'Esta seção não permite a seleção de diversas imagens',
-        ).msn();
+        ).alertScaffold();
         Navigator.of(context).pop();
       } else {
         File file = files.first;
@@ -44,7 +44,7 @@ class AddTileWidget extends StatelessWidget {
         CustomScaffoldMessenger(
           context: context,
           message: 'Esta seção não permite a seleção de diversas imagens',
-        ).msn();
+        ).alertScaffold();
         Navigator.of(context).pop();
       } else {
         for (html.File file in files) {

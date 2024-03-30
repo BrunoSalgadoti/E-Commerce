@@ -4,16 +4,16 @@ import 'package:brn_ecommerce/models/version_manager.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 
-/// Executa operações específicas durante o modo de depuração e no primeiro início do aplicativo.
+/// Performs specific operations during debug mode and on first start of the application.
 ///
-/// Esta função é projetada para ser usada durante o desenvolvimento do aplicativo.
-/// Ela executa operações que podem ser úteis apenas no ambiente de depuração,
-/// como a atualização das informações de versão e a criação de tabelas auxiliares.
+/// This function is designed to be used during application development.
+/// It performs operations that may only be useful in the debug environment,
+/// such as updating version information and creating auxiliary tables.
 ///
-/// [firstStart] - Indica se é o primeiro início do aplicativo.
+/// [firstStart] - Indicates whether this is the first start of the application.
 Future<void> debugModeAndFirstStart({required bool firstStart}) async {
   if (!kReleaseMode) {
-    /// Atualiza as informações de versão do aplicativo.
+    /// Updates the application version information.
     // This code snippet will only run in debug mode
     final versionManager = VersionManager();
     await versionManager.updateVersionInfo();
@@ -33,27 +33,27 @@ Future<void> debugModeAndFirstStart({required bool firstStart}) async {
     //   child: const Text("Throw Test Exception"),
     // );
 
-    ///Criação de Tabelas Auxiliares
+    ///Creation of Auxiliary Tables
     ///
-    /// Nesta parte do código, tabelas auxiliares, como tabelas de vendas e tabelas de
-    /// administração, são criadas durante o primeiro início do aplicativo. Essas tabelas
-    /// podem ser usadas para funcionalidades específicas do aplicativo e são definidas
-    /// pelo desenvolvedor.
+    /// In this part of the code, auxiliary tables, such as sales tables and
+    /// administration, are created during the first start of the application. These tables
+    /// can be used for application-specific functionality and are defined
+    /// by the developer.
     ///
-    /// IMPORTANTE: Essa parte do código deve ser executada com cuidado, pois cria tabelas
-    /// no Firestore que não são modificadas diretamente pelos usuários. Modificações
-    /// posteriores nessas tabelas devem ser feitas apenas pelo desenvolvedor, levando em
-    /// consideração o impacto nas funcionalidades do aplicativo.
+    /// IMPORTANT: This part of the code must be executed carefully, as it creates tables
+    /// in Firestore that are not directly modified by users. Modifications
+    /// further details on these tables should only be done by the developer, taking into account
+    /// consideration of the impact on the application's functionalities.
 
-    /// Cria tabelas auxiliares de usuários e administradores se não existirem
-    /// durante o primeiro início do aplicativo.
-    /// CASO:  [firstStart = true] - no main.dart.
+    /// Create auxiliary user and administrator tables if they do not exist
+    /// during the first application start.
+    /// CASE: [firstStart = true] - in main.dart.
     // This code snippet will only run in debug mode and case [firstStart = true]
     // - in main.dart
     UserManager().createAuxAndAdminsIfNotExists(firstStart: firstStart);
 
-    /// Cria ou atualiza as categorias de produtos no Firestore durante o primeiro início
-    /// do aplicativo ou expressamente solicitado pelo Dono da Loja Virtual.
+    /// Create or update product categories in Firestore during first launch
+    /// of the application or expressly requested by the Online Store Owner.
     /// CASO:  [firstStart = true] - no main.dart.
     // This code snippet will only run in debug mode and case [firstStart = true]
     // - in main.dart

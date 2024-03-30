@@ -5,7 +5,20 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../helpers/breakpoints.dart';
 
+/// # Widget for a sliding up panel with filters (Folder: common/sliding_up_panel)
+/// ## FiltersSlidingUpPanel
+/// A widget that displays a sliding up panel with filters for selecting product status.
+///
+/// This widget is used to allow users to filter products based on their status. It includes a
+/// sliding up panel that contains checkboxes for different status options.
 class FiltersSlidingUpPanel extends StatefulWidget {
+  /// Creates a [FiltersSlidingUpPanel] widget with the specified parameters.
+  ///
+  /// The [textOfSlidingUpPanel] parameter is required and represents the text displayed on the sliding up panel.
+  ///
+  /// The [panelController] parameter is required and controls the state of the sliding up panel.
+  ///
+  /// The [selectedStatus] parameter is required and represents the currently selected status of products.
   const FiltersSlidingUpPanel({
     super.key,
     required this.textOfSlidingUpPanel,
@@ -13,8 +26,13 @@ class FiltersSlidingUpPanel extends StatefulWidget {
     required this.selectedStatus,
   });
 
+  /// Controls the state of the sliding up panel.
   final PanelController panelController;
+
+  /// Represents the currently selected status of products.
   final Set<StatusOfProducts> selectedStatus;
+
+  /// The text displayed on the sliding up panel.
   final String? textOfSlidingUpPanel;
 
   @override

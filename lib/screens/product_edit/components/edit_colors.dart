@@ -1,5 +1,5 @@
-import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/custom_text_form_field.dart';
+import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
 import 'package:brn_ecommerce/models/colors_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -97,8 +97,7 @@ class EditColorsState extends State<EditColors> {
                 }
                 return null;
               },
-              onChanged: (amount) =>
-                  widget.colorsProducts?.amount = int.tryParse(amount!) ?? 0,
+              onChanged: (amount) => widget.colorsProducts?.amount = int.tryParse(amount!) ?? 0,
             ),
           ),
         ),

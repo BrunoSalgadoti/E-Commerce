@@ -1,6 +1,6 @@
-import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/cards/flexible_product_card.dart';
-import 'package:brn_ecommerce/common/custom_text_form_field.dart';
+import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/filters_sliding_up_panel.dart';
 import 'package:brn_ecommerce/models/categories_of_products/product_category.dart';
@@ -137,8 +137,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                                   focusedBorder: InputBorder.none,
                                                   textFormFieldSize: 14,
                                                   obscureText: false,
-                                                  hintText:
-                                                      'Procurar produtos na categoria...',
+                                                  hintText: 'Procurar produtos na categoria...',
                                                   hintSize: 14,
                                                   onSubmitted: (value) => goSearch,
                                                 )),
@@ -177,17 +176,15 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                 if (productManager.search.isEmpty)
                                   SizedBox(
                                       width: double.infinity,
-                                      child: UtilsForCategory(
-                                              productManager, widget.productCategory)
-                                          .carouselRecentProducts(
-                                              context, recentProductsFromCategory)),
+                                      child:
+                                          UtilsForCategory(productManager, widget.productCategory)
+                                              .carouselRecentProducts(
+                                                  context, recentProductsFromCategory)),
                                 FiltersSlidingUpPanel(
-                                    textOfSlidingUpPanel: 'FILTRAR: Produtos na Categoria...',
-                                    panelController: panelController,
-                                    selectedStatus: selectedStatus,
-                                    paddingContentCheckbox: const EdgeInsets.only(
-                                      right: 30,
-                                    )),
+                                  textOfSlidingUpPanel: 'FILTRAR: Produtos na Categoria...',
+                                  panelController: panelController,
+                                  selectedStatus: selectedStatus,
+                                ),
                                 widget.productCategory.subCategoryList!.isEmpty
                                     ? Container()
                                     : Padding(
@@ -217,9 +214,8 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                           ),
                                           children: [
                                             SubCategoriesWidget(
-                                              subCategories: widget
-                                                  .productCategory.subCategoryList!
-                                                  .toList(),
+                                              subCategories:
+                                                  widget.productCategory.subCategoryList!.toList(),
                                             ),
                                           ],
                                         )),

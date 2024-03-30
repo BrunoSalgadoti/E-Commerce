@@ -1,7 +1,7 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:brn_ecommerce/common/button/custom_button.dart';
-import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
-import 'package:brn_ecommerce/common/custom_text_form_field.dart';
+import 'package:brn_ecommerce/common/buttons/custom_button.dart';
+import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
+import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/models/policy_and_documents.dart';
 import 'package:brn_ecommerce/models/users.dart';
@@ -152,7 +152,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   context: context,
                                   message: 'Confirmação de Senha não confere! Tente '
                                       'Redigitar a Senha e a confirmação da Senha',
-                                ).msn();
+                                ).alertScaffold();
                                 return;
                               }
                               if (!policyAndDocuments.agreedToPolicyTerms ||
@@ -161,16 +161,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   context: context,
                                   message: 'É necessário Concordar com a Política de '
                                       'privacidade e nossos Termos de Serviço',
-                                ).msn();
+                                ).alertScaffold();
                                 return;
                               }
                               userManager.singUpWithEmailAndPassword(
                                 users: users,
                                 onFail: (error) {
                                   CustomScaffoldMessenger(
-                                          context: context,
-                                          message: 'Falha ao cadastrar $error')
-                                      .msn();
+                                          context: context, message: 'Falha ao cadastrar $error')
+                                      .alertScaffold();
                                 },
                                 onSuccess: () {
                                   Navigator.of(context).pop();

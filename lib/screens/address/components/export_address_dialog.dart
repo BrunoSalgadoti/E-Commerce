@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:brn_ecommerce/common/button/custom_text_button.dart';
-import 'package:brn_ecommerce/common/custom_messengers/custom_alert_dialog.dart';
+import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
+import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
+import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/order_client.dart';
 import 'package:custom_universal_html/html.dart' as html;
@@ -13,11 +14,10 @@ import 'package:screenshot/screenshot.dart';
 
 import '../../../common/formatted_fields/format_values.dart';
 
-class ExportAddressDialog extends StatelessWidget {
-  ExportAddressDialog(
-    this.address,
-    this.orderClient, {
-    super.key,
+class ExportAddressDialog {
+  ExportAddressDialog({
+    required this.address,
+    required this.orderClient,
   });
 
   final Address? address;
@@ -25,11 +25,10 @@ class ExportAddressDialog extends StatelessWidget {
 
   final ScreenshotController screenshotController = ScreenshotController();
 
-  @override
-  Widget build(BuildContext context) {
+  void alertForShowAddress(BuildContext context) {
     final orderId = orderClient?.orderId ?? "";
 
-    return CustomAlertDialog(
+    CustomAlertDialogAdaptive(
       titleText: 'Endereço de Entrega',
       titleSize: 19,
       content: Screenshot(
@@ -92,23 +91,33 @@ class ExportAddressDialog extends StatelessWidget {
                 html.document.body?.append(downloadLink);
               }
             } else {
-              ///Capture and saving to a file
-              screenshotController.capture().then((value) async {
+              await screenshotController.capture().then((value) async {
                 var image = value;
 
                 final dir = await getApplicationDocumentsDirectory();
                 final imagePath =
-                    await File('${dir.path}/ ${formattedOrderId(orderId)}.png').create();
+                    await File('${dir.path}/${formattedOrderId(orderId)}.png').create();
                 await imagePath.writeAsBytes(image!);
 
-                ///Save a widget Capture to a Gallery
+                // Save a widget Capture to a Gallery
                 await GallerySaver.saveImage(imagePath.path);
-              });
+                CustomScaffoldMessenger(
+                  // ignore: use_build_context_synchronously
+                  context: context,
+                  message: 'Endereço salvo no dispositivo',
+                  duration: const Duration(seconds: 5),
+                ).alertScaffold();
+              }).catchError((error) => CustomScaffoldMessenger(
+                    context: context,
+                    message:
+                        'Erro: "$error" ao tentar exportar o endereço, favor tentar novamente.',
+                    duration: const Duration(seconds: 5),
+                  ).alertScaffold());
             }
           },
         )
       ],
       bodyText: null,
-    );
+    ).alertContent(context);
   }
 }

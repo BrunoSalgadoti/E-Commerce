@@ -26,8 +26,7 @@ class ShareProductWeb {
           '__Visite a nossa Loja Virtual!__';
       String sharedUrl = '\n$urlShare';
 
-      String formattedMessage =
-          '$productName$productPrice$sharedImageUrl$productText$sharedUrl';
+      String formattedMessage = '$productName$productPrice$sharedImageUrl$productText$sharedUrl';
 
       String shareLink = Uri.encodeComponent(formattedMessage);
 

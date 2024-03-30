@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/miscellaneous/communications_utils.dart';
 import 'package:brn_ecommerce/models/stores.dart';
@@ -111,8 +111,7 @@ class StoreCard extends StatelessWidget {
                             color: primaryColor,
                             onTap: () {
                               CommunicationsUtils(
-                                      parameterClass1Of2: store,
-                                      parameterClass2Of2: store.address!)
+                                      parameterClass1Of2: store, parameterClass2Of2: store.address!)
                                   .openMap(
                                 context,
                                 store.address!.lat!,
@@ -127,8 +126,8 @@ class StoreCard extends StatelessWidget {
                             iconData: Icons.phone,
                             color: primaryColor,
                             onTap: () {
-                              CommunicationsUtils(parameterClass1Of2: store).openPhone(
-                                  context, unFormatPhone(store.phoneNumberStore ?? ''));
+                              CommunicationsUtils(parameterClass1Of2: store)
+                                  .openPhone(context, unFormatPhone(store.phoneNumberStore ?? ''));
                               CommunicationsUtils(parameterClass1Of2: store).alertForCall(
                                 context,
                                 'Este dispositivo não suporta esta função!\n'

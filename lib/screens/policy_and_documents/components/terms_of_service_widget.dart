@@ -32,16 +32,14 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
           onChanged: (value) {
             setState(() {
               agreedToTermsOfService = value ?? false;
-              final policyAndDocuments =
-                  Provider.of<PolicyAndDocuments>(context, listen: false);
+              final policyAndDocuments = Provider.of<PolicyAndDocuments>(context, listen: false);
               policyAndDocuments.setAgreedToTermsOfService(value!);
             });
           },
         ),
         InkWell(
           onTap: () async {
-            final termsOfServiceText =
-                await rootBundle.loadString('assets/docs/termsOfService.md');
+            final termsOfServiceText = await rootBundle.loadString('assets/docs/termsOfService.md');
             goToPage(termsOfServiceText);
           },
           child: const Text(

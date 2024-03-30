@@ -49,7 +49,7 @@ class Product extends ChangeNotifier {
     isValid = (document["isvalid"] ?? true) as bool;
     brand = document["brand"] as String? ?? "";
     freight = document["freight"] as bool;
-    insertionDate = document["insertionDate"] as Timestamp;
+    insertionDate = (document["insertionDate"] ?? Timestamp.now()) as Timestamp;
     categoryOfProduct = document["categoryOfProduct"] as String? ?? "";
     itemProducts = (document["details"] as List<dynamic>)
         .map((d) => DetailsProducts.fromMap(d as Map<String, dynamic>))
@@ -184,8 +184,7 @@ class Product extends ChangeNotifier {
           final url = await snapshot.ref.getDownloadURL();
           updateImages.add(url);
         } else {
-          final UploadTask task =
-              storageRef.child(const Uuid().v4()).putFile(newImage as File);
+          final UploadTask task = storageRef.child(const Uuid().v4()).putFile(newImage as File);
           final TaskSnapshot snapshot = await task.whenComplete(() {});
           final String url = await snapshot.ref.getDownloadURL();
           updateImages.add(url);
@@ -292,8 +291,7 @@ class Product extends ChangeNotifier {
     isValid = true; // Assume initially that it is valid
 
     for (final stock in detailsProducts) {
-      final matchingDetails =
-          detailsProducts.firstWhere((details) => details.size == stock.size);
+      final matchingDetails = detailsProducts.firstWhere((details) => details.size == stock.size);
 
       final int totalAmount = matchingDetails.colorProducts!.fold(0, (a, b) => a + b.amount);
 

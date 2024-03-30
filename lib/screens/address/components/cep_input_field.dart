@@ -1,8 +1,8 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:brn_ecommerce/common/button/custom_button.dart';
-import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/custom_messengers/custom_scaffold_messenger.dart';
-import 'package:brn_ecommerce/common/custom_text_form_field.dart';
+import 'package:brn_ecommerce/common/buttons/custom_button.dart';
+import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
+import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
 import 'package:brn_ecommerce/models/address.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +61,7 @@ class _CepInputFieldState extends State<CepInputField> {
                         await cartManager.getAddress(cepController.text);
                       } catch (error) {
                         // ignore: use_build_context_synchronously
-                        CustomScaffoldMessenger(context: context, message: '$error').msn();
+                        CustomScaffoldMessenger(context: context, message: '$error').alertScaffold();
                       }
                     }
                   }

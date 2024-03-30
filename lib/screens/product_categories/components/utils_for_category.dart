@@ -6,6 +6,7 @@ import 'package:brn_ecommerce/models/categories_of_products/product_category.dar
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,12 +19,21 @@ class UtilsForCategory {
   // Function to load recent products and sort by insertion date
   List<Product> loadRecentProducts() {
     List<Product> sortedProducts = productManager.allProducts
-        .where((p) =>
-            p.isValid! && p.hasStock && p.categoryOfProduct == productCategory.categoryID)
+        .where((p) => p.isValid! && p.hasStock && p.categoryOfProduct == productCategory.categoryID)
         .take(10)
         .toList();
 
-    sortedProducts.sort((a, b) => b.insertionDate!.compareTo(a.insertionDate!));
+    //TODO: Inserir variável no produto changeDate não modificar a data de inserção do produto.
+    //TODO: Ajustar verificação para comparação de data e mês, OBS: classificando por dia!!
+
+    sortedProducts.sort((a, b) {
+      // Verifica se a inserção de a e b é nula e, se for, retorna Timestamp.now()
+      final aInsertion = a.insertionDate ?? Timestamp.now();
+      final bInsertion = b.insertionDate ?? Timestamp.now();
+
+      // Compara as datas de inserção
+      return bInsertion.compareTo(aInsertion);
+    });
 
     return sortedProducts;
   }
@@ -37,8 +47,7 @@ class UtilsForCategory {
     return allCategoryProducts;
   }
 
-  Widget carouselRecentProducts(
-      BuildContext context, List<Product> recentProductsFromCategory) {
+  Widget carouselRecentProducts(BuildContext context, List<Product> recentProductsFromCategory) {
     final CarouselController carouselController = CarouselController();
 
     return CarouselSlider(
@@ -96,9 +105,7 @@ class UtilsForCategory {
                     color: Theme.of(context).primaryColor.withAlpha(90),
                     child: IconButton(
                         icon: const Icon(Icons.open_in_new,
-                            semanticLabel: 'Visualizar Produto',
-                            size: 20,
-                            color: Colors.white),
+                            semanticLabel: 'Visualizar Produto', size: 20, color: Colors.white),
                         onPressed: () {
                           Navigator.pushNamed(context, "/product", arguments: product);
                         })),

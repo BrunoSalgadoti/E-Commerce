@@ -1,7 +1,5 @@
 import 'dart:async';
-
-import 'package:brn_ecommerce/common/button/custom_text_button.dart';
-import 'package:brn_ecommerce/common/custom_messengers/custom_alert_dialog.dart';
+import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/common/miscellaneous/communications_utils.dart';
 import 'package:brn_ecommerce/models/admin_orders_manager.dart';
 import 'package:brn_ecommerce/models/page_manager.dart';
@@ -13,7 +11,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class AdminUsersSearch extends ChangeNotifier {
   AdminUsersSearch() {
@@ -69,8 +66,7 @@ class AdminUsersSearch extends ChangeNotifier {
     firestore.collection("users").get(const GetOptions(source: Source.cache)).then((snapshot) {
       if (snapshot.metadata.isFromCache) {
         allUsers = snapshot.docs.map((d) => Users.fromDocument(d)).toList();
-        allUsers
-            .sort((a, b) => a.userName!.toLowerCase().compareTo(b.userName!.toLowerCase()));
+        allUsers.sort((a, b) => a.userName!.toLowerCase().compareTo(b.userName!.toLowerCase()));
         filterList(allUsers);
         notifyListeners();
       }
@@ -99,32 +95,12 @@ class AdminUsersSearch extends ChangeNotifier {
       filteredUsers.addAll(allUsers);
     } else {
       userFilteredSendEmail = true;
-      filteredUsers.addAll(allUsers.where((u) =>
-          u.userName!.toString().toLowerCase().contains(search.toString().toLowerCase())));
+      filteredUsers.addAll(allUsers.where(
+          (u) => u.userName!.toString().toLowerCase().contains(search.toString().toLowerCase())));
     }
 
     filterList(filteredUsers);
     return filteredUsers;
-  }
-
-  void _sendEmail(String? userEmail, String? userName) {
-    String? encodeQueryParameters(Map<String, String> params) {
-      return params.entries
-          .map((MapEntry<String, String> e) =>
-              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
-          .join("&");
-    }
-
-    final Uri emailLaunchUri = Uri(
-        scheme: "mailto",
-        path: userEmail ?? emails.toString().replaceAll(RegExp(r"[\[\]]"), ""),
-        query: encodeQueryParameters(<String, String>{
-          "subject": "BRN Info_DEV",
-          "body": userName == null
-              ? "Olá estimado Cliente,\n Estamos Entrando em contato para:\n"
-              : "Olá $userName,\n Estamos Entrando em contato para:\n",
-        }));
-    launchUrl(emailLaunchUri);
   }
 
   Future<void> _favoringUser(String? id) async {
@@ -173,7 +149,8 @@ class AdminUsersSearch extends ChangeNotifier {
                   backgroundColor: Colors.cyanAccent,
                   icon: Icons.email,
                   onPressed: (context) {
-                    _sendEmail(user.email, user.userName!);
+                    CommunicationsUtils(parameterClass1Of2: user)
+                        .sendEmail(user.email, user.userName, emails);
                   },
                 ),
                 SlidableAction(
@@ -196,8 +173,7 @@ class AdminUsersSearch extends ChangeNotifier {
                     children: <Widget>[
                       user.userPhotoURL == "" || user.userPhotoURL == null
                           ? const CircleAvatar(
-                              backgroundImage:
-                                  AssetImage('assets/images/userWithoutImage.png'))
+                              backgroundImage: AssetImage('assets/images/userWithoutImage.png'))
                           : CircleAvatar(
                               backgroundImage: NetworkImage(user.userPhotoURL!),
                             ),
@@ -213,11 +189,10 @@ class AdminUsersSearch extends ChangeNotifier {
                     ],
                   ),
                   title: Text(user.userName!,
-                      style:
-                          const TextStyle(fontWeight: FontWeight.w800, color: Colors.white)),
+                      style: const TextStyle(fontWeight: FontWeight.w800, color: Colors.black)),
                   subtitle: Text(
                     "${user.email}\nTel.: ${user.phoneNumber ?? ""}",
-                    style: const TextStyle(fontSize: 16, color: Colors.white),
+                    style: const TextStyle(fontSize: 16, color: Colors.black),
                   ),
                   onTap: () {
                     adminOrdersManager.setUserFilter(user);
@@ -253,56 +228,61 @@ class AdminUsersSearch extends ChangeNotifier {
                     label: 'Enviar',
                     backgroundColor: Colors.cyanAccent,
                     icon: Icons.email,
-                    onPressed: (context) {
-                      userFilteredSendEmail == true
-                          ? _sendEmail(user.email, user.userName)
-                          : showDialog<void>(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return CustomAlertDialog(
-                                  titleText: 'Enviar E-mail',
-                                  titleSize: 18,
-                                  titleColor: Colors.black,
-                                  bodyText: 'Escolha para quem deseja enviar\n '
-                                      'o E-mail!',
-                                  bodyWeight: FontWeight.normal,
-                                  actions: [
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          CustomTextButton(
-                                            text: 'Este Contato',
-                                            icon: null,
-                                            onPressed: () {
-                                              _sendEmail(user.email, user.userName);
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                          CustomTextButton(
-                                            text: 'Todos contatos!',
-                                            icon: null,
-                                            onPressed: () {
-                                              _sendEmail(null, null);
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                          CustomTextButton(
-                                            text: 'Cancelar',
-                                            icon: null,
-                                            fontColor: Colors.red,
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                        ],
+                    autoClose: true,
+                    onPressed: (context) => userFilteredSendEmail == true
+                        ? CommunicationsUtils(parameterClass1Of2: user)
+                            .sendEmail(user.email, user.userName, emails)
+                        : showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Enviar E-mail:'),
+                                titleTextStyle: const TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                content: const Text('Escolha para quem deseja enviar o E-mail!'),
+                                alignment: Alignment.topCenter,
+                                contentTextStyle: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.black),
+                                actions: [
+                                  Wrap(
+                                    alignment: WrapAlignment.center,
+                                    children: [
+                                      CustomTextButton(
+                                        text: 'Contato Selecionado',
+                                        fontSize: 13,
+                                        icon: null,
+                                        onPressed: () {
+                                          CommunicationsUtils(parameterClass1Of2: user)
+                                              .sendEmail(user.email, user.userName, emails);
+                                          Navigator.of(context).pop();
+                                        },
                                       ),
-                                    ),
-                                  ],
-                                );
-                              });
-                    }),
+                                      CustomTextButton(
+                                        text: 'Todos os contatos!',
+                                        fontSize: 13,
+                                        icon: null,
+                                        onPressed: () {
+                                          CommunicationsUtils(parameterClass1Of2: user)
+                                              .sendEmail(null, null, emails);
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      CustomTextButton(
+                                          text: 'Cancelar Envio',
+                                          fontSize: 13,
+                                          icon: null,
+                                          fontColor: Colors.red,
+                                          onPressed: () => Navigator.of(context).pop()),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            })),
                 SlidableAction(
                     label: 'Ligar',
                     backgroundColor: Colors.greenAccent,

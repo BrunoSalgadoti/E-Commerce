@@ -6,7 +6,7 @@ import 'package:brn_ecommerce/helpers/themes/factory_colors/ios_factory_colos.da
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'factory_colors/web_factory_colors.dart';
+import 'web_factory_colors.dart';
 
 Color getEspecialColor([BuildContext? context]) {
   if (kIsWeb) {
@@ -41,5 +41,29 @@ Color getGradientColorSecond([BuildContext? context]) {
     return const AnotherColors().homeGradientColor2Ios;
   } else {
     return Colors.lightBlueAccent;
+  }
+}
+
+Color getButtonColor([BuildContext? context]) {
+  if (kIsWeb) {
+    return const WebFactoryColors().buttonColor;
+  } else if (Platform.isAndroid) {
+    return const AndroidFactoryColors().buttonColor;
+  } else if (Platform.isIOS) {
+    return const IosFactoryColors().buttonColor;
+  } else {
+    return Colors.blue;
+  }
+}
+
+Color getTextColor([BuildContext? context]) {
+  if (kIsWeb) {
+    return const WebFactoryColors().titleMediumColor;
+  } else if (Platform.isAndroid) {
+    return const AndroidFactoryColors().titleMediumColor;
+  } else if (Platform.isIOS) {
+    return const IosFactoryColors().titleMediumColor;
+  } else {
+    return Colors.blue;
   }
 }

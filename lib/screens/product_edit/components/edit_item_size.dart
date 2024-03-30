@@ -1,6 +1,6 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:brn_ecommerce/common/button/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/custom_text_form_field.dart';
+import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/models/details_products.dart';
 import 'package:flutter/material.dart';
@@ -64,10 +64,7 @@ class EditItemSize extends StatelessWidget {
                 initialValue: formattedRealTextFormFiled(initialPrice),
                 labelText: 'Preço',
                 prefixText: 'R\$ ',
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  CentavosInputFormatter()
-                ],
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly, CentavosInputFormatter()],
                 validator: (price) {
                   if (unFormattedReal(price!) == "0.00") {
                     return 'Valor Inválido';

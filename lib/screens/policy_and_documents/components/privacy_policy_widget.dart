@@ -32,16 +32,14 @@ class _PrivacyPolicyWidgetState extends State<PrivacyPolicyWidget> {
           onChanged: (value) {
             setState(() {
               agreedToPolicyTerms = value ?? false;
-              final policyAndDocuments =
-                  Provider.of<PolicyAndDocuments>(context, listen: false);
+              final policyAndDocuments = Provider.of<PolicyAndDocuments>(context, listen: false);
               policyAndDocuments.setAgreedToPolicyTerms(value!);
             });
           },
         ),
         InkWell(
           onTap: () async {
-            final privacyPolicyText =
-                await rootBundle.loadString('assets/docs/privacyPolicy.md');
+            final privacyPolicyText = await rootBundle.loadString('assets/docs/privacyPolicy.md');
             goToPage(privacyPolicyText);
           },
           child: const Text(

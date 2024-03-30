@@ -1,3 +1,4 @@
+import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/models/home_manager.dart';
 import 'package:brn_ecommerce/models/section.dart';
 import 'package:brn_ecommerce/screens/home/components/add_tile_widget.dart';
@@ -18,45 +19,49 @@ class SectionList extends StatelessWidget {
     final ScrollController scrollController = ScrollController();
 
     return ChangeNotifierProvider.value(
-      value: section,
-      child: Container(
-        margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SectionHeader(section: section),
-            SizedBox(
-                height: kIsWeb ? 250 : 150,
-                child: Consumer<Section>(
-                  builder: (_, section, __) {
-                    return Scrollbar(
-                      scrollbarOrientation: ScrollbarOrientation.bottom,
-                      thumbVisibility: kIsWeb ? true : false,
-                      trackVisibility: kIsWeb ? true : false,
-                      interactive: kIsWeb ? true : false,
-                      controller: scrollController,
-                      child: ListView.separated(
-                        controller: scrollController,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (_, index) {
-                          if (index < section.items!.length) {
-                            return ItemTile(item: section.items!.reversed.toList()[index]);
-                          } else {
-                            return const AddTileWidget();
-                          }
+        value: section,
+        child: LayoutBuilder(builder: (context, constraints) {
+          return ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(18, 8, 18, 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SectionHeader(section: section),
+                  SizedBox(
+                      height: constraints.maxWidth <= mobileBreakpoint ? 160 : 280,
+                      child: Consumer<Section>(
+                        builder: (_, section, __) {
+                          return Scrollbar(
+                            scrollbarOrientation: ScrollbarOrientation.bottom,
+                            thumbVisibility: kIsWeb ? true : false,
+                            trackVisibility: kIsWeb ? true : false,
+                            interactive: kIsWeb ? true : false,
+                            controller: scrollController,
+                            child: ListView.separated(
+                              controller: scrollController,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (_, index) {
+                                if (index < section.items!.length) {
+                                  return ItemTile(item: section.items!.reversed.toList()[index]);
+                                } else {
+                                  return const AddTileWidget();
+                                }
+                              },
+                              separatorBuilder: (_, __) => const SizedBox(width: 4),
+                              itemCount: homeManager.editing
+                                  ? section.items!.length + 1
+                                  : section.items!.length,
+                            ),
+                          );
                         },
-                        separatorBuilder: (_, __) => const SizedBox(width: 4),
-                        itemCount: homeManager.editing
-                            ? section.items!.length + 1
-                            : section.items!.length,
-                      ),
-                    );
-                  },
-                ))
-          ],
-        ),
-      ),
-    );
+                      ))
+                ],
+              ),
+            ),
+          );
+        }));
   }
 }

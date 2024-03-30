@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/common/button/custom_button.dart';
+import 'package:brn_ecommerce/common/buttons/custom_button.dart';
 import 'package:brn_ecommerce/models/home_manager.dart';
 import 'package:brn_ecommerce/models/section.dart';
 import 'package:flutter/material.dart';
