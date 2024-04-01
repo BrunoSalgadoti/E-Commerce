@@ -66,9 +66,11 @@ class AdvertisingWidgetState extends State<AdvertisingWidget> {
 
     final List<AdvertisingCarouselContent> cardContents = UtilsForAdvertising()
         .loadAdvertisingProducts(productManager)
+        .where((p) => p.product!.hasStock)
         .toList(); // Carousel content (product cards)
     final List<AdvertisingCarouselContent> imageContents = UtilsForAdvertising()
         .loadAdminSelectedImages()
+        .where((p) => p.product!.hasStock)
         .toList(); // Carousel content (selected images)
     final totalItems = cardContents.length + imageContents.length - 1; //Total items in the carousel
     final totalPages = totalItems.ceil(); // Total number of pages in the carousel
@@ -90,6 +92,8 @@ class AdvertisingWidgetState extends State<AdvertisingWidget> {
                   controller: _pageController,
                   padEnds: true,
                   children: [
+                    //Selection of map content to be displayed on the Advertising Card...
+                    // (cardContents or imageContents)
                     ...cardContents.map<Widget>((content) {
                       if (content.type == ContentType.productCard) {
                         return AdvertisingCard(product: content.product!);
@@ -102,6 +106,8 @@ class AdvertisingWidgetState extends State<AdvertisingWidget> {
                     ),
                   ],
                 ),
+
+                //Content of the FloatingActionButton pageview controller in web mode only
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
