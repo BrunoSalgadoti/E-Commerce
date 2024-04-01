@@ -13,6 +13,7 @@ class UtilsForAdvertising {
     List<Product> advertisingProducts = productManager.allProducts
         //TODO: Colocar em Product a variável  advertising
         // .where((product) => product.advertising == true)
+        // .where((p) => p.product!.hasStock)
         .toList();
 
     cardContents = advertisingProducts
@@ -20,6 +21,7 @@ class UtilsForAdvertising {
               type: ContentType.productCard,
               product: product,
             ))
+        .where((p) => p.product!.hasStock)
         .toList();
 
     return cardContents;

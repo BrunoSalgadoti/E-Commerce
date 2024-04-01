@@ -1,7 +1,7 @@
 import 'package:brn_ecommerce/common/cards/flexible_product_card.dart';
-import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/common/messengers/search_dialog.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
-import 'package:brn_ecommerce/common/miscellaneous/search_dialog.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/filters_sliding_up_panel.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
@@ -131,6 +131,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      //TODO: Envolver em um container opaco para decoração
                       const Text(
                         "Filtro Ativo:",
                         style: TextStyle(

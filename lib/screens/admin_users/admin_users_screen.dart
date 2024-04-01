@@ -1,6 +1,6 @@
 import 'package:alphabet_list_scroll_view_fix/alphabet_list_scroll_view.dart';
-import 'package:brn_ecommerce/common/custom_drawer/custom_drawer.dart';
-import 'package:brn_ecommerce/common/miscellaneous/search_dialog.dart';
+import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/common/messengers/search_dialog.dart';
 import 'package:brn_ecommerce/models/admin_users_manager.dart';
 import 'package:brn_ecommerce/models/admin_users_search.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,6 @@ class AdminUsersScreen extends StatelessWidget {
               if (adminUsersSearch.search.isEmpty) {
                 return const Text('Clientes');
               } else {
-                return LayoutBuilder(builder: (_, constraints) {
                   return GestureDetector(
                     onTap: () async {
                       final search = await showDialog<String>(
@@ -34,14 +33,14 @@ class AdminUsersScreen extends StatelessWidget {
                     },
                     child: Container(
                         color: const Color.fromARGB(16, 255, 255, 255),
-                        width: constraints.biggest.width,
+                        width: double.infinity,
                         child: Text(
                           adminUsersSearch.search,
                           textAlign: TextAlign.center,
                           style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
                         )),
                   );
-                });
+
               }
             },
           ),

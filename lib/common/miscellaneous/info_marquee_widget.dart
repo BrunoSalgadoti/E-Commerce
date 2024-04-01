@@ -123,6 +123,8 @@ class InfoMarqueeWidgetState extends State<InfoMarqueeWidget> with SingleTickerP
           onTap: widget.onPressed,
           child: Stack(
             children: [
+
+              // Text part of the animated glow
               Positioned.fill(
                 child: SlideTransition(
                   position: _offsetAnimation,

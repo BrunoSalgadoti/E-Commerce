@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:brn_ecommerce/common/advertising/components/advertising_card.dart';
 import 'package:brn_ecommerce/common/advertising/components/content_type.dart';
 import 'package:brn_ecommerce/common/advertising/components/utils_for_advertising.dart';
+import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/models/product.dart';
 import 'package:brn_ecommerce/models/product_manager.dart';
@@ -63,6 +64,7 @@ class AdvertisingWidgetState extends State<AdvertisingWidget> {
   Widget build(BuildContext context) {
     final Product product = context.watch<Product>(); // Product obtained from context
     final ProductManager productManager = context.watch<ProductManager>();
+    final Color padEndsColor = getTextColorBasedOnBackground(Theme.of(context).primaryColor);
 
     final List<AdvertisingCarouselContent> cardContents = UtilsForAdvertising()
         .loadAdvertisingProducts(productManager)
@@ -177,8 +179,7 @@ class AdvertisingWidgetState extends State<AdvertisingWidget> {
                     child: Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color:
-                            _currentPage == index ? Theme.of(context).primaryColor : Colors.white12,
+                        color: _currentPage == index ? padEndsColor : Colors.black45,
                       ),
                       width: 9,
                       height: 9,
