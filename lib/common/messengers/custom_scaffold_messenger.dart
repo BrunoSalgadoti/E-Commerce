@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 /// ## CustomScaffoldMessenger (Folder: common/messengers)
 /// Widget that encapsulates the logic for showing a custom Snackbar message using ScaffoldMessenger.
-class CustomScaffoldMessenger extends StatelessWidget {
+class CustomScaffoldMessenger {
   /// Create a CustomScaffoldMessenger widget.
   ///
   /// The parameters [context] and [message] are required.
@@ -22,7 +22,6 @@ class CustomScaffoldMessenger extends StatelessWidget {
   /// The parameter [iconColor] sets the color of the icon in the Snackbar.
 
   const CustomScaffoldMessenger({
-    super.key,
     required this.context,
     required this.message,
     this.backgroundColor = Colors.red,
@@ -73,10 +72,5 @@ class CustomScaffoldMessenger extends StatelessWidget {
         ),
       );
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
