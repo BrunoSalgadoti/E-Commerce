@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
 class MonitoringLogger {
-
   // Variable that, if set to TRUE, DISABLES all PROJECT Monitoring.
   final stopAllLoggers = true;
 

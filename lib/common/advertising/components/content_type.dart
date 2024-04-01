@@ -1,4 +1,6 @@
-import 'package:brn_ecommerce/models/product.dart';
+
+
+import 'package:brn_ecommerce/models/products/product.dart';
 
 /// ## AdvertisingCarouselContent (Folder: common/advertising/components)
 /// ### Components of Advertising Widget

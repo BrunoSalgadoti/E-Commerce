@@ -1,12 +1,12 @@
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
-import 'package:brn_ecommerce/models/product.dart';
+import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /// ## AdvertisingCard  (Folder: common/advertising/components)
 /// ### Components of Advertising Widget
-/// Widget that represents an advertising card to be reused on different screens.
+/// Widget that represents an advertising card to be reused on different views.
 class AdvertisingCard extends StatelessWidget {
   const AdvertisingCard({super.key, required this.product});
 

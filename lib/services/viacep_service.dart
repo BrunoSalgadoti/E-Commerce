@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/models/chearch_cep/viacep_adress.dart';
+import 'package:brn_ecommerce/models/address_n_cep/viacep_adress.dart';
 import 'package:dio/dio.dart';
 
 class ViaCepService {

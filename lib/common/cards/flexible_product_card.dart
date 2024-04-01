@@ -3,8 +3,8 @@ import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/common/miscellaneous/freight_logo.dart';
 import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
-import 'package:brn_ecommerce/models/product.dart';
-import 'package:brn_ecommerce/models/users_manager.dart';
+import 'package:brn_ecommerce/models/products/product.dart';
+import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -127,7 +127,7 @@ class FlexibleProductCard extends StatelessWidget {
                                         fontWeight: FontWeight.bold,
                                         color: textColor),
                                   )),
-                              //TODO: Resolver Markdown Text
+                              //TODO: Implementar MarkdownText
                               Align(
                                   alignment: Alignment.center,
                                   child: AutoSizeText(

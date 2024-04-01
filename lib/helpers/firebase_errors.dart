@@ -1,7 +1,7 @@
 String getErrorString(String code) {
   switch (code) {
     case "WEAK_PASSWORD":
-      case "weak-password":
+    case "weak-password":
       return 'Sua senha é muito fraca. '
           'Tente incluir caracteres especiais, '
           'letras maiúsculas e minúsculas, '
@@ -34,8 +34,8 @@ String getErrorString(String code) {
       return 'Operação não permitida. '
           'Verifique se você está autorizado a realizar esta operação.';
     case "unknown":
-        return 'Algo deu errado, favor tentar novamente. :( . '
-            'Verifique sua conexão com a internet!';
+      return 'Algo deu errado, favor tentar novamente. :( . '
+          'Verifique sua conexão com a internet!';
 
     default:
       return 'Algo deu errado :(, favor tentar novamente!\n '

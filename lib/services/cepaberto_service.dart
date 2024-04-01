@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/models/chearch_cep/cepaberto_address.dart';
+import 'package:brn_ecommerce/models/address_n_cep/cepaberto_address.dart';
 import 'package:brn_ecommerce/services/db_api/config.dart';
 import 'package:dio/dio.dart';
 

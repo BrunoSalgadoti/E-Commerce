@@ -1,6 +1,6 @@
 import 'package:brn_ecommerce/brn_e_commerce.dart';
 import 'package:brn_ecommerce/helpers/app_providers.dart';
-import 'package:brn_ecommerce/models/product.dart';
+import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/services/config/debug_mode_and_first_start.dart';
 import 'package:brn_ecommerce/services/config/firebase_automated_maps_update.dart';
 import 'package:brn_ecommerce/services/db_api/firebase_options.dart';
@@ -10,7 +10,6 @@ import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart' show kDebugMode, kReleaseMode;
 import 'package:flutter/material.dart';
-import 'package:url_strategy/url_strategy.dart';
 
 import 'services/development_monitoring/firebase_performance.dart';
 
@@ -38,7 +37,8 @@ Future<void> main() async {
     ///variable to true.
     // This code snippet will only run in debug mode and
     // with the variable shouldStart == true
-    if (shouldStart == true) {// <- Don´t Change it! (Default: true)
+    if (shouldStart == true) {
+      // <- Don´t Change it! (Default: true)
       Product product = Product();
       FirebaseAutomatedMapsUpdate<Product>(
         collectionPath: 'products',

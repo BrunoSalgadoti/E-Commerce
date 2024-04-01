@@ -151,9 +151,13 @@ Future<void> reportNoFatalErrorToCrashlytics(
 
 //TODO: Implementar testar e Substituir outros indicators
 Widget customProgressIndicator(
-    {Color? color, double? strokeWidth, Color? stopAnimationColor, Color? linearBackgroundColor,
-    required bool isCircular, required bool isLoading}) {
-  if (isCircular == true &&  isLoading == true) {
+    {Color? color,
+    double? strokeWidth,
+    Color? stopAnimationColor,
+    Color? linearBackgroundColor,
+    required bool isCircular,
+    required bool isLoading}) {
+  if (isCircular == true && isLoading == true) {
     return Center(
       child: CircularProgressIndicator(
         color: color ?? Colors.blue,

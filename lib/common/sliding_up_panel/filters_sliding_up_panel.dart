@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/models/product_manager.dart';
+import 'package:brn_ecommerce/models/products/product_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';

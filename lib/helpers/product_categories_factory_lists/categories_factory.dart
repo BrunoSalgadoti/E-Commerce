@@ -1,5 +1,5 @@
-import 'package:brn_ecommerce/models/categories_of_products/product_category.dart';
-import 'package:brn_ecommerce/models/categories_of_products/product_sub_category.dart';
+import 'package:brn_ecommerce/models/products/categories/product_category.dart';
+import 'package:brn_ecommerce/models/products/categories/product_sub_category.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

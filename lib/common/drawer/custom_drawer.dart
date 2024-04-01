@@ -1,10 +1,11 @@
 import 'package:brn_ecommerce/common/drawer/components/drawer_header.dart';
 import 'package:brn_ecommerce/common/drawer/components/drawer_title.dart';
 import 'package:brn_ecommerce/common/drawer/components/setting_drawer.dart';
-import 'package:brn_ecommerce/models/users_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+
+import '../../models/users/users_manager.dart';
 
 /// # Widgets of the Custom Drawer reused in the project (Folder: common/drawer)
 /// ## CustomDrawer

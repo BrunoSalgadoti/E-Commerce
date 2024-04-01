@@ -1,6 +1,6 @@
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
-import 'package:brn_ecommerce/models/cart_manager.dart';
+import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

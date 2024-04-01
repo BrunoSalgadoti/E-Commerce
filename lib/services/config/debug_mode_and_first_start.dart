@@ -1,6 +1,6 @@
-import 'package:brn_ecommerce/models/categories_of_products/product_category_manager.dart';
-import 'package:brn_ecommerce/models/users_manager.dart';
-import 'package:brn_ecommerce/models/version_manager.dart';
+import 'package:brn_ecommerce/models/products/categories/product_category_manager.dart';
+import 'package:brn_ecommerce/models/users/users_manager.dart';
+import 'package:brn_ecommerce/services/config/version_manager.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 

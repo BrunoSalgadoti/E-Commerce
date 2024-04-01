@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
-import 'package:brn_ecommerce/models/page_manager.dart';
-import 'package:brn_ecommerce/models/users_manager.dart';
+import 'package:brn_ecommerce/models/screens/page_manager.dart';
+import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,11 +33,11 @@ class CustomDrawerHeader extends StatelessWidget {
                       'Loja Virtual:',
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                      Image.asset(
-                        "assets/logo/storeLogo.png",
-                        height: 90,
-                        fit: BoxFit.scaleDown,
-                      ),
+                    Image.asset(
+                      "assets/logo/storeLogo.png",
+                      height: 90,
+                      fit: BoxFit.scaleDown,
+                    ),
                   ] else
                     const AutoSizeText(
                       overflow: TextOverflow.ellipsis,

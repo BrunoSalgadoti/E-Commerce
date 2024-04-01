@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
-import 'package:brn_ecommerce/models/cart_manager.dart';
-import 'package:brn_ecommerce/models/product.dart';
-import 'package:brn_ecommerce/models/users_manager.dart';
+import 'package:brn_ecommerce/models/products/product.dart';
+import 'package:brn_ecommerce/models/sales/cart_manager.dart';
+import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -46,8 +46,7 @@ class CustomButton extends StatelessWidget {
     this.widthButton,
   });
 
-  final VoidCallback?
-      onPressed; // Function called when the buttons is pressed
+  final VoidCallback? onPressed; // Function called when the buttons is pressed
   final String text;
   final Color? buttonColor;
   final Color? textColor;
@@ -70,13 +69,10 @@ class CustomButton extends StatelessWidget {
                 shadowColor: shadowColor,
                 elevation: elevation,
                 padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30))),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))),
             child: Consumer3<UserManager, Product, CartManager>(
               builder: (_, userManager, product, cartManager, __) {
-                return userManager.loading ||
-                        product.loading ||
-                        cartManager.loading
+                return userManager.loading || product.loading || cartManager.loading
                     ? FittedBox(
                         child: SpinKitThreeInOut(
                           color: getEspecialColor(),
@@ -86,8 +82,7 @@ class CustomButton extends StatelessWidget {
                     : AutoSizeText(
                         overflow: TextOverflow.ellipsis,
                         text,
-                        style: TextStyle(
-                            color: textColor ?? getTextColor(), fontSize: 17),
+                        style: TextStyle(color: textColor ?? getTextColor(), fontSize: 17),
                         maxFontSize: 20,
                         maxLines: 2,
                         minFontSize: 12,

@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/models/page_manager.dart';
+import 'package:brn_ecommerce/models/screens/page_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
