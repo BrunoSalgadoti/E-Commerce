@@ -1,6 +1,8 @@
 import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
+import 'package:brn_ecommerce/common/miscellaneous/info_marquee_widget.dart';
 import 'package:brn_ecommerce/common/cards/price_card.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
+import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
 import 'package:brn_ecommerce/models/cart_manager.dart';
 import 'package:brn_ecommerce/screens/cart/components/cart_tile.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +40,15 @@ class CartScreen extends StatelessWidget {
                       ))
                   .toList(),
             ),
+           InfoMarqueeWidget(
+              text: 'Continue comprando em nossa loja!! Contamos com divérsos produtos em promoção,'
+                  ' confira! Clique aqui! E boas compras!',
+              color: getButtonColor(),
+              glowColor: Colors.greenAccent.withAlpha(500),
+            onPressed: () {
+              Navigator.pushNamed(context, "/product_screen");
+            },
+            ),
             PriceCard(
                 buttonText: 'Continuar para Entrega',
                 onPressed: cartManager.isCartValid
@@ -45,6 +56,7 @@ class CartScreen extends StatelessWidget {
                         Navigator.pushNamed(context, "/address");
                       }
                     : null),
+
           ],
         );
       }),
