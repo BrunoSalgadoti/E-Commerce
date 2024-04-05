@@ -7,26 +7,30 @@ import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
+/// # Admin Users Manager Model (Folder: models/admin_area)
+/// ## AdminUsersManager
+/// A class responsible for managing users in the admin panel, including listening to user updates.
+///
+/// This class handles the management of users in the admin panel. It provides functionality for listening to
+/// real-time updates for users from Firestore and updating the user list accordingly.
 class AdminUsersManager with ChangeNotifier {
-  List<Users> userList = [];
+  // Properties
 
+  /// The instance of the Firestore database.
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  /// The list of users managed by the admin.
+  List<Users> userList = [];
+
+  /// The subscription to listen for user updates.
   StreamSubscription<dynamic>? _subscription;
 
-  void updateUser(UserManager userManager) {
-    _subscription?.cancel();
-    if (userManager.adminEnable) {
-      _listenToUsers();
-    } else {
-      userList.clear();
-      notifyListeners();
-    }
-  }
+  // Methods
 
+  /// Listens to users from Firestore and updates the internal user list accordingly.
   Future<void> _listenToUsers() async {
     PerformanceMonitoring().startTrace('listen-users', shouldStart: true);
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Info message: Instance  _listenToUsers');
     }
 
@@ -48,12 +52,23 @@ class AdminUsersManager with ChangeNotifier {
     PerformanceMonitoring().stopTrace('listen-users');
   }
 
+  /// Updates the user list based on the admin's user manager.
+  ///
+  /// If adminEnable is true, listens to users from Firestore and updates the user list.
+  /// If adminEnable is false, clears the user list.
+  void updateUser(UserManager userManager) {
+    if (userManager.adminEnable) {
+      _listenToUsers();
+    } else {
+      userList.clear();
+    }
+    notifyListeners();
+  }
+
+  /// Disposes of resources when the object is no longer needed.
   @override
   void dispose() {
     _subscription?.cancel();
-    if (!kReleaseMode) {
-      MonitoringLogger().logInfo('Info message: Instance  $_subscription CANCELADO');
-    }
     super.dispose();
   }
 }

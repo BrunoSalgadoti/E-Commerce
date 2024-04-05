@@ -1,6 +1,6 @@
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
-import 'package:brn_ecommerce/models/screens/home_manager.dart';
-import 'package:brn_ecommerce/models/screens/section.dart';
+import 'package:brn_ecommerce/models/views/home_manager.dart';
+import 'package:brn_ecommerce/models/views/section.dart';
 import 'package:flutter/material.dart';
 
 class AddSectionWidget extends StatelessWidget {

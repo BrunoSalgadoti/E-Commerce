@@ -4,6 +4,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 /// ## CustomTextButton
 /// A custom text button that offers flexibility in terms of text, icon, image, and action when pressed.
 class CustomTextButton extends StatelessWidget {
+  final String? text;
+  final String? imageAssetsTarget;
+  final VoidCallback? onPressed;
+  final ButtonStyle? style;
+  final Color? fontColor;
+  final double fontSize;
+  final Icon? icon;
+  final FontWeight? fontWeight;
+  final double imageWidth;
+  final double imageHeight;
+  final bool? isSvg;
+  final Color? imageColor;
+
   /// Create a [CustomTextButton].
   ///
   /// The parameter [text] is optional and represents the text displayed on the button.
@@ -44,19 +57,6 @@ class CustomTextButton extends StatelessWidget {
     this.isSvg = false,
     this.imageColor,
   });
-
-  final String? text;
-  final String? imageAssetsTarget;
-  final VoidCallback? onPressed;
-  final ButtonStyle? style;
-  final Color? fontColor;
-  final double fontSize;
-  final Icon? icon;
-  final FontWeight? fontWeight;
-  final double imageWidth;
-  final double imageHeight;
-  final bool? isSvg;
-  final Color? imageColor;
 
   @override
   Widget build(BuildContext context) {

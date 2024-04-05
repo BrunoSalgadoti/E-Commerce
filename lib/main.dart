@@ -8,7 +8,7 @@ import 'package:brn_ecommerce/services/db_api/firebase_options.dart';
 // ignore: depend_on_referenced_packages
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart' show kDebugMode, kReleaseMode;
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
 import 'services/development_monitoring/firebase_performance.dart';
@@ -23,7 +23,7 @@ Future<void> main() async {
 
   PerformanceMonitoring().startTrace('main', shouldStart: true);
 
-  if (!kReleaseMode) {
+  if (kDebugMode) {
     bool shouldStart = false; //<- Change it! Only if you need to update...
     /// automatic fields in all documents of a class! (Default: false)
 

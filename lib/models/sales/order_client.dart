@@ -1,16 +1,47 @@
-import 'package:brn_ecommerce/models/address_n_cep/address.dart';
+import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
+import 'package:brn_ecommerce/models/locations_services/address.dart';
 import 'package:brn_ecommerce/models/products/cart_product.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
+import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../common/formatted_fields/format_values.dart';
-import '../../services/development_monitoring/monitoring_logger.dart';
-
+/// # StatusOfOrders (Folder: models/sales)
+///
+/// An enum representing the status of orders, including canceled, preparing,
+/// transporting, delivered, keeping return, and returned.
 enum StatusOfOrders { canceled, preparing, transporting, delivered, keepingReturn, returned }
 
+/// # OrderClient (Folder: models/sales)
+///
+/// A class representing an order with properties and methods for managing order data,
+/// including order ID, user information, items, address, status, and more.
+///
+/// This class handles order-related functionalities such as saving orders, updating status,
+/// getting status text, advancing and going back in status, and managing order cancellation.
 class OrderClient {
+  // Proprieties
+
+  String? orderId;
+  String? userId;
+  String? userName;
+  num? totalQuantity;
+  num? price;
+  List<CartProduct>? items;
+  Address? address;
+  StatusOfOrders? status;
+  Timestamp? date;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  /// Returns the Firestore reference for the order document.
+  DocumentReference get firestoreRef => firestore.collection("orders").doc(orderId);
+
+  //Constructors
+
+  /// Initializes an instance of [OrderClient] from a [CartManager] instance.
+  ///
+  /// This constructor creates an order instance based on the data retrieved from a [CartManager].
   OrderClient.fromCartManager(CartManager cartManager) {
     items = List.from(cartManager.items);
     price = cartManager.totalPrice;
@@ -21,8 +52,11 @@ class OrderClient {
     status = StatusOfOrders.preparing;
   }
 
+  /// Initializes an instance of [OrderClient] from a Firestore document snapshot.
+  ///
+  /// The factory constructor creates an order instance based on the data retrieved from a Firestore document snapshot.
   OrderClient.fromDocument(DocumentSnapshot doc) {
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Info: OrderClient.fromDocument');
     }
 
@@ -41,14 +75,31 @@ class OrderClient {
     address = Address.fromMap(doc["address"] as Map<String, dynamic>);
   }
 
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  // Getters and Setters
 
-  DocumentReference get firestoreRef => firestore.collection("orders").doc(orderId);
+  /// Gets the formatted order ID.
+  String get formattedId => formattedOrderId(orderId);
 
+  /// Gets the text representation of the order status.
+  String get statusText => getStatusText(status!);
+
+  /// Gets the next status text based on the current order status.
+  String get nextStatusText => getNextStatusText(status!);
+
+  /// Gets the previous status text based on the current order status.
+  String get previousStatusText => getPreviousStatusText(status!);
+
+  /// Gets the body text based on the current order status.
+  String get bodyText => getBodyText(status!);
+
+  // Methods
+
+  /// Updates the order status based on a Firestore document snapshot.
   void updateFromDocument(DocumentSnapshot doc) {
     status = StatusOfOrders.values[doc["status"] as int];
   }
 
+  /// Saves the order data to Firestore.
   Future<void> saveOrder() async {
     PerformanceMonitoring().startTrace('save-order', shouldStart: true);
 
@@ -65,6 +116,7 @@ class OrderClient {
     PerformanceMonitoring().stopTrace('save-order');
   }
 
+  /// Gets the function to go back in status, if applicable.
   Function()? get back {
     return status!.index >= StatusOfOrders.transporting.index &&
             status!.index != StatusOfOrders.delivered.index &&
@@ -76,6 +128,7 @@ class OrderClient {
         : null;
   }
 
+  /// Gets the function to advance in status, if applicable.
   Function()? get advance {
     return status!.index < StatusOfOrders.returned.index
         ? () {
@@ -85,33 +138,13 @@ class OrderClient {
         : null;
   }
 
+  /// Cancels the order status.
   void cancelStatus() {
     status = StatusOfOrders.canceled;
     firestoreRef.update({"status": status!.index});
   }
 
-  String? orderId;
-
-  List<CartProduct>? items;
-  num? price;
-
-  String? userId;
-  String? userName;
-  Address? address;
-  num? totalQuantity;
-  StatusOfOrders? status;
-  Timestamp? date;
-
-  String get formattedId => formattedOrderId(orderId);
-
-  String get statusText => getStatusText(status!);
-
-  String get nextStatusText => getNextStatusText(status!);
-
-  String get previousStatusText => getPreviousStatusText(status!);
-
-  String get bodyText => getBodyText(status!);
-
+  /// Returns the text representation of the order status.
   static String getStatusText(StatusOfOrders status) {
     switch (status) {
       case StatusOfOrders.canceled:
@@ -131,6 +164,7 @@ class OrderClient {
     }
   }
 
+  /// Returns the next status text based on the current order status.
   static String getNextStatusText(StatusOfOrders status) {
     switch (status) {
       case StatusOfOrders.preparing:
@@ -146,6 +180,7 @@ class OrderClient {
     }
   }
 
+  /// Returns the previous status text based on the current order status.
   static String getPreviousStatusText(StatusOfOrders status) {
     switch (status) {
       case StatusOfOrders.preparing:
@@ -159,6 +194,7 @@ class OrderClient {
     }
   }
 
+  /// Returns the body text based on the current order status.
   String getBodyText(StatusOfOrders status) {
     switch (status) {
       case StatusOfOrders.transporting:

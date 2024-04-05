@@ -12,6 +12,15 @@ import '../../helpers/breakpoints.dart';
 /// This widget is used to allow users to filter products based on their status. It includes a
 /// sliding up panel that contains checkboxes for different status options.
 class FiltersSlidingUpPanel extends StatefulWidget {
+  /// Controls the state of the sliding up panel.
+  final PanelController panelController;
+
+  /// Represents the currently selected status of products.
+  final Set<StatusOfProducts> selectedStatus;
+
+  /// The text displayed on the sliding up panel.
+  final String? textOfSlidingUpPanel;
+
   /// Creates a [FiltersSlidingUpPanel] widget with the specified parameters.
   ///
   /// The [textOfSlidingUpPanel] parameter is required and represents the text displayed on the sliding up panel.
@@ -25,15 +34,6 @@ class FiltersSlidingUpPanel extends StatefulWidget {
     required this.panelController,
     required this.selectedStatus,
   });
-
-  /// Controls the state of the sliding up panel.
-  final PanelController panelController;
-
-  /// Represents the currently selected status of products.
-  final Set<StatusOfProducts> selectedStatus;
-
-  /// The text displayed on the sliding up panel.
-  final String? textOfSlidingUpPanel;
 
   @override
   FiltersSlidingUpPanelState createState() => FiltersSlidingUpPanelState();
@@ -58,7 +58,7 @@ class FiltersSlidingUpPanelState extends State<FiltersSlidingUpPanel>
         bottomRight: Radius.circular(10),
       ),
       minHeight: 35,
-      maxHeight: MediaQuery.of(context).size.height / 2 < 300 ? 170 : 340,
+      maxHeight: MediaQuery.of(context).size.height / 2 < 300 ? 180 : 340,
       panel: Align(
         alignment: Alignment.topLeft,
         child: ConstrainedBox(
@@ -95,10 +95,10 @@ class FiltersSlidingUpPanelState extends State<FiltersSlidingUpPanel>
                 builder: (_, productManager, __) {
                   return Expanded(
                       child: ListView(
-                          itemExtent: 48,
+                          itemExtent: 45,
                           children: StatusOfProducts.values.map((s) {
                             final isSelected = widget.selectedStatus.contains(s);
-                            return CheckboxListTile(
+                            return CheckboxListTile.adaptive(
                               title: Text(ProductManager.getStatusText(s)),
                               dense: true,
                               activeColor: primaryColor,
@@ -110,18 +110,25 @@ class FiltersSlidingUpPanelState extends State<FiltersSlidingUpPanel>
                                       if (widget.selectedStatus.contains(s)) {
                                         widget.selectedStatus.remove(s);
                                       } else {
-                                        widget.selectedStatus.clear();
                                         widget.selectedStatus.add(s);
                                       }
                                     } else {
                                       widget.selectedStatus.remove(s);
+                                      widget.selectedStatus.clear();
                                     }
                                     productManager.setStatusFilter(
                                       status: s,
                                       enabled: widget.selectedStatus.contains(s),
                                     );
                                   });
-                                  widget.panelController.close();
+                                  if (mounted) {
+                                    widget.panelController.close();
+                                  }
+                                  if (productManager.filtersOn == false) {
+                                    widget.selectedStatus.clear();
+                                    widget.selectedStatus.remove(s);
+                                    debugPrint(productManager.filtersOn.toString());
+                                  }
                                 }
                               },
                             );

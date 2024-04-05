@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 /// Widget Card for areas of the APP that require user login and the user is not logged in.
 /// My orders area, among others.
 class LoginCard extends StatelessWidget {
-  const LoginCard({
-    super.key,
-  });
+  const LoginCard({super.key,});
 
   @override
   Widget build(BuildContext context) {

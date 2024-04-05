@@ -8,26 +8,38 @@ import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
+/// # Manager for handling product categories (Folder: models/products/product_category)
+/// ## ProductCategoryManager
+/// A class responsible for managing product categories, including updating and filtering operations.
+///
+/// This manager handles the logic related to product categories, such as updating categories in Firebase,
+/// loading categories for users, configuring real-time updates for categories, and filtering activated categories.
 class ProductCategoryManager extends ChangeNotifier {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  UserManager? userManager;
+  List<ProductCategory> _categoriesList = [];
+  StreamSubscription<QuerySnapshot>? _categoriesListener;
+
+  //Constructor
+
   ProductCategoryManager() {
     verifyUser(userManager ?? UserManager());
   }
 
-  UserManager? userManager;
-
-  List<ProductCategory> _categoriesList = [];
-
-  StreamSubscription<QuerySnapshot>? _categoriesListener;
-
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
+  /// Verifies if the categories list is empty.
+  ///
+  /// Returns `true` if the list is empty; otherwise, returns `false`.
   bool verifyCategoriesList() {
     if (_categoriesList.isEmpty) return true;
     return false;
   }
 
+  /// Updates the categories in Firebase based on the local data.
+  ///
+  /// This method retrieves the categories from Firestore, compares them with the local data, and updates
+  /// any differences to ensure consistency between the app and the database.
   Future<void> updateCategory() async {
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Update Category to Firebase');
     }
 
@@ -74,8 +86,11 @@ class ProductCategoryManager extends ChangeNotifier {
     }
   }
 
+  /// Loads activated categories for users from Firestore.
+  ///
+  /// This method retrieves activated categories from Firestore and updates the local categories list accordingly.
   Future<void> _loadCategoriesForUsers() async {
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Info _loadCategoriesForUSERS');
     }
     // Starts trying to get data from cache
@@ -103,9 +118,12 @@ class ProductCategoryManager extends ChangeNotifier {
     });
   }
 
+  // Loads all categories from Firestore.
+  ///
+  /// This method retrieves all categories from Firestore, including both activated and deactivated categories.
   Future<void> _loadAllCategories() async {
     PerformanceMonitoring().startTrace('_loadCategoriesList', shouldStart: true);
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Info _loadAllCategories');
     }
 
@@ -123,9 +141,13 @@ class ProductCategoryManager extends ChangeNotifier {
     PerformanceMonitoring().stopTrace('_loadCategoriesList');
   }
 
+  /// Sets up real-time updates for all categories from Firestore.
+  ///
+  /// This method configures a listener for real-time updates on categories in Firestore and updates the
+  /// local categories list whenever changes occur.
   Future<void> _setupRealTimeUpdatesAllCategories() async {
     PerformanceMonitoring().startTrace('setup-rt-updates-categories', shouldStart: true);
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Info message: _categoriesListener Start ');
     }
 
@@ -138,6 +160,15 @@ class ProductCategoryManager extends ChangeNotifier {
     PerformanceMonitoring().stopTrace('setup-rt-updates-categories');
   }
 
+  /// Filters and retrieves activated categories based on admin privileges and editing mode.
+  ///
+  /// This method filters the list of categories based on whether the user has admin privileges and whether
+  /// they are in the process of editing categories.
+  ///
+  /// - If `adminEnable` is `true` and `editingCategories` is `true`, all categories are returned.
+  /// - If `adminEnable` is `false`, only activated categories are returned.
+  ///
+  /// The returned list is sorted alphabetically by category title.
   List<ProductCategory> filterCategoriesActivated(bool adminEnable, bool editingCategories) {
     final List<ProductCategory> categoriesActive = [];
 
@@ -177,7 +208,7 @@ class ProductCategoryManager extends ChangeNotifier {
   /// Make sure you understand its behavior well before using it, as it may affect
   /// the categories in Firestore.
   Future<void> createProductCategoriesIfNotExists({required bool firstStart}) async {
-    if (!kReleaseMode && firstStart == true) {
+    if (kDebugMode && firstStart == true) {
       MonitoringLogger().logInfo('Info: Creating Categories');
 
       // Check if "categories" collection is empty in Firebase
@@ -232,10 +263,7 @@ class ProductCategoryManager extends ChangeNotifier {
 
   @override
   void dispose() {
-    super.dispose();
     _categoriesListener?.cancel();
-    if (!kReleaseMode) {
-      MonitoringLogger().logInfo('Info: ListenerCancel ');
-    }
+    super.dispose();
   }
 }

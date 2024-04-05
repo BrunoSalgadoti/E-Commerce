@@ -7,22 +7,29 @@ import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
+/// # OrdersManager (Folder: models/sales)
+///
+/// A class responsible for managing orders, including updating user data and listening to order changes.
+///
+/// This class handles user updates, order subscription, and order data management.
 class OrdersManager extends ChangeNotifier {
-  Users? users;
-
-  List<OrderClient> orders = [];
+  // Proprieties
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
+  List<OrderClient> orders = [];
+  Users? users;
   StreamSubscription<dynamic>? _subscription;
 
+  // Methods
+
+  /// Updates the user data and starts listening to orders.
   void updateUser(Users users) {
     this.users = users;
     orders.clear();
 
     _subscription?.cancel();
 
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Info: ${_subscription?.cancel()}_subscriptionCANCEL');
     }
 
@@ -31,6 +38,7 @@ class OrdersManager extends ChangeNotifier {
     }
   }
 
+  /// Listens to changes in orders for the current user.
   Future<void> _listenToOrders() async {
     PerformanceMonitoring().startTrace('listen-orders', shouldStart: true);
     if (!kReleaseMode) {

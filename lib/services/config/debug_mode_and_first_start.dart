@@ -12,7 +12,7 @@ import 'package:flutter/foundation.dart';
 ///
 /// [firstStart] - Indicates whether this is the first start of the application.
 Future<void> debugModeAndFirstStart({required bool firstStart}) async {
-  if (!kReleaseMode) {
+  if (kDebugMode) {
     /// Updates the application version information.
     // This code snippet will only run in debug mode
     final versionManager = VersionManager();

@@ -2,6 +2,7 @@ import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/cards/flexible_product_card.dart';
 import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
+import 'package:brn_ecommerce/common/sliding_up_panel/components/filters_result.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/filters_sliding_up_panel.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category_manager.dart';
@@ -30,17 +31,13 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
 
   @override
   void initState() {
-    super.initState();
     Future.delayed(Duration.zero, () {
       final productManager = Provider.of<ProductManager>(context, listen: false);
       productManager.filtersOn = false;
       productManager.search = '';
+      productManager.selectedFiltersByUser.clear();
     });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    super.initState();
   }
 
   @override
@@ -231,40 +228,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                           children: [
                             Expanded(
                               child: Column(children: [
-                                if (productManager.filtersOn == true)
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      const Text(
-                                        'Filtro Ativo:',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 14,
-                                          color: Colors.redAccent,
-                                        ),
-                                      ),
-                                      Text(
-                                        '${productManager.activeFilterName}',
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(
-                                          Icons.close,
-                                          size: 20,
-                                          color: Colors.red,
-                                        ),
-                                        onPressed: () {
-                                          productManager.disableFilter();
-                                        },
-                                      ),
-                                    ],
-                                  ),
+                                if (productManager.filtersOn == true) filtersResult(),
                                 if (allProductsFromCategory.isEmpty)
                                   productManager.filtersOn == true ||
                                           productManager.search.isNotEmpty
@@ -346,5 +310,18 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
             },
           ));
     });
+  }
+
+  @override
+  void dispose() {
+    Future.delayed(Duration.zero, () {
+      if (mounted) {
+        final productManager = Provider.of<ProductManager>(context, listen: false);
+        productManager.filtersOn = false;
+        productManager.search = '';
+        productManager.selectedFiltersByUser.clear();
+      }
+    });
+    super.dispose();
   }
 }

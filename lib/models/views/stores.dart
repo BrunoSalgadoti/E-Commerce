@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:brn_ecommerce/helpers/extensions.dart';
-import 'package:brn_ecommerce/models/address_n_cep/address.dart';
-import 'package:brn_ecommerce/models/screens/opening_stores.dart';
+import 'package:brn_ecommerce/models/locations_services/address.dart';
+import 'package:brn_ecommerce/models/views/opening_stores.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,9 +14,30 @@ import 'package:uuid/uuid.dart';
 
 import '../../common/formatted_fields/format_values.dart';
 
+/// Enumeration that represents the status of the store.
 enum StoreStatus { closed, open, closing }
 
+/// # Stores (Folder: models/views)
+///
+/// Class that represents an unity of the store.
 class Stores extends ChangeNotifier {
+  // Proprieties
+
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseStorage storage = FirebaseStorage.instance;
+  String? id;
+  String? nameStore;
+  String? emailStore;
+  String? phoneNumberStore;
+  dynamic imageStore;
+  Map<String, Map<String, TimeOfDay>?>? openingStoresFromTimeOfDay;
+  Address? address;
+  OpeningStores? openingStores;
+  StoreStatus? status;
+
+  //Constructors
+
+  /// Constructor for the Stores class.
   Stores({
     this.id,
     this.nameStore,
@@ -27,12 +48,14 @@ class Stores extends ChangeNotifier {
     this.address,
   });
 
+  /// Constructor from a DocumentSnapshot.
   Stores.fromDocument(DocumentSnapshot document) {
     PerformanceMonitoring().startTrace('stores-from-document', shouldStart: true);
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Instance beginning Stores.fromDocument');
     }
 
+    // Assigning values from DocumentSnapshot
     id = document.id;
     nameStore = document.get("nameStore") as String? ?? "";
     emailStore = document.get("emailStore") as String? ?? "";
@@ -65,38 +88,56 @@ class Stores extends ChangeNotifier {
     PerformanceMonitoring().stopTrace('stores-from-document');
   }
 
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final FirebaseStorage storage = FirebaseStorage.instance;
+  //Getters
 
+  /// Reference for store storage.
   Reference get storageRef => storage.ref().child("stores");
 
-  Address? address;
-  OpeningStores? openingStores;
-
-  String? id;
-  String? nameStore;
-  String? emailStore;
-  String? phoneNumberStore;
-  dynamic imageStore;
-  Map<String, Map<String, TimeOfDay>?>? openingStoresFromTimeOfDay;
-  StoreStatus? status;
-
+  /// Formatted address text.
   String? get addressText => '${address?.street}, ${address?.number}'
       '${address?.complement?.isNotEmpty == true ? ' - ${address!.complement}' : ''} - '
       '${address?.district}, ${address?.city}/'
       '${address?.state} - ${formattedZipcode(address?.zipCode)}';
 
+  /// Text of opening hours.
   String get openingText {
+    // Cálculo do texto do horário de funcionamento
     return 'Seg-Sex: ${formattedPeriod(openingStoresFromTimeOfDay!["monFri"])}\n'
         'Sab: ${formattedPeriod(openingStoresFromTimeOfDay!["saturday"])}\n'
         'Dom: ${formattedPeriod(openingStoresFromTimeOfDay!["monday"])}';
   }
 
-  String formattedPeriod(Map<String, TimeOfDay>? period) {
-    if (period == null || period.isEmpty) return 'Fechada';
-    return '${period["from"]?.formatted()} - ${period["to"]?.formatted()}';
+  /// Store status text.
+  String get statusText {
+    switch (status) {
+      case StoreStatus.closed:
+        return 'Fechada';
+      case StoreStatus.open:
+        return 'Aberta';
+      case StoreStatus.closing:
+        return 'Fechando';
+      default:
+        return '';
+    }
   }
 
+  /// Colors associated with the store status.
+  Color get colorsForOpenStore {
+    switch (status) {
+      case StoreStatus.closed:
+        return Colors.red;
+      case StoreStatus.open:
+        return Colors.green;
+      case StoreStatus.closing:
+        return const Color.fromARGB(255, 210, 179, 7);
+      default:
+        return Colors.transparent;
+    }
+  }
+
+  // Methods
+
+  // Converts the store to a Map.
   Map<String, dynamic> toMap() {
     return {
       "nameStore": nameStore,
@@ -108,6 +149,13 @@ class Stores extends ChangeNotifier {
     };
   }
 
+  /// Formats the time period.
+  String formattedPeriod(Map<String, TimeOfDay>? period) {
+    if (period == null || period.isEmpty) return 'Fechada';
+    return '${period["from"]?.formatted()} - ${period["to"]?.formatted()}';
+  }
+
+  /// Updates the store in the database.
   Future<void> updateStore(String storeId, Stores store) async {
     try {
       final storeRef = firestore.collection("stores").doc(storeId);
@@ -115,15 +163,17 @@ class Stores extends ChangeNotifier {
       await updateStoreImage(imageStore, storeId);
     } catch (error) {
       if (kDebugMode) {
+        //TODO: Tratar erro
         print(error);
       }
     }
     notifyListeners();
   }
 
+  /// Saves the store in the database.
   Future<void> saveStore(Stores store) async {
     PerformanceMonitoring().startTrace('save-store', shouldStart: true);
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Save file upload to Firebase Storage');
     }
 
@@ -134,19 +184,21 @@ class Stores extends ChangeNotifier {
       await updateStoreImage(imageStore, store.id);
     } catch (error) {
       if (kDebugMode) {
+        //TODO: Tratar erro
         print(error);
       }
     }
     notifyListeners();
 
     PerformanceMonitoring().stopTrace('save-store');
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('File saved completed');
     }
   }
 
+  /// Deletes the store from the database.
   Future<void> deleteStore(Stores store, String? storeId) async {
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Starting file delete to Firebase Storage');
     }
 
@@ -163,15 +215,17 @@ class Stores extends ChangeNotifier {
       await firestoreRef.delete();
     } catch (error) {
       if (kDebugMode) {
+        //TODO: Tratar erro
         print(error);
       }
     }
     notifyListeners();
   }
 
+  /// Updates the store image.
   Future<void> updateStoreImage(dynamic image, [String? storeId]) async {
     PerformanceMonitoring().startTrace('update-store-image', shouldStart: true);
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Starting file upload to Firebase Storage');
     }
 
@@ -196,6 +250,7 @@ class Stores extends ChangeNotifier {
           image = url;
         } catch (e) {
           if (kDebugMode) {
+            //TODO: Tratar erro
             print('Erro ao decodificar o base64String: $e');
           }
         }
@@ -212,6 +267,7 @@ class Stores extends ChangeNotifier {
     PerformanceMonitoring().stopTrace('update-store-image');
   }
 
+  /// Updates the store status.
   void updateStatus() {
     final weekDay = DateTime.now().weekday;
 
@@ -235,32 +291,6 @@ class Stores extends ChangeNotifier {
       status = StoreStatus.closing;
     } else {
       status = StoreStatus.closed;
-    }
-  }
-
-  String get statusText {
-    switch (status) {
-      case StoreStatus.closed:
-        return 'Fechada';
-      case StoreStatus.open:
-        return 'Aberta';
-      case StoreStatus.closing:
-        return 'Fechando';
-      default:
-        return '';
-    }
-  }
-
-  Color get colorsForStatus {
-    switch (status) {
-      case StoreStatus.closed:
-        return Colors.red;
-      case StoreStatus.open:
-        return Colors.green;
-      case StoreStatus.closing:
-        return const Color.fromARGB(255, 210, 179, 7);
-      default:
-        return Colors.transparent;
     }
   }
 }

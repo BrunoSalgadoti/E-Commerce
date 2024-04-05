@@ -1,8 +1,8 @@
 import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/miscellaneous/communications_utils.dart';
-import 'package:brn_ecommerce/models/screens/stores.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
+import 'package:brn_ecommerce/models/views/stores.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +41,7 @@ class StoreCard extends StatelessWidget {
                     child: Text(
                       store.statusText,
                       style: TextStyle(
-                        color: store.colorsForStatus,
+                        color: store.colorsForOpenStore,
                         fontWeight: FontWeight.w800,
                         fontSize: 16,
                       ),

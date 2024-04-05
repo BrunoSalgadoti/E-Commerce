@@ -3,20 +3,41 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:brn_ecommerce/models/screens/section_item.dart';
+import 'package:brn_ecommerce/models/views/section_item.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart' show ChangeNotifier, kDebugMode, kIsWeb;
+import 'package:flutter/foundation.dart' show ChangeNotifier, kIsWeb, kDebugMode;
 import 'package:uuid/uuid.dart';
 
+/// # Section (Folder: models/views)
+///
+/// A class representing a section in the application.
+///
+/// This class represents a section in an application, with methods for adding and removing items,
+/// saving the section, deleting the section, validating the section, and cloning the section.
 class Section extends ChangeNotifier {
+  // Proprieties
+
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseStorage storage = FirebaseStorage.instance;
+  String? id;
+  String? name;
+  String? type;
+  String? _error;
+  int? position;
+  List<SectionItem>? items;
+  List<SectionItem>? originalItems;
+
+  // Constructors
+
   Section({this.id, this.name, this.type, this.items, this.position}) {
     items = items ?? [];
     originalItems = List.from(items!);
   }
 
+  /// Constructor from Firestore Document
   Section.fromDocument(DocumentSnapshot document) {
     try {
       id = document.id;
@@ -31,39 +52,36 @@ class Section extends ChangeNotifier {
     }
   }
 
-  String? id;
-  String? name;
-  String? type;
-  int? position;
-  List<SectionItem>? items;
-  List<SectionItem>? originalItems;
+  /// Getter for Firestore Document Reference
+  DocumentReference get firestoreRef => firestore.doc("home/$id");
 
-  String? _error;
+  /// Getter for Firebase Storage Reference
+  Reference get storageRef => storage.ref().child("home").child(id!);
 
+  /// Getter for error message
   String? get error => _error;
 
+  /// Setter for error message
   set error(String? value) {
     _error = value;
     notifyListeners();
   }
 
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final FirebaseStorage storage = FirebaseStorage.instance;
+  // Methods
 
-  DocumentReference get firestoreRef => firestore.doc("home/$id");
-
-  Reference get storageRef => storage.ref().child("home").child(id!);
-
+  /// Add an item to the section
   void addItem(SectionItem item) {
     items!.add(item);
     notifyListeners();
   }
 
+  /// to remove an item from the section
   void removeItem(SectionItem item) {
     items!.remove(item);
     notifyListeners();
   }
 
+  /// to save the section to Firestore
   Future<void> saveSection(int position) async {
     PerformanceMonitoring().startTrace('save-section', shouldStart: true);
 
@@ -97,6 +115,7 @@ class Section extends ChangeNotifier {
             item.image = url;
           } catch (e) {
             if (kDebugMode) {
+              //TODO: tratar erro
               print('Erro ao decodificar o base64String: $e');
             }
           }
@@ -116,6 +135,7 @@ class Section extends ChangeNotifier {
           await ref.delete();
         }
       } catch (error) {
+        //TODO: tratar erro
         MonitoringLogger().logError('Erro ao Salvar Seção: $error');
       }
     }
@@ -128,6 +148,7 @@ class Section extends ChangeNotifier {
     PerformanceMonitoring().stopTrace('save-section');
   }
 
+  /// To delete the section from Firestore
   Future<void> delete() async {
     await firestoreRef.delete();
     for (final item in items!) {
@@ -136,11 +157,14 @@ class Section extends ChangeNotifier {
           final ref = storage.refFromURL(item.image as String);
           await ref.delete();
           // ignore: empty_catches
-        } catch (error) {}
+        } catch (error) {
+          //TODO: tratar erro
+        }
       }
     }
   }
 
+  /// Method to check if the section is valid
   bool valid() {
     if (name == null || name!.isEmpty) {
       error = 'Título Inválido';
@@ -152,6 +176,7 @@ class Section extends ChangeNotifier {
     return error == null;
   }
 
+  /// Method to clone the section
   Section clone() {
     return Section(
         id: id,

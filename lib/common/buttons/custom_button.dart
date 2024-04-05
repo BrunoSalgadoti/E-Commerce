@@ -11,6 +11,17 @@ import 'package:provider/provider.dart';
 /// ## CustomButton
 /// A custom buttons that offers flexibility in terms of color, style, and action when pressed.
 class CustomButton extends StatelessWidget {
+
+  final VoidCallback? onPressed; // Function called when the buttons is pressed
+  final String text;
+  final Color? buttonColor;
+  final Color? textColor;
+  final Color? buttonDisabledColor;
+  final Color shadowColor;
+  final double elevation;
+  final double? heightButton;
+  final double? widthButton;
+
   /// Create one [CustomButton].
   ///
   /// The parameter [text] is required and represents the text displayed on the buttons.
@@ -45,16 +56,6 @@ class CustomButton extends StatelessWidget {
     this.heightButton,
     this.widthButton,
   });
-
-  final VoidCallback? onPressed; // Function called when the buttons is pressed
-  final String text;
-  final Color? buttonColor;
-  final Color? textColor;
-  final Color? buttonDisabledColor;
-  final Color shadowColor;
-  final double elevation;
-  final double? heightButton;
-  final double? widthButton;
 
   @override
   Widget build(BuildContext context) {

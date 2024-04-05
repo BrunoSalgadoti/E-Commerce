@@ -2,6 +2,7 @@ import 'package:brn_ecommerce/common/cards/flexible_product_card.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/messengers/search_dialog.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
+import 'package:brn_ecommerce/common/sliding_up_panel/components/filters_result.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/filters_sliding_up_panel.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
@@ -24,12 +25,13 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   @override
   void initState() {
-    super.initState();
     Future.delayed(Duration.zero, () {
       final productManager = Provider.of<ProductManager>(context, listen: false);
       productManager.filtersOn = false;
       productManager.search = '';
+      productManager.selectedFiltersByUser.clear();
     });
+    super.initState();
   }
 
   @override
@@ -126,36 +128,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   panelController: panelController,
                   selectedStatus: selectedStatus,
                 ),
-                if (productManager.filtersOn == true)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      //TODO: Envolver em um container opaco para decoração
-                      const Text(
-                        "Filtro Ativo:",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                          color: Colors.redAccent,
-                        ),
-                      ),
-                      Text(
-                        "${productManager.activeFilterName}",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.close),
-                        onPressed: () {
-                          productManager.disableFilter();
-                        },
-                      ),
-                    ],
-                  ),
+                if (productManager.filtersOn == true) filtersResult(),
                 Expanded(
                   child: Stack(
                     children: [
@@ -218,5 +191,18 @@ class _ProductsScreenState extends State<ProductsScreen> {
         );
       }),
     );
+  }
+
+  @override
+  void dispose() {
+    Future.delayed(Duration.zero, () {
+      if (mounted) {
+        final productManager = Provider.of<ProductManager>(context, listen: false);
+        productManager.filtersOn = false;
+        productManager.search = '';
+        productManager.selectedFiltersByUser.clear();
+      }
+    });
+    super.dispose();
   }
 }

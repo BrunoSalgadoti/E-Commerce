@@ -4,22 +4,29 @@ import 'factory_colors/android_factory_colors.dart';
 import 'factory_colors/ios_factory_colos.dart';
 import 'factory_colors/web_factory_colors.dart';
 
+/// # Theme Manager (Folder: helpers/themes)
+/// A manager class for handling different theme data based on platform.
+///
+/// This class manages and initializes theme data for Android, iOS, and Web platforms.
 class Themes with ChangeNotifier {
-  AndroidFactoryColors androidFactoryColors = const AndroidFactoryColors();
-  IosFactoryColors iosFactoryColors = const IosFactoryColors();
-  WebFactoryColors webFactoryColors = const WebFactoryColors();
-
   late ThemeData themeAndroid;
   late ThemeData themeIos;
   late ThemeData themeWeb;
 
+  AndroidFactoryColors androidFactoryColors = const AndroidFactoryColors();
+  IosFactoryColors iosFactoryColors = const IosFactoryColors();
+  WebFactoryColors webFactoryColors = const WebFactoryColors();
+
+  /// Constructs a new instance of Themes and initializes theme data.
   Themes(BuildContext context) {
     _initializeThemes(context);
   }
 
+  /// Initializes theme data for Android, iOS, and Web platforms.
   void _initializeThemes(BuildContext context) {
+    /// Theme data for Android platform
     themeAndroid = ThemeData(
-      ///Material Data Theme Flutter 3
+      //Material Data Theme Flutter 3
       useMaterial3: true,
       primaryColor: androidFactoryColors.primaryColor,
       scaffoldBackgroundColor: androidFactoryColors.scaffoldBackgroundColor,
@@ -71,8 +78,9 @@ class Themes with ChangeNotifier {
       ),
     );
 
+    /// Theme data for iOS platform
     themeIos = ThemeData(
-      ///Material Data Theme Flutter 3
+      //Material Data Theme Flutter 3
       useMaterial3: true,
       primaryColor: iosFactoryColors.primaryColor,
       scaffoldBackgroundColor: iosFactoryColors.scaffoldBackgroundColor,
@@ -124,8 +132,9 @@ class Themes with ChangeNotifier {
       ),
     );
 
+    /// Theme data for Web platform
     themeWeb = ThemeData(
-      ///Material Data Theme Flutter 3
+      //Material Data Theme Flutter 3
       useMaterial3: true,
       primaryColor: webFactoryColors.primaryColor,
       scaffoldBackgroundColor: webFactoryColors.scaffoldBackgroundColor,

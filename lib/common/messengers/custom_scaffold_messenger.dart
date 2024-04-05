@@ -3,6 +3,16 @@ import 'package:flutter/material.dart';
 /// ## CustomScaffoldMessenger (Folder: common/messengers)
 /// Widget that encapsulates the logic for showing a custom Snackbar message using ScaffoldMessenger.
 class CustomScaffoldMessenger {
+  final BuildContext context;
+  final String message;
+  final Color backgroundColor;
+  final Duration duration;
+  final SnackBarBehavior behavior;
+  final double borderRadius;
+  final EdgeInsetsGeometry margin;
+  final TextStyle textStyle;
+  final Color iconColor;
+
   /// Create a CustomScaffoldMessenger widget.
   ///
   /// The parameters [context] and [message] are required.
@@ -20,7 +30,6 @@ class CustomScaffoldMessenger {
   /// The parameter [textStyle] sets the style of the text in the Snackbar.
   ///
   /// The parameter [iconColor] sets the color of the icon in the Snackbar.
-
   const CustomScaffoldMessenger({
     required this.context,
     required this.message,
@@ -32,16 +41,6 @@ class CustomScaffoldMessenger {
     this.textStyle = const TextStyle(fontSize: 18),
     this.iconColor = Colors.yellow,
   });
-
-  final BuildContext context;
-  final String message;
-  final Color backgroundColor;
-  final Duration duration;
-  final SnackBarBehavior behavior;
-  final double borderRadius;
-  final EdgeInsetsGeometry margin;
-  final TextStyle textStyle;
-  final Color iconColor;
 
   /// Method to show the Snackbar message.
   ///

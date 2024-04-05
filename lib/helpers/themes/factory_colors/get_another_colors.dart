@@ -8,6 +8,13 @@ import 'package:flutter/material.dart';
 
 import 'web_factory_colors.dart';
 
+/// ## Color Helper Functions  (Folder: helpers/themes/factory_colors)
+/// ### getEspecialColor
+/// Returns a special color based on the platform or device type.
+///
+/// This function checks the platform or device type and returns a specific color accordingly.
+///
+/// The [context] parameter is optional and can be used to obtain the current build context.
 Color getEspecialColor([BuildContext? context]) {
   if (kIsWeb) {
     return const WebFactoryColors().iconDrawerColor;
@@ -20,6 +27,12 @@ Color getEspecialColor([BuildContext? context]) {
   }
 }
 
+/// ### getGradientColorFirst
+/// Returns the first gradient color based on the platform or device type.
+///
+/// This function checks the platform or device type and returns the first gradient color accordingly.
+///
+/// The [context] parameter is optional and can be used to obtain the current build context.
 Color getGradientColorFirst([BuildContext? context]) {
   if (kIsWeb) {
     return const AnotherColors().homeGradientColor1Web;
@@ -32,6 +45,12 @@ Color getGradientColorFirst([BuildContext? context]) {
   }
 }
 
+/// ### getGradientColorSecond
+/// Returns the second gradient color based on the platform or device type.
+///
+/// This function checks the platform or device type and returns the second gradient color accordingly.
+///
+/// The [context] parameter is optional and can be used to obtain the current build context.
 Color getGradientColorSecond([BuildContext? context]) {
   if (kIsWeb) {
     return const AnotherColors().homeGradientColor2Web;
@@ -44,6 +63,12 @@ Color getGradientColorSecond([BuildContext? context]) {
   }
 }
 
+/// ### getButtonColor
+/// Returns the button color based on the platform or device type.
+///
+/// This function checks the platform or device type and returns the button color accordingly.
+///
+/// The [context] parameter is optional and can be used to obtain the current build context.
 Color getButtonColor([BuildContext? context]) {
   if (kIsWeb) {
     return const WebFactoryColors().buttonColor;
@@ -56,6 +81,12 @@ Color getButtonColor([BuildContext? context]) {
   }
 }
 
+/// ### getTextColor
+/// Returns the text color based on the platform or device type.
+///
+/// This function checks the platform or device type and returns the text color accordingly.
+///
+/// The [context] parameter is optional and can be used to obtain the current build context.
 Color getTextColor([BuildContext? context]) {
   if (kIsWeb) {
     return const WebFactoryColors().titleMediumColor;

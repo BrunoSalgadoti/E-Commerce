@@ -8,6 +8,30 @@ import 'package:flutter/material.dart';
 ///
 /// This widget is stateful, allowing for dynamic content changes based on a specified duration.
 class EmptyPageIndicator extends StatefulWidget {
+  /// The title text to be displayed.
+  final String title;
+
+  /// The size of the title text.
+  final double? titleSize;
+
+  /// The color of the title text.
+  final Color? titleColor;
+
+  /// The icon data to be displayed.
+  final IconData? iconData;
+
+  /// The color of the icon.
+  final Color? iconColor;
+
+  /// The size of the icon.
+  final double? iconSize;
+
+  /// The image path to be displayed.
+  final String? image;
+
+  /// The duration for switching between indicators.
+  final Duration? duration;
+
   /// Creates an [EmptyPageIndicator] widget with the specified parameters.
   ///
   /// The [title] parameter is required and represents the title text to be displayed.
@@ -36,30 +60,6 @@ class EmptyPageIndicator extends StatefulWidget {
     this.titleSize,
     this.titleColor,
   });
-
-  /// The title text to be displayed.
-  final String title;
-
-  /// The size of the title text.
-  final double? titleSize;
-
-  /// The color of the title text.
-  final Color? titleColor;
-
-  /// The icon data to be displayed.
-  final IconData? iconData;
-
-  /// The color of the icon.
-  final Color? iconColor;
-
-  /// The size of the icon.
-  final double? iconSize;
-
-  /// The image path to be displayed.
-  final String? image;
-
-  /// The duration for switching between indicators.
-  final Duration? duration;
 
   @override
   EmptyPageIndicatorState createState() => EmptyPageIndicatorState();
@@ -156,9 +156,9 @@ class EmptyPageIndicatorState extends State<EmptyPageIndicator> {
 
   @override
   void dispose() {
-    super.dispose();
     if (_timer != null && _timer!.isActive) {
       _timer?.cancel();
     }
+    super.dispose();
   }
 }

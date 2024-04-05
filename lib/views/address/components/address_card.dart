@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/models/address_n_cep/address.dart';
+import 'package:brn_ecommerce/models/locations_services/address.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:brn_ecommerce/models/sales/delivery.dart';
 import 'package:brn_ecommerce/views/address/components/address_input_field.dart';

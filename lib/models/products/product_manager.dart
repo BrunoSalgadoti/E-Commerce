@@ -8,6 +8,11 @@ import 'package:flutter/foundation.dart';
 
 import '../../services/development_monitoring/monitoring_logger.dart';
 
+/// # Product Manager (Folder: models/products)
+/// ## StatusOfProducts
+/// An enum to represent different states of products.
+///
+/// This enum defines the possible product states that can be used to filter products.
 enum StatusOfProducts {
   bestSellers,
   lowestPrice,
@@ -17,7 +22,27 @@ enum StatusOfProducts {
   sortedZA,
 }
 
+/// ## ProductManager
+/// A class responsible for managing the list of products and their related operations.
+///
+/// This class handles product list management, including operations such as filtering, searching, updating and deleting.
 class ProductManager extends ChangeNotifier {
+  // Properties
+
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  String? activeFilterName;
+  String _search = '';
+  bool filtersOn = false;
+  List<StatusOfProducts> statusFilter = [];
+  List<StatusOfProducts> selectedFiltersByUser = [];
+  List<Product> allProducts = [];
+  StatusOfProducts? status;
+  ProductsBestSelling? bestSellingProductsManager;
+  StreamSubscription<dynamic>? _subscription;
+
+  // Constructor
+
+  /// Initialize an instance of [Product Manager] and start listening for products.
   ProductManager() {
     _listenToProducts();
 
@@ -27,38 +52,21 @@ class ProductManager extends ChangeNotifier {
     );
   }
 
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  // Getters and Setters
 
-  StreamSubscription<dynamic>? _subscription;
-
-  ProductsBestSelling? bestSellingProductsManager;
-
-  List<Product> allProducts = [];
-  StatusOfProducts? status;
-  String? activeFilterName = "";
-  bool filtersOn = false;
-  List<StatusOfProducts> statusFilter = [];
-
+  /// Returns the state of the selected product.
   get selectedStatus => status;
 
-  String _filtered = '';
-
-  String get filtered => _filtered;
-
-  set filtered(String value) {
-    _filtered = value;
-    notifyListeners();
-  }
-
-  String _search = '';
-
-  String get search => _search;
-
+  /// Sets the search query and notifies listeners.
   set search(String value) {
     _search = value;
     notifyListeners();
   }
 
+  /// Returns the current search query.
+  String get search => _search;
+
+  /// Returns the filtered products based on the applied filters.
   List<Product> get filteredProducts {
     List<Product> filteredProducts = List.from(allProducts);
 
@@ -99,6 +107,9 @@ class ProductManager extends ChangeNotifier {
     return filteredProducts;
   }
 
+  // Methods
+
+  /// Starts listening for products in Firestore.
   void _listenToProducts() async {
     PerformanceMonitoring().startTrace('listen_products', shouldStart: true);
     if (!kReleaseMode) {
@@ -133,6 +144,7 @@ class ProductManager extends ChangeNotifier {
     PerformanceMonitoring().stopTrace('listen_products');
   }
 
+  /// Search for a product by its ID.
   Product? findProductById(String id) {
     try {
       return allProducts.firstWhere((p) => p.id == id);
@@ -141,45 +153,55 @@ class ProductManager extends ChangeNotifier {
     }
   }
 
+  /// Updates the product list with an updated product.
   void updateProducts(Product product) {
     allProducts.removeWhere((p) => p.id == product.id);
     allProducts.add(product);
     notifyListeners();
   }
 
+  /// Requests the deletion of a product.
   void requestDelete(Product product) {
     product.deleteProduct();
     allProducts.removeWhere((p) => p.id == product.id);
     notifyListeners();
   }
 
+  /// Disables all filters.
   void disableFilter() {
     filtersOn = false;
     statusFilter = [];
     filteredProducts.clear();
+    selectedFiltersByUser.clear();
     notifyListeners();
   }
 
+  /// Sets the products state filter and notifies listeners.
   void setStatusFilter({StatusOfProducts? status, bool? enabled}) {
     if (enabled!) {
+      selectedFiltersByUser.add(status!);
       filtersOn = true;
-      statusFilter.add(status!);
-      setActiveFilterName(getStatusText(status));
+      statusFilter.add(status);
+      setActiveFilterName(getStatusText(selectedFiltersByUser[0]));
     } else {
       statusFilter.remove(status);
       setActiveFilterName("");
+      selectedFiltersByUser.clear();
       filtersOn = false;
     }
     notifyListeners();
   }
 
+  /// Defines the name of the currently active filter.
   void setActiveFilterName(String name) {
     activeFilterName = name;
     notifyListeners();
   }
 
+  /// Returns the text corresponding to the product state.
   String? get statusText => getStatusText(status!);
 
+  /// Returns the text corresponding to a given product state.
   static String getStatusText(StatusOfProducts status) {
     switch (status) {
       case StatusOfProducts.bestSellers:
@@ -201,7 +223,9 @@ class ProductManager extends ChangeNotifier {
 
   @override
   void dispose() {
-    super.dispose();
     _subscription?.cancel();
+    filteredProducts.clear();
+    selectedFiltersByUser.clear();
+    super.dispose();
   }
 }

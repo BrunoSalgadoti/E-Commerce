@@ -8,10 +8,41 @@ import 'package:brn_ecommerce/services/development_monitoring/firebase_performan
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart' show ChangeNotifier, kIsWeb, kReleaseMode;
+import 'package:flutter/foundation.dart' show ChangeNotifier, kDebugMode, kIsWeb;
 import 'package:uuid/uuid.dart';
 
+/// # Product (Folder: models/products)
+///
+/// A class representing a product with various properties and methods for managing product data.
+///
+/// This class handles the management of product information such as name, description, images, stock, pricing details, and more.
 class Product extends ChangeNotifier {
+  // Properties
+
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseStorage storage = FirebaseStorage.instance;
+  String? id;
+  String? name;
+  String? description;
+  String? stockErrorMessage;
+  String brand = "";
+  String? categoryOfProduct;
+  bool? freight;
+  bool deleted = false;
+  bool advertising = false;
+  bool _loading = false;
+  bool? isValid;
+  List<String>? images;
+  List<dynamic>? newImages;
+  List<DetailsProducts>? itemProducts;
+  Timestamp? insertionDate;
+  DetailsProducts? details;
+
+  // Constructor
+
+  /// Initializes an instance of [Product] with the specified parameters.
+  ///
+  /// The constructor allows setting various properties of the product.
   Product({
     this.id,
     this.name,
@@ -21,7 +52,7 @@ class Product extends ChangeNotifier {
     this.deleted = false,
     this.advertising = false,
     this.isValid,
-    this.errorMessage,
+    this.stockErrorMessage,
     this.details,
     this.brand = "",
     this.freight,
@@ -33,10 +64,13 @@ class Product extends ChangeNotifier {
     details = details ?? DetailsProducts(stock: 0);
   }
 
+  /// Creates a [Product] instance from a Firestore document snapshot.
+  ///
+  /// Constructor creates a product instance based on the data retrieved from a Firestore document snapshot.
   Product.fromDocument(DocumentSnapshot document) {
     PerformanceMonitoring().startTrace('product-document', shouldStart: true);
 
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Debug message: Instance Product.fromDocument');
     }
 
@@ -58,84 +92,11 @@ class Product extends ChangeNotifier {
     PerformanceMonitoring().stopTrace('product-document');
   }
 
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final FirebaseStorage storage = FirebaseStorage.instance;
+  // Methods
 
-  DocumentReference get firestoreRef => firestore.doc("products/$id");
-
-  Reference get storageRef => storage.ref().child("products").child(id!);
-
-  String? id;
-  String? name;
-  String? description;
-  String? errorMessage;
-  String brand = "";
-  bool? freight;
-  bool deleted = false;
-  bool advertising = false;
-  bool? isValid;
-  String? categoryOfProduct;
-  Timestamp? insertionDate;
-  List<String>? images;
-  List<dynamic>? newImages;
-  List<DetailsProducts>? itemProducts;
-
-  bool _loading = false;
-
-  bool get loading => _loading;
-
-  set loading(bool value) {
-    _loading = value;
-    notifyListeners();
-  }
-
-  DetailsProducts? details;
-
-  DetailsProducts? get selectedDetails => details;
-
-  set selectedDetails(DetailsProducts? value) {
-    details = value;
-    notifyListeners();
-  }
-
-  int get totalStock {
-    int stock = 0;
-    for (final item in itemProducts!) {
-      stock += item.stock;
-    }
-    return stock;
-  }
-
-  int get totalSellers {
-    int sellers = 0;
-    for (final item in itemProducts!) {
-      sellers += item.sellers;
-    }
-    return sellers;
-  }
-
-  bool get hasStock {
-    return totalStock > 0 && !deleted && isValid!;
-  }
-
-  num get basePrice {
-    num lowest = double.infinity;
-    for (final details in itemProducts!) {
-      if (details.price! < lowest && details.hasStock) {
-        lowest = details.price!;
-      }
-    }
-    return lowest;
-  }
-
-  DetailsProducts? findSize(String name) {
-    try {
-      return itemProducts?.firstWhere((s) => s.size == name);
-    } catch (error) {
-      return null;
-    }
-  }
-
+  /// Converts the product data to a map for Firestore storage.
+  ///
+  /// This method converts the product properties into a map format suitable for storing in Firestore.
   Map<String, dynamic> toMap() {
     return {
       "name": name,
@@ -151,13 +112,84 @@ class Product extends ChangeNotifier {
     };
   }
 
+  /// Returns the Firestore reference for the product document.
+  DocumentReference get firestoreRef => firestore.doc("products/$id");
+
+  /// Returns the storage reference for the product images.
+  Reference get storageRef => storage.ref().child("products").child(id!);
+
+  // Getters and Setters
+
+  /// Indicates if the product is currently loading data.
+  bool get loading => _loading;
+
+  /// Sets the loading state of the product.
+  set loading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
+  /// Returns the selected details of the product.
+  DetailsProducts? get selectedDetails => details;
+
+  /// Sets the selected details of the product.
+  set selectedDetails(DetailsProducts? value) {
+    details = value;
+    notifyListeners();
+  }
+
+  /// Calculates and returns the total stock of the product.
+  int get totalStock {
+    int stock = 0;
+    for (final item in itemProducts!) {
+      stock += item.stock;
+    }
+    return stock;
+  }
+
+  /// Calculates and returns the total number of sellers for the product.
+  int get totalSellers {
+    int sellers = 0;
+    for (final item in itemProducts!) {
+      sellers += item.sellers;
+    }
+    return sellers;
+  }
+
+  /// Indicates if the product has available stock.
+  bool get hasStock {
+    return totalStock > 0 && !deleted && isValid!;
+  }
+
+  /// Calculates and returns the base price of the product.
+  num get basePrice {
+    num lowest = double.infinity;
+    for (final details in itemProducts!) {
+      if (details.price! < lowest && details.hasStock) {
+        lowest = details.price!;
+      }
+    }
+    return lowest;
+  }
+
+  /// Finds and returns details related to a specific size.
+  DetailsProducts? findSize(String name) {
+    try {
+      return itemProducts?.firstWhere((s) => s.size == name);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  /// Exports the details of the product to a list of maps.
   List<Map<String, dynamic>>? exportDetailsList() {
     return itemProducts!.map((details) => details.toMap()).toList();
   }
 
+  /// Saves the product data to Firestore.
   Future<void> saveProduct() async {
     PerformanceMonitoring().startTrace('save_product', shouldStart: true);
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logDebug('Debug message: Instance starting saveProduct');
     }
 
@@ -210,11 +242,12 @@ class Product extends ChangeNotifier {
     loading = false;
 
     PerformanceMonitoring().stopTrace('save_product');
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logDebug('Debug message: Instance ending saveProduct');
     }
   }
 
+  /// Deletes the product from Firestore and associated images.
   Future<void> deleteProductWithZeroStockOneImage() async {
     for (final details in itemProducts!) {
       // Zero stock in every detail
@@ -261,6 +294,7 @@ class Product extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Deletes the product from Firestore and associated images.
   void deleteProduct() async {
     // Call method to update inventory to zero and one image
     await deleteProductWithZeroStockOneImage();
@@ -270,22 +304,7 @@ class Product extends ChangeNotifier {
     notifyListeners();
   }
 
-  Product cloneProduct() {
-    return Product(
-      id: id,
-      name: name,
-      brand: brand,
-      freight: freight ?? true,
-      description: description,
-      images: List.from(images!),
-      itemProducts: itemProducts?.map((items) => items.clone()).toList(),
-      deleted: deleted,
-      advertising: advertising,
-      isValid: isValid,
-      categoryOfProduct: categoryOfProduct,
-    );
-  }
-
+  /// Checks the consistency of amounts and stocks for the product.
   Future<void> checkAmountsAndStocksConsistency(
       String productId, List<DetailsProducts> detailsProducts) async {
     isValid = true; // Assume initially that it is valid
@@ -303,7 +322,7 @@ class Product extends ChangeNotifier {
 
         await productRef.update({"isvalid": false});
 
-        errorMessage = 'A Qtd. de ESTOQUE está diferente da de Cores!!!\n'
+        stockErrorMessage = 'A Qtd. de ESTOQUE está diferente da de Cores!!!\n'
             'Favor revisar o ESTOQUE e a Qtd. de CORES equivalentes ao Tamanho!\n'
             'Tamanho: ${stock.size}, Estoque: ${stock.stock},'
             ' Total Cores: $totalAmount';
@@ -316,9 +335,25 @@ class Product extends ChangeNotifier {
             FirebaseFirestore.instance.collection("products").doc(productId);
 
         await productRef.update({"isvalid": true});
-        notifyListeners();
       }
       notifyListeners();
     }
+  }
+
+  /// Clones the current product instance.
+  Product cloneProduct() {
+    return Product(
+      id: id,
+      name: name,
+      brand: brand,
+      freight: freight ?? true,
+      description: description,
+      images: List.from(images!),
+      itemProducts: itemProducts?.map((items) => items.clone()).toList(),
+      deleted: deleted,
+      advertising: advertising,
+      isValid: isValid,
+      categoryOfProduct: categoryOfProduct,
+    );
   }
 }

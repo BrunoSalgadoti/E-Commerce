@@ -9,6 +9,21 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 ///
 /// This widget conditionally displays the logo based on the freight status of the product.
 class FreightLogo extends StatelessWidget {
+  final double? positionedBottom;
+  final double? positionedRight;
+  final double? positionedLeft;
+  final double? positionedTop;
+  final double? containerHeight;
+  final double? containerWidth;
+  final double? fontSize;
+  final double? iconSize;
+  final Radius? radiusTopLeft;
+  final Radius? radiusTopRight;
+  final Radius? radiusBottomRight;
+  final Radius? radiusBottomLeft;
+  final String? text;
+  final Product product;
+
   /// Creates a [FreightLogo] widget with the specified parameters.
   ///
   /// The [product] parameter is required and represents the product associated with the logo.
@@ -55,20 +70,6 @@ class FreightLogo extends StatelessWidget {
     this.radiusBottomRight,
     this.radiusBottomLeft,
   });
-  final Product product;
-  final double? positionedBottom;
-  final double? positionedRight;
-  final double? positionedLeft;
-  final double? positionedTop;
-  final double? containerHeight;
-  final double? containerWidth;
-  final Radius? radiusTopLeft;
-  final Radius? radiusTopRight;
-  final Radius? radiusBottomRight;
-  final Radius? radiusBottomLeft;
-  final double? fontSize;
-  final double? iconSize;
-  final String? text;
 
   @override
   Widget build(BuildContext context) {

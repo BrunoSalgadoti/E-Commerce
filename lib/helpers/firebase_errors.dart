@@ -1,3 +1,8 @@
+/// # Firebase error handling (Folder: helpers).
+/// Returns an error message based on the provided error code.
+///
+/// The [code] parameter represents the error code returned by authentication services.
+/// This function returns a specific error message corresponding to the error code.
 String getErrorString(String code) {
   switch (code) {
     case "WEAK_PASSWORD":

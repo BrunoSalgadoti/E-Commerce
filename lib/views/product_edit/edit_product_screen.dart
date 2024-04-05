@@ -38,7 +38,7 @@ class EditProductScreen extends StatelessWidget {
 
     void showAlertDialog() => CustomAlertDialogAdaptive(
           titleText: 'Valores não correspondentes!',
-          bodyText: product!.errorMessage,
+          bodyText: product!.stockErrorMessage,
           actions: [
             CustomTextButton(
               text: 'Ciente!',

@@ -6,24 +6,42 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
+/// # CheckoutManager (Folder: models/sales)
+///
+/// A class representing the checkout manager with functionalities for processing orders,
+/// checking stock consistency, generating order IDs, decrementing stock, and more.
+///
+/// This class handles the checkout process, including checking stock availability,
+/// generating order IDs, saving orders, and decrementing product stock after successful checkout.
 class CheckoutManager extends ChangeNotifier {
+  // Proprieties
+
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  bool _loading = false;
   CartManager? cartManager;
 
-  bool _loading = false;
+  // Getters and Setters
 
+  /// Indicates if the checkout process is currently loading.
   bool get loading => _loading;
 
+  /// Sets the loading state of the checkout process.
   set loading(bool value) {
     _loading = value;
     notifyListeners();
   }
 
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  // Methods
 
+  /// Updates the cart manager instance for checkout.
   void updateCart(CartManager cartManager) {
     this.cartManager = cartManager;
   }
 
+  /// Initiates the checkout process.
+  ///
+  /// Calls the specified [onStockFail] function if there is an issue with stock availability,
+  /// and calls [onSuccess] function if the checkout is successful.
   Future<void> checkout({required Function onStockFail, required Function onSuccess}) async {
     loading = true;
 
@@ -51,6 +69,7 @@ class CheckoutManager extends ChangeNotifier {
     loading = false;
   }
 
+  /// Checks the consistency of order counter and existing orders.
   Future<void> _checkConsistenceOfCounterAndOrders() async {
     final DocumentSnapshot orderCounterSnapshot = await firestore.doc("aux/orderCounter").get();
     final orderCounterCurrent = orderCounterSnapshot.get("current") as int;
@@ -78,6 +97,7 @@ class CheckoutManager extends ChangeNotifier {
     }
   }
 
+  /// Generates a new order ID for the checkout process.
   Future<int> _getOrderId() async {
     await _checkConsistenceOfCounterAndOrders();
 
@@ -96,6 +116,7 @@ class CheckoutManager extends ChangeNotifier {
     }
   }
 
+  /// Decrements the stock of products in the cart after successful checkout.
   Future<void> _decrementStock() async {
     // 1. Read all stocks
     // 2. Decrease inventories locally

@@ -1,5 +1,3 @@
-
-
 import 'package:brn_ecommerce/models/products/product.dart';
 
 /// ## AdvertisingCarouselContent (Folder: common/advertising/components)

@@ -85,6 +85,45 @@ import 'package:flutter/services.dart';
 /// )
 /// ```
 class CustomTextFormField extends StatelessWidget {
+  final String? title;
+  final String? initialValue;
+  final String? hintText;
+  final String? labelText;
+  final String? prefixText;
+  final String? counterText;
+  final double? titleSize;
+  final double? hintSize;
+  final double? textFormFieldSize;
+  final int? maxLength;
+  final Color textFormFieldColor;
+  final Color? titleColor;
+  final Color? hintColor;
+  final Color? focusedBorderColor;
+  final Color? enableBorderColor;
+  final Color? fillColor;
+  final bool titleBold;
+  final bool hintBold;
+  final bool textFormFieldBold;
+  final bool? enableTextEdit;
+  final bool? autocorrect;
+  final bool? filled;
+  final bool? isDense;
+  final bool obscureText;
+  final TextInputAction? textInputAction;
+  final TextCapitalization? textCapitalization;
+  final TextEditingController? controller;
+  final TextAlign? textAlign;
+  final FocusNode? focusNode;
+  final TextInputType textInputType;
+  final InputBorder? focusedBorder;
+  final InputBorder? enabledBorder;
+  final EdgeInsetsGeometry? contentPadding;
+  final void Function(String?)? onSaved;
+  final void Function(String?)? onSubmitted;
+  final void Function(String?)? onChanged;
+  final String? Function(String?)? validator;
+  final List<TextInputFormatter>? inputFormatters;
+
   const CustomTextFormField({
     super.key,
     this.onSaved,
@@ -125,45 +164,6 @@ class CustomTextFormField extends StatelessWidget {
     this.focusNode,
     this.onSubmitted,
   }) : textInputAction = onSubmitted == null ? TextInputAction.done : TextInputAction.next;
-
-  final String? title;
-  final String? initialValue;
-  final String? hintText;
-  final String? labelText;
-  final String? prefixText;
-  final String? counterText;
-  final double? titleSize;
-  final double? hintSize;
-  final double? textFormFieldSize;
-  final int? maxLength;
-  final Color textFormFieldColor;
-  final Color? titleColor;
-  final Color? hintColor;
-  final Color? focusedBorderColor;
-  final Color? enableBorderColor;
-  final Color? fillColor;
-  final bool titleBold;
-  final bool hintBold;
-  final bool textFormFieldBold;
-  final bool? enableTextEdit;
-  final bool? autocorrect;
-  final bool? filled;
-  final bool? isDense;
-  final bool obscureText;
-  final TextInputAction? textInputAction;
-  final TextCapitalization? textCapitalization;
-  final TextEditingController? controller;
-  final TextAlign? textAlign;
-  final FocusNode? focusNode;
-  final TextInputType textInputType;
-  final InputBorder? focusedBorder;
-  final InputBorder? enabledBorder;
-  final EdgeInsetsGeometry? contentPadding;
-  final void Function(String?)? onSaved;
-  final void Function(String?)? onSubmitted;
-  final void Function(String?)? onChanged;
-  final String? Function(String?)? validator;
-  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {

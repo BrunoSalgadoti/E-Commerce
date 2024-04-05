@@ -1,7 +1,7 @@
 import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
-import 'package:brn_ecommerce/models/screens/home_manager.dart';
-import 'package:brn_ecommerce/models/screens/section.dart';
+import 'package:brn_ecommerce/models/views/home_manager.dart';
+import 'package:brn_ecommerce/models/views/section.dart';
 import 'package:decorated_text/decorated_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

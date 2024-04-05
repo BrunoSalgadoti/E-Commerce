@@ -3,6 +3,8 @@ import 'package:brn_ecommerce/models/products/categories/product_sub_category.da
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+/// # List of factory product categories. (Folder: helpers/product_categories_factory_lists)
+/// ## categoriesFactoryList
 /// List of factory product categories.
 ///
 /// This list is used to create or update product categories in Firebase
@@ -18,7 +20,6 @@ import 'package:flutter/material.dart';
 /// This list is conditionally populated with categories only when the application
 /// runs in development mode (kReleaseMode = false). In production mode,
 /// the list will be empty.
-
 List<ProductCategory> categoriesFactoryList = kReleaseMode
     ? []
     : [

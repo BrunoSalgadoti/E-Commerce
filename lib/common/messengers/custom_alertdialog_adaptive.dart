@@ -7,6 +7,21 @@ import 'package:flutter/material.dart';
 /// This class provides a consistent way to create alert dialogs that are visually
 /// adapted for both Android and iOS platforms.
 class CustomAlertDialogAdaptive {
+
+  final String? titleText;
+  final String? bodyText;
+  final List<Widget> actions;
+  final Widget? content;
+  final Color? titleColor;
+  final double? titleSize;
+  final TextAlign? titleAlign;
+  final FontWeight? titleWeight;
+  final Color? bodyColor;
+  final double? bodySize;
+  final TextAlign? bodyAlign;
+  final FontWeight? bodyWeight;
+  final EdgeInsetsGeometry? contentPadding;
+
   /// Create a [CustomAlertDialogAdaptive].
   ///
   /// The parameter [titleText] is required and represents the title text of the alert dialog.
@@ -50,20 +65,6 @@ class CustomAlertDialogAdaptive {
     this.contentPadding,
   });
 
-  final String? titleText;
-  final String? bodyText;
-  final List<Widget> actions;
-  final Widget? content;
-  final Color? titleColor;
-  final double? titleSize;
-  final TextAlign? titleAlign;
-  final FontWeight? titleWeight;
-  final Color? bodyColor;
-  final double? bodySize;
-  final TextAlign? bodyAlign;
-  final FontWeight? bodyWeight;
-  final EdgeInsetsGeometry? contentPadding;
-
   /// Creates an adaptive action based on the current platform.
   ///
   /// The parameter [context] is required and represents the BuildContext.
@@ -74,9 +75,10 @@ class CustomAlertDialogAdaptive {
   ///
   /// Returns an adaptive action widget based on the platform (TextButton for Android and CupertinoDialogAction for iOS).
   //TODO: Verificar uso...
-  Widget adaptiveAction(
-      {required BuildContext context, required VoidCallback onPressed, required Widget child}) {
+  Widget adaptiveAction({required BuildContext context, required VoidCallback onPressed,
+    required Widget child}) {
     final ThemeData theme = Theme.of(context);
+
     switch (theme.platform) {
       case TargetPlatform.android:
       case TargetPlatform.fuchsia:

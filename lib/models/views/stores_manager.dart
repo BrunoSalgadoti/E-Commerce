@@ -1,31 +1,44 @@
 import 'dart:async';
 
-import 'package:brn_ecommerce/models/address_n_cep/address.dart';
-import 'package:brn_ecommerce/models/screens/stores.dart';
+import 'package:brn_ecommerce/models/locations_services/address.dart';
+import 'package:brn_ecommerce/models/views/stores.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
+/// # StoresManager (Folder: models/views)
+///
+/// Manages the state and operations related to stores within the application.
+///
+/// This class provides methods to load store data, set up real-time updates,
+/// and handle timers for periodic tasks.
 class StoresManager extends ChangeNotifier {
+  // Proprieties
+
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  List<Stores> storesList = [];
+  Stores? stores;
+  Address? address;
+  Timer? _timer;
+  StreamSubscription<QuerySnapshot>? _storesListener;
+
+  // Constructors
+
+  /// Constructs a StoresManager instance with optional initial stores and address.
   StoresManager([this.stores, this.address]) {
     _loadStoreList();
     _startTime();
     _setupRealTimeUpdates();
   }
 
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  // Methods
 
-  Stores? stores;
-  Address? address;
-  Timer? _timer;
-  StreamSubscription<QuerySnapshot>? _storesListener;
-
-  List<Stores> storesList = [];
-
+  /// Loads the list of stores from Firestore and initializes the store list.
   Future<void> _loadStoreList() async {
     PerformanceMonitoring().startTrace('load-store-list', shouldStart: true);
 
+    // Fetch store data from Firestore
     QuerySnapshot<Map<String, dynamic>> snapshot =
         await firestore.collection("stores").get(const GetOptions(source: Source.cache));
 
@@ -39,6 +52,7 @@ class StoresManager extends ChangeNotifier {
     PerformanceMonitoring().stopTrace('load-store-list');
   }
 
+  /// Starts a timer to perform periodic checks on store statuses.
   void _startTime() async {
     PerformanceMonitoring().startTrace('start-time', shouldStart: true);
 
@@ -49,6 +63,7 @@ class StoresManager extends ChangeNotifier {
     PerformanceMonitoring().stopTrace('start-time');
   }
 
+  /// Checks and updates the opening status of all stores in the list.
   void _checkOpening() {
     for (final store in storesList) {
       store.updateStatus();
@@ -56,13 +71,14 @@ class StoresManager extends ChangeNotifier {
     }
   }
 
+  /// Sets up real-time updates for the list of stores from Firestore.
   Future<void> _setupRealTimeUpdates() async {
     PerformanceMonitoring().startTrace('setup-rt-updates', shouldStart: true);
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Info message: _storesListener Start ');
     }
 
-    // Configure real-time update listener
+    // Configure a real-time update listener for store data changes
     _storesListener = firestore.collection("stores").snapshots().listen((event) {
       storesList = event.docs.map((s) => Stores.fromDocument(s)).toList();
       notifyListeners();
@@ -73,11 +89,8 @@ class StoresManager extends ChangeNotifier {
 
   @override
   void dispose() {
-    super.dispose();
     _timer?.cancel();
     _storesListener?.cancel();
-    if (!kReleaseMode) {
-      MonitoringLogger().logInfo('Info: ${_storesListener?.cancel()} ListenerCancel ');
-    }
+    super.dispose();
   }
 }

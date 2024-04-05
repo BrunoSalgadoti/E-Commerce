@@ -1,25 +1,47 @@
-import 'package:brn_ecommerce/models/screens/section.dart';
+import 'package:brn_ecommerce/models/views/section.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
+/// # HomeManager (Folder: models/views)
+///
+/// A class responsible for managing home page sections and their editing state.
+///
+/// This class handles loading sections, adding, removing, moving sections, entering editing mode,
+/// saving changes, and discarding edits for the home page.
 class HomeManager extends ChangeNotifier {
+  // proprieties
+
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final List<Section> _sections = [];
+  bool editing = false;
+  bool loading = false;
+  List<Section> _editingSections = [];
+
+  // Constructor
+
+  /// Initializes a [HomeManager] instance and loads home page sections.
   HomeManager() {
     _loadSections();
   }
 
-  final List<Section> _sections = [];
-  List<Section> _editingSections = [];
+  // Getters
 
-  bool editing = false;
-  bool loading = false;
+  List<Section> get sections {
+    if (editing) {
+      return _editingSections;
+    } else {
+      return _sections;
+    }
+  }
 
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  // Methods
 
+  /// Loads home page sections from Firestore.
   Future<void> _loadSections() async {
     PerformanceMonitoring().startTrace('load-sections', shouldStart: true);
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Info message: Starting listen Sections');
     }
 
@@ -31,21 +53,24 @@ class HomeManager extends ChangeNotifier {
       notifyListeners();
     });
     PerformanceMonitoring().stopTrace('load-sections');
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Info message: Ending listen Sections');
     }
   }
 
+  /// Adds a new section to the list of editing sections.
   void addSection(Section section) {
     _editingSections.add(section);
     notifyListeners();
   }
 
+  /// Removes a section from the list of editing sections.
   void removeSection(Section section) {
     _editingSections.remove(section);
     notifyListeners();
   }
 
+  /// Moves a section up in the list of editing sections.
   void moveSectionUp(Section section) {
     final int currentIndex = _editingSections.indexOf(section);
     if (currentIndex > 0) {
@@ -55,6 +80,7 @@ class HomeManager extends ChangeNotifier {
     }
   }
 
+  /// Moves a section down in the list of editing sections.
   void moveSectionDown(Section section) {
     final int currentIndex = _editingSections.indexOf(section);
     if (currentIndex < _editingSections.length - 1) {
@@ -64,6 +90,7 @@ class HomeManager extends ChangeNotifier {
     }
   }
 
+  /// Swaps the positions of two sections in the list of editing sections.
   void _swapSections(Section section1, Section section2) {
     final int index1 = _editingSections.indexOf(section1);
     final int index2 = _editingSections.indexOf(section2);
@@ -74,20 +101,14 @@ class HomeManager extends ChangeNotifier {
     }
   }
 
-  List<Section> get sections {
-    if (editing) {
-      return _editingSections;
-    } else {
-      return _sections;
-    }
-  }
-
+  /// Enters editing mode by cloning current sections for editing.
   void enterEditing() {
     editing = true;
     _editingSections = _sections.map((s) => s.clone()).toList();
     notifyListeners();
   }
 
+  /// Saves changes made in editing mode to Firestore.
   Future<void> saveEditing() async {
     bool valid = true;
     for (final section in _editingSections) {
@@ -118,6 +139,7 @@ class HomeManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Discards changes made in editing mode.
   void discardEditing() {
     editing = false;
     notifyListeners();

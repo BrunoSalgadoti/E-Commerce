@@ -8,9 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 /// ### Components of Advertising Widget
 /// Widget that represents an advertising card to be reused on different views.
 class AdvertisingCard extends StatelessWidget {
-  const AdvertisingCard({super.key, required this.product});
-
   final Product product;
+
+  const AdvertisingCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {

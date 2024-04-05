@@ -94,12 +94,6 @@ class InfoMarqueeWidgetState extends State<InfoMarqueeWidget> with SingleTickerP
   }
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     // Visual part of the text marquee and animated glow
     return Container(
@@ -161,5 +155,14 @@ class InfoMarqueeWidgetState extends State<InfoMarqueeWidget> with SingleTickerP
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    if (mounted) {
+      _controller.dispose();
+      _offsetAnimation;
+    }
+    super.dispose();
   }
 }

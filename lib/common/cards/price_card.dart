@@ -7,6 +7,9 @@ import 'package:provider/provider.dart';
 /// ## PriceCard
 /// Widget that displays a summary of the order with subtotal, delivery cost, and total price.
 class PriceCard extends StatelessWidget {
+  final String buttonText;
+  final VoidCallback? onPressed; // Function called when the button is pressed.
+
   /// Create a PriceCard widget.
   ///
   /// The parameter [buttonText] is required and represents the text displayed on the button.
@@ -17,9 +20,6 @@ class PriceCard extends StatelessWidget {
     required this.buttonText,
     required this.onPressed,
   });
-
-  final String buttonText;
-  final VoidCallback? onPressed; // Function called when the button is pressed.
 
   @override
   Widget build(BuildContext context) {

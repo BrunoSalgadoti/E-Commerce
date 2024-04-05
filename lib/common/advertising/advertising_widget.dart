@@ -54,13 +54,6 @@ class AdvertisingWidgetState extends State<AdvertisingWidget> {
   }
 
   @override
-  void dispose() {
-    _pageController.dispose(); // Releases the page controller
-    _timer.cancel(); // Cancels the timer when the state ends
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final Product product = context.watch<Product>(); // Product obtained from context
     final ProductManager productManager = context.watch<ProductManager>();
@@ -191,5 +184,12 @@ class AdvertisingWidgetState extends State<AdvertisingWidget> {
         ],
       );
     });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose(); // Releases the page controller
+    _timer.cancel(); // Cancels the timer when the state ends
+    super.dispose();
   }
 }

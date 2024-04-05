@@ -7,13 +7,30 @@ import 'package:brn_ecommerce/services/development_monitoring/firebase_performan
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+/// # UserManager (Folder: models/users)
+///
+/// A class responsible for managing user authentication and data related to user accounts.
+///
+/// This class handles sign-in, sign-up, user data retrieval, and other related operations.
 class UserManager extends ChangeNotifier {
+  // Proprieties of Users
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  bool _loading = false;
+  bool _newUserAccount = false;
+  bool _editingCategories = false;
+  bool _loadingFace = false;
+  bool _loadingGoogle = false;
+  Users? users;
+
+  // Constructor
+
+  /// Initializes a [UserManager] instance.
   UserManager() {
     if (isLoggedIn || _newUserAccount == true) {
       _loadCurrentUser();
@@ -21,60 +38,43 @@ class UserManager extends ChangeNotifier {
     _auth.setLanguageCode('pt-BR');
   }
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  Users? users;
-
-  bool _loading = false;
-
-  bool _newUserAccount = false;
+  // Getters and Setters
 
   bool get loading => _loading;
+
+  bool get editingCategories => _editingCategories;
+
+  bool get loadingFace => _loadingFace;
+
+  bool get loadingGoogle => _loadingGoogle;
+
+  bool get isLoggedIn => users != null;
+
+  bool get adminEnable => users != null && users!.admin;
 
   set loading(bool value) {
     _loading = value;
     notifyListeners();
   }
 
-  bool _editingCategories = false;
-
-  bool get editingCategories => _editingCategories;
-
   set editingCategories(bool value) {
     _editingCategories = value;
     notifyListeners();
   }
-
-  bool _loadingFace = false;
-
-  bool get loadingFace => _loadingFace;
 
   set loadingFace(bool value) {
     _loadingFace = value;
     notifyListeners();
   }
 
-  bool _loadingGoogle = false;
-
-  bool get loadingGoogle => _loadingGoogle;
-
   set loadingGoogle(bool value) {
     _loadingGoogle = value;
     notifyListeners();
   }
 
-  bool get isLoggedIn => users != null;
+  // Methods
 
-  bool get adminEnable => users != null && users!.admin;
-
-  Image? image = Image.asset(
-    "assets/logo/storeLogo.png",
-    width: 15,
-    height: 15,
-  );
-
+  /// Checks if necessary auxiliary documents and admin data exist in Firestore.
   Future<void> createAuxAndAdminsIfNotExists({required bool firstStart}) async {
     if (!kReleaseMode && firstStart == true) {
       MonitoringLogger().logInfo('Info: Verifier createAuxAndAdminsIfNotExists');
@@ -108,6 +108,7 @@ class UserManager extends ChangeNotifier {
     }
   }
 
+  /// Signs in with email and password.
   Future<void> signInWithEmailAndPassword(
       {required Users users, required Function onFail, required Function onSuccess}) async {
     PerformanceMonitoring().startTrace('sign-in-email', shouldStart: true);
@@ -130,6 +131,7 @@ class UserManager extends ChangeNotifier {
     PerformanceMonitoring().stopTrace('sign-in-email');
   }
 
+  /// Signs in or signs up with Facebook authentication.
   Future<void> loginOrSingUpWithFacebook(
       {required Function? onFail, required Function? onSuccess}) async {
     PerformanceMonitoring().startTrace('login-facebook', shouldStart: true);
@@ -209,6 +211,7 @@ class UserManager extends ChangeNotifier {
     PerformanceMonitoring().stopTrace('login-facebook');
   }
 
+  /// Signs in or signs up with Google authentication.
   Future<void> loginOrSingUpWithGoogle({
     required Function? onFail,
     required Function? onSuccess,
@@ -279,6 +282,7 @@ class UserManager extends ChangeNotifier {
     PerformanceMonitoring().stopTrace('login-google');
   }
 
+  /// Signs up with email and password.
   Future<void> singUpWithEmailAndPassword(
       {required Users users, required Function onFail, required Function onSuccess}) async {
     PerformanceMonitoring().startTrace('sing-up-email', shouldStart: true);
@@ -306,12 +310,14 @@ class UserManager extends ChangeNotifier {
     PerformanceMonitoring().stopTrace('sing-up-email');
   }
 
+  /// Signs out the current user.
   void signOut() {
     _auth.signOut();
     users = null;
     notifyListeners();
   }
 
+  /// Loads the current user's data from Firestore.
   Future<void> _loadCurrentUser({User? user}) async {
     try {
       final User currentUser = user ?? _auth.currentUser!;
@@ -335,4 +341,9 @@ class UserManager extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+//TODO: Criação de método para capturar cookies e dados do Analytics
+// Future<void> _loadUserVisitor ({User? user}) async {
+//
+// }
 }

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
-import 'package:brn_ecommerce/models/address_n_cep/address.dart';
+import 'package:brn_ecommerce/models/locations_services/address.dart';
 import 'package:brn_ecommerce/models/sales/order_client.dart';
 import 'package:custom_universal_html/html.dart' as html;
 import 'package:flutter/foundation.dart' show kIsWeb;

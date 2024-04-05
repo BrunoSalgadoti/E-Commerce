@@ -1,5 +1,11 @@
 import 'package:geolocator/geolocator.dart';
 
+/// # Locations Services Classes (Folder: models/locations_services)
+/// ## LocationService n´ ViaCepAddress class
+/// A service class for retrieving device location information from the ViaCep API.
+///
+/// This class utilizes the Geolocator package to access the device's geolocation
+/// capabilities and obtain the current position.
 class LocationService {
   GeolocatorPlatform geolocatorPlatform = GeolocatorPlatform.instance;
 

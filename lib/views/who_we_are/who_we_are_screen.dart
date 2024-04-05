@@ -1,4 +1,3 @@
-
 import 'package:brn_ecommerce/views/who_we_are/components/footer_description_widget.dart';
 import 'package:brn_ecommerce/views/who_we_are/components/top_description_widget.dart';
 import 'package:flutter/material.dart';

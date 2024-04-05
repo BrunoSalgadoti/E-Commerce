@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/common/miscellaneous/communications_utils.dart';
 import 'package:brn_ecommerce/models/admin_area/admin_orders_manager.dart';
-import 'package:brn_ecommerce/models/screens/page_manager.dart';
 import 'package:brn_ecommerce/models/users/users.dart';
+import 'package:brn_ecommerce/models/views/page_manager.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,24 +13,48 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
+/// # Admin Users Search Model (Folder: models/products)
+/// ## AdminUsersSearch
+/// A class responsible for managing user search functionality in the admin panel.
+///
+/// This class handles user search operations in the admin panel. It provides functionality for filtering
+/// users based on search queries, favoriting and disfavoriting users, and handling UI elements related to users.
 class AdminUsersSearch extends ChangeNotifier {
+  // Properties
+
+  /// The instance of the Firestore database.
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  /// Indicates whether user filtering should send an email.
+  bool userFilteredSendEmail = false;
+
+  /// The search query string.
+  String _search = '';
+
+  /// The list of all users.
+  List<Users> allUsers = [];
+
+  /// The list of favorite user widgets.
+  List<Widget> favouriteList = [];
+
+  /// The list of normal user widgets.
+  List<Widget> normalList = [];
+
+  /// The subscription to listen for user updates.
+  StreamSubscription<dynamic>? _subscription;
+
+  // Constructor
+
+  /// Initializes an instance of [AdminUsersSearch] and loads all users initially.
   AdminUsersSearch() {
     if (allUsers.isEmpty) {
       _loadAllUsers();
     }
   }
 
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  // Getters and Setters
 
-  StreamSubscription<dynamic>? _subscription;
-
-  bool userFilteredSendEmail = false;
-  String _search = '';
-
-  List<Users> allUsers = [];
-  List<Widget> favouriteList = [];
-  List<Widget> normalList = [];
-
+  /// Returns the list of user names based on the current search query.
   List<String> get names {
     if (search.isEmpty) {
       return allUsers
@@ -47,23 +71,43 @@ class AdminUsersSearch extends ChangeNotifier {
     }
   }
 
+  /// Returns the list of user emails.
   List<String> get emails => allUsers.map((e) => e.email).toList();
 
+  /// Gets the current search query.
   String get search => _search;
 
+  /// Sets the search query and notifies listeners.
   set search(String value) {
     _search = value;
     notifyListeners();
   }
 
+  // Private Methods
+
+  /// Favors a user by updating their favorite status in Firestore.
+  Future<void> _favoringUser(String? id) async {
+    await firestore.collection("users").doc(id).update({
+      "favourite": true,
+    });
+  }
+
+  /// Disfavors a user by updating their favorite status in Firestore.
+  Future<void> _disfavoringUser(String? id) async {
+    await firestore.collection("users").doc(id).update({
+      "favourite": false,
+    });
+  }
+
+  /// Loads all users from Firestore and sets up listeners for real-time updates.
   void _loadAllUsers() {
-    if (!kReleaseMode) {
-      MonitoringLogger().logInfo('_loadAllUsers');
+    if (kDebugMode) {
+      MonitoringLogger().logInfo('*************_loadAllUsers***************');
     }
 
     PerformanceMonitoring().startTrace('listen-users', shouldStart: true);
 
-    // Start by fetching data from cache
+    // Fetch data from cache initially
     firestore.collection("users").get(const GetOptions(source: Source.cache)).then((snapshot) {
       if (snapshot.metadata.isFromCache) {
         allUsers = snapshot.docs.map((d) => Users.fromDocument(d)).toList();
@@ -73,7 +117,7 @@ class AdminUsersSearch extends ChangeNotifier {
       }
     });
 
-    // Listen to the stream for real-time updates and update the UI when necessary
+    // Listen to the stream for real-time updates and update the UI
     _subscription = firestore.collection("users").snapshots().listen((snapshot) {
       allUsers = snapshot.docs.map((d) => Users.fromDocument(d)).toList();
       allUsers.sort((a, b) => a.userName!.toLowerCase().compareTo(b.userName!.toLowerCase()));
@@ -84,9 +128,10 @@ class AdminUsersSearch extends ChangeNotifier {
     PerformanceMonitoring().stopTrace('listen-users');
   }
 
+  /// Filters users based on the current search query.
   List<Users> getFilteredUsers() {
-    if (!kReleaseMode) {
-      MonitoringLogger().logInfo('getFilteredUsers');
+    if (kDebugMode) {
+      MonitoringLogger().logInfo('************* getFilteredUsers *************');
     }
 
     List<Users> filteredUsers = [];
@@ -104,18 +149,7 @@ class AdminUsersSearch extends ChangeNotifier {
     return filteredUsers;
   }
 
-  Future<void> _favoringUser(String? id) async {
-    await firestore.collection("users").doc(id).update({
-      "favourite": true,
-    });
-  }
-
-  Future<void> _disfavoringUser(String? id) async {
-    await firestore.collection("users").doc(id).update({
-      "favourite": false,
-    });
-  }
-
+  /// Generates favorite and normal user widgets based on the filtered users list.
   void filterList(List<Users> allOrFiltered) {
     final List<Users> users = [];
     users.addAll(allOrFiltered);
@@ -124,12 +158,16 @@ class AdminUsersSearch extends ChangeNotifier {
 
     for (var user in users) {
       if (user.favourite == true) {
+
+        // Widget for favourite user
         favouriteList.add(
           Slidable(
+            // Start and end action panes for sliding actions
             startActionPane: ActionPane(
               motion: const DrawerMotion(),
               extentRatio: 0.30,
               children: [
+                // Slidable action for disfavoring user
                 SlidableAction(
                   flex: 2,
                   label: 'Desfavoritar',
@@ -145,6 +183,7 @@ class AdminUsersSearch extends ChangeNotifier {
               motion: const DrawerMotion(),
               extentRatio: 0.50,
               children: [
+                // Slidable actions for sending email and calling
                 SlidableAction(
                   label: 'Enviar',
                   backgroundColor: Colors.cyanAccent,
@@ -170,8 +209,10 @@ class AdminUsersSearch extends ChangeNotifier {
             child: Consumer2<AdminOrdersManager, PageManager>(
               builder: (_, adminOrdersManager, pageManager, __) {
                 return ListTile(
+                  // User information displayed in list tile
                   leading: Stack(
                     children: <Widget>[
+                      // User avatar
                       user.userPhotoURL == "" || user.userPhotoURL == null
                           ? const CircleAvatar(
                               backgroundImage: AssetImage('assets/images/userWithoutImage.png'))
@@ -205,11 +246,15 @@ class AdminUsersSearch extends ChangeNotifier {
           ),
         );
       } else {
-        normalList.add(Slidable(
+        normalList.add(
+          // Widget for normal user
+            Slidable(
+              // Start and end action panes for sliding actions
             startActionPane: ActionPane(
               motion: const DrawerMotion(),
               extentRatio: 0.30,
               children: [
+                // Slidable action for favoriting user
                 SlidableAction(
                   flex: 2,
                   label: 'Favorito',
@@ -225,6 +270,7 @@ class AdminUsersSearch extends ChangeNotifier {
               motion: const DrawerMotion(),
               extentRatio: 0.50,
               children: [
+                // Slidable actions for sending email and calling
                 SlidableAction(
                     label: 'Enviar',
                     backgroundColor: Colors.cyanAccent,
@@ -250,6 +296,7 @@ class AdminUsersSearch extends ChangeNotifier {
                                     fontWeight: FontWeight.normal,
                                     color: Colors.black),
                                 actions: [
+                                  // Custom buttons for email options
                                   Wrap(
                                     alignment: WrapAlignment.center,
                                     children: [
@@ -299,6 +346,7 @@ class AdminUsersSearch extends ChangeNotifier {
             child: Consumer2<AdminOrdersManager, PageManager>(
                 builder: (_, adminOrdersManager, pageManager, __) {
               return ListTile(
+                // User information displayed in list tile
                 leading: user.userPhotoURL == "" || user.userPhotoURL == null
                     ? const CircleAvatar(
                         backgroundImage: AssetImage('assets/images/userWithoutImage.png'))
@@ -319,6 +367,9 @@ class AdminUsersSearch extends ChangeNotifier {
     }
   }
 
+  // Dispose Method
+
+  /// Disposes of resources when the object is no longer needed.
   @override
   void dispose() {
     _subscription?.cancel();

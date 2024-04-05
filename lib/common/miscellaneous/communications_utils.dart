@@ -10,6 +10,15 @@ import 'package:url_launcher/url_launcher.dart';
 ///
 /// This class is generic, taking two type parameters `T` and `U`.
 class CommunicationsUtils<T, U> {
+  /// The first type parameter of the utility class.
+  final T parameterClass1Of2;
+
+  /// The second type parameter of the utility class.
+  final U? parameterClass2Of2;
+
+  /// Indicates if an error has occurred.
+  bool? hasError = false;
+
   /// Creates a [CommunicationsUtils] instance with the specified parameters.
   ///
   /// The [parameterClass1Of2] parameter is required and represents the first type parameter.
@@ -22,15 +31,6 @@ class CommunicationsUtils<T, U> {
     this.parameterClass2Of2,
     this.hasError,
   });
-
-  /// The first type parameter of the utility class.
-  final T parameterClass1Of2;
-
-  /// The second type parameter of the utility class.
-  final U? parameterClass2Of2;
-
-  /// Indicates if an error has occurred.
-  bool? hasError = false;
 
   /// Displays an alert for a call action.
   ///

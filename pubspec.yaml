@@ -1,5 +1,5 @@
 name: brn_ecommerce
-description: Loja Virtual pertencente a empresa - BRN Info_Dev (C.N.P.J. 52.129.576./001-57)- 
+description: Loja Virtual pertencente a empresa - BRN Info_Dev (CNPJ. 52.129.576./001-57)- 
   Desenvolvida pelo Analista e Dev. Bruno Salgado. 
   Contato (82) 9 9984-5889
   Copyright 2024.
@@ -107,43 +107,43 @@ flutter:
     - lib/common/drawer/
     - lib/common/drawer/components/
     - lib/models/
-    - lib/models/chearch_cep/
+    - lib/models/locations_services/
     - lib/helpers/
     - lib/helpers/themes/
     - lib/helpers/themes/factory_colors/
-    - lib/screens/
-    - lib/screens/base/
-    - lib/screens/cart/
-    - lib/screens/cart/components/
-    - lib/screens/home/
-    - lib/screens/home/components/
-    - lib/screens/login/
-    - lib/screens/orders/
-    - lib/screens/orders/components/
-    - lib/screens/stores/
-    - lib/screens/stores/components/
-    - lib/screens/address/
-    - lib/screens/address/components/
-    - lib/screens/sign_up/
-    - lib/screens/checkout/
-    - lib/screens/checkout/components/
-    - lib/screens/products/
-    - lib/screens/products/components/
-    - lib/screens/who_we_are/
-    - lib/screens/who_we_are/components/
-    - lib/screens/admin_users/
-    - lib/screens/stores_edit/
-    - lib/screens/stores_edit/components/
-    - lib/screens/admin_orders/
-    - lib/screens/product_edit/
-    - lib/screens/product_edit/components/
-    - lib/screens/products_share/
-    - lib/screens/products_share/components/
-    - lib/screens/product_details/
-    - lib/screens/product_selected/
-    - lib/screens/sales_confirmation/
-    - lib/screens/policy_and_documents/
-    - lib/screens/policy_and_documents/components/
+    - lib/views/
+    - lib/views/base/
+    - lib/views/cart/
+    - lib/views/cart/components/
+    - lib/views/home/
+    - lib/views/home/components/
+    - lib/views/login/
+    - lib/views/orders/
+    - lib/views/orders/components/
+    - lib/views/stores/
+    - lib/views/stores/components/
+    - lib/views/address/
+    - lib/views/address/components/
+    - lib/views/sign_up/
+    - lib/views/checkout/
+    - lib/views/checkout/components/
+    - lib/views/products/
+    - lib/views/products/components/
+    - lib/views/who_we_are/
+    - lib/views/who_we_are/components/
+    - lib/views/admin_users/
+    - lib/views/stores_edit/
+    - lib/views/stores_edit/components/
+    - lib/views/admin_orders/
+    - lib/views/product_edit/
+    - lib/views/product_edit/components/
+    - lib/views/products_share/
+    - lib/views/products_share/components/
+    - lib/views/product_details/
+    - lib/views/product_selected/
+    - lib/views/sales_confirmation/
+    - lib/views/policy_and_documents/
+    - lib/views/policy_and_documents/components/
     - lib/services/
     - lib/services/db_api/
     - lib/generated/

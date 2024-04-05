@@ -9,6 +9,15 @@ import 'package:google_fonts/google_fonts.dart';
 ///
 /// This widget is customizable in terms of alignment, background color, size, and text style.
 class TagForCard<T> extends StatelessWidget {
+  final T data;
+  final AlignmentGeometry alignment;
+  final Color backgroundColor;
+  final double? containerWidth;
+  final double? containerHeight;
+  final int? alphaBackgroundColor;
+  final double? textFontSize;
+  final GoogleFontStaticMethod googleFonts;
+
   /// Creates a [TagForCard] widget with the specified parameters.
   ///
   /// The [data] parameter is required and represents the data to be displayed in the tag.
@@ -37,15 +46,6 @@ class TagForCard<T> extends StatelessWidget {
     this.textFontSize,
     this.googleFonts = GoogleFonts.rancho,
   });
-
-  final T data;
-  final AlignmentGeometry alignment;
-  final Color backgroundColor;
-  final double? containerWidth;
-  final double? containerHeight;
-  final int? alphaBackgroundColor;
-  final double? textFontSize;
-  final GoogleFontStaticMethod googleFonts;
 
   @override
   Widget build(BuildContext context) {

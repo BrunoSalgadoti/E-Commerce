@@ -10,7 +10,28 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+/// #Products Categories classes (Folder: models/products/product_category)
+/// ## ProductCategory Class
+///
+/// Represents a product category with detailed information such as ID, title, color,
+/// image, activation status, and sub-categories.
+///
+/// This class includes methods for mapping data to and from Firestore documents,
+/// updating category images, and exporting sub-categories.
 class ProductCategory extends ChangeNotifier {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseStorage storage = FirebaseStorage.instance;
+  String? categoryID;
+  String? categoryTitle;
+  String? categoryColor;
+  bool? categoryActivated;
+  dynamic categoryImg;
+  Color? categoryRealColor;
+  List<SubCategory>? subCategoryList;
+
+  //Constructor
+
+  /// Creates a [ProductCategory] object with the specified parameters.
   ProductCategory({
     this.categoryID,
     this.categoryTitle,
@@ -23,10 +44,11 @@ class ProductCategory extends ChangeNotifier {
     subCategoryList = subCategoryList ?? [];
   }
 
+  /// Creates a [ProductCategory] object from a Firestore document snapshot.
   ProductCategory.fromDocument(DocumentSnapshot document) {
+    // Performance monitoring and logging...
     PerformanceMonitoring().startTrace('categoryFromMap', shouldStart: true);
-
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Message: CategoryFromMap');
     }
 
@@ -43,25 +65,9 @@ class ProductCategory extends ChangeNotifier {
     PerformanceMonitoring().stopTrace('categoryFromMap');
   }
 
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final FirebaseStorage storage = FirebaseStorage.instance;
-
-  DocumentReference get firestoreRef => firestore.doc("categories/$categoryID");
-
-  Reference get storageRef => storage.ref().child("categories").child("$categoryID!");
-
-  String? categoryID;
-  String? categoryTitle;
-  Color? categoryRealColor;
-  String? categoryColor;
-  dynamic categoryImg;
-  bool? categoryActivated;
-  List<SubCategory>? subCategoryList;
-
-  List<Map<String, dynamic>>? exportSubCategories() {
-    return subCategoryList?.map((sub) => sub.toMap()).toList();
-  }
-
+  /// Converts the [ProductCategory] object to a map for serialization.
+  ///
+  /// Returns a map containing the category attributes as key-value pairs.
   Map<String, dynamic> toMap() {
     return {
       "categoryID": categoryID,
@@ -73,6 +79,43 @@ class ProductCategory extends ChangeNotifier {
     };
   }
 
+  DocumentReference get firestoreRef => firestore.doc("categories/$categoryID");
+
+  Reference get storageRef => storage.ref().child("categories").child("$categoryID!");
+
+  /// ## Method: exportSubCategories
+  /// Converts the list of sub-categories into a list of maps.
+  ///
+  /// This method is used to export the sub-categories of a product category into a list of maps,
+  /// which can then be serialized or stored in a database.
+  ///
+  /// Returns a list of maps containing the attributes of each sub-category.
+  ///
+  /// ```dart
+  /// List<Map<String, dynamic>>? exportSubCategories() {
+  ///   return subCategoryList?.map((sub) => sub.toMap()).toList();
+  /// }
+  /// ```
+  List<Map<String, dynamic>>? exportSubCategories() {
+    return subCategoryList?.map((sub) => sub.toMap()).toList();
+  }
+
+  /// ## Method: updateCategoryImage
+  /// Updates the image of the product category.
+  ///
+  /// This method is used to update the image of a product category. It handles different scenarios
+  /// based on the platform (web or mobile) and the type of image input (base64 string or file).
+  /// If the category already has an image, the old image is deleted before uploading the new one.
+  ///
+  /// The method performs base64 decoding for web platforms and directly uploads files for mobile platforms.
+  /// After updating the image, it triggers a database update and notifies listeners about the change.
+  ///
+  /// Parameters:
+  /// - `image`: The new image to be set for the category.
+  ///
+  /// Returns: Future<void>
+  ///
+  /// ```dart
   Future<void> updateCategoryImage(dynamic image) async {
     PerformanceMonitoring().startTrace('update-category-image', shouldStart: true);
     if (!kReleaseMode) {

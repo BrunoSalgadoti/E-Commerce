@@ -1,7 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
-import 'package:brn_ecommerce/models/screens/page_manager.dart';
+import 'package:brn_ecommerce/models/admin_area/configs/admin_images_controller.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
+import 'package:brn_ecommerce/models/views/page_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,7 @@ class CustomDrawerHeader extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  if (userManager.image != null) ...[
+                  if (const AdminAssetsController().storeLogo != null) ...[
                     const AutoSizeText(
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
@@ -34,7 +35,7 @@ class CustomDrawerHeader extends StatelessWidget {
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     Image.asset(
-                      "assets/logo/storeLogo.png",
+                      const AdminAssetsController().storeLogo!,
                       height: 90,
                       fit: BoxFit.scaleDown,
                     ),

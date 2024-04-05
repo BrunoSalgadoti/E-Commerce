@@ -5,7 +5,33 @@ import 'package:flutter/material.dart';
 
 import '../../common/functions/common_functions.dart';
 
+/// # Cart Product Model (Folder: models/products)
+/// ## CartProduct
+/// A class representing a product in the user's shopping cart.
+///
+/// This class manages the details of a product added to the cart, including its ID, brand, size, color,
+/// quantity, price, and freight information. It provides methods for incrementing and decrementing the quantity,
+/// checking stock availability, and managing stackable sizes.
 class CartProduct extends ChangeNotifier {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  String? id;
+  String? productId;
+  String? brand;
+  String? size;
+  String? color;
+  int? quantity;
+  num? fixedPrice;
+  bool? _freight;
+  Color? realColorFromCart;
+  Product? _product;
+  DetailsProducts? _detailsProducts;
+
+  // Constructors
+
+  /// Creates a [CartProduct] from an existing [Product] and [DetailsProducts].
+  ///
+  /// The [product] parameter represents the main product details.
+  /// The [detailsProducts] parameter represents the details of the product, including size and color options.
   CartProduct.fromProduct(this._product, this._detailsProducts) {
     productId = product?.id;
     brand = product?.brand;
@@ -16,6 +42,9 @@ class CartProduct extends ChangeNotifier {
     realColorFromCart = getColorFromString(color!);
   }
 
+  /// Creates a [CartProduct] from a Firestore document snapshot.
+  ///
+  /// This constructor is used when retrieving a cart product from Firestore.
   CartProduct.fromDocument(DocumentSnapshot document) {
     id = document.id;
     productId = document.get("pid") as String;
@@ -31,6 +60,9 @@ class CartProduct extends ChangeNotifier {
     });
   }
 
+  /// Creates a [CartProduct] from a map.
+  ///
+  /// This constructor is used when converting a map to a cart product object.
   CartProduct.fromMap(Map<String, dynamic> map) {
     productId = map["pid"] as String;
     brand = map["brand"] as String? ?? "";
@@ -46,34 +78,77 @@ class CartProduct extends ChangeNotifier {
     });
   }
 
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  // Methods
 
-  String? id;
-  String? productId;
-  String? brand;
-  String? size;
-  String? color;
-  int? quantity;
-  num? fixedPrice;
-  Color? realColorFromCart;
+  /// Converts the cart product to a map for cart item representation.
+  ///
+  /// This method is used when preparing cart items for storage or transmission.
+  Map<String, dynamic> toCartItemMap() {
+    return {
+      "pid": productId,
+      "quantity": quantity,
+      "size": size,
+      "color": color,
+      "brand": brand,
+      "freight": freight
+    };
+  }
 
-  Product? _product;
+  /// Converts the cart product to a map for order item representation.
+  ///
+  /// This method is used when preparing order items for storage or transmission.
+  Map<String, dynamic> toOrderItemMap() {
+    return {
+      "pid": productId,
+      "quantity": quantity,
+      "size": size,
+      "color": color,
+      "brand": brand,
+      "freight": freight,
+      "fixedPrice": fixedPrice ?? unitPrice
+    };
+  }
 
-  Product? get product => _product;
+  /// Checks if the cart product's stackable size matches the provided product's size and color.
+  ///
+  /// The [product] parameter represents the product to compare with.
+  bool stackableSize(Product product) {
+    return product.id == productId &&
+        product.selectedDetails!.size == size &&
+        detailsProducts!.selectedColors!.color == color;
+  }
+
+  /// Increases the quantity of the cart product by one unit.
+  void increment() {
+    dynamic count = quantity;
+    count++;
+    quantity = count;
+    notifyListeners();
+  }
+
+  /// Decreases the quantity of the cart product by one unit.
+  void decrement() {
+    dynamic count = quantity;
+    count--;
+    quantity = count;
+    notifyListeners();
+  }
+
+  // Properties (getters and setters)
 
   set product(Product? value) {
     _product = value;
     notifyListeners();
   }
 
-  DetailsProducts? _detailsProducts;
-
-  DetailsProducts? get detailsProducts => _detailsProducts;
+  Product? get product => _product;
 
   set detailsProductsFindValues(DetailsProducts? value) {
     _detailsProducts = value;
     notifyListeners();
   }
+
+  DetailsProducts? get detailsProducts => _detailsProducts;
 
   DetailsProducts? get detailsProductsFindValues {
     if (product == null) return null;
@@ -97,10 +172,6 @@ class CartProduct extends ChangeNotifier {
     return detailsProductsFindValues?.stock ?? 0;
   }
 
-  bool? _freight;
-
-  bool? get freight => _freight;
-
   set freight(bool? value) {
     if (_freight != value) {
       _freight = value;
@@ -108,48 +179,7 @@ class CartProduct extends ChangeNotifier {
     }
   }
 
-  Map<String, dynamic> toCartItemMap() {
-    return {
-      "pid": productId,
-      "quantity": quantity,
-      "size": size,
-      "color": color,
-      "brand": brand,
-      "freight": freight
-    };
-  }
-
-  Map<String, dynamic> toOrderItemMap() {
-    return {
-      "pid": productId,
-      "quantity": quantity,
-      "size": size,
-      "color": color,
-      "brand": brand,
-      "freight": freight,
-      "fixedPrice": fixedPrice ?? unitPrice
-    };
-  }
-
-  bool stackableSize(Product product) {
-    return product.id == productId &&
-        product.selectedDetails!.size == size &&
-        detailsProducts!.selectedColors!.color == color;
-  }
-
-  void increment() {
-    dynamic count = quantity;
-    count++;
-    quantity = count;
-    notifyListeners();
-  }
-
-  void decrement() {
-    dynamic count = quantity;
-    count--;
-    quantity = count;
-    notifyListeners();
-  }
+  bool? get freight => _freight;
 
   bool get hasStock {
     if (product != null && product!.deleted) return false;
@@ -164,4 +194,5 @@ class CartProduct extends ChangeNotifier {
     if (amount == null) return false;
     return amount >= quantity!;
   }
+
 }

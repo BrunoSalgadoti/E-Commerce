@@ -13,6 +13,7 @@ class ShareProductWeb {
   String urlShare = 'https://brn-ecommerce.web.app/';
 
   Future<void> shareProductOnWeb(BuildContext context, SocialMediaWeb socialPlatform) async {
+    final argumentsRoute = ModalRoute.of(context)?.settings.arguments as Map<String, List<String>>;
     try {
       String productName = 'A Loja Virtual BRN Info-Dev\n Convida você a conferir '
           'uma de nossas Super Promoções!'
@@ -24,7 +25,10 @@ class ShareProductWeb {
       String productText = '\nDescrição do produto... '
           '\n ${shareProductScreen.product!.description} \n\n '
           '__Visite a nossa Loja Virtual!__';
-      String sharedUrl = '\n$urlShare';
+      String sharedUrl = '\n';
+
+// TODO: implementação em andamento
+      debugPrint(argumentsRoute[shareProductScreen.product!.id]!.toString());
 
       String formattedMessage = '$productName$productPrice$sharedImageUrl$productText$sharedUrl';
 
@@ -44,9 +48,9 @@ class ShareProductWeb {
       final defaultUrl = defaultUrls[socialPlatform];
       try {
         if (url != null) {
-          if (await canLaunchUrl(Uri.parse(url))) {
+          if (await launchUrl(Uri.parse(url))) {
             await launchUrl(Uri.parse(url));
-          } else if (defaultUrl != null && await canLaunchUrl(Uri.parse(defaultUrl))) {
+          } else if (defaultUrl != null && await launchUrl(Uri.parse(defaultUrl))) {
             await launchUrl(Uri.parse(defaultUrl));
           }
         }

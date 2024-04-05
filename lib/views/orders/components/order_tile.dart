@@ -7,7 +7,6 @@ import 'package:brn_ecommerce/views/address/components/export_address_dialog.dar
 import 'package:brn_ecommerce/views/orders/components/order_product_tile.dart';
 import 'package:flutter/material.dart';
 
-
 class OrderTile extends StatelessWidget {
   const OrderTile(this.orderClient, {super.key, this.showControls = false});
 

@@ -12,12 +12,12 @@ import 'package:google_fonts/google_fonts.dart';
 /// ## FlexibleProductCard
 /// A flexible product card widget that can be displayed vertically or horizontally.
 class FlexibleProductCard extends StatelessWidget {
+  // Determines whether the card should be displayed vertically or horizontally.
+  final bool isVertical;
+  final Product? product;
+
   /// Creates a flexible product card.
   const FlexibleProductCard({super.key, this.product, required this.isVertical});
-
-  final bool
-      isVertical; // Determines whether the card should be displayed vertically or horizontally.
-  final Product? product;
 
   @override
   Widget build(BuildContext context) {

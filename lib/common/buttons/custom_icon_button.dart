@@ -7,6 +7,12 @@ import 'package:flutter/material.dart';
 /// It provides visual feedback when pressed and performs a function
 /// when the buttons is pressed.
 class CustomIconButton extends StatelessWidget {
+  final VoidCallback? onTap; // Function called when the buttons is pressed.
+  final IconData iconData;
+  final Color? color;
+  final double? size;
+  final EdgeInsets padding;
+
   /// Cria um [CustomIconButton].
   ///
   /// The parameter [iconData] is mandatory and represents the icon to be displayed.
@@ -26,12 +32,6 @@ class CustomIconButton extends StatelessWidget {
     this.size,
     this.padding = const EdgeInsets.fromLTRB(8, 8, 10, 8),
   });
-
-  final VoidCallback? onTap; // Function called when the buttons is pressed.
-  final IconData iconData;
-  final Color? color;
-  final double? size;
-  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {

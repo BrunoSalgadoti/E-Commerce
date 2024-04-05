@@ -1,6 +1,5 @@
+import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../development_monitoring/firebase_performance.dart';
 
 /// Class that facilitates automated updating of documents in Firestore.
 class FirebaseAutomatedMapsUpdate<T> {

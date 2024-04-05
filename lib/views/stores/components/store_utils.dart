@@ -1,7 +1,7 @@
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
 import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
-import 'package:brn_ecommerce/models/address_n_cep/address.dart';
-import 'package:brn_ecommerce/models/screens/stores.dart';
+import 'package:brn_ecommerce/models/locations_services/address.dart';
+import 'package:brn_ecommerce/models/views/stores.dart';
 import 'package:flutter/material.dart';
 
 class StoreUtils {
