@@ -2,9 +2,9 @@ import 'package:brn_ecommerce/services/db_api/config.dart';
 
 /// # Delivery (Folder: models/sales)
 ///
-/// A class representing delivery settings, including base price, kilometers, latitude, longitude, and maximum distance.
+/// A class representing delivery settings FACTORY configuration, including base price, kilometers, latitude, longitude, and maximum distance.
 ///
-/// This class contains properties and methods related to delivery configuration.
+/// This class contains properties and methods related to radius and locations delivery FACTORY configuration.
 class Delivery {
   // Proprieties
 
@@ -14,7 +14,7 @@ class Delivery {
   double? lat;
   double? long;
 
-  //TODO: Configurar na tela do ADM inserção de valores
+  //TODO: Configurar na tela do ADM inserção de valores e toMapUpdate valores de ráio de entrega
   /// # Control variables for delivery
   /// The maximum distance configured by the administrator for product delivery
   // (Initial values taking into account the center of the city in question)
@@ -44,7 +44,8 @@ class Delivery {
     this.maxKm,
   });
 
-  /// Creates a [Delivery] instance from a map.
+  //TODO: Receber na tela ADM quando construida
+  // Creates a [Delivery] instance from a map.
   Delivery.fromMap(Map<String, dynamic> map) {
     basePrice = map["basePrice"] as num;
     km = map["km"] as num;

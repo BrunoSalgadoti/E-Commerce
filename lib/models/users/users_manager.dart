@@ -76,7 +76,7 @@ class UserManager extends ChangeNotifier {
 
   /// Checks if necessary auxiliary documents and admin data exist in Firestore.
   Future<void> createAuxAndAdminsIfNotExists({required bool firstStart}) async {
-    if (!kReleaseMode && firstStart == true) {
+    if (kDebugMode && firstStart == true) {
       MonitoringLogger().logInfo('Info: Verifier createAuxAndAdminsIfNotExists');
 
       // Check if the "admins" collection is empty
@@ -124,8 +124,6 @@ class UserManager extends ChangeNotifier {
       onSuccess();
     } on FirebaseAuthException catch (error) {
       onFail(getErrorString(error.code));
-      debugPrint(
-          ' \n \n ################### \n \n${error.code.toString()}  \n \n ################### \n \n \n');
     }
     loading = false;
     PerformanceMonitoring().stopTrace('sign-in-email');
@@ -141,7 +139,7 @@ class UserManager extends ChangeNotifier {
       // check if is running on Web
       if (kIsWeb) {
         await FacebookAuth.i.webAndDesktopInitialize(
-          appId: Config.facebookAppId,
+          appId: config.facebookAppId,
           cookie: true,
           xfbml: true,
           version: "v17.0",
@@ -204,8 +202,6 @@ class UserManager extends ChangeNotifier {
       }
     } on FirebaseAuthException catch (error) {
       onFail!(getErrorString(error.code));
-      debugPrint(
-          ' \n \n ################### \n \n${error.code.toString()}  \n \n ################### \n \n \n');
       loadingFace = false;
     }
     PerformanceMonitoring().stopTrace('login-facebook');
@@ -275,8 +271,6 @@ class UserManager extends ChangeNotifier {
       }
     } on FirebaseAuthException catch (error) {
       onFail!(getErrorString(error.code));
-      debugPrint(
-          ' \n \n ################### \n \n${error.code.toString()}  \n \n ################### \n \n \n');
       loadingGoogle = false;
     }
     PerformanceMonitoring().stopTrace('login-google');
@@ -302,8 +296,6 @@ class UserManager extends ChangeNotifier {
       onSuccess();
     } on FirebaseAuthException catch (error) {
       onFail(getErrorString(error.code));
-      debugPrint(
-          ' \n \n ################### \n \n${error.code.toString()}  \n \n ################### \n \n \n');
     }
     loading = false;
 

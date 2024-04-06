@@ -2,7 +2,7 @@ import 'package:brn_ecommerce/models/locations_services/cepaberto_map_api.dart';
 import 'package:brn_ecommerce/services/db_api/config.dart';
 import 'package:dio/dio.dart';
 
-const token = Config.cepabertoServiceToken;
+const token = config.cepabertoServiceToken;
 
 /// # CepAbertoApi (Folder: services)
 ///
@@ -32,14 +32,15 @@ class CepAbertoApi {
       final response = await dio.get<Map<String, dynamic>>(endpoint);
 
       if (response.data!.isEmpty) {
-        return Future.error('CEP Inválido');
+        return Future.error('Busca por CEP Temporariamente indisponível!,'
+            'favor contatar a Loja, Obrigado.');
       }
 
       final CepAbertoAddress address = CepAbertoAddress.fromMap(response.data!);
 
       return address;
     } on DioException {
-      return Future.error('Erro ao Buscar CEP');
+      return Future.error('Erro ao Buscar CEP, favor tentar em alguns instantes!');
     }
   }
 }

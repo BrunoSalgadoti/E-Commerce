@@ -3,7 +3,6 @@ import 'package:brn_ecommerce/models/locations_services/viacep_map_api.dart';
 import 'package:brn_ecommerce/models/products/cart_product.dart';
 import 'package:brn_ecommerce/models/products/details_products.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
-import 'package:brn_ecommerce/models/sales/delivery.dart';
 import 'package:brn_ecommerce/models/users/users.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:brn_ecommerce/services/cepaberto_api.dart';
@@ -23,14 +22,13 @@ import 'package:geolocator/geolocator.dart';
 class CartManager extends ChangeNotifier {
   // Proprieties
 
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
   num productsPrice = 0.0;
   num? deliveryPrice;
   bool _loading = false;
   List<CartProduct> items = [];
   Users? users;
   Address? address;
-  Delivery? delivery;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   // Getters and Setters
 
@@ -135,6 +133,7 @@ class CartManager extends ChangeNotifier {
       users!.cartReference.add(cartProduct.toCartItemMap()).then((doc) => cartProduct.id = doc.id);
       _onItemUpdate();
     }
+    notifyListeners();
   }
 
   /// Removes a product from the cart.
@@ -188,15 +187,15 @@ class CartManager extends ChangeNotifier {
 
   /// Fetches address details from a given ZIP code.
   Future<void> getAddress(String cep) async {
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Info message: Start Load Get Address Cart');
     }
 
     if (kIsWeb) {
       loading = true;
-      final viaCepService = ViaCepApi();
 
       try {
+        final viaCepService = ViaCepApi();
         final viaCepAddress = await viaCepService.getAddressFromZipCode(cep);
 
         // Get current location if WEB
@@ -210,13 +209,18 @@ class CartManager extends ChangeNotifier {
           state: viaCepAddress.state,
           street: viaCepAddress.streetAddress,
           district: viaCepAddress.district,
+          //TODO: 2-2 Substituir por linhas abaixo comentada após configurar CORS para acesso
           lat: latitude,
           long: longitude,
+          //TODO: 1-2 Permissão CORS -> Access-Control-Allow-Origin' configurar
+          // lat: cepAbertoAddress.latitude,
+          // long: cepAbertoAddress.longitude,
         );
         loading = false;
+        notifyListeners();
       } catch (error) {
         loading = false;
-        return Future.error('CEP Inválido');
+        return Future.error('CEP Inválido!\nFavor conferir o CEP e tente em instantes. Obrigado.');
       }
     } else {
       loading = true;
@@ -235,9 +239,10 @@ class CartManager extends ChangeNotifier {
           long: cepAbertoAddress.longitude,
         );
         loading = false;
+        notifyListeners();
       } catch (error) {
         loading = false;
-        return Future.error('CEP Inválido');
+        return Future.error('CEP inválido!\nFavor conferir o CEP e tente em instantes, obrigado.');
       }
     }
   }
@@ -265,7 +270,7 @@ class CartManager extends ChangeNotifier {
 
   /// Calculates delivery charges based on the user's location.
   Future<bool> calculateDelivery(double lat, double long) async {
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Info message: Start Calculate Delivery Cart');
     }
 
@@ -276,7 +281,6 @@ class CartManager extends ChangeNotifier {
       final longStore = doc.get("long") as double;
       final basePriceDelivery = doc.get("basePrice") as num;
       final kmForDelivery = doc.get("km") as num;
-
       final maximumDeliveryDistance = doc.get("maxKm") as num;
 
       double distanceClient = Geolocator.distanceBetween(latStore, longStore, lat, long);
@@ -295,7 +299,6 @@ class CartManager extends ChangeNotifier {
         deliveryPrice = 0;
         notifyListeners();
       }
-
       return true;
     } catch (error) {
       return Future.error('Erro ao calcular Frete $error');

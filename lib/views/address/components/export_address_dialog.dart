@@ -15,15 +15,14 @@ import 'package:screenshot/screenshot.dart';
 import '../../../common/formatted_fields/format_values.dart';
 
 class ExportAddressDialog {
+  final Address? address;
+  final OrderClient? orderClient;
+  final ScreenshotController screenshotController = ScreenshotController();
+
   ExportAddressDialog({
     required this.address,
     required this.orderClient,
   });
-
-  final Address? address;
-  final OrderClient? orderClient;
-
-  final ScreenshotController screenshotController = ScreenshotController();
 
   void alertForShowAddress(BuildContext context) {
     final orderId = orderClient?.orderId ?? "";

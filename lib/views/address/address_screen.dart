@@ -1,5 +1,7 @@
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
 import 'package:brn_ecommerce/common/cards/price_card.dart';
+import 'package:brn_ecommerce/common/functions/common_functions.dart';
+import 'package:brn_ecommerce/common/messengers/components/text_of_alerts_and_messengers.dart';
 import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
@@ -19,26 +21,11 @@ class AddressScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Functions to remove context from async methods
     goToScreen() => Navigator.pushNamed(context, "/checkout");
-    backScreen() => Navigator.pop(context);
-
-    alertPolicyAndTerms() {
-      CustomScaffoldMessenger(
-        context: context,
-        message: 'É necessário Concordar com a Política'
-            ' de privacidade e nossos '
-            'Termos de Serviço',
-      ).alertScaffold();
-      return;
-    }
-
-    String messenger = 'Foi verificado em nosso sistema que está '
-        'conta de usuário\n'
-        'ainda não aceitou a nossa Política de '
-        'privacidade e o nosso Termos de Uso'
-        '\n\nPor favor, para continuar: \n\n'
-        'Leia atentamente e aceite os Termos e '
-        'a Política de Privacidade!';
+    alertPolicyAndTerms() => CustomScaffoldMessenger(
+            context: context, message: AlertsMessengersText.policyAndTermsConfirmation)
+        .alertScaffold();
 
     return Scaffold(
       appBar: AppBar(
@@ -48,16 +35,15 @@ class AddressScreen extends StatelessWidget {
       body: ListView(
         children: [
           const AddressCard(),
-          Consumer3<CartManager, PolicyAndDocuments, VersionManager>(
-              builder: (_, cartManager, policyAndDocuments, versionManager, __) {
-            final userManager = Provider.of<UserManager>(context);
-            final currentUser = userManager.users;
+          Consumer4<CartManager, PolicyAndDocuments, VersionManager, UserManager>(
+              builder: (_, cartManager, policyAndDocuments, versionManager, userManager, __) {
 
             void checkPolicyAndTerms() {
-              if (currentUser!.policyAndTerms == false || currentUser.policyAndTerms == null) {
+              if (userManager.users!.policyAndTerms == false ||
+                  userManager.users!.policyAndTerms == null) {
                 CustomAlertDialogAdaptive(
                   titleText: 'A T E N Ç Ã O!',
-                  bodyText: messenger,
+                  bodyText: AlertsMessengersText.policyAndTermsUnchecked,
                   actions: [
                     const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -75,7 +61,7 @@ class AddressScreen extends StatelessWidget {
                           widthButton: 100,
                           heightButton: 40,
                           onPressed: () {
-                            backScreen();
+                            backScreenPop(context: context);
                           },
                         ),
                         CustomButton(
@@ -87,8 +73,8 @@ class AddressScreen extends StatelessWidget {
                                 policyAndDocuments.agreedToTermsOfService == false) {
                               alertPolicyAndTerms();
                             } else {
-                              currentUser.policyAndTerms = true;
-                              await currentUser.updateUserData();
+                              userManager.users!.policyAndTerms = true;
+                              await userManager.users!.updateUserData();
                               goToScreen();
                             }
                           },
@@ -106,9 +92,7 @@ class AddressScreen extends StatelessWidget {
               if (!versionManager.compatibleVersion) {
                 CustomAlertDialogAdaptive(
                   titleText: 'Atualização Necessária!',
-                  bodyText: 'Por favor, para continuar: \n'
-                      'é necessário atualizar o aplicativo para a '
-                      'versão mais recente!',
+                  bodyText: AlertsMessengersText.appUpdateRequired,
                   actions: [
                     CustomButton(
                       text: 'Atualizar',
@@ -126,7 +110,7 @@ class AddressScreen extends StatelessWidget {
                           // Example for iOS:
                           // launch('https://apps.apple.com/app/id<your_app_id>');
                         }
-                        backScreen();
+                        backScreenPop(context: context);
                       },
                     )
                   ],

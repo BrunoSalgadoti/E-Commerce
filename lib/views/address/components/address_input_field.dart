@@ -1,28 +1,29 @@
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
 import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
+import 'package:brn_ecommerce/common/messengers/components/text_of_alerts_and_messengers.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/models/locations_services/address.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
-import 'package:brn_ecommerce/models/sales/delivery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AddressInputField extends StatelessWidget {
-  const AddressInputField({super.key, required this.address, required this.delivery});
-
   final Address address;
-  final Delivery delivery;
+
+  const AddressInputField({super.key, required this.address});
 
   @override
   Widget build(BuildContext context) {
     final cartManager = context.watch<CartManager>();
+
+    // Functions to remove context from async methods
     calculateShippingError() => CustomScaffoldMessenger(
-          context: context,
-          message: 'Verifique seu acesso a internet!',
-          duration: const Duration(milliseconds: 4500),
-        ).alertScaffold();
+      context: context,
+      message: AlertsMessengersText.checkingDeliveryRadius,
+      duration: const Duration(milliseconds: 4500),
+    ).alertScaffold();
 
     if (address.zipCode != null && cartManager.deliveryPrice == null) {
       return Column(

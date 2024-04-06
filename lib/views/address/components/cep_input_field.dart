@@ -11,19 +11,14 @@ import 'package:provider/provider.dart';
 
 import '../../../common/formatted_fields/format_values.dart';
 
-class CepInputField extends StatefulWidget {
-  const CepInputField({
+class CepInputField extends StatelessWidget {
+  final Address address;
+
+   CepInputField({
     super.key,
     required this.address,
   });
 
-  final Address address;
-
-  @override
-  State<CepInputField> createState() => _CepInputFieldState();
-}
-
-class _CepInputFieldState extends State<CepInputField> {
   final TextEditingController cepController = TextEditingController();
 
   @override
@@ -31,7 +26,7 @@ class _CepInputFieldState extends State<CepInputField> {
     final cartManager = context.watch<CartManager>();
     final primaryColor = Theme.of(context).primaryColor;
 
-    if (widget.address.zipCode == null) {
+    if (address.zipCode == null) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -40,7 +35,7 @@ class _CepInputFieldState extends State<CepInputField> {
             enableTextEdit: !cartManager.loading,
             controller: cepController,
             labelText: 'CEP',
-            hintText: '00.000-000',
+            hintText: '00000000',
             inputFormatters: [FilteringTextInputFormatter.digitsOnly, CepInputFormatter()],
             textInputType: TextInputType.number,
             validator: (value) {
@@ -77,7 +72,7 @@ class _CepInputFieldState extends State<CepInputField> {
           children: [
             Expanded(
               child: Text(
-                'CEP: ${formattedZipcode(widget.address.zipCode)}',
+                'CEP: ${formattedZipcode(address.zipCode)}',
                 style: TextStyle(
                   color: primaryColor,
                   fontSize: 18,

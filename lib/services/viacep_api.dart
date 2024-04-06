@@ -32,7 +32,7 @@ class ViaCepApi {
 
       return address;
     } on DioException {
-      return Future.error('Erro ao Buscar CEP');
+      return Future.error('Erro ao Buscar CEP, favor tentar em instantes!');
     }
   }
 }

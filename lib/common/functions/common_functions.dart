@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 
+void backScreenPop({required BuildContext context}) => Navigator.pop(context);
+
 /// # Utility functions and methods (Folder: common/functions)
 /// ## getColorFromString
 /// Converts a hexadecimal color string to a Color object.
