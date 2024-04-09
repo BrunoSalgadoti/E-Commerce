@@ -2,41 +2,40 @@ import 'package:brn_ecommerce/common/cards/flexible_product_card.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/messengers/search_dialog.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
+import 'package:brn_ecommerce/common/sliding_up_panel/components/controller.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/filters_result.dart';
-import 'package:brn_ecommerce/common/sliding_up_panel/filters_sliding_up_panel.dart';
+import 'package:brn_ecommerce/common/sliding_up_panel/components/sliding_filters_products.dart';
+import 'package:brn_ecommerce/common/sliding_up_panel/custom_sliding_up_painel.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ProductsScreen extends StatefulWidget {
-  const ProductsScreen({
-    super.key,
-  });
+  const ProductsScreen({super.key});
 
   @override
   State<ProductsScreen> createState() => _ProductsScreenState();
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
-  final PanelController panelController = PanelController();
+  final Set<StatusOfProducts> selectedStatus = <StatusOfProducts>{};
 
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
       final productManager = Provider.of<ProductManager>(context, listen: false);
-      productManager.filtersOn = false;
-      productManager.search = '';
-      productManager.selectedFiltersByUser.clear();
+      productManager.disableFilter();
+      controlsSlidingPanel.panelController.close();
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Set<StatusOfProducts> selectedStatus = <StatusOfProducts>{};
+    final primaryColor = Theme.of(context).primaryColor;
+
     return Scaffold(
       drawer: const CustomDrawer(),
       appBar: AppBar(
@@ -123,10 +122,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                FiltersSlidingUpPanel(
+                customSlidingUpPainel(
+                  slidingTitleColor: primaryColor,
                   textOfSlidingUpPanel: null,
-                  panelController: panelController,
-                  selectedStatus: selectedStatus,
+                  context: context,
+                  childrenOfPainel: SlidingFiltersProducts(
+                    selectedStatus: selectedStatus,
+                  ),
+                  body: null,
                 ),
                 if (productManager.filtersOn == true) filtersResult(),
                 Expanded(
@@ -198,9 +201,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
     Future.delayed(Duration.zero, () {
       if (mounted) {
         final productManager = Provider.of<ProductManager>(context, listen: false);
-        productManager.filtersOn = false;
-        productManager.search = '';
-        productManager.selectedFiltersByUser.clear();
+        productManager.disableFilter();
+        controlsSlidingPanel.panelController.close();
       }
     });
     super.dispose();

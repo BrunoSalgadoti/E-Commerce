@@ -112,7 +112,7 @@ class ProductManager extends ChangeNotifier {
   /// Starts listening for products in Firestore.
   void _listenToProducts() async {
     PerformanceMonitoring().startTrace('listen_products', shouldStart: true);
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('Starting listen products');
     }
 
@@ -170,9 +170,9 @@ class ProductManager extends ChangeNotifier {
   /// Disables all filters.
   void disableFilter() {
     filtersOn = false;
-    statusFilter = [];
-    filteredProducts.clear();
+    statusFilter.clear();
     selectedFiltersByUser.clear();
+    filteredProducts.clear();
     notifyListeners();
   }
 
@@ -183,11 +183,13 @@ class ProductManager extends ChangeNotifier {
       filtersOn = true;
       statusFilter.add(status);
       setActiveFilterName(getStatusText(selectedFiltersByUser[0]));
+      notifyListeners();
     } else {
       statusFilter.remove(status);
       setActiveFilterName("");
       selectedFiltersByUser.clear();
       filtersOn = false;
+      notifyListeners();
     }
     notifyListeners();
   }
@@ -226,6 +228,7 @@ class ProductManager extends ChangeNotifier {
     _subscription?.cancel();
     filteredProducts.clear();
     selectedFiltersByUser.clear();
+    disableFilter();
     super.dispose();
   }
 }

@@ -1,9 +1,10 @@
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
-import 'package:brn_ecommerce/common/sliding_up_panel/filters_sliding_up_panel.dart';
+import 'package:brn_ecommerce/common/sliding_up_panel/components/controller.dart';
+import 'package:brn_ecommerce/common/sliding_up_panel/components/sliding_filters_products.dart';
+import 'package:brn_ecommerce/common/sliding_up_panel/custom_sliding_up_painel.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../common/formatted_fields/format_values.dart';
 import '../../common/miscellaneous/freight_logo.dart';
@@ -18,7 +19,6 @@ class SelectProductScreen extends StatefulWidget {
 }
 
 class _SelectProductScreenState extends State<SelectProductScreen> {
-  final PanelController panelController = PanelController();
   final Set<StatusOfProducts> selectedStatus = <StatusOfProducts>{};
 
   @override
@@ -26,8 +26,8 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
     super.initState();
     Future.delayed(Duration.zero, () {
       final productManager = Provider.of<ProductManager>(context, listen: false);
-      productManager.filtersOn = false;
-      productManager.search = '';
+      productManager.disableFilter();
+      controlsSlidingPanel.panelController.close();
     });
   }
 
@@ -44,10 +44,14 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
           final filteredProducts = productManager.filteredProducts;
 
           return Column(children: [
-            FiltersSlidingUpPanel(
-              textOfSlidingUpPanel: 'Procure um produto para vincular a foto...',
-              panelController: panelController,
-              selectedStatus: selectedStatus,
+            customSlidingUpPainel(
+              context: context,
+              slidingTitleColor: null,
+              textOfSlidingUpPanel: null,
+              childrenOfPainel: SlidingFiltersProducts(
+                selectedStatus: selectedStatus,
+              ),
+              body: null,
             ),
             if (productManager.filtersOn == true)
               Row(
@@ -103,13 +107,13 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
                           elevation: 7,
                           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                           child: Stack(children: [
-                            FreightLogo(product: product, text: null),
                             Image.network(
                               product.images!.first,
-                              fit: BoxFit.fill,
+                              fit: BoxFit.fitHeight,
                               width: 89,
                               height: 85,
                             ),
+                            FreightLogo(product: product, text: null),
                             ListTile(
                               contentPadding: const EdgeInsets.all(0),
                               visualDensity: VisualDensity.comfortable,
@@ -132,7 +136,7 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
-                                      Text('Quant. Disponível: '
+                                      Text('Qtd. Disponível: '
                                           '${product.totalStock}'),
                                       product.hasStock
                                           ? Text('Menor Preço: '
@@ -159,5 +163,17 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    Future.delayed(Duration.zero, () {
+      if (mounted) {
+        final productManager = Provider.of<ProductManager>(context, listen: false);
+        productManager.disableFilter();
+        controlsSlidingPanel.panelController.close();
+      }
+    });
+    super.dispose();
   }
 }

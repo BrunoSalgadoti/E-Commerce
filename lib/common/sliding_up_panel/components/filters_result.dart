@@ -1,3 +1,4 @@
+import 'package:brn_ecommerce/common/sliding_up_panel/components/controller.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,6 +46,7 @@ Widget filtersResult() {
             ),
             onPressed: () {
               productManager.disableFilter();
+              controlsSlidingPanel.panelController.close();
             },
           ),
         ],

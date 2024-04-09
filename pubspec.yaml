@@ -147,6 +147,34 @@ flutter:
     - lib/services/
     - lib/services/db_api/
     - lib/generated/
+    - lib/l10n/
+    - lib/views/admin_settings/
+    - lib/views/admin_settings/components/
+    - lib/views/product_categories/
+    - lib/views/product_categories/components/
+    - lib/views/product_best_selling/
+    - lib/common/messengers/
+    - lib/common/messengers/components/
+    - lib/common/advertising/
+    - lib/common/advertising/components/
+    - lib/common/miscellaneous/
+    - lib/common/formatted_fields/
+    - lib/common/sliding_up_panel/
+    - lib/common/sliding_up_panel/components/
+    - lib/models/sales/
+    - lib/models/users/
+    - lib/models/views/
+    - lib/models/products/
+    - lib/models/products/categories/
+    - lib/models/admin_area/
+    - lib/models/admin_area/configs/
+    - lib/models/users_area/
+    - lib/helpers/product_categories_factory_lists/
+    - lib/services/config/
+    - lib/services/development_monitoring/
+    - lib/services/firebase_remote_configs/
+    - lib/generated/intl/
+    - lib/generated/l10n/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
