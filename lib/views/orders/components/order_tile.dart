@@ -3,7 +3,7 @@ import 'package:brn_ecommerce/common/formatted_fields/format_timestamp.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/models/sales/order_client.dart';
-import 'package:brn_ecommerce/views/address/components/export_address_dialog.dart';
+import 'package:brn_ecommerce/models/admin_area/components/export_address_dialog.dart';
 import 'package:brn_ecommerce/views/orders/components/order_product_tile.dart';
 import 'package:flutter/material.dart';
 

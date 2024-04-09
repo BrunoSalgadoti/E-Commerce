@@ -46,7 +46,7 @@ class AdminOrdersManager extends ChangeNotifier {
 
   /// Listens to orders from Firestore and updates the internal order list accordingly.
   Future<void> _listenToOrders() async {
-    if (!kReleaseMode) {
+    if (kDebugMode) {
       MonitoringLogger().logInfo('_listenToOrders');
     }
 

@@ -40,6 +40,7 @@ class SizesForm extends StatelessWidget {
                     state.value?.add(DetailsProducts(stock: 0));
                     state.didChange(state.value);
                   },
+                  semanticLabel: 'Adicionar item',
                 ),
               ],
             ),

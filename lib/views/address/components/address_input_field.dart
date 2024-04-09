@@ -32,7 +32,7 @@ class AddressInputField extends StatelessWidget {
           CustomTextFormField(
             initialValue: address.street,
             labelText: 'Logradouro',
-            hintText: 'Av. Apolônio Sales',
+            hintText: 'Av./Rua... Nome da Av./Rua...',
             validator: emptyValidator,
             onSaved: (value) => address.street = value,
           ),

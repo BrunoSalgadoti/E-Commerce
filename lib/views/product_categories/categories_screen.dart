@@ -32,7 +32,9 @@ class CategoriesScreen extends StatelessWidget {
                         iconData: Icons.edit,
                         onTap: () {
                           userManager.editingCategories = true;
-                        })
+                        },
+                  semanticLabel: 'Editar categorias',
+                )
                     : userManager.adminEnable && userManager.editingCategories == true
                         ? CustomIconButton(
                             padding: const EdgeInsets.only(right: 15, left: 15),
@@ -65,6 +67,7 @@ class CategoriesScreen extends StatelessWidget {
                                 }
                               });
                             },
+                  semanticLabel: 'Salvar categorias',
                           )
                         : const SizedBox(width: 25),
               ],

@@ -80,14 +80,17 @@ class EditItemSize extends StatelessWidget {
             iconData: Icons.remove,
             color: Colors.red,
             onTap: onRemove,
+            semanticLabel: 'Remover item',
           ),
           CustomIconButton(
             iconData: Icons.arrow_drop_up,
             onTap: onMoveUp,
+            semanticLabel: 'Mover item pra cima',
           ),
           CustomIconButton(
             iconData: Icons.arrow_drop_down,
             onTap: onMoveDown,
+            semanticLabel: 'Mover item pra baixo',
           ),
         ],
       ),

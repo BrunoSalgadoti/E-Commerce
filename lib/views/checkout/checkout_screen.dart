@@ -120,6 +120,7 @@ class CheckoutScreen extends StatelessWidget {
                                 });
                               }
                             },
+                            showIcon: true,
                           );
                         },
                       )

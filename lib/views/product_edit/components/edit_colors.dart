@@ -106,6 +106,7 @@ class EditColorsState extends State<EditColors> {
           iconData: Icons.remove,
           color: Colors.red,
           onTap: widget.onRemove,
+          semanticLabel: 'Remover cor',
         ),
       ],
     );

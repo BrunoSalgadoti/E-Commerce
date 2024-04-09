@@ -55,7 +55,8 @@ class CartScreen extends StatelessWidget {
                     ? () {
                         Navigator.pushNamed(context, "/address");
                       }
-                    : null),
+                    : null,
+              showIcon: false),
           ],
         );
       }),

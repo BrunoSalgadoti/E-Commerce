@@ -85,7 +85,7 @@ class ShareProductScreenState extends State<ShareProductScreen> {
                     iconData: FontAwesomeIcons.whatsapp,
                     color: const Color(0xff88f83f),
                     onTap: () => _shareProductWeb(SocialMediaWeb.whatsapp),
-                  ),
+                    semanticLabel: ''),
                 ],
               )
             : Container(
@@ -94,7 +94,8 @@ class ShareProductScreenState extends State<ShareProductScreen> {
                   child: CustomIconButton(
                       iconData: FontAwesomeIcons.share,
                       color: Colors.white,
-                      onTap: _onShareButtonPressed),
+                      onTap: _onShareButtonPressed,
+                    semanticLabel: ''),
                 ),
               ),
       );
@@ -110,6 +111,7 @@ class ShareProductScreenState extends State<ShareProductScreen> {
               onTap: () {
                 Navigator.of(context).pop();
               },
+              semanticLabel: 'Fechar',
             )
           ],
         ),

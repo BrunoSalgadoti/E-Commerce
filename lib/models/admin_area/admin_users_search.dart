@@ -289,7 +289,7 @@ class AdminUsersSearch extends ChangeNotifier {
                                   color: Colors.red,
                                   fontWeight: FontWeight.bold,
                                 ),
-                                content: const Text('Escolha para quem deseja enviar o E-mail!'),
+                                content: const Text('Para quem deseja enviar o E-mail?'),
                                 alignment: Alignment.topCenter,
                                 contentTextStyle: const TextStyle(
                                     fontSize: 15,
@@ -311,7 +311,7 @@ class AdminUsersSearch extends ChangeNotifier {
                                         },
                                       ),
                                       CustomTextButton(
-                                        text: 'Todos os contatos!',
+                                        text: 'Todos os contatos.',
                                         fontSize: 13,
                                         icon: null,
                                         onPressed: () {
@@ -321,7 +321,7 @@ class AdminUsersSearch extends ChangeNotifier {
                                         },
                                       ),
                                       CustomTextButton(
-                                          text: 'Cancelar Envio',
+                                          text: 'Cancelar envio',
                                           fontSize: 13,
                                           icon: null,
                                           fontColor: Colors.red,

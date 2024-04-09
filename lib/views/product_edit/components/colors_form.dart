@@ -38,6 +38,7 @@ class ColorsForm extends StatelessWidget {
                     state.value?.add(ColorsProducts(amount: 0));
                     state.didChange(state.value);
                   },
+                  semanticLabel: 'Paleta de cores',
                 ),
               ],
             ),

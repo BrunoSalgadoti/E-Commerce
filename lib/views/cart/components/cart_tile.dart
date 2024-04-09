@@ -159,6 +159,7 @@ class CartTile extends StatelessWidget {
                                       cartProduct.quantity! > cartProduct.unitQuantityAmount
                                   ? Colors.red
                                   : Theme.of(context).primaryColor,
+                              semanticLabel: 'Incluir mais Itens',
                             ),
                             Text(
                               '${cartProduct.quantity}',
@@ -201,7 +202,7 @@ class CartTile extends StatelessWidget {
                                   : cartProduct.decrement,
                               color: cartProduct.quantity! > 1
                                   ? Theme.of(context).primaryColor
-                                  : Colors.red,
+                                  : Colors.red, semanticLabel: 'Excluir Item',
                             ),
                           ],
                         );

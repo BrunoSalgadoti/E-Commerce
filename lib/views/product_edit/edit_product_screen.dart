@@ -94,7 +94,9 @@ class EditProductScreen extends StatelessWidget {
                             ],
                           )
                         ],
-                      ).alertContent(context))
+                      ).alertContent(context),
+                semanticLabel: 'Deletar produto'
+              )
           ],
         ),
         backgroundColor: Colors.white,

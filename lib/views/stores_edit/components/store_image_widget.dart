@@ -99,7 +99,7 @@ class StoreImageWidget extends StatelessWidget {
               iconData: Icons.change_circle_outlined,
               color: Colors.blue,
               size: 45,
-            )),
+              semanticLabel: 'Substituir imagem da loja')),
       ],
     );
   }

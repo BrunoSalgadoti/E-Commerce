@@ -48,6 +48,7 @@ class SectionHeader extends StatelessWidget {
                     : () {
                         homeManager.moveSectionUp(section);
                       },
+                semanticLabel: 'Mover para cima',
               ),
               CustomIconButton(
                 iconData: Icons.move_down,
@@ -57,6 +58,7 @@ class SectionHeader extends StatelessWidget {
                     : () {
                         homeManager.moveSectionDown(section);
                       },
+                semanticLabel: 'Mover para baixo',
               ),
               const SizedBox(
                 width: 20,
@@ -67,6 +69,7 @@ class SectionHeader extends StatelessWidget {
                 onTap: () {
                   homeManager.removeSection(section);
                 },
+                semanticLabel: 'Remover seção',
               ),
             ],
           ),

@@ -47,7 +47,8 @@ class EditStoresScreenState extends State<EditStoresScreen> {
                   onTap: () {
                     StoreUtils(store: widget.store, address: widget.store.address!)
                         .alertForDeleteStore(context);
-                  }),
+                  },
+                semanticLabel: 'Excluir Loja',),
           ],
         ),
         backgroundColor: Colors.white,

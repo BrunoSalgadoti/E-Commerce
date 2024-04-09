@@ -14,7 +14,7 @@ import '../../../common/formatted_fields/format_values.dart';
 class CepInputField extends StatelessWidget {
   final Address address;
 
-   CepInputField({
+  CepInputField({
     super.key,
     required this.address,
   });
@@ -84,9 +84,8 @@ class CepInputField extends StatelessWidget {
               iconData: Icons.edit,
               size: 20,
               color: primaryColor,
-              onTap: () {
-                cartManager.removeAddress();
-              },
+              onTap: () => cartManager.removeAddress(),
+              semanticLabel: 'Editar',
             )
           ],
         ),

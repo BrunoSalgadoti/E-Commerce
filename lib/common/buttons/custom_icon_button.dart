@@ -11,7 +11,9 @@ class CustomIconButton extends StatelessWidget {
   final IconData iconData;
   final Color? color;
   final double? size;
+  final double? weight;
   final EdgeInsets padding;
+  final String semanticLabel;
 
   /// Cria um [CustomIconButton].
   ///
@@ -27,10 +29,12 @@ class CustomIconButton extends StatelessWidget {
   const CustomIconButton({
     super.key,
     required this.iconData,
+    required this.semanticLabel,
     this.onTap,
     this.color,
     this.size,
-    this.padding = const EdgeInsets.fromLTRB(8, 8, 10, 8),
+    this.weight,
+    this.padding = const EdgeInsets.fromLTRB(12, 10, 10, 12),
   });
 
   @override
@@ -44,6 +48,8 @@ class CustomIconButton extends StatelessWidget {
           child: Padding(
             padding: padding,
             child: Icon(
+              semanticLabel: semanticLabel,
+              weight: weight,
               size: size,
               iconData,
               color: onTap != null ? color : Colors.grey[400],

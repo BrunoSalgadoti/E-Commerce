@@ -14,7 +14,7 @@ class OrdersScreen extends StatelessWidget {
     return Scaffold(
       drawer: const CustomDrawer(),
       appBar: AppBar(
-        title: const Text('Meus Pedidos'),
+        title: const Text('Meus pedidos'),
         centerTitle: true,
       ),
       body: Consumer<OrdersManager>(
