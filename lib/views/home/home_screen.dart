@@ -1,6 +1,7 @@
 import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:brn_ecommerce/models/views/home_manager.dart';
@@ -78,9 +79,9 @@ class HomeScreen extends StatelessWidget {
                           IconButton(
                             onPressed: () {
                               if (context.read<UserManager>().isLoggedIn) {
-                                Navigator.pushNamed(context, "/cart");
+                                Navigator.pushNamed(context, routesNavigator.cartScreen);
                               } else {
-                                Navigator.pushNamed(context, "/login");
+                                Navigator.pushNamed(context, routesNavigator.loginScreen);
                               }
                             },
                             icon: Consumer<UserManager>(

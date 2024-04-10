@@ -1,3 +1,4 @@
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/cart_product.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class OrderProductTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (!imageNotAvailable) {
-          Navigator.pushNamed(context, "/product", arguments: cartProduct?.product);
+          Navigator.pushNamed(context, routesNavigator.productDetailsScreen, arguments: cartProduct?.product);
         }
       },
       child: Container(

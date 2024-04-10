@@ -1,5 +1,6 @@
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/details_products.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
@@ -84,7 +85,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   child: IconButton(
                       icon: const Icon(Icons.share_outlined),
                       onPressed: () {
-                        Navigator.pushNamed(context, "/share_product", arguments: widget.product);
+                        Navigator.pushNamed(context, routesNavigator.shareProductScreen, arguments: widget.product);
                       }),
                 ),
               const SizedBox(width: 16),
@@ -94,7 +95,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     return IconButton(
                       icon: const Icon(Icons.edit),
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, "/edit_product",
+                        Navigator.pushReplacementNamed(context, routesNavigator.editProductScreen,
                             arguments: widget.product);
                       },
                     );
@@ -257,9 +258,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                             context
                                                 .read<CartManager>()
                                                 .addToCart(product, detailsProducts);
-                                            Navigator.pushNamed(context, "/cart");
+                                            Navigator.pushNamed(context, routesNavigator.cartScreen);
                                           } else {
-                                            Navigator.pushNamed(context, "/login");
+                                            Navigator.pushNamed(context, routesNavigator.loginScreen);
                                           }
                                         }
                                       : null,

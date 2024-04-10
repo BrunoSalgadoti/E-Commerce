@@ -2,6 +2,7 @@ import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category_manager.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:brn_ecommerce/views/product_categories/components/main_categories_card.dart';
@@ -101,7 +102,7 @@ class CategoriesScreen extends StatelessWidget {
                             return GestureDetector(
                               onTap: () {
                                 Navigator.of(context)
-                                    .pushNamed("/category_screen", arguments: category);
+                                    .pushNamed(routesNavigator.categoryProductsScreen, arguments: category);
                               },
                               child: MainCategoriesCard(productCategory: category),
                             );

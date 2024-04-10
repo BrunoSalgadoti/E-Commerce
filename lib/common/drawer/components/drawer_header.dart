@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
 import 'package:brn_ecommerce/models/admin_area/configs/admin_images_controller.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:brn_ecommerce/models/views/page_manager.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,10 +34,13 @@ class CustomDrawerHeader extends StatelessWidget {
                       'Loja Virtual:',
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    Image.asset(
-                      const AdminAssetsController().storeLogo!,
-                      height: 90,
-                      fit: BoxFit.scaleDown,
+                    InkWell(
+                      child: Image.asset(
+                        const AdminAssetsController().storeLogo!,
+                        height: 90,
+                        fit: BoxFit.scaleDown,
+                      ),
+                      onTap: () =>  context.read<PageManager>().setPage(0)
                     ),
                   ] else
                     const AutoSizeText(
@@ -63,7 +66,7 @@ class CustomDrawerHeader extends StatelessWidget {
                         userManager.signOut();
                         context.read<PageManager>().setPage(0);
                       } else {
-                        Navigator.pushNamed(context, "/login");
+                        Navigator.pushNamed(context, routesNavigator.loginScreen);
                       }
                     },
                     child: AutoSizeText(

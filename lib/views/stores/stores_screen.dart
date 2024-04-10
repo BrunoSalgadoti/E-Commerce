@@ -1,5 +1,6 @@
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:brn_ecommerce/models/views/stores_manager.dart';
 import 'package:brn_ecommerce/views/stores/components/store_card.dart';
@@ -23,7 +24,7 @@ class StoresScreen extends StatelessWidget {
                   return IconButton(
                     icon: const Icon(Icons.add),
                     onPressed: () {
-                      Navigator.pushNamed(context, "/edit_stores");
+                      Navigator.pushNamed(context, routesNavigator.editStoresScreen);
                     },
                   );
                 } else {

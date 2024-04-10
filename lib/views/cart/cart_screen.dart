@@ -2,6 +2,7 @@ import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
 import 'package:brn_ecommerce/common/cards/price_card.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/common/miscellaneous/info_marquee_widget.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:brn_ecommerce/views/cart/components/cart_tile.dart';
@@ -46,14 +47,14 @@ class CartScreen extends StatelessWidget {
               color: getButtonColor(),
               glowColor: Colors.greenAccent.withAlpha(500),
               onPressed: () {
-                Navigator.pushNamed(context, "/product_screen");
+                Navigator.pushNamed(context, routesNavigator.productScreen);
               },
             ),
             PriceCard(
                 buttonText: 'Continuar para Entrega',
                 onPressed: cartManager.isCartValid
                     ? () {
-                        Navigator.pushNamed(context, "/address");
+                        Navigator.pushNamed(context, routesNavigator.addressScreen);
                       }
                     : null,
               showIcon: false),

@@ -1,5 +1,6 @@
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,7 +17,7 @@ class AdvertisingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, "/product", arguments: product);
+        Navigator.pushNamed(context, routesNavigator.productDetailsScreen, arguments: product);
       },
       child: LayoutBuilder(builder: (context, constraints) {
         return Stack(

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
@@ -107,7 +108,7 @@ class UtilsForCategory {
                         icon: const Icon(Icons.open_in_new,
                             semanticLabel: 'Visualizar Produto', size: 20, color: Colors.white),
                         onPressed: () {
-                          Navigator.pushNamed(context, "/product", arguments: product);
+                          Navigator.pushNamed(context, routesNavigator.productDetailsScreen, arguments: product);
                         })),
               ),
               Positioned(

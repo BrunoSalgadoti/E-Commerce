@@ -1,6 +1,7 @@
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
 import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +50,7 @@ class PriceCard extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       semanticLabel: 'Voltar \n ao carrinho',
                       onTap: () =>
-                          Navigator.popUntil(context, (route) => route.settings.name == "/cart")),
+                          Navigator.popUntil(context, (route) => route.settings.name == routesNavigator.cartScreen)),
                 ),
               ],
             ),

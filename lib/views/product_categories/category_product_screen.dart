@@ -6,6 +6,7 @@ import 'package:brn_ecommerce/common/sliding_up_panel/components/controller.dart
 import 'package:brn_ecommerce/common/sliding_up_panel/components/filters_result.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/sliding_filters_products.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/custom_sliding_up_painel.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category_manager.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
@@ -310,10 +311,10 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                       Navigator.of(context).pop();
                       break;
                     case 1:
-                      Navigator.of(context).pushNamed('/cart');
+                      Navigator.of(context).pushNamed(routesNavigator.cartScreen);
                       break;
                     case 2:
-                    //TODO: Rota para a tela
+                    //TODO: Tela e Rota para a tela
                     // Navigator.of(context).pushNamed('/favoritos');
                       break;
                   }

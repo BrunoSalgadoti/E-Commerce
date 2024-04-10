@@ -1,10 +1,10 @@
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
 import 'package:brn_ecommerce/common/cards/price_card.dart';
-import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/common/messengers/components/text_of_alerts_and_messengers.dart';
 import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:brn_ecommerce/models/views/policy_and_documents.dart';
@@ -23,7 +23,8 @@ class AddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Functions to remove context from async methods
-    goToScreen() => Navigator.pushNamed(context, "/checkout");
+    goToScreen() => Navigator.pushNamed(context, routesNavigator.checkoutScreen);
+    backScreen() =>   Navigator.of(context).pop();
     alertPolicyAndTerms() => CustomScaffoldMessenger(
             context: context, message: AlertsMessengersText.policyAndTermsConfirmation)
         .alertScaffold();
@@ -67,7 +68,7 @@ class AddressScreen extends StatelessWidget {
                                   widthButton: 100,
                                   heightButton: 40,
                                   onPressed: () {
-                                    backScreenPop(context: context);
+                                    backScreen();
                                   },
                                 ),
                                 CustomButton(
@@ -116,7 +117,7 @@ class AddressScreen extends StatelessWidget {
                                   // Example for iOS:
                                   // launch('https://apps.apple.com/app/id<your_app_id>');
                                 }
-                                backScreenPop(context: context);
+                                backScreen();
                               },
                             )
                           ],

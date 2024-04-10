@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
 import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
 import 'package:brn_ecommerce/models/views/home_manager.dart';
@@ -21,15 +22,16 @@ class ItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeManager = context.watch<HomeManager>();
-    backScreen() => Navigator.of(context).pop();
     final product =
         context.read<ProductManager>().findProductById(item?.product != null ? item!.product! : '');
+    // Functions to remove context from async methods
+    void backScreen() =>   Navigator.of(context).pop();
 
     return GestureDetector(
         onTap: () {
           if (item?.product != null) {
             if (product != null && product.isValid!) {
-              Navigator.pushNamed(context, "/product", arguments: product);
+              Navigator.pushNamed(context, routesNavigator.productDetailsScreen, arguments: product);
             }
           }
         },
@@ -84,9 +86,9 @@ class ItemTile extends StatelessWidget {
                                   item?.product = null;
                                   Navigator.of(context).pop();
                                 } else {
-                                  final Product product =
-                                      await Navigator.pushNamed(context, '/select_product')
-                                          as Product;
+                                  final Product product = await Navigator.pushNamed(
+                                      context, routesNavigator.selectProductScreen,
+                                      arguments: Product()) as Product;
                                   item?.product = product.id;
                                   backScreen();
                                 }

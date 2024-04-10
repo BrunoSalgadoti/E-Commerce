@@ -3,6 +3,7 @@ import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/common/miscellaneous/freight_logo.dart';
 import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +32,10 @@ class FlexibleProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (imageNotAvailable && userManager.adminEnable) {
-          Navigator.pushNamed(context, "/edit_product", arguments: product);
+          Navigator.pushNamed(context, routesNavigator.editProductScreen, arguments: product);
         }
         if (!imageNotAvailable) {
-          Navigator.pushNamed(context, "/product", arguments: product);
+          Navigator.pushNamed(context, routesNavigator.productDetailsScreen, arguments: product);
         }
       },
       child: product!.isValid!

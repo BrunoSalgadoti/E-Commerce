@@ -1,4 +1,5 @@
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:flutter/material.dart';
 
 /// ## LoginCard
@@ -44,7 +45,7 @@ class LoginCard extends StatelessWidget {
                   CustomButton(
                     text: 'Entrar',
                     onPressed: () {
-                      Navigator.pushNamed(context, "/login");
+                      Navigator.pushNamed(context, routesNavigator.loginScreen);
                     },
                   )
                 ],

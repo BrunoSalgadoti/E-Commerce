@@ -1,3 +1,4 @@
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/views/policy_and_documents.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +24,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
   @override
   Widget build(BuildContext context) {
     goToPage(String arguments) =>
-        Navigator.pushNamed(context, "/privacy_policy", arguments: arguments);
+        Navigator.pushNamed(context, routesNavigator.privacyAndPolicyScreen);
 
     return Row(
       children: [

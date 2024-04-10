@@ -2,6 +2,7 @@ import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/common/miscellaneous/freight_logo.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/cart_product.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class CartTile extends StatelessWidget {
       value: cartProduct,
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, "/product", arguments: cartProduct?.product);
+          Navigator.pushNamed(context, routesNavigator.productDetailsScreen, arguments: cartProduct?.product);
         },
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),

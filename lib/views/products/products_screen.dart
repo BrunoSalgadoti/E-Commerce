@@ -7,6 +7,7 @@ import 'package:brn_ecommerce/common/sliding_up_panel/components/filters_result.
 import 'package:brn_ecommerce/common/sliding_up_panel/components/sliding_filters_products.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/custom_sliding_up_painel.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:flutter/material.dart';
@@ -103,7 +104,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 return IconButton(
                   icon: const Icon(Icons.add),
                   onPressed: () {
-                    Navigator.pushNamed(context, "/edit_product");
+                    Navigator.pushNamed(context, routesNavigator.editProductScreen);
                   },
                 );
               } else {
@@ -183,9 +184,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
           foregroundColor: Theme.of(context).primaryColor,
           onPressed: () {
             if (userManager.isLoggedIn) {
-              Navigator.pushNamed(context, "/cart");
+              Navigator.pushNamed(context, routesNavigator.cartScreen);
             } else {
-              Navigator.pushNamed(context, "/login");
+              Navigator.pushNamed(context, routesNavigator.loginScreen);
             }
           },
           child: userManager.isLoggedIn

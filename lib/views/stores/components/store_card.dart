@@ -1,6 +1,7 @@
 import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/miscellaneous/communications_utils.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:brn_ecommerce/models/views/stores.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,7 @@ class StoreCard extends StatelessWidget {
                             size: 40,
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, "/edit_stores", arguments: store);
+                            Navigator.pushNamed(context, routesNavigator.editStoresScreen, arguments: store);
                           },
                         );
                       } else {

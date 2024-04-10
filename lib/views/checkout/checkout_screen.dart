@@ -1,6 +1,7 @@
 import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/common/cards/price_card.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:brn_ecommerce/models/sales/checkout_manager.dart';
 import 'package:brn_ecommerce/views/checkout/components/credit_card_widget.dart';
@@ -111,11 +112,11 @@ class CheckoutScreen extends StatelessWidget {
                                   CustomScaffoldMessenger(context: context, message: '$error')
                                       .alertScaffold();
                                   Navigator.popUntil(
-                                      context, (route) => route.settings.name == "/cart");
+                                      context, (route) => route.settings.name == routesNavigator.cartScreen);
                                 }, onSuccess: (order) {
                                   Navigator.popUntil(
-                                      context, (route) => route.settings.name == "/product");
-                                  Navigator.pushReplacementNamed(context, "/sales_confirmation",
+                                      context, (route) => route.settings.name == routesNavigator.productDetailsScreen);
+                                  Navigator.pushReplacementNamed(context, routesNavigator.salesConfirmationScreen,
                                       arguments: order);
                                 });
                               }

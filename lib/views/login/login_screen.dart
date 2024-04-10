@@ -3,6 +3,7 @@ import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/common/buttons/custom_text_button_styles.dart';
 import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/models/users/users.dart';
@@ -97,7 +98,7 @@ class LoginScreen extends StatelessWidget {
                       alignment: Alignment.center,
                       child: MaterialButton(
                         onPressed: () {
-                          Navigator.pushReplacementNamed(context, "/signup");
+                          Navigator.pushReplacementNamed(context, routesNavigator.signupScreen);
                         },
                         child: Text(
                           'Não tem conta? Cadastre-se!',

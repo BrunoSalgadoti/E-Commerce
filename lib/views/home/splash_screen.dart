@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
         autoStart: kIsWeb ? false : true,
       );
       Timer(const Duration(seconds: 6), () {
-        Navigator.pushReplacementNamed(context, "/home");
+        Navigator.pushReplacementNamed(context, routesNavigator.homeScreen);
       });
     }
   }
