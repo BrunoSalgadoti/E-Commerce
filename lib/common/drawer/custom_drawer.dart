@@ -18,6 +18,7 @@ class CustomDrawer extends StatelessWidget {
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width / 1.8),
       child: Drawer(
+        semanticLabel: "Menu de opções",
         child: Padding(
           padding: const EdgeInsets.only(right: 8.0),
           child: Stack(

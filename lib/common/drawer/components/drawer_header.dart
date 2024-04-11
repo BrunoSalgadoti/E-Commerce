@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
 import 'package:brn_ecommerce/models/admin_area/configs/admin_images_controller.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
-import 'package:brn_ecommerce/models/views/page_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +18,7 @@ class CustomDrawerHeader extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.fromLTRB(15, 10, 15, 8),
         height: 200,
-        child: Consumer<UserManager>(builder: (_, userManager, __) {
+        child: Consumer2<UserManager, PageManager>(builder: (_, userManager, pageManager, __) {
           return ListView(
             children: [
               Column(
@@ -35,13 +35,12 @@ class CustomDrawerHeader extends StatelessWidget {
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     InkWell(
-                      child: Image.asset(
-                        const AdminAssetsController().storeLogo!,
-                        height: 90,
-                        fit: BoxFit.scaleDown,
-                      ),
-                      onTap: () =>  context.read<PageManager>().setPage(0)
-                    ),
+                        child: Image.asset(
+                          const AdminAssetsController().storeLogo!,
+                          height: 90,
+                          fit: BoxFit.scaleDown,
+                        ),
+                        onTap: () => pageManager.setPage(0)),
                   ] else
                     const AutoSizeText(
                       overflow: TextOverflow.ellipsis,
@@ -64,7 +63,7 @@ class CustomDrawerHeader extends StatelessWidget {
                     onTap: () {
                       if (userManager.isLoggedIn) {
                         userManager.signOut();
-                        context.read<PageManager>().setPage(0);
+                        pageManager.setPage(0);
                       } else {
                         Navigator.pushNamed(context, routesNavigator.loginScreen);
                       }

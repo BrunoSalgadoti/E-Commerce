@@ -1,5 +1,5 @@
+import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
-import 'package:brn_ecommerce/models/views/page_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,39 +16,37 @@ class DrawerTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int currentPage = context.watch<PageManager>().page;
-
-    return InkWell(
-      onTap: () {
-        context.read<PageManager>().setPage(page!);
-      },
-      child: SizedBox(
-        height: 60,
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Icon(
-                iconData!,
-                size: 32,
-                color: currentPage == page ? getEspecialColor() : Colors.grey[700],
-              ),
-            ),
-            Flexible(
-              fit: FlexFit.loose,
-              child: Text(
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                title!,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: currentPage == page ? getEspecialColor() : Colors.grey[700],
+    return Consumer<PageManager>(builder: (_, pageManager, __) {
+      return InkWell(
+        onTap: () => pageManager.setPage(page!),
+        child: SizedBox(
+          height: 60,
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: Icon(
+                  iconData!,
+                  size: 32,
+                  color: pageManager.page == page ? getEspecialColor() : Colors.grey[700],
                 ),
               ),
-            )
-          ],
+              Flexible(
+                fit: FlexFit.loose,
+                child: Text(
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  title!,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: pageManager.page == page ? getEspecialColor() : Colors.grey[700],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

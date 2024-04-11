@@ -112,7 +112,6 @@ flutter:
     - lib/helpers/themes/
     - lib/helpers/themes/factory_colors/
     - lib/views/
-    - lib/views/base/
     - lib/views/cart/
     - lib/views/cart/components/
     - lib/views/home/
