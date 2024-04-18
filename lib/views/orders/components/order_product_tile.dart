@@ -1,8 +1,7 @@
+import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/cart_product.dart';
 import 'package:flutter/material.dart';
-
-import '../../../common/formatted_fields/format_values.dart';
 
 class OrderProductTile extends StatelessWidget {
   const OrderProductTile(
@@ -21,103 +20,98 @@ class OrderProductTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (!imageNotAvailable) {
-          Navigator.pushNamed(context, routesNavigator.productDetailsScreen, arguments: cartProduct?.product);
+          Navigator.pushNamed(context, routesNavigator.productDetailsScreen,
+              arguments: cartProduct?.product);
         }
       },
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-        padding: const EdgeInsets.all(8),
-        child: Row(
-          children: [
-            SizedBox(
-              height: 100,
-              width: 100,
-              child: imageNotAvailable
-                  ? Image.asset(
-                      'assets/images/noImage.png',
-                      fit: BoxFit.cover,
-                    )
-                  : Image.network(
-                      cartProduct!.product!.images!.first,
-                      fit: BoxFit.cover,
+      child: LayoutBuilder(builder: (context, constraints) {
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 7, vertical: 7),
+          padding: const EdgeInsets.all(8),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              imageNotAvailable
+                  ? FittedBox(
+                      child: Image.asset('assets/images/noImage.png',
+                          height: constraints.maxWidth > 300 ? 100 : constraints.maxWidth * 0.22,
+                          width: constraints.maxWidth > 300 ? 150 : constraints.maxWidth * 0.25,
+                          fit: BoxFit.fill))
+                  : FittedBox(
+                      child: Image.network(cartProduct!.product!.images!.first,
+                          height: constraints.maxWidth > 300 ? 100 : constraints.maxWidth * 0.22,
+                          width: constraints.maxWidth > 300 ? 150 : constraints.maxWidth * 0.25,
+                          fit: BoxFit.fill)),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      cartProduct?.product?.name ?? 'Produto indisponível',
+                      style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                     ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    cartProduct?.product?.name ?? 'Produto indisponível',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: Text(
-                      'Tamanho: ${cartProduct?.size ?? 'Tamanho não encontrado'}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w300,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      child: Text(
+                        'Tamanho: ${cartProduct?.size ?? 'Tamanho não encontrado'}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w300,
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
+                    Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           cartProduct!.realColorFromCart == Colors.transparent
-                              ? const Text('Cor: Cor da foto')
-                              : const Text('Cor: '),
-                          Container(
-                            width: 60,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: cartProduct!.realColorFromCart == Colors.transparent
-                                      ? Colors.grey.withOpacity(0.0)
-                                      : Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 4,
-                                  offset: const Offset(0, 2),
+                              ? const Flexible(child: Text(maxLines: 2, 'Cor: Cor da foto'))
+                              : const Flexible(
+                                  child: Text('Cor:  '),
                                 ),
-                              ],
-                            ),
+                          Flexible(
                             child: Container(
-                              color: cartProduct?.realColorFromCart ?? Colors.transparent,
+                              width: 60,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: cartProduct!.realColorFromCart == Colors.transparent
+                                          ? Colors.grey.withOpacity(0.0)
+                                          : Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 2,
+                                      blurRadius: 4,
+                                      offset: const Offset(0, 2)),
+                                ],
+                              ),
+                              child: Container(
+                                  color: cartProduct?.realColorFromCart ?? Colors.transparent),
                             ),
                           ),
                         ],
-                      )),
-                  Text(
-                    formattedRealText(fixedOrUnityPrice),
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-            Column(
-              children: [
-                Text(
-                  '${cartProduct?.quantity}',
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Text(formattedRealText(fixedOrUnityPrice),
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold)),
+                  ],
                 ),
-                const Text(
-                  'QTD.',
-                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-                )
-              ],
-            )
-          ],
-        ),
-      ),
+              ),
+              Column(
+                children: [
+                  Text('${cartProduct?.quantity}',
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  const Text('Qtd.', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold))
+                ],
+              )
+            ],
+          ),
+        );
+      }),
     );
   }
 }
