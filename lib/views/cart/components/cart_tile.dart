@@ -25,7 +25,8 @@ class CartTile extends StatelessWidget {
       value: cartProduct,
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, routesNavigator.productDetailsScreen, arguments: cartProduct?.product);
+          Navigator.pushNamed(context, routesNavigator.productDetailsScreen,
+              arguments: cartProduct?.product);
         },
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -203,7 +204,8 @@ class CartTile extends StatelessWidget {
                                   : cartProduct.decrement,
                               color: cartProduct.quantity! > 1
                                   ? Theme.of(context).primaryColor
-                                  : Colors.red, semanticLabel: 'Excluir Item',
+                                  : Colors.red,
+                              semanticLabel: 'Excluir Item',
                             ),
                           ],
                         );

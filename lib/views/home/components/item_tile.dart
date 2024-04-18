@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
+import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
@@ -12,8 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-import '../../../common/formatted_fields/format_values.dart';
-
 class ItemTile extends StatelessWidget {
   const ItemTile({super.key, this.item});
 
@@ -24,14 +23,15 @@ class ItemTile extends StatelessWidget {
     final homeManager = context.watch<HomeManager>();
     final product =
         context.read<ProductManager>().findProductById(item?.product != null ? item!.product! : '');
-    // Functions to remove context from async methods
-    void backScreen() =>   Navigator.of(context).pop();
+    // Function to remove context from async methods
+    void backScreen() => Navigator.of(context).pop();
 
     return GestureDetector(
         onTap: () {
           if (item?.product != null) {
             if (product != null && product.isValid!) {
-              Navigator.pushNamed(context, routesNavigator.productDetailsScreen, arguments: product);
+              Navigator.pushNamed(context, routesNavigator.productDetailsScreen,
+                  arguments: product);
             }
           }
         },
@@ -72,7 +72,7 @@ class ItemTile extends StatelessWidget {
                               elevation: 0,
                               onPressed: () {
                                 context.read<Section>().removeItem(item!);
-                                Navigator.of(context).pop();
+                                backScreen();
                               }),
                           CustomButton(
                               text: product != null ? 'Desvincular' : 'Vincular',
@@ -84,7 +84,7 @@ class ItemTile extends StatelessWidget {
                               onPressed: () async {
                                 if (product != null) {
                                   item?.product = null;
-                                  Navigator.of(context).pop();
+                                  backScreen();
                                 } else {
                                   final Product product = await Navigator.pushNamed(
                                       context, routesNavigator.selectProductScreen,
@@ -100,7 +100,7 @@ class ItemTile extends StatelessWidget {
                               buttonColor: Colors.transparent,
                               textColor: Colors.blue,
                               elevation: 0,
-                              onPressed: () => Navigator.of(context).pop())
+                              onPressed: () => backScreen())
                         ]),
                   )
                 ],

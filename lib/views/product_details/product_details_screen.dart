@@ -39,11 +39,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   void updateSelectedSizeIndex(int index) {
     final detailsProducts = context.read<DetailsProducts>();
     final selectedSize = widget.product!.itemProducts![index];
@@ -85,7 +80,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   child: IconButton(
                       icon: const Icon(Icons.share_outlined),
                       onPressed: () {
-                        Navigator.pushNamed(context, routesNavigator.shareProductScreen, arguments: widget.product);
+                        Navigator.pushNamed(context, routesNavigator.shareProductScreen,
+                            arguments: widget.product);
                       }),
                 ),
               const SizedBox(width: 16),
@@ -258,9 +254,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                             context
                                                 .read<CartManager>()
                                                 .addToCart(product, detailsProducts);
-                                            Navigator.pushNamed(context, routesNavigator.cartScreen);
+                                            Navigator.pushNamed(
+                                                context, routesNavigator.cartScreen);
                                           } else {
-                                            Navigator.pushNamed(context, routesNavigator.loginScreen);
+                                            Navigator.pushNamed(
+                                                context, routesNavigator.loginScreen);
                                           }
                                         }
                                       : null,
@@ -283,5 +281,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   },
                 )),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

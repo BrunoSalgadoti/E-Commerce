@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:brn_ecommerce/common/messengers/components/text_of_alerts_and_messengers.dart';
 import 'package:flutter/material.dart';
 
 /// # Widget for displaying an empty page indicator with alternating content (Folder: common/miscellaneous)
@@ -137,8 +138,7 @@ class EmptyPageIndicatorState extends State<EmptyPageIndicator> {
                   color: widget.iconColor ?? Colors.white,
                 ),
                 Text(
-                  'Verifique a sua conexão com a internet!\n'
-                  'Se o erro persistir entre em contato com a Loja',
+                  alertsMessengersText.erroEmptyPageIndicator,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

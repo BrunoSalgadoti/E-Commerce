@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
+import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category.dart';
@@ -33,6 +34,7 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
     final Color backgroundColor = widget.productCategory!.categoryRealColor!;
     final Color textColor = getTextColorBasedOnBackground(backgroundColor);
     Color? selectedColor;
+    //Functions created to remove context to the async methods
     void backScreen() => Navigator.of(context).pop();
 
     void showColorPicker() {
@@ -79,7 +81,7 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
           return Image.network(widget.productCategory!.categoryImg!, fit: BoxFit.cover);
         }
       } else {
-        return Image.asset('assets/images/CategoriesBackground.jpg', fit: BoxFit.cover);
+        return Image.asset(rootAssets.infoMarqueeBackgroundJpg, fit: BoxFit.cover);
       }
     }
 

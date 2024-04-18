@@ -9,18 +9,26 @@ Widget customSlidingUpPainel({
   required Widget? childrenOfPainel,
   required Color? slidingTitleColor,
   required String? textOfSlidingUpPanel,
+  List<BoxShadow>? boxShadow,
+  double? borderRadiosBottomLeft,
+  double? borderRadiosBottomRight,
+  double? borderRadiosTopLeft,
+  double? borderRadiosTopRight,
 }) {
   return SlidingUpPanel(
       controller: controlsSlidingPanel.panelController,
-      boxShadow: const [
-        BoxShadow(
-          blurRadius: 2.8,
-          color: Color.fromRGBO(0, 0, 0, 20),
-        )
-      ],
-      borderRadius: const BorderRadius.only(
-        bottomLeft: Radius.circular(10),
-        bottomRight: Radius.circular(10),
+      boxShadow: boxShadow ??
+          const [
+            BoxShadow(
+              blurRadius: 2.8,
+              color: Color.fromRGBO(0, 0, 0, 20),
+            )
+          ],
+      borderRadius: BorderRadius.only(
+        bottomLeft: Radius.circular(borderRadiosBottomLeft ?? 10),
+        bottomRight: Radius.circular(borderRadiosBottomRight ?? 10),
+        topLeft: Radius.circular(borderRadiosTopLeft ?? 0),
+        topRight: Radius.circular(borderRadiosTopRight ?? 0),
       ),
       minHeight: 35,
       maxHeight: MediaQuery.of(context).size.height / 2 < 300 ? 180 : 340,

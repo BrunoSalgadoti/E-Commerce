@@ -61,7 +61,8 @@ class StoreCard extends StatelessWidget {
                             size: 40,
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, routesNavigator.editStoresScreen, arguments: store);
+                            Navigator.pushNamed(context, routesNavigator.editStoresScreen,
+                                arguments: store);
                           },
                         );
                       } else {
@@ -123,7 +124,7 @@ class StoreCard extends StatelessWidget {
                               CommunicationsUtils(parameterClass1Of2: store)
                                   .alertForMaps(context, '');
                             },
-                          semanticLabel: 'Abrir mapas'),
+                            semanticLabel: 'Abrir mapas'),
                         CustomIconButton(
                             iconData: Icons.phone,
                             color: primaryColor,
@@ -137,7 +138,7 @@ class StoreCard extends StatelessWidget {
                                 '${formattedPhoneNumber(store.phoneNumberStore)}',
                               );
                             },
-                          semanticLabel: 'Abrir telefone'),
+                            semanticLabel: 'Abrir telefone'),
                         CustomIconButton(
                             iconData: Icons.email_outlined,
                             color: primaryColor,
@@ -149,7 +150,8 @@ class StoreCard extends StatelessWidget {
                                 'Este dispositivo não suporta esta função!\n'
                                 'O E-mail da Loja é : ${store.emailStore}',
                               );
-                            }, semanticLabel: 'Abrir e-mail'),
+                            },
+                            semanticLabel: 'Abrir e-mail'),
                       ],
                     ),
                   ),

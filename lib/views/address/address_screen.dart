@@ -24,9 +24,9 @@ class AddressScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Functions to remove context from async methods
     goToScreen() => Navigator.pushNamed(context, routesNavigator.checkoutScreen);
-    backScreen() =>   Navigator.of(context).pop();
+    backScreen() => Navigator.of(context).pop();
     alertPolicyAndTerms() => CustomScaffoldMessenger(
-            context: context, message: AlertsMessengersText.policyAndTermsConfirmation)
+            context: context, message: alertsMessengersText.policyAndTermsConfirmation)
         .alertScaffold();
 
     return LayoutBuilder(builder: (context, constraints) {
@@ -50,7 +50,7 @@ class AddressScreen extends StatelessWidget {
                           userManager.users!.policyAndTerms == null) {
                         CustomAlertDialogAdaptive(
                           titleText: 'A T E N Ç Ã O!',
-                          bodyText: AlertsMessengersText.policyAndTermsUnchecked,
+                          bodyText: alertsMessengersText.policyAndTermsUnchecked,
                           actions: [
                             const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -99,7 +99,7 @@ class AddressScreen extends StatelessWidget {
                       if (!versionManager.compatibleVersion) {
                         CustomAlertDialogAdaptive(
                           titleText: 'Atualização necessária!',
-                          bodyText: AlertsMessengersText.appUpdateRequired,
+                          bodyText: alertsMessengersText.appUpdateRequired,
                           actions: [
                             CustomButton(
                               text: 'Atualizar',

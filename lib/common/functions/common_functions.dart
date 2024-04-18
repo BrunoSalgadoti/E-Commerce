@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 
-void backScreenPop({required BuildContext context}) => Navigator.pop(context);
-
 /// # Utility functions and methods (Folder: common/functions)
 /// ## getColorFromString
 /// Converts a hexadecimal color string to a Color object.
@@ -97,8 +95,7 @@ Future<void> sendEmailNotification({
   required String subject, // Subject as parameter
   required String messageText, // Message as a parameter
 }) async {
-  final smtpServer =
-      gmail('suporte@brninfodev.com', 'sua-senha'); // Replace with Firebase SMTP credentials
+  final smtpServer = gmail('suporte@brninfodev.com', 'sua-senha'); // Replace with Firebase SMTP credentials
 
   final message = Message()
     ..from = const Address('seu-email@gmail.com', 'Seu Nome') // Your email address and name
@@ -151,7 +148,7 @@ Future<void> reportNoFatalErrorToCrashlytics(
 ///
 /// Returns a [Widget] representing the custom progress indicator based on the provided parameters.
 
-//TODO: Implementar testar e Substituir outros indicators
+//TODO: customProgressIndicator - Implementar testar e Substituir outros indicators
 Widget customProgressIndicator(
     {Color? color,
     double? strokeWidth,

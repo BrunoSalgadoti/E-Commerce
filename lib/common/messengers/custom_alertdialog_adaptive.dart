@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 /// This class provides a consistent way to create alert dialogs that are visually
 /// adapted for both Android and iOS platforms.
 class CustomAlertDialogAdaptive {
-
   final String? titleText;
   final String? bodyText;
   final List<Widget> actions;
@@ -75,8 +74,8 @@ class CustomAlertDialogAdaptive {
   ///
   /// Returns an adaptive action widget based on the platform (TextButton for Android and CupertinoDialogAction for iOS).
   //TODO: Verificar uso...
-  Widget adaptiveAction({required BuildContext context, required VoidCallback onPressed,
-    required Widget child}) {
+  Widget adaptiveAction(
+      {required BuildContext context, required VoidCallback onPressed, required Widget child}) {
     final ThemeData theme = Theme.of(context);
 
     switch (theme.platform) {

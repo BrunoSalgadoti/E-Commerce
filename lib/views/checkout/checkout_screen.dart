@@ -111,12 +111,16 @@ class CheckoutScreen extends StatelessWidget {
                                 checkoutManager.checkout(onStockFail: (error) {
                                   CustomScaffoldMessenger(context: context, message: '$error')
                                       .alertScaffold();
-                                  Navigator.popUntil(
-                                      context, (route) => route.settings.name == routesNavigator.cartScreen);
+                                  Navigator.popUntil(context,
+                                      (route) => route.settings.name == routesNavigator.cartScreen);
                                 }, onSuccess: (order) {
                                   Navigator.popUntil(
-                                      context, (route) => route.settings.name == routesNavigator.productDetailsScreen);
-                                  Navigator.pushReplacementNamed(context, routesNavigator.salesConfirmationScreen,
+                                      context,
+                                      (route) =>
+                                          route.settings.name ==
+                                          routesNavigator.productDetailsScreen);
+                                  Navigator.pushReplacementNamed(
+                                      context, routesNavigator.salesConfirmationScreen,
                                       arguments: order);
                                 });
                               }

@@ -91,13 +91,11 @@ class SectionHeader extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: DecoratedGoogleFontText(
           section.name!,
-          fontMethod: GoogleFonts.mohave,
-          // .satisfy,
-          fillColor: Colors.black,
+          fontMethod: GoogleFonts.bungeeSpice,
+          fillColor: Colors.transparent,
           fontSize: 22,
           fontWeight: FontWeight.w800,
           borderWidth: 0.8,
-          borderColor: Theme.of(context).primaryColor,
         ),
       );
     }

@@ -34,8 +34,8 @@ class CategoriesScreen extends StatelessWidget {
                         onTap: () {
                           userManager.editingCategories = true;
                         },
-                  semanticLabel: 'Editar categorias',
-                )
+                        semanticLabel: 'Editar categorias',
+                      )
                     : userManager.adminEnable && userManager.editingCategories == true
                         ? CustomIconButton(
                             padding: const EdgeInsets.only(right: 15, left: 15),
@@ -68,7 +68,7 @@ class CategoriesScreen extends StatelessWidget {
                                 }
                               });
                             },
-                  semanticLabel: 'Salvar categorias',
+                            semanticLabel: 'Salvar categorias',
                           )
                         : const SizedBox(width: 25),
               ],
@@ -101,8 +101,9 @@ class CategoriesScreen extends StatelessWidget {
                                 userManager.adminEnable, userManager.editingCategories)[index];
                             return GestureDetector(
                               onTap: () {
-                                Navigator.of(context)
-                                    .pushNamed(routesNavigator.categoryProductsScreen, arguments: category);
+                                Navigator.of(context).pushNamed(
+                                    routesNavigator.categoryProductsScreen,
+                                    arguments: category);
                               },
                               child: MainCategoriesCard(productCategory: category),
                             );

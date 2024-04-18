@@ -20,6 +20,7 @@ class StoreImageWidget extends StatelessWidget {
     final storeImage = store.imageStore != null && store.imageStore != ""
         ? Image.network(store.imageStore!, fit: BoxFit.cover)
         : Image.asset('assets/images/noImage.png', fit: BoxFit.cover);
+    // Functions to remove context from async methods
     backScreen() => Navigator.of(context).pop();
 
     void onImageSelected(File file) {
@@ -66,40 +67,40 @@ class StoreImageWidget extends StatelessWidget {
         Align(
             alignment: Alignment.topLeft,
             child: CustomIconButton(
-              onTap: () async {
-                if (kIsWeb) {
-                  showDialog(
-                      context: context,
-                      builder: (context) => ImageSourceWeb(
-                            onImageSelectedWeb: onImageSelectedWeb,
-                          ));
-                } else if (Platform.isAndroid) {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (context) => ImageSourceSheet(
-                            onImageSelected: onImageSelected,
-                            onImageSelectedList: onImageSelectedList,
-                          ));
-                } else if (Platform.isIOS) {
-                  showCupertinoModalPopup(
-                      context: context,
-                      builder: (context) => ImageSourceSheet(
-                            onImageSelected: onImageSelected,
-                            onImageSelectedList: onImageSelectedList,
-                          ));
-                } else {
-                  showDialog(
-                      context: context,
-                      builder: (context) => ImageSourceSheet(
-                            onImageSelected: onImageSelected,
-                            onImageSelectedList: onImageSelectedList,
-                          ));
-                }
-              },
-              iconData: Icons.change_circle_outlined,
-              color: Colors.blue,
-              size: 45,
-              semanticLabel: 'Substituir imagem da loja')),
+                onTap: () async {
+                  if (kIsWeb) {
+                    showDialog(
+                        context: context,
+                        builder: (context) => ImageSourceWeb(
+                              onImageSelectedWeb: onImageSelectedWeb,
+                            ));
+                  } else if (Platform.isAndroid) {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) => ImageSourceSheet(
+                              onImageSelected: onImageSelected,
+                              onImageSelectedList: onImageSelectedList,
+                            ));
+                  } else if (Platform.isIOS) {
+                    showCupertinoModalPopup(
+                        context: context,
+                        builder: (context) => ImageSourceSheet(
+                              onImageSelected: onImageSelected,
+                              onImageSelectedList: onImageSelectedList,
+                            ));
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (context) => ImageSourceSheet(
+                              onImageSelected: onImageSelected,
+                              onImageSelectedList: onImageSelectedList,
+                            ));
+                  }
+                },
+                iconData: Icons.change_circle_outlined,
+                color: Colors.blue,
+                size: 45,
+                semanticLabel: 'Substituir imagem da loja')),
       ],
     );
   }

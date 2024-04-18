@@ -1,7 +1,7 @@
 import 'package:brn_ecommerce/common/cards/flexible_product_card.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
-import 'package:brn_ecommerce/common/messengers/search_dialog.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
+import 'package:brn_ecommerce/common/search/search_products.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/controller.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/filters_result.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/sliding_filters_products.dart';
@@ -39,81 +39,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
     return Scaffold(
       drawer: const CustomDrawer(),
-      appBar: AppBar(
-        toolbarHeight: 40,
-        title: Consumer<ProductManager>(
-          builder: (_, productManager, __) {
-            if (productManager.search.isEmpty) {
-              return productManager.filtersOn == true
-                  ? const Text("Filtro Ativo!")
-                  : const Text("Todos os Produtos");
-            } else {
-              return GestureDetector(
-                onTap: () async {
-                  final search = await showDialog<String>(
-                      context: context,
-                      builder: (_) => SearchDialog(
-                            initialText: productManager.search,
-                            hintText: "Pesquise o produto desejado...",
-                          ));
-                  if (search != null) {
-                    productManager.search = search;
-                  }
-                },
-                child: Container(
-                    color: const Color.fromARGB(16, 255, 255, 255),
-                    child: Text(
-                      productManager.search,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    )),
-              );
-            }
-          },
-        ),
-        centerTitle: true,
-        actions: [
-          Consumer<ProductManager>(
-            builder: (_, productManager, __) {
-              if (productManager.search.isEmpty) {
-                return IconButton(
-                    onPressed: () async {
-                      final search = await showDialog<String>(
-                          context: context,
-                          builder: (_) => SearchDialog(
-                                initialText: productManager.search,
-                                hintText: "Pesquise o produto desejado",
-                              ));
-                      if (search != null) {
-                        productManager.search = search;
-                      }
-                    },
-                    icon: const Icon(Icons.search));
-              } else {
-                return IconButton(
-                    onPressed: () async {
-                      productManager.search = '';
-                    },
-                    icon: const Icon(Icons.close));
-              }
-            },
-          ),
-          Consumer<UserManager>(
-            builder: (_, userManager, __) {
-              if (userManager.adminEnable) {
-                return IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
-                    Navigator.pushNamed(context, routesNavigator.editProductScreen);
-                  },
-                );
-              } else {
-                return Container();
-              }
-            },
-          )
-        ],
-      ),
+      appBar: searchProducts(context: context),
       body: Consumer<ProductManager>(builder: (_, productManager, __) {
         final filteredProducts = productManager.filteredProducts;
         return Align(

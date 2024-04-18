@@ -49,8 +49,7 @@ class PriceCard extends StatelessWidget {
                       iconData: Icons.add_shopping_cart_rounded,
                       padding: EdgeInsets.zero,
                       semanticLabel: 'Voltar \n ao carrinho',
-                      onTap: () =>
-                          Navigator.popUntil(context, (route) => route.settings.name == routesNavigator.cartScreen)),
+                      onTap: () => Navigator.pushReplacementNamed(context, routesNavigator.cartScreen)),
                 ),
               ],
             ),

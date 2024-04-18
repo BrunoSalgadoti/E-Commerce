@@ -67,7 +67,11 @@ dependencies:
   auto_size_text: ^3.0.0
   google_fonts: ^4.0.4
   decorated_text: ^0.1.0
-  #  //TODO: configurar go_router
+
+
+  #  mobx: ^2.3.3+2
+  #  flutter_mobx: ^2.2.1+1
+  #  //TODO or not TODO: configurar go_router
   #  go_router: ^7.1.1
 
 

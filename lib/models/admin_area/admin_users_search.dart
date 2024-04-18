@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
+import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:brn_ecommerce/common/miscellaneous/communications_utils.dart';
 import 'package:brn_ecommerce/models/admin_area/admin_orders_manager.dart';
 import 'package:brn_ecommerce/models/users/users.dart';
-import 'package:brn_ecommerce/models/views/page_manager.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -158,7 +158,6 @@ class AdminUsersSearch extends ChangeNotifier {
 
     for (var user in users) {
       if (user.favourite == true) {
-
         // Widget for favourite user
         favouriteList.add(
           Slidable(
@@ -248,8 +247,8 @@ class AdminUsersSearch extends ChangeNotifier {
       } else {
         normalList.add(
           // Widget for normal user
-            Slidable(
-              // Start and end action panes for sliding actions
+          Slidable(
+            // Start and end action panes for sliding actions
             startActionPane: ActionPane(
               motion: const DrawerMotion(),
               extentRatio: 0.30,
@@ -359,10 +358,12 @@ class AdminUsersSearch extends ChangeNotifier {
                 ),
                 onTap: () {
                   adminOrdersManager.setUserFilter(user);
-                  pageManager.setPage(6);
+                  pageManager.setPage(7);
                 },
               );
-            })));
+            }),
+          ),
+        );
       }
     }
   }

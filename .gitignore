@@ -51,7 +51,7 @@ app.*.map.json
 /lib/services/db_api/
 /ios/
 /android/
-/docs_ecommerce/TODO/
+/docs_ecommerce/TODO or not TODO/
 /lib/services/db_api/firebase_options.dart
 /firebase.json
 /.firebaserc
@@ -71,3 +71,4 @@ app.*.map.json
 /assets/docs/
 /docs_ecommerce/exemplos/
 /lib/generated/assets.dart
+/docs_ecommerce/TODO or not TODO/

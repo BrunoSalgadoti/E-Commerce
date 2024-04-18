@@ -1,3 +1,4 @@
+import 'package:brn_ecommerce/common/messengers/components/text_of_alerts_and_messengers.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -94,10 +95,10 @@ class CommunicationsUtils<T, U> {
         scheme: "mailto",
         path: userEmail ?? emails.toString().replaceAll(RegExp(r"[\[\]]"), ""),
         query: encodeQueryParameters(<String, String>{
-          "subject": "BRN Info_DEV",
+          "subject": alertsMessengersText.subjectOfTheEmail,
           "body": userName == null
-              ? "Olá estimado Cliente,\n Estamos Entrando em contato para:\n"
-              : "Olá $userName,\n Estamos Entrando em contato para:\n",
+              ? alertsMessengersText.bodyMessangersEmailWithowtUserName
+              : "$userName,\n ${alertsMessengersText.bodyMessangersEmailWithUserName}",
         }));
     return launchUrl(emailLaunchUri);
   }
@@ -151,28 +152,29 @@ class CommunicationsUtils<T, U> {
         context: showModalContext(),
         builder: (_) {
           return SafeArea(
-              child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              for (final map in availableMap)
-                ListTile(
-                  onTap: () {
-                    map.showMarker(
-                      coords: Coords(lat, long),
-                      title: title,
-                      description: description,
-                    );
-                    closeModal();
-                  },
-                  title: Text(map.mapName),
-                  leading: SvgPicture.asset(
-                    map.icon,
-                    width: 30,
-                    height: 30,
-                  ),
-                )
-            ],
-          ));
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for (final map in availableMap)
+                  ListTile(
+                    onTap: () {
+                      map.showMarker(
+                        coords: Coords(lat, long),
+                        title: title,
+                        description: description,
+                      );
+                      closeModal();
+                    },
+                    title: Text(map.mapName),
+                    leading: SvgPicture.asset(
+                      map.icon,
+                      width: 30,
+                      height: 30,
+                    ),
+                  )
+              ],
+            ),
+          );
         },
       );
     } catch (error) {

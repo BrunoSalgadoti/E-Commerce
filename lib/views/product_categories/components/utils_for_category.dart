@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
+import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category.dart';
@@ -108,7 +109,8 @@ class UtilsForCategory {
                         icon: const Icon(Icons.open_in_new,
                             semanticLabel: 'Visualizar Produto', size: 20, color: Colors.white),
                         onPressed: () {
-                          Navigator.pushNamed(context, routesNavigator.productDetailsScreen, arguments: product);
+                          Navigator.pushNamed(context, routesNavigator.productDetailsScreen,
+                              arguments: product);
                         })),
               ),
               Positioned(
@@ -141,7 +143,7 @@ class UtilsForCategory {
       }
     } else {
       return Image.asset(
-        'assets/images/CategoriesBackground.jpg',
+        rootAssets.infoMarqueeBackgroundJpg,
         width: double.infinity,
         height: 270,
         fit: BoxFit.cover,

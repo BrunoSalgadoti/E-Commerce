@@ -40,7 +40,6 @@ class FlexibleProductCard extends StatelessWidget {
       },
       child: product!.isValid!
           ? isVertical == true
-
               /// Widget content for vertical card
               ? Card(
                   semanticContainer: true,
@@ -159,7 +158,6 @@ class FlexibleProductCard extends StatelessWidget {
                     ),
                   ),
                 )
-
               /// Widget content for horizontal card
               : Card(
                   semanticContainer: true,

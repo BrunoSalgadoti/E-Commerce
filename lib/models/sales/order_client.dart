@@ -152,7 +152,7 @@ class OrderClient {
       case StatusOfOrders.preparing:
         return 'Em preparação';
       case StatusOfOrders.transporting:
-        return 'Encomenda em transporte';
+        return 'Em transporte';
       case StatusOfOrders.delivered:
         return 'Entregue';
       case StatusOfOrders.keepingReturn:

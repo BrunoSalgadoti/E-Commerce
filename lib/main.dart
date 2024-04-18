@@ -1,5 +1,5 @@
 import 'package:brn_ecommerce/brn_e_commerce.dart';
-import 'package:brn_ecommerce/helpers/app_providers.dart';
+import 'package:brn_ecommerce/helpers/providers_app.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/services/config/debug_mode_and_first_start.dart';
 import 'package:brn_ecommerce/services/config/firebase_automated_maps_update.dart';
@@ -57,10 +57,10 @@ Future<void> main() async {
   // screen size and font settings... (To test responsiveness)
   runApp(kDebugMode
       ? DevicePreview(
-          builder: (_) => const AppProviders(child: BrnEcommerce()),
+          builder: (_) => const ProvidersApp(child: BrnEcommerce()),
           enabled: false) // <- Change this if you won´t START...
       // ...DevicePreview for TRUE or FALSE to ENABLE or DISABLED
-      : const AppProviders(child: BrnEcommerce()));
+      : const ProvidersApp(child: BrnEcommerce()));
 
   PerformanceMonitoring().stopTrace('main');
 }

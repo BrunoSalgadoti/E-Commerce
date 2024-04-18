@@ -1,4 +1,5 @@
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
+import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
@@ -40,7 +41,7 @@ class AdvertisingCard extends StatelessWidget {
                 height: double.infinity,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/CategoriesBackground.jpg'),
+                    image: AssetImage(rootAssets.infoMarqueeBackgroundJpg),
                     fit: BoxFit.cover,
                   ),
                 ),
