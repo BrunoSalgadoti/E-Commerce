@@ -41,7 +41,7 @@ class AdvertisingCard extends StatelessWidget {
                 height: double.infinity,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(rootAssets.infoMarqueeBackgroundJpg),
+                    image: AssetImage(rootAssets.imageForEmptyBackgroundsJpg),
                     fit: BoxFit.cover,
                   ),
                 ),

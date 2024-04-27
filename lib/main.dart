@@ -58,7 +58,7 @@ Future<void> main() async {
   runApp(kDebugMode
       ? DevicePreview(
           builder: (_) => const ProvidersApp(child: BrnEcommerce()),
-          enabled: false) // <- Change this if you won´t START...
+          enabled: true) // <- Change this if you won´t START...
       // ...DevicePreview for TRUE or FALSE to ENABLE or DISABLED
       : const ProvidersApp(child: BrnEcommerce()));
 

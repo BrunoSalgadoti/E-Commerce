@@ -52,7 +52,7 @@ class ProvidersApp extends StatelessWidget {
         // Providers for App Data and Settings
         ChangeNotifierProvider(create: (_) => WhoWeAreManager()),
         ChangeNotifierProvider(create: (_) => PolicyAndDocuments()),
-        ChangeNotifierProvider(create: (_) => HomeManager(), lazy: false),
+        ChangeNotifierProvider(create: (_) => HomeManager()),
         ChangeNotifierProvider(create: (_) => VersionManager()),
         ChangeNotifierProvider(create: (_) => AdminUsersSearch()),
         ChangeNotifierProvider(create: (_) => Stores()),
@@ -60,12 +60,12 @@ class ProvidersApp extends StatelessWidget {
 
         // Proxy Providers for managing dependencies between providers
         ChangeNotifierProxyProvider<UserManager, ProductCategoryManager>(
-            lazy: false,
+            // lazy: false,
             create: (_) => ProductCategoryManager(),
             update: (_, userManager, productCategoryManager) =>
                 productCategoryManager!..verifyUser(userManager)),
         ChangeNotifierProxyProvider<UserManager, CartManager>(
-            lazy: false,
+            // lazy: false,
             create: (_) => CartManager(),
             update: (_, userManager, cartManager) => cartManager!..updateUser(userManager)),
         ChangeNotifierProxyProvider<UserManager, OrdersManager>(
@@ -73,7 +73,7 @@ class ProvidersApp extends StatelessWidget {
             update: (_, userManager, ordersManager) =>
                 ordersManager!..updateUser(userManager.users ?? Users(email: ""))),
         ChangeNotifierProxyProvider<UserManager, AdminUsersManager>(
-            lazy: false,
+            // lazy: false,
             create: (_) => AdminUsersManager(),
             update: (_, userManager, adminUsersManager) =>
                 adminUsersManager!..updateUser(userManager)),

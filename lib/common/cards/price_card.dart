@@ -36,7 +36,7 @@ class PriceCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(40, 30, 40, 16),
+        padding: const EdgeInsets.fromLTRB(15, 30, 15, 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

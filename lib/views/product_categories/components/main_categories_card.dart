@@ -81,7 +81,7 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
           return Image.network(widget.productCategory!.categoryImg!, fit: BoxFit.cover);
         }
       } else {
-        return Image.asset(rootAssets.infoMarqueeBackgroundJpg, fit: BoxFit.cover);
+        return Image.asset(rootAssets.imageForEmptyBackgroundsJpg, fit: BoxFit.cover);
       }
     }
 

@@ -143,7 +143,7 @@ class UtilsForCategory {
       }
     } else {
       return Image.asset(
-        rootAssets.infoMarqueeBackgroundJpg,
+        rootAssets.imageForEmptyBackgroundsJpg,
         width: double.infinity,
         height: 270,
         fit: BoxFit.cover,
