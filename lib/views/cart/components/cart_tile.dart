@@ -29,9 +29,9 @@ class CartTile extends StatelessWidget {
               },
               child: LayoutBuilder(builder: (context, constraints) {
                 return ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 470),
+                  constraints: const BoxConstraints(maxWidth: 460),
                   child: Card(
-                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                    margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
                     semanticContainer: true,
                     clipBehavior: Clip.antiAlias,
                     elevation: 4,

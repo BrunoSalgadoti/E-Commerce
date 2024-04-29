@@ -35,215 +35,220 @@ class OrderTile extends StatelessWidget {
           child: Card(
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             child: ExpansionTile(
-                collapsedTextColor: Colors.indigoAccent,
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(formattedOrderId(orderId),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                              )),
-                          Text(clientName,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                              )),
-                          Text(formattedRealText(price),
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
-                                color: primaryColor,
-                              )),
-                          Text(formattedDateString,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
-                                color: primaryColor,
-                              )),
-                        ],
-                      ),
-                    ),
-                    Flexible(
-                      child: Text(
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        orderClient!.statusText,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: orderClient!.status == StatusOfOrders.canceled ||
-                                  orderClient!.status == StatusOfOrders.returned
-                              ? Colors.red
-                              : primaryColor,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              collapsedTextColor: Colors.indigoAccent,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Column(
-                      children: orderClient!.items!.map((e) {
-                    return OrderProductTile(e);
-                  }).toList()),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 18),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Flexible(
-                            child: Text(
-                          'Qtd. Itens: ',
-                          style: TextStyle(fontSize: 15),
-                          overflow: TextOverflow.fade,
-                        )),
-                        Flexible(
-                            child: Text(
-                          '${orderClient!.totalQuantity}',
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                        ))
+                        Text(formattedOrderId(orderId),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                            )),
+                        Text(clientName,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                            )),
+                        Text(formattedRealText(price),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                              color: primaryColor,
+                            )),
+                        Text(formattedDateString,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                              color: primaryColor,
+                            )),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  if (showControls &&
-                      orderClient!.status != StatusOfOrders.canceled &&
-                      orderClient!.status != StatusOfOrders.returned)
-                    SizedBox(
-                      height: 90,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
+                  Flexible(
+                    child: Text(
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      orderClient!.statusText,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: orderClient!.status == StatusOfOrders.canceled ||
+                                orderClient!.status == StatusOfOrders.returned
+                            ? Colors.red
+                            : primaryColor,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              children: [
+                Column(
+                    children: orderClient!.items!.map((e) {
+                  return OrderProductTile(e);
+                }).toList()),
+                Padding(
+                  padding: const EdgeInsets.only(right: 18),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Flexible(
+                          child: Text(
+                        'Qtd. Itens: ',
+                        style: TextStyle(fontSize: 15),
+                        overflow: TextOverflow.fade,
+                      )),
+                      Flexible(
+                          child: Text(
+                        '${orderClient!.totalQuantity}',
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ))
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 8),
+                if (showControls &&
+                    orderClient!.status != StatusOfOrders.canceled &&
+                    orderClient!.status != StatusOfOrders.returned)
+                  SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Modificar Status do Pedido:',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text(
-                                'Modificar Status do Pedido:',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  CustomTextButton(
-                                      text: 'Cancelar',
-                                      icon: null,
-                                      fontColor: Colors.red,
-                                      onPressed: () {
-                                        orderClient?.status = StatusOfOrders.canceled;
-                                        CustomAlertDialogAdaptive(
-                                          titleText: 'A T E N Ç Ã O!',
-                                          bodyText: orderClient!.bodyText,
-                                          titleWeight: FontWeight.normal,
-                                          actions: [
-                                            Wrap(
-                                              runSpacing: 30,
-                                              children: [
-                                                CustomTextButton(
-                                                  text: 'Sim',
-                                                  icon: null,
-                                                  fontColor: Colors.red,
-                                                  onPressed: () {
-                                                    orderClient?.cancelStatus();
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                ),
-                                                const FractionallySizedBox(widthFactor: 0.6),
-                                                CustomTextButton(
-                                                  text: 'NÃO',
-                                                  icon: null,
-                                                  fontSize: 18,
-                                                  fontColor: Colors.green,
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                )
-                                              ],
+                              CustomTextButton(
+                                  text: 'Cancelar',
+                                  icon: null,
+                                  fontColor: Colors.red,
+                                  onPressed: () {
+                                    orderClient?.status = StatusOfOrders.canceled;
+
+                                    CustomAlertDialogAdaptive(
+                                      titleText: 'A T E N Ç Ã O!',
+                                      bodyText: orderClient!.bodyText,
+                                      titleWeight: FontWeight.normal,
+                                      actions: [
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Flexible(
+                                              child: CustomTextButton(
+                                                text: 'Sim',
+                                                icon: null,
+                                                fontColor: Colors.red,
+                                                onPressed: () {
+                                                  orderClient?.cancelStatus();
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ),
+                                            Flexible(
+                                              child: CustomTextButton(
+                                                text: 'NÃO',
+                                                icon: null,
+                                                fontSize: 14,
+                                                fontColor: Colors.green,
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
                                             )
                                           ],
-                                        ).alertContent(context);
-                                      }),
-                                  Column(
-                                    children: [
-                                      Text(orderClient!.previousStatusText),
-                                      CustomTextButton(
-                                        text: null,
-                                        icon: const Icon(Icons.arrow_back),
-                                        onPressed: orderClient?.back,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Column(
-                                    children: [
-                                      Text(orderClient!.nextStatusText),
-                                      CustomTextButton(
-                                        text: null,
-                                        icon: const Icon(Icons.arrow_forward),
-                                        onPressed: verificationNextStatusText
-                                            ? () => CustomAlertDialogAdaptive(
-                                                  titleText: 'A T E N Ç Ã O!',
-                                                  bodyText: orderClient!.bodyText,
-                                                  actions: [
-                                                    Wrap(
-                                                      runSpacing: 30,
-                                                      children: [
-                                                        CustomTextButton(
-                                                          text: 'Sim',
-                                                          icon: null,
-                                                          fontColor: Colors.red,
-                                                          onPressed: () {
-                                                            orderClient?.advance!();
-                                                            Navigator.of(context).pop();
-                                                          },
-                                                        ),
-                                                        const FractionallySizedBox(
-                                                            widthFactor: 0.6),
-                                                        CustomTextButton(
-                                                          text: 'NÃO',
-                                                          icon: null,
-                                                          fontSize: 18,
-                                                          fontColor: Colors.green,
-                                                          onPressed: () {
-                                                            Navigator.of(context).pop();
-                                                          },
-                                                        )
-                                                      ],
-                                                    )
-                                                  ],
-                                                ).alertContent(context)
-                                            : orderClient?.advance,
-                                      ),
-                                    ],
-                                  ),
+                                        ),
+                                      ],
+                                    ).alertContent(context);
+                                  }),
+                              Column(
+                                children: [
+                                  Text(orderClient!.previousStatusText),
                                   CustomTextButton(
-                                    text: 'Endereço',
-                                    icon: null,
-                                    fontColor: Theme.of(context).primaryColor,
-                                    onPressed: () => ExportAddressDialog(
-                                      address: orderClient?.address,
-                                      orderClient: orderClient,
-                                    ).alertForShowAddress(context),
+                                    text: null,
+                                    icon: const Icon(Icons.arrow_back),
+                                    onPressed: orderClient?.back,
                                   ),
                                 ],
-                              )
+                              ),
+                              const SizedBox(width: 8),
+                              Column(
+                                children: [
+                                  Text(orderClient!.nextStatusText),
+                                  CustomTextButton(
+                                    text: null,
+                                    icon: const Icon(Icons.arrow_forward),
+                                    onPressed: verificationNextStatusText
+                                        ? () => CustomAlertDialogAdaptive(
+                                              titleText: 'A T E N Ç Ã O!',
+                                              bodyText: orderClient!.bodyText,
+                                              actions: [
+                                                Row(
+                                                  mainAxisSize: MainAxisSize.max,
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Flexible(
+                                                      child: CustomTextButton(
+                                                        text: 'Sim',
+                                                        icon: null,
+                                                        fontColor: Colors.red,
+                                                        onPressed: () {
+                                                          orderClient?.advance!();
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                      ),
+                                                    ),
+                                                    Flexible(
+                                                      child: CustomTextButton(
+                                                        text: 'NÃO',
+                                                        icon: null,
+                                                        fontSize: 14,
+                                                        fontColor: Colors.green,
+                                                        onPressed: () {
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                      ),
+                                                    )
+                                                  ],
+                                                )
+                                              ],
+                                            ).alertContent(context)
+                                        : orderClient?.advance,
+                                  ),
+                                ],
+                              ),
+                              CustomTextButton(
+                                text: 'Endereço',
+                                icon: null,
+                                fontColor: Theme.of(context).primaryColor,
+                                onPressed: () => ExportAddressDialog(
+                                  address: orderClient?.address,
+                                  orderClient: orderClient,
+                                ).alertForShowAddress(context),
+                              ),
                             ],
-                          )
-                        ],
-                      ),
-                    )
-                ]),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+              ],
+            ),
           ),
         ),
       ),
