@@ -1,3 +1,4 @@
+import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:flutter/material.dart';
 
 /// ## CustomScaffoldMessenger (Folder: common/messengers)
@@ -9,7 +10,6 @@ class CustomScaffoldMessenger {
   final Duration duration;
   final SnackBarBehavior behavior;
   final double borderRadius;
-  final EdgeInsetsGeometry margin;
   final TextStyle textStyle;
   final Color iconColor;
 
@@ -37,7 +37,6 @@ class CustomScaffoldMessenger {
     this.duration = const Duration(seconds: 8),
     this.behavior = SnackBarBehavior.floating,
     this.borderRadius = 10,
-    this.margin = const EdgeInsets.all(15),
     this.textStyle = const TextStyle(fontSize: 18),
     this.iconColor = Colors.yellow,
   });
@@ -49,25 +48,28 @@ class CustomScaffoldMessenger {
     if (message.isNotEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Row(
-            children: [
-              Icon(Icons.error_outline_outlined, color: iconColor, size: 34),
-              const SizedBox(width: 7),
-              Flexible(
-                child: Text(
-                  message,
-                  style: textStyle,
-                ),
-              ),
-            ],
-          ),
+          width: MediaQuery.of(context).size.width >= tabletBreakpoint ? 800 : 400,
           backgroundColor: backgroundColor,
           duration: duration,
           behavior: behavior,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
           ),
-          margin: margin,
+          content: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Row(
+              children: [
+                Icon(Icons.error_outline_outlined, color: iconColor, size: 34),
+                const SizedBox(width: 7),
+                Flexible(
+                  child: Text(
+                    message,
+                    style: textStyle,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       );
     }

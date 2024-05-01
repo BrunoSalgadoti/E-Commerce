@@ -88,7 +88,6 @@ class CartScreen extends StatelessWidget {
                             context.read<PageManager>().setPage(1);
                             Navigator.of(context).pop();
                           },
-                          //TODO: Parei aqui 30-04-2024
                           marqueeSpeed: MediaQuery.of(context).size.width >= 900 ? 24 : 22,
                           marqueeStart: MediaQuery.of(context).size.width >= 900 ? 1.0 : 1.7,
                           marqueeEnd: MediaQuery.of(context).size.width >= 900 ? -1.0 : -1.5,
