@@ -6,7 +6,7 @@ description: Loja Virtual pertencente a empresa - BRN Info_Dev (CNPJ. 52.129.576
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.6+01
+version: 1.0.6+02
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
@@ -20,7 +20,7 @@ dependencies:
     # 1.14.3 depends of  intl ^0.19.0
   brasil_fields: ^1.14.1
   carousel_slider: ^4.2.1
-  cloud_firestore: ^4.17.1
+  cloud_firestore: ^4.17.2
   collection: ^1.18.0
   credit_card_type_detector: ^3.0.0
   cupertino_icons: ^1.0.8
@@ -28,13 +28,13 @@ dependencies:
   decorated_text: ^0.1.0
   dio: ^5.4.3+1
   fan_carousel_image_slider: ^0.1.2
-  firebase_analytics: ^10.10.3
-  firebase_auth: ^4.19.3
+  firebase_analytics: ^10.10.4
+  firebase_auth: ^4.19.4
   firebase_core: ^2.30.1
-  firebase_crashlytics: ^3.5.3
-  firebase_performance: ^0.9.4+3
-  firebase_remote_config: ^4.4.3
-  firebase_storage: ^11.7.3
+  firebase_crashlytics: ^3.5.4
+  firebase_performance: ^0.9.4+4
+  firebase_remote_config: ^4.4.4
+  firebase_storage: ^11.7.4
   flip_card: ^0.7.0
   flutter_colorpicker: ^1.0.3
     # 6.2.0 depends of HTTP 1.0
@@ -74,11 +74,12 @@ dependencies:
   url_strategy: ^0.2.0
     # 4.4.0 depends of assets_audio_player ^3.1.1 no existe
   uuid: ^3.0.7
+  # 4.4.0 depends of http ^1.2.1
   youtube_player_iframe: ^4.0.4
 
       #  //TODO: Verificação de dependencias
   #  youtube_player_iframe_web: ^3.0.1   # depends on HTTP 1.2.1
-  #  mobx: ^2.3.3+2
+  mobx: ^2.3.3+2
   #  flutter_mobx: ^2.2.1+1
        #  //TODO: configurar go_router
   #  go_router: ^7.1.1

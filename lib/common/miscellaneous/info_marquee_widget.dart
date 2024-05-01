@@ -1,46 +1,22 @@
-import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
 import 'package:decorated_text/decorated_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// # Widget that displays an animated, clickable text marquee to display information in...
-/// an eye-catching way. (Folder: common/miscellaneous)
-///
-/// Used to highlight important information in the application.
-///
-/// ## InfoMarqueeWidget
-///
-/// [Parameters] :
-/// - [text] : Text to be displayed on the sign.
-/// - [color] : Background color of the sign.
-/// - [glowColor] : Animated glow color of the sign.
-/// - [fontColor] : Color of the text on the sign.
-/// - [borderRadius] : Marquee corner radius (optional, default is 20.0).
-/// - [fontSize] : Text font size (optional, default is 16.0).
-/// - [fontWeight] : Font weight of the text (optional, default is FontWeight.normal).
-/// - [onPressed] : Callback function to be executed when the marquee is pressed (optional).
-///
-/// [Example_of_use] :
-/// ```dart
-/// InfoMarqueeWidget(
-/// text: 'Important notice!',
-/// color: Colors.yellow,
-/// glowColor: Colors.orange,
-/// fontColor: Colors.black,
-/// borderRadius: 10.0,
-/// fontSize: 18.0,
-/// onPressed: () {
-/// // Action when pressing the sign
-/// },
-/// )
-/// ```
 class InfoMarqueeWidget extends StatefulWidget {
   final String text;
   final Color color;
   final Color glowColor;
-  final Color? fontColor;
+  final Color fontColor;
+  final Color fontBorderColor;
   final double borderRadius;
+  final double marqueeHeight;
+  final double marqueeSpeed;
+  final double marqueeStart;
+  final double marqueeEnd;
+  final double marqueeWidth;
   final double fontSize;
+  final double fontBorderWidth;
+  final double textMaxWidth;
   final FontWeight fontWeight;
   final VoidCallback? onPressed;
 
@@ -49,9 +25,17 @@ class InfoMarqueeWidget extends StatefulWidget {
     required this.text,
     required this.color,
     required this.glowColor,
-    this.borderRadius = 20.0,
+    required this.marqueeWidth,
+    required this.marqueeSpeed,
+    required this.marqueeStart,
+    required this.marqueeEnd,
+    this.marqueeHeight = 30,
+    this.borderRadius = 10,
+    this.textMaxWidth = 800,
     this.fontSize = 15.0,
-    this.fontColor,
+    this.fontBorderWidth = 0.4,
+    this.fontColor = Colors.black,
+    this.fontBorderColor = Colors.transparent,
     this.fontWeight = FontWeight.normal,
     this.onPressed,
   });
@@ -63,7 +47,6 @@ class InfoMarqueeWidget extends StatefulWidget {
 class InfoMarqueeWidgetState extends State<InfoMarqueeWidget> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _offsetAnimation;
-
   bool _isGlowing = false;
 
   @override
@@ -71,12 +54,14 @@ class InfoMarqueeWidgetState extends State<InfoMarqueeWidget> with SingleTickerP
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 24),
+      duration: Duration(seconds: widget.marqueeSpeed.toInt()),
     )..repeat(reverse: false);
 
+    debugPrint(' duração: ${widget.marqueeSpeed.toString()}');
+
     _offsetAnimation = Tween<Offset>(
-      begin: const Offset(1.0, 0.0),
-      end: const Offset(-2.0, 0.0),
+      begin: Offset(widget.marqueeStart, 0.0),
+      end: Offset(widget.marqueeEnd, 0.0),
     ).animate(_controller);
 
     _startGlowAnimation();
@@ -95,9 +80,10 @@ class InfoMarqueeWidgetState extends State<InfoMarqueeWidget> with SingleTickerP
 
   @override
   Widget build(BuildContext context) {
-    // Visual part of the text marquee and animated glow
     return Container(
-      height: 30,
+      height: widget.marqueeHeight,
+      width: widget.marqueeWidth,
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: widget.color,
         borderRadius: BorderRadius.circular(widget.borderRadius),
@@ -111,44 +97,37 @@ class InfoMarqueeWidgetState extends State<InfoMarqueeWidget> with SingleTickerP
         ],
       ),
       child: Material(
-        color: getButtonColor(),
+        color: widget.color,
         child: InkWell(
           borderRadius: BorderRadius.circular(widget.borderRadius),
           onTap: widget.onPressed,
           child: Stack(
             children: [
-              // Text part of the animated glow
-              Positioned.fill(
-                child: SlideTransition(
-                  position: _offsetAnimation,
-                  child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 5,
-                        horizontal: 0,
+              SlideTransition(
+                position: _offsetAnimation,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 5,
+                    horizontal: 0,
+                  ),
+                  child: OverflowBox(
+                    maxWidth: widget.textMaxWidth,
+                    minWidth: widget.textMaxWidth,
+                    child: FittedBox(
+                      fit: BoxFit.fill,
+                      child: DecoratedGoogleFontText(
+                        widget.text,
+                        fontMethod: GoogleFonts.roboto,
+                        // widget.fontGoogleStyle,
+                        fillColor: widget.fontColor,
+                        fontSize: widget.fontSize,
+                        fontWeight: widget.fontWeight,
+                        borderWidth: widget.fontBorderWidth,
+                        borderColor: widget.fontBorderColor,
                       ),
-                      child: FittedBox(
-                        fit: BoxFit.fitHeight,
-                        alignment: Alignment.centerLeft,
-                        child: DecoratedGoogleFontText(
-                          widget.text,
-                          fontMethod: GoogleFonts.kellySlab,
-                          fillColor: widget.fontColor ?? Colors.black,
-                          fontSize: widget.fontSize,
-                          fontWeight: widget.fontWeight,
-                          borderWidth: 0.4,
-                          borderColor: Colors.white,
-                        ),
-                      )),
+                    ),
+                  ),
                 ),
-              ),
-
-              // Visual part of the animated glow
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 1000),
-                width: _isGlowing ? 150 : 0,
-                height: 2,
-                color: widget.glowColor,
               ),
             ],
           ),

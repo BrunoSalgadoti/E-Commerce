@@ -8,7 +8,6 @@ import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/common/miscellaneous/info_marquee_widget.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
-import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:brn_ecommerce/views/cart/components/cart_tile.dart';
 import 'package:decorated_text/decorated_text.dart';
@@ -71,7 +70,6 @@ class CartScreen extends StatelessWidget {
                   );
                 }
                 return SingleChildScrollView(
-                  // Main column contains the body of the Cart Screen
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,22 +78,22 @@ class CartScreen extends StatelessWidget {
                       const AdvertisingWidget(),
                       Padding(
                         padding: const EdgeInsets.only(top: 20, bottom: 15),
-                        child: SizedBox(
-                          width: tabletBreakpoint,
-                          child: InfoMarqueeWidget(
-                            text: alertsMessengersText.infoMarqueeOfCartScreen,
-                            color: getButtonColor(),
-                            glowColor: Colors.greenAccent.withAlpha(500),
-                            onPressed: () {
-                              context.read<PageManager>().setPage(1);
-                              Navigator.of(context).pop();
-                            },
-                          ),
+                        child: InfoMarqueeWidget(
+                          text: alertsMessengersText.infoMarqueeOfCartScreen,
+                          color: const Color.fromARGB(197, 225, 218, 218),
+                          fontWeight: FontWeight.w800,
+                          glowColor: const Color.fromARGB(255, 81, 255, 255),
+                          marqueeWidth: tabletBreakpoint,
+                          onPressed: () {
+                            context.read<PageManager>().setPage(1);
+                            Navigator.of(context).pop();
+                          },
+                          //TODO: Parei aqui 30-04-2024
+                          marqueeSpeed: MediaQuery.of(context).size.width >= 900 ? 24 : 22,
+                          marqueeStart: MediaQuery.of(context).size.width >= 900 ? 1.0 : 1.7,
+                          marqueeEnd: MediaQuery.of(context).size.width >= 900 ? -1.0 : -1.5,
                         ),
                       ),
-
-                      // Second column separates Advertising Widget and InfoMarqueeWidget
-                      // structure of the CartTile and PriceCard List (Contains Different Constraints).
                       ConstrainedBox(
                         constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
                         child: Column(
