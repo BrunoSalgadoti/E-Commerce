@@ -1,5 +1,5 @@
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-mixin controlsSlidingPanel {
+mixin ControlsSlidingPanel {
   static PanelController panelController = PanelController();
 }

@@ -27,7 +27,7 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
     Future.delayed(Duration.zero, () {
       final productManager = Provider.of<ProductManager>(context, listen: false);
       productManager.disableFilter();
-      controlsSlidingPanel.panelController.close();
+      ControlsSlidingPanel.panelController.close();
     });
   }
 
@@ -171,7 +171,7 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
       if (mounted) {
         final productManager = Provider.of<ProductManager>(context, listen: false);
         productManager.disableFilter();
-        controlsSlidingPanel.panelController.close();
+        ControlsSlidingPanel.panelController.close();
       }
     });
     super.dispose();

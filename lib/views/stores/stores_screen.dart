@@ -24,7 +24,7 @@ class StoresScreen extends StatelessWidget {
                   return IconButton(
                     icon: const Icon(Icons.add),
                     onPressed: () {
-                      Navigator.pushNamed(context, routesNavigator.editStoresScreen);
+                      Navigator.pushNamed(context, RoutesNavigator.editStoresScreen);
                     },
                   );
                 } else {

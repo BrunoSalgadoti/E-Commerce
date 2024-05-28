@@ -1,4 +1,5 @@
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
+import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/cart_product.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class OrderProductTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (!imageNotAvailable) {
-          Navigator.pushNamed(context, routesNavigator.productDetailsScreen,
+          Navigator.pushNamed(context, RoutesNavigator.productDetailsScreen,
               arguments: cartProduct?.product);
         }
       },
@@ -33,7 +34,7 @@ class OrderProductTile extends StatelessWidget {
             children: [
               imageNotAvailable
                   ? FittedBox(
-                      child: Image.asset('assets/images/noImage.png',
+                      child: Image.asset(RootAssets.noImagePng,
                           height: constraints.maxWidth > 300 ? 100 : constraints.maxWidth * 0.22,
                           width: constraints.maxWidth > 300 ? 150 : constraints.maxWidth * 0.25,
                           fit: BoxFit.fill))

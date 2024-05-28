@@ -18,7 +18,7 @@ class AdvertisingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, routesNavigator.productDetailsScreen, arguments: product);
+        Navigator.pushNamed(context, RoutesNavigator.productDetailsScreen, arguments: product);
       },
       child: LayoutBuilder(builder: (context, constraints) {
         return Stack(
@@ -41,7 +41,7 @@ class AdvertisingCard extends StatelessWidget {
                 height: double.infinity,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(rootAssets.imageForEmptyBackgroundsJpg),
+                    image: AssetImage(RootAssets.imageForEmptyBackgroundsJpg),
                     fit: BoxFit.cover,
                   ),
                 ),

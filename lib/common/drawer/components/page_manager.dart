@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 class PageManager extends ChangeNotifier {
   // Proprieties
 
-  // final PageController _pageController;
   int page = 0;
 
   // Methods
@@ -18,7 +17,7 @@ class PageManager extends ChangeNotifier {
   void setPage(int value) {
     if (value == page) return;
     page = value;
-    controllerPageView.pageController.jumpToPage(value);
+    ControllerPageView.pageController.jumpToPage(value);
     notifyListeners();
   }
 }

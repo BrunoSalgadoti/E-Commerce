@@ -24,7 +24,7 @@ class _PrivacyPolicyWidgetState extends State<PrivacyPolicyWidget> {
   @override
   Widget build(BuildContext context) {
     goToPage(String arguments) =>
-        Navigator.pushNamed(context, routesNavigator.privacyAndPolicyScreen);
+        Navigator.pushNamed(context, RoutesNavigator.privacyAndPolicyScreen);
 
     return Row(
       children: [

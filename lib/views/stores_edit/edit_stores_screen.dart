@@ -42,13 +42,14 @@ class EditStoresScreenState extends State<EditStoresScreen> {
           actions: [
             if (widget.store.id != null)
               CustomIconButton(
-                  iconData: Icons.delete,
-                  color: Colors.white,
-                  onTap: () {
-                    StoreUtils(store: widget.store, address: widget.store.address!)
-                        .alertForDeleteStore(context);
-                  },
-                semanticLabel: 'Excluir Loja',),
+                iconData: Icons.delete,
+                color: Colors.white,
+                onTap: () {
+                  StoreUtils(store: widget.store, address: widget.store.address!)
+                      .alertForDeleteStore(context);
+                },
+                semanticLabel: 'Excluir Loja',
+              ),
           ],
         ),
         backgroundColor: Colors.white,

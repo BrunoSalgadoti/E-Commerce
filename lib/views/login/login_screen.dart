@@ -98,7 +98,7 @@ class LoginScreen extends StatelessWidget {
                       alignment: Alignment.center,
                       child: MaterialButton(
                         onPressed: () {
-                          Navigator.pushReplacementNamed(context, routesNavigator.signupScreen);
+                          Navigator.pushReplacementNamed(context, RoutesNavigator.signupScreen);
                         },
                         child: Text(
                           'Não tem conta? Cadastre-se!',

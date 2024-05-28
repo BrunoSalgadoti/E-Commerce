@@ -138,7 +138,7 @@ class EmptyPageIndicatorState extends State<EmptyPageIndicator> {
                   color: widget.iconColor ?? Colors.white,
                 ),
                 Text(
-                  alertsMessengersText.erroEmptyPageIndicator,
+                  AlertsMessengersText.erroEmptyPageIndicator,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

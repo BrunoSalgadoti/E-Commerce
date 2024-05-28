@@ -57,8 +57,6 @@ class InfoMarqueeWidgetState extends State<InfoMarqueeWidget> with SingleTickerP
       duration: Duration(seconds: widget.marqueeSpeed.toInt()),
     )..repeat(reverse: false);
 
-    debugPrint(' duração: ${widget.marqueeSpeed.toString()}');
-
     _offsetAnimation = Tween<Offset>(
       begin: Offset(widget.marqueeStart, 0.0),
       end: Offset(widget.marqueeEnd, 0.0),

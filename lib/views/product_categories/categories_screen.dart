@@ -102,7 +102,7 @@ class CategoriesScreen extends StatelessWidget {
                             return GestureDetector(
                               onTap: () {
                                 Navigator.of(context).pushNamed(
-                                    routesNavigator.categoryProductsScreen,
+                                    RoutesNavigator.categoryProductsScreen,
                                     arguments: category);
                               },
                               child: MainCategoriesCard(productCategory: category),

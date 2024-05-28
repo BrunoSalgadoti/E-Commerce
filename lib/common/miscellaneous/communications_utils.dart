@@ -95,10 +95,10 @@ class CommunicationsUtils<T, U> {
         scheme: "mailto",
         path: userEmail ?? emails.toString().replaceAll(RegExp(r"[\[\]]"), ""),
         query: encodeQueryParameters(<String, String>{
-          "subject": alertsMessengersText.subjectOfTheEmail,
+          "subject": AlertsMessengersText.subjectOfTheEmail,
           "body": userName == null
-              ? alertsMessengersText.bodyMessangersEmailWithowtUserName
-              : "$userName,\n ${alertsMessengersText.bodyMessangersEmailWithUserName}",
+              ? AlertsMessengersText.bodyMessangersEmailWithowtUserName
+              : "$userName,\n ${AlertsMessengersText.bodyMessangersEmailWithUserName}",
         }));
     return launchUrl(emailLaunchUri);
   }

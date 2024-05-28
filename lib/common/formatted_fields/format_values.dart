@@ -13,10 +13,10 @@ import 'package:brasil_fields/brasil_fields.dart';
 /// - The [address] parameter is the address string to be formatted.
 /// - Returns the formatted zip code or '00000000' if the address is null or does not have 8 characters.
 String formattedZipcode(String? address) {
-  if (address == null ) {
+  if (address == null) {
     return '00.000-000';
   }
-  if(address.length != 8) {
+  if (address.length != 8) {
     address = unFormattedZipcode(address);
   }
   final zipcode = UtilBrasilFields.obterCep(address!);

@@ -3,12 +3,12 @@ import 'package:brn_ecommerce/views/product_categories/components/sub_categories
 import 'package:flutter/material.dart';
 
 class SubCategoriesWidget extends StatefulWidget {
+  final List<SubCategory> subCategories;
+
   const SubCategoriesWidget({
     super.key,
     required this.subCategories,
   });
-
-  final List<SubCategory> subCategories;
 
   @override
   State<SubCategoriesWidget> createState() => _SubCategoriesWidgetState();
@@ -21,14 +21,8 @@ class _SubCategoriesWidgetState extends State<SubCategoriesWidget> {
 
   @override
   void initState() {
-    super.initState();
     pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    pageController.dispose();
-    super.dispose();
+    super.initState();
   }
 
   @override
@@ -93,5 +87,11 @@ class _SubCategoriesWidgetState extends State<SubCategoriesWidget> {
           ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 }

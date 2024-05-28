@@ -35,7 +35,7 @@ class CustomDrawerHeader extends StatelessWidget {
                 ),
                 InkWell(
                     child: Image.asset(
-                      rootAssets.storeImgLogo,
+                      RootAssets.storeImgLogo,
                       height: 90,
                       fit: BoxFit.scaleDown,
                     ),
@@ -55,7 +55,7 @@ class CustomDrawerHeader extends StatelessWidget {
                       userManager.signOut();
                       pageManager.setPage(0);
                     } else {
-                      Navigator.pushNamed(context, routesNavigator.loginScreen);
+                      Navigator.pushNamed(context, RoutesNavigator.loginScreen);
                     }
                   },
                   child: AutoSizeText(

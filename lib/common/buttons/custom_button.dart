@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 /// ## CustomButton
 /// A custom buttons that offers flexibility in terms of color, style, and action when pressed.
 class CustomButton extends StatelessWidget {
-
   final VoidCallback? onPressed; // Function called when the buttons is pressed
   final String text;
   final Color? buttonColor;

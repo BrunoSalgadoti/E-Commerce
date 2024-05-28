@@ -61,7 +61,7 @@ class StoreCard extends StatelessWidget {
                             size: 40,
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, routesNavigator.editStoresScreen,
+                            Navigator.pushNamed(context, RoutesNavigator.editStoresScreen,
                                 arguments: store);
                           },
                         );

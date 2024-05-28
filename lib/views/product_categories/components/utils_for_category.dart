@@ -109,7 +109,7 @@ class UtilsForCategory {
                         icon: const Icon(Icons.open_in_new,
                             semanticLabel: 'Visualizar Produto', size: 20, color: Colors.white),
                         onPressed: () {
-                          Navigator.pushNamed(context, routesNavigator.productDetailsScreen,
+                          Navigator.pushNamed(context, RoutesNavigator.productDetailsScreen,
                               arguments: product);
                         })),
               ),
@@ -143,7 +143,7 @@ class UtilsForCategory {
       }
     } else {
       return Image.asset(
-        rootAssets.imageForEmptyBackgroundsJpg,
+        RootAssets.imageForEmptyBackgroundsJpg,
         width: double.infinity,
         height: 270,
         fit: BoxFit.cover,

@@ -30,7 +30,7 @@ class ItemTile extends StatelessWidget {
         onTap: () {
           if (item?.product != null) {
             if (product != null && product.isValid!) {
-              Navigator.pushNamed(context, routesNavigator.productDetailsScreen,
+              Navigator.pushNamed(context, RoutesNavigator.productDetailsScreen,
                   arguments: product);
             }
           }
@@ -87,7 +87,7 @@ class ItemTile extends StatelessWidget {
                                   backScreen();
                                 } else {
                                   final Product product = await Navigator.pushNamed(
-                                      context, routesNavigator.selectProductScreen,
+                                      context, RoutesNavigator.selectProductScreen,
                                       arguments: Product()) as Product;
                                   item?.product = product.id;
                                   backScreen();

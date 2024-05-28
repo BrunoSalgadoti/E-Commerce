@@ -95,7 +95,8 @@ Future<void> sendEmailNotification({
   required String subject, // Subject as parameter
   required String messageText, // Message as a parameter
 }) async {
-  final smtpServer = gmail('suporte@brninfodev.com', 'sua-senha'); // Replace with Firebase SMTP credentials
+  final smtpServer =
+      gmail('suporte@brninfodev.com', 'sua-senha'); // Replace with Firebase SMTP credentials
 
   final message = Message()
     ..from = const Address('seu-email@gmail.com', 'Seu Nome') // Your email address and name

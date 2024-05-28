@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-
 // ignore: depend_on_referenced_packages
 import 'package:logger/logger.dart';
 

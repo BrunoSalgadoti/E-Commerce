@@ -21,7 +21,7 @@ class AddressInputField extends StatelessWidget {
     // Functions to remove context from async methods
     calculateShippingError() => CustomScaffoldMessenger(
           context: context,
-          message: alertsMessengersText.checkingDeliveryRadius,
+          message: AlertsMessengersText.checkingDeliveryRadius,
           duration: const Duration(milliseconds: 4500),
         ).alertScaffold();
 

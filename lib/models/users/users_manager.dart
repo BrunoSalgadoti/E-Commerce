@@ -139,7 +139,7 @@ class UserManager extends ChangeNotifier {
       // check if is running on Web
       if (kIsWeb) {
         await FacebookAuth.i.webAndDesktopInitialize(
-          appId: config.facebookAppId,
+          appId: Config.facebookAppId,
           cookie: true,
           xfbml: true,
           version: "v17.0",
@@ -155,7 +155,8 @@ class UserManager extends ChangeNotifier {
           final AccessToken accessToken = result.accessToken!;
 
           // Converte o token de acesso em uma credencial do Firebase
-          final OAuthCredential credential = FacebookAuthProvider.credential(accessToken.token);
+          final OAuthCredential credential =
+              FacebookAuthProvider.credential(accessToken.tokenString);
 
           // Converts the access token to a Firebase credential
           final UserCredential userCredential =

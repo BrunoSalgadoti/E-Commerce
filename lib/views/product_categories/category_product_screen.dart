@@ -35,11 +35,13 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
 
   @override
   void initState() {
-    Future.delayed(Duration.zero, () {
-      final productManager = Provider.of<ProductManager>(context, listen: false);
-      productManager.disableFilter();
-      controlsSlidingPanel.panelController.close();
-    });
+    if (!mounted) {
+      Future.delayed(Duration.zero, () {
+        final productManager = Provider.of<ProductManager>(context, listen: false);
+        productManager.disableFilter();
+        ControlsSlidingPanel.panelController.close();
+      });
+    }
     super.initState();
   }
 
@@ -74,7 +76,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                   titleColor: Colors.black,
                   iconData: null,
                   iconColor: Colors.black,
-                  image: rootAssets.cartAwaitGif,
+                  image: RootAssets.cartAwaitGif,
                 )
               : SingleChildScrollView(
                   child: Column(
@@ -93,7 +95,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 13),
                                   child: Image.asset(
-                                    rootAssets.storeImgLogo,
+                                    RootAssets.storeImgLogo,
                                     width: 155,
                                     fit: BoxFit.fill,
                                   ),
@@ -316,7 +318,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                   Navigator.of(context).pop();
                   break;
                 case 1:
-                  Navigator.of(context).pushReplacementNamed(routesNavigator.cartScreen);
+                  Navigator.of(context).pushReplacementNamed(RoutesNavigator.cartScreen);
                   break;
                 case 2:
                 //TODO or not TODO: Tela e Rota para a tela
@@ -337,7 +339,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
       if (mounted) {
         final productManager = Provider.of<ProductManager>(context, listen: false);
         productManager.disableFilter();
-        controlsSlidingPanel.panelController.close();
+        ControlsSlidingPanel.panelController.close();
       }
     });
     super.dispose();

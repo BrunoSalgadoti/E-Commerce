@@ -2,7 +2,7 @@ import 'package:brn_ecommerce/models/locations_services/cepaberto_map_api.dart';
 import 'package:brn_ecommerce/services/db_api/config.dart';
 import 'package:dio/dio.dart';
 
-const token = config.cepabertoServiceToken;
+const token = Config.cepabertoServiceToken;
 
 /// # CepAbertoApi (Folder: services)
 ///

@@ -62,7 +62,7 @@ class CartScreen extends StatelessWidget {
                         const EmptyPageIndicator(
                           title: '',
                           iconData: null,
-                          image: rootAssets.goShoppingCartGif,
+                          image: RootAssets.goShoppingCartGif,
                           duration: null,
                         ),
                       ],
@@ -79,7 +79,7 @@ class CartScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 20, bottom: 15),
                         child: InfoMarqueeWidget(
-                          text: alertsMessengersText.infoMarqueeOfCartScreen,
+                          text: AlertsMessengersText.infoMarqueeOfCartScreen,
                           color: const Color.fromARGB(197, 225, 218, 218),
                           fontWeight: FontWeight.w800,
                           glowColor: const Color.fromARGB(255, 81, 255, 255),
@@ -130,7 +130,7 @@ class CartScreen extends StatelessWidget {
                                           buttonText: 'Continuar para Entrega',
                                           onPressed: cartManager.isCartValid
                                               ? () => Navigator.pushNamed(
-                                                  context, routesNavigator.addressScreen)
+                                                  context, RoutesNavigator.addressScreen)
                                               : null,
                                           showIcon: false),
                                     ),

@@ -59,7 +59,6 @@ class HandleErrors {
     this.emailMessage = '',
   });
 
-
   /// Handles errors and sends email notifications when error limits are reached.
   ///
   /// The [error] parameter represents the error object or message.

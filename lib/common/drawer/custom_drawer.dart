@@ -86,6 +86,7 @@ class CustomDrawer extends StatelessWidget {
                       title: "Quem Somos?",
                       page: 5,
                     ),
+
                     /// Start of the Drawer referring to users with administrative access only.
                     Consumer<UserManager>(
                       builder: (_, userManager, __) {

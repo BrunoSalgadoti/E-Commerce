@@ -10,7 +10,7 @@ import 'package:brn_ecommerce/views/who_we_are/who_we_are_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-mixin controllerPageView {
+mixin ControllerPageView {
   static final PageController pageController = PageController();
 }
 
@@ -22,7 +22,7 @@ class DrawerPageView extends StatelessWidget {
     return Consumer<UserManager>(
       builder: (_, userManager, __) {
         return PageView(
-          controller: controllerPageView.pageController,
+          controller: ControllerPageView.pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: [
             const HomeScreen(),

@@ -24,7 +24,7 @@ class CartTile extends StatelessWidget {
             value: cartProduct,
             child: GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, routesNavigator.productDetailsScreen,
+                Navigator.pushNamed(context, RoutesNavigator.productDetailsScreen,
                     arguments: cartProduct?.product);
               },
               child: LayoutBuilder(builder: (context, constraints) {
@@ -53,7 +53,7 @@ class CartTile extends StatelessWidget {
                                 cartProduct?.product?.images == null ||
                                         cartProduct!.product!.images!.isEmpty
                                     ? Image.asset(
-                                        rootAssets.noImagePng,
+                                        RootAssets.noImagePng,
                                         fit: BoxFit.cover,
                                         width: double.infinity,
                                         height: double.infinity,

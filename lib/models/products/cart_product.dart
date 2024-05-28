@@ -194,5 +194,4 @@ class CartProduct extends ChangeNotifier {
     if (amount == null) return false;
     return amount >= quantity!;
   }
-
 }

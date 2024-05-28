@@ -1,7 +1,6 @@
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:flutter/material.dart';
 
-
 /// # Colors Products Model (Folder: models/products)
 /// ## ColorsProducts
 /// A class representing color variations and their quantities for a product.

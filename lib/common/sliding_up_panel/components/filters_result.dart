@@ -46,7 +46,7 @@ Widget filtersResult() {
             ),
             onPressed: () {
               productManager.disableFilter();
-              controlsSlidingPanel.panelController.close();
+              ControlsSlidingPanel.panelController.close();
             },
           ),
         ],

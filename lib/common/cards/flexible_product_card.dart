@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
+import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/freight_logo.dart';
 import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
@@ -32,14 +33,15 @@ class FlexibleProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (imageNotAvailable && userManager.adminEnable) {
-          Navigator.pushNamed(context, routesNavigator.editProductScreen, arguments: product);
+          Navigator.pushNamed(context, RoutesNavigator.editProductScreen, arguments: product);
         }
         if (!imageNotAvailable) {
-          Navigator.pushNamed(context, routesNavigator.productDetailsScreen, arguments: product);
+          Navigator.pushNamed(context, RoutesNavigator.productDetailsScreen, arguments: product);
         }
       },
       child: product!.isValid!
           ? isVertical == true
+
               /// Widget content for vertical card
               ? Card(
                   semanticContainer: true,
@@ -60,7 +62,7 @@ class FlexibleProductCard extends StatelessWidget {
                                 alignment: Alignment.topCenter,
                                 child: imageNotAvailable
                                     ? Image.asset(
-                                        'assets/images/noImage.png',
+                                        RootAssets.noImagePng,
                                         fit: BoxFit.fill,
                                         width: double.infinity,
                                         height: 250,
@@ -120,7 +122,7 @@ class FlexibleProductCard extends StatelessWidget {
                                     maxFontSize: 17,
                                     maxLines: 2,
                                     minFontSize: 12,
-                                    product!.name!,
+                                    product?.name ?? '',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontSize: 17,
@@ -135,7 +137,7 @@ class FlexibleProductCard extends StatelessWidget {
                                     maxFontSize: 17,
                                     maxLines: 3,
                                     minFontSize: 10,
-                                    product!.description!,
+                                    product?.description ?? '',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(fontSize: 15, color: textColor),
                                   )),
@@ -158,6 +160,7 @@ class FlexibleProductCard extends StatelessWidget {
                     ),
                   ),
                 )
+
               /// Widget content for horizontal card
               : Card(
                   semanticContainer: true,
@@ -174,7 +177,7 @@ class FlexibleProductCard extends StatelessWidget {
                             AspectRatio(
                               aspectRatio: 1,
                               child: imageNotAvailable
-                                  ? Image.asset('assets/images/noImage.png', fit: BoxFit.fitHeight)
+                                  ? Image.asset(RootAssets.noImagePng, fit: BoxFit.fitHeight)
                                   : Image(
                                       image: NetworkImage(product?.images?.first ?? ""),
                                       fit: BoxFit.cover,
@@ -204,7 +207,7 @@ class FlexibleProductCard extends StatelessWidget {
                                       maxFontSize: 16,
                                       maxLines: 4,
                                       minFontSize: 10,
-                                      product!.description!,
+                                      product?.description ?? '',
                                       style: const TextStyle(
                                         fontSize: 13.0,
                                         fontWeight: FontWeight.w800,

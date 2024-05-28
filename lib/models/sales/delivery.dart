@@ -19,19 +19,19 @@ class Delivery {
   /// The maximum distance configured by the administrator for product delivery
   // (Initial values taking into account the center of the city in question)
   // Delivery value considering the distance radius maxKmForDelivery x kmForPriceQuote
-  num basePriceForDelivery = deliveryConfig.basePriceFromFactory;
+  num basePriceForDelivery = DeliveryConfig.basePriceFromFactory;
 
   // Value for price quote (Base value X kilometers traveled (basePriceForDelivery X kmForPriceQuote))
-  num kmForPriceQuote = deliveryConfig.kmFromFactory;
+  num kmForPriceQuote = DeliveryConfig.kmFromFactory;
 
   // Store latitude (starting point for shipping calculation)
-  double latOfStore = deliveryConfig.latOfStoreFromFactory;
+  double latOfStore = DeliveryConfig.latOfStoreFromFactory;
 
   // store longitude (starting point for shipping calculation)
-  double longOfStore = deliveryConfig.longOfStoreFromFactory;
+  double longOfStore = DeliveryConfig.longOfStoreFromFactory;
 
   // Maximum delivery radius in kilometers for product deliveries
-  num maxKmForDelivery = deliveryConfig.maxKmFromFactory;
+  num maxKmForDelivery = DeliveryConfig.maxKmFromFactory;
 
   // Constructors
 

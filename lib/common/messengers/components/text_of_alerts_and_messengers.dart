@@ -1,4 +1,4 @@
-mixin alertsMessengersText {
+mixin AlertsMessengersText {
   // # MESSENGERS OF THE SCAFFOLDDs N´ ALERTDIALOGGs MESSENGERS (ALERTS!!!)
 
   /// # [POLICY_AND_TERMS_CONFIRMATION] (box unchecked and confirmation)

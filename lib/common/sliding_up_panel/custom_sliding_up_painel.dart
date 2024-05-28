@@ -16,7 +16,7 @@ Widget customSlidingUpPainel({
   double? borderRadiosTopRight,
 }) {
   return SlidingUpPanel(
-      controller: controlsSlidingPanel.panelController,
+      controller: ControlsSlidingPanel.panelController,
       boxShadow: boxShadow ??
           const [
             BoxShadow(
@@ -40,11 +40,11 @@ Widget customSlidingUpPainel({
                 children: [
                   GestureDetector(
                     onTap: () {
-                      if (controlsSlidingPanel.panelController.isAttached) {
-                        if (controlsSlidingPanel.panelController.isPanelClosed) {
-                          controlsSlidingPanel.panelController.open();
+                      if (ControlsSlidingPanel.panelController.isAttached) {
+                        if (ControlsSlidingPanel.panelController.isPanelClosed) {
+                          ControlsSlidingPanel.panelController.open();
                         } else {
-                          controlsSlidingPanel.panelController.close();
+                          ControlsSlidingPanel.panelController.close();
                         }
                       }
                     },

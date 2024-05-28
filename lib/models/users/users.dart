@@ -23,6 +23,7 @@ class Users {
 
   // Properties for Firestore references
   DocumentReference get firestoreRef => FirebaseFirestore.instance.doc("users/$id");
+
   CollectionReference get cartReference => firestoreRef.collection("cart");
 
   // Constructors

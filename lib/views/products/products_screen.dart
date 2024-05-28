@@ -28,7 +28,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
     Future.delayed(Duration.zero, () {
       final productManager = Provider.of<ProductManager>(context, listen: false);
       productManager.disableFilter();
-      controlsSlidingPanel.panelController.close();
+      ControlsSlidingPanel.panelController.close();
     });
     super.initState();
   }
@@ -110,9 +110,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
           foregroundColor: Theme.of(context).primaryColor,
           onPressed: () {
             if (userManager.isLoggedIn) {
-              Navigator.pushNamed(context, routesNavigator.cartScreen);
+              Navigator.pushNamed(context, RoutesNavigator.cartScreen);
             } else {
-              Navigator.pushNamed(context, routesNavigator.loginScreen);
+              Navigator.pushNamed(context, RoutesNavigator.loginScreen);
             }
           },
           child: userManager.isLoggedIn
@@ -129,7 +129,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
       if (mounted) {
         final productManager = Provider.of<ProductManager>(context, listen: false);
         productManager.disableFilter();
-        controlsSlidingPanel.panelController.close();
+        ControlsSlidingPanel.panelController.close();
       }
     });
     super.dispose();

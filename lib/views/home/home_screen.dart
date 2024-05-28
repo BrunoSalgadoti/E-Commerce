@@ -45,28 +45,29 @@ class HomeScreen extends StatelessWidget {
                 CustomScrollView(
                   slivers: [
                     SliverToBoxAdapter(
-                        child: Container(
-                          height: 60,
-                          width: double.infinity,
-                          color: Colors.white,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(8, 1.8, 8, 7),
-                            child: Image.asset(
-                              "assets/logo/storeLogo.png",
-                              width: 75,
-                              height: 40,
-                              fit: BoxFit.fill,
+                      child: Container(
+                        height: 60,
+                        width: double.infinity,
+                        color: Colors.white,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 1.8, 8, 7),
+                              child: Image.asset(
+                                "assets/logo/storeLogo.png",
+                                width: 75,
+                                height: 40,
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                          ),
-                          //TODO: Material propaganda.
-                        ],
+                            //TODO: Material propaganda.
+                          ],
+                        ),
                       ),
-                    )),
+                    ),
                     SliverAppBar(
                       primary: false,
                       snap: true,
@@ -78,9 +79,9 @@ class HomeScreen extends StatelessWidget {
                         IconButton(
                           onPressed: () {
                             if (context.read<UserManager>().isLoggedIn) {
-                              Navigator.pushNamed(context, routesNavigator.cartScreen);
+                              Navigator.pushNamed(context, RoutesNavigator.cartScreen);
                             } else {
-                              Navigator.pushNamed(context, routesNavigator.loginScreen);
+                              Navigator.pushNamed(context, RoutesNavigator.loginScreen);
                             }
                           },
                           icon: Consumer<UserManager>(

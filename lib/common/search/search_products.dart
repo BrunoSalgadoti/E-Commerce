@@ -72,7 +72,7 @@ PreferredSizeWidget searchProducts({
           if (userManager.adminEnable) {
             return IconButton(
               icon: const Icon(Icons.add),
-              onPressed: () => Navigator.pushNamed(context, routesNavigator.editProductScreen),
+              onPressed: () => Navigator.pushNamed(context, RoutesNavigator.editProductScreen),
             );
           } else {
             return Container();

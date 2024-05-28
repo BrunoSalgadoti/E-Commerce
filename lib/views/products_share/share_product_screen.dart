@@ -82,10 +82,10 @@ class ShareProductScreenState extends State<ShareProductScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   CustomIconButton(
-                    iconData: FontAwesomeIcons.whatsapp,
-                    color: const Color(0xff88f83f),
-                    onTap: () => _shareProductWeb(SocialMediaWeb.whatsapp),
-                    semanticLabel: ''),
+                      iconData: FontAwesomeIcons.whatsapp,
+                      color: const Color(0xff88f83f),
+                      onTap: () => _shareProductWeb(SocialMediaWeb.whatsapp),
+                      semanticLabel: ''),
                 ],
               )
             : Container(
@@ -95,7 +95,7 @@ class ShareProductScreenState extends State<ShareProductScreen> {
                       iconData: FontAwesomeIcons.share,
                       color: Colors.white,
                       onTap: _onShareButtonPressed,
-                    semanticLabel: ''),
+                      semanticLabel: ''),
                 ),
               ),
       );
