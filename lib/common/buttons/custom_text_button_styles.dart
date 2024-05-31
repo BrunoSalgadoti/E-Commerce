@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 class CustomTextButtonStyles {
   /// Button style for Facebook login.
   static final ButtonStyle buttonStyleFacebook = ButtonStyle(
-    shadowColor: MaterialStateProperty.all<Color>(Colors.black),
-    backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 24, 118, 241)),
-    elevation: MaterialStateProperty.all<double>(2),
-    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-    shape: MaterialStateProperty.all<OutlinedBorder>(
+    shadowColor: WidgetStateProperty.all<Color>(Colors.black),
+    backgroundColor: WidgetStateProperty.all<Color>(const Color.fromARGB(255, 24, 118, 241)),
+    elevation: WidgetStateProperty.all<double>(2),
+    foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+    shape: WidgetStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
@@ -18,11 +18,11 @@ class CustomTextButtonStyles {
 
   /// Button style for Facebook login.
   static final ButtonStyle buttonStyleGoogle = ButtonStyle(
-    shadowColor: MaterialStateProperty.all<Color>(Colors.black),
-    backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-    elevation: MaterialStateProperty.all<double>(2),
-    foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-    shape: MaterialStateProperty.all<OutlinedBorder>(
+    shadowColor: WidgetStateProperty.all<Color>(Colors.black),
+    backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
+    elevation: WidgetStateProperty.all<double>(2),
+    foregroundColor: WidgetStateProperty.all<Color>(Colors.blue),
+    shape: WidgetStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),

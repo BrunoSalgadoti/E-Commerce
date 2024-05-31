@@ -4,9 +4,7 @@ import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/services/config/debug_mode_and_first_start.dart';
 import 'package:brn_ecommerce/services/config/firebase_automated_maps_update.dart';
 import 'package:brn_ecommerce/services/db_api/firebase_options.dart';
-// Package device_preview installed in Dev_Dependencies
-// ignore: depend_on_referenced_packages
-import 'package:device_preview/device_preview.dart';
+import 'package:device_preview_minus/device_preview_minus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
@@ -58,8 +56,8 @@ Future<void> main() async {
   runApp(kDebugMode
       ? DevicePreview(
           builder: (_) => const ProvidersApp(child: BrnEcommerce()),
-          enabled: true) // <- Change this if you won´t START...
-      // ...DevicePreview for TRUE or FALSE to ENABLE or DISABLED
+          // ...DevicePreview for TRUE or FALSE to ENABLE or DISABLED
+          enabled: false) // <- Change this if you won´t START...
       : const ProvidersApp(child: BrnEcommerce()));
 
   PerformanceMonitoring().stopTrace('main');

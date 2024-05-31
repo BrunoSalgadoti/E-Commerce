@@ -1,4 +1,5 @@
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
+import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/details_products.dart';
@@ -80,7 +81,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   child: IconButton(
                       icon: const Icon(Icons.share_outlined),
                       onPressed: () {
-                        Navigator.pushNamed(context, routesNavigator.shareProductScreen,
+                        Navigator.pushNamed(context, RoutesNavigator.shareProductScreen,
                             arguments: widget.product);
                       }),
                 ),
@@ -91,7 +92,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     return IconButton(
                       icon: const Icon(Icons.edit),
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, routesNavigator.editProductScreen,
+                        Navigator.pushReplacementNamed(context, RoutesNavigator.editProductScreen,
                             arguments: widget.product);
                       },
                     );
@@ -110,18 +111,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   titleColor: Colors.black,
                   iconData: null,
                   iconColor: Colors.black,
-                  image: "assets/images/await.gif")
+                  image: RootAssets.cartAwaitGif)
               : Consumer<DetailsProducts>(
                   builder: (_, detailsProducts, __) {
                     return ListView(children: [
-                      FanCarouselImageSlider(
+                      FanCarouselImageSlider.sliderType2(
                         imagesLink: widget.product!.images!.map((url) {
                           return NetworkImage(url).url;
                         }).toList(),
                         isAssets: false,
                         autoPlay: kIsWeb ? true : false,
                         initalPageIndex: 0,
-                        showIndicator: true,
                         indicatorActiveColor: primaryColor,
                         indicatorDeactiveColor: Colors.blueGrey,
                         sliderHeight: 400,
@@ -255,10 +255,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                 .read<CartManager>()
                                                 .addToCart(product, detailsProducts);
                                             Navigator.pushNamed(
-                                                context, routesNavigator.cartScreen);
+                                                context, RoutesNavigator.cartScreen);
                                           } else {
                                             Navigator.pushNamed(
-                                                context, routesNavigator.loginScreen);
+                                                context, RoutesNavigator.loginScreen);
                                           }
                                         }
                                       : null,

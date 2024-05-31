@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,19 +13,22 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final assetsAudioPlayer = AssetsAudioPlayer();
+  final assetsAudioPlayer = AudioPlayer();
 
   @override
   void initState() {
     super.initState();
     if (mounted) {
-      // Open audio with autoStart: false to prevent autoplay
-      assetsAudioPlayer.open(
-        Audio("assets/vignette/vignette.mp3"),
-        autoStart: kIsWeb ? false : true,
-      );
+      // Set the release mode to keep the source after playback has completed.
+      assetsAudioPlayer.setReleaseMode(ReleaseMode.stop);
+
+      // Start the player as soon as the app is displayed.
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await assetsAudioPlayer.setSource(AssetSource(RootAssets.vignetteAudio));
+        await assetsAudioPlayer.resume();
+      });
       Timer(const Duration(seconds: 6), () {
-        Navigator.pushReplacementNamed(context, routesNavigator.homeScreen);
+        Navigator.pushReplacementNamed(context, RoutesNavigator.homeScreen);
       });
     }
   }
@@ -47,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   invertColors: true,
-                  image: AssetImage("assets/images/splashScreen.jpg"),
+                  image: AssetImage(RootAssets.splashScreenJpg),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -67,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen> {
               return SizedBox(
                 width: width,
                 height: 500,
-                child: Image.asset("assets/logo/storeLogo.png"),
+                child: Image.asset(RootAssets.storeImgLogo),
               );
             },
           ),

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
     <base href="$FLUTTER_BASE_HREF">
-
     <meta charset="UTF-8">
     <meta content="IE=Edge" http-equiv="X-UA-Compatible">
     <meta name="description" content="Loja Virtual BRN Info_Dev">
@@ -20,37 +19,29 @@
     <title>brn_ecommerce</title>
     <link rel="manifest" href="manifest.json">
 
-    <script>
-    // The value below is injected by flutter build, do not touch.
-    var serviceWorkerVersion = null;
-
-
-    </script>
-    <!-- This script adds the flutter initialization JS code -->
-    <script src="flutter.js" defer></script>
+    <!-- This script adds the NEW flutter initialization for BOOTSTRAP JS code -->
+    <script src="flutter_bootstrap.js" async></script>
 
 </head>
 <body>
 
 <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js'
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js'
 
     // If you enabled Analytics in your project, add the Firebase SDK for Google Analytics
-    import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js'
+    import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js'
 
     // Add Firebase products that you want to use
-    import { getAuth } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js'
-    import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js'
-
-
+    import { getAuth } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js'
+    import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js'
 </script>
 
 <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
+       _flutter.loader.load({
         serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
+          serviceWorkerVersion: {{flutter_service_worker_version}},
         }
       }).then(function(engineInitializer) {
         return engineInitializer.initializeEngine();
@@ -58,8 +49,6 @@
         return appRunner.runApp();
       });
     });
-
-
 </script>
 
 </body>
