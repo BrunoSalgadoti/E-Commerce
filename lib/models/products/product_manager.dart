@@ -218,9 +218,7 @@ class ProductManager extends ChangeNotifier {
         return 'De A-Z';
       case StatusOfProducts.sortedZA:
         return 'De Z-A';
-      default:
-        return '';
-    }
+      }
   }
 
   @override

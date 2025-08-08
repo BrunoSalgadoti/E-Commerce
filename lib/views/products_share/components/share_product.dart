@@ -18,29 +18,26 @@ class ShareProduct {
   Future<Uint8List?> saveWidgetImage() async {
     Uint8List? widgetImage = await shareProductScreen.captureImage();
 
-    if (widgetImage != null) {
-      String tempPath;
-      Directory? tempDir = await getTemporaryDirectory();
-      tempPath = tempDir.path;
+    String tempPath;
+    Directory? tempDir = await getTemporaryDirectory();
+    tempPath = tempDir.path;
 
-      File imageFile = File('$tempPath/product_image.png');
-      await imageFile.writeAsBytes(widgetImage);
+    File imageFile = File('$tempPath/product_image.png');
+    await imageFile.writeAsBytes(widgetImage!);
 
-      PermissionStatus permissionStatus = await Permission.storage.status;
-      if (!permissionStatus.isGranted) {
-        permissionStatus = await Permission.storage.request();
-        if (permissionStatus.isGranted) {
-          await Share.shareXFiles([XFile(imageFile.path)],
-              text: 'Visite o nosso Site: https://brn-ecommerce.web.app/');
-        }
-      } else {
+    PermissionStatus permissionStatus = await Permission.storage.status;
+    if (!permissionStatus.isGranted) {
+      permissionStatus = await Permission.storage.request();
+      if (permissionStatus.isGranted) {
         await Share.shareXFiles([XFile(imageFile.path)],
             text: 'Visite o nosso Site: https://brn-ecommerce.web.app/');
       }
-
-      return widgetImage; // Retorne a imagem capturada
+    } else {
+      await Share.shareXFiles([XFile(imageFile.path)],
+          text: 'Visite o nosso Site: https://brn-ecommerce.web.app/');
     }
-    return widgetImage;
+
+    return widgetImage; // Retorne a imagem capturada
   }
 
   Future<void> shareProductOnMobile(BuildContext context, SocialMedia socialPlatform) async {

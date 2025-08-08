@@ -159,9 +159,7 @@ class OrderClient {
         return 'Aguardando devolução';
       case StatusOfOrders.returned:
         return 'Encomenda Devolvida!';
-      default:
-        return '';
-    }
+      }
   }
 
   /// Returns the next status text based on the current order status.

@@ -50,7 +50,7 @@ class UtilsForCategory {
   }
 
   Widget carouselRecentProducts(BuildContext context, List<Product> recentProductsFromCategory) {
-    final CarouselController carouselController = CarouselController();
+    final CarouselSliderControllerImpl carouselController = CarouselSliderControllerImpl();
 
     return CarouselSlider(
         carouselController: carouselController,

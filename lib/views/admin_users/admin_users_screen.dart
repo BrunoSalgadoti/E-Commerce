@@ -1,4 +1,4 @@
-import 'package:alphabet_list_scroll_view_fix/alphabet_list_scroll_view.dart';
+import 'package:alphabet_scroll_view/alphabet_scroll_view.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/search/search_clients.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
@@ -24,7 +24,51 @@ class AdminUsersScreen extends StatelessWidget {
               appBar: searchClients(context: context),
               body: Consumer2<AdminUsersSearch, AdminUsersManager>(
                 builder: (_, adminUsersSearch, adminUsersManager, __) {
+                  final List<String> names = adminUsersSearch.names;
+
                   return Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
+                      child: AlphabetScrollView(
+                        list: names.map((e) => AlphaModel(e)).toList(),
+                        alignment: LetterAlignment.right,
+                        itemExtent: 70,
+                        unselectedTextStyle: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                        selectedTextStyle: const TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.yellow,
+                        ),
+                        overlayWidget: (value) =>
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                const Icon(Icons.star, size: 50, color: Colors.yellow),
+                                Container(
+                                  height: 50,
+                                  width: 50,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    value.toUpperCase(),
+                                    style: const TextStyle(fontSize: 18, color: Colors.white),
+                                  ),
+                                ),
+                              ],
+                            ),
+                        itemBuilder: (_, index, id) {
+                          return adminUsersSearch.normalList[index];
+                        },
+                      ),
+                    ),
+                  );
+
+                 /* return Center(
                     child: ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
                       child: AlphabetListScrollView(
@@ -52,7 +96,9 @@ class AdminUsersScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                  );
+                  ); */
+
+
                 },
               )),
         ),

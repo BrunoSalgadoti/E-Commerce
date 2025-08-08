@@ -10,8 +10,9 @@ import 'package:brn_ecommerce/views/product_edit/components/freight_form.dart';
 import 'package:brn_ecommerce/views/product_edit/components/images_form.dart';
 import 'package:brn_ecommerce/views/product_edit/components/sizes_form.dart';
 import 'package:flutter/material.dart';
-import 'package:markdown_editable_textinput/format_markdown.dart';
-import 'package:markdown_editable_textinput/markdown_text_input.dart';
+import 'package:markdown_toolbar/markdown_toolbar.dart';
+// import 'package:markdown_editable_textinput/format_markdown.dart';
+// import 'package:markdown_editable_textinput/markdown_text_input.dart';
 import 'package:provider/provider.dart';
 
 class EditProductScreen extends StatelessWidget {
@@ -26,6 +27,8 @@ class EditProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
     TextEditingController controller = TextEditingController();
+    // // Functions to remove context from async methods
+    void backScreen() => Navigator.of(context).pop();
 
     void saveProductError() => CustomScaffoldMessenger(
           context: context,
@@ -33,8 +36,6 @@ class EditProductScreen extends StatelessWidget {
               'Revise os campos e tente novamente!\n'
               '\nSE O ERRO PERSISTIR CONTATE O SUPORTE',
         ).alertScaffold();
-
-    void backScreen() => Navigator.of(context).pop();
 
     void showAlertDialog() => CustomAlertDialogAdaptive(
           titleText: 'Valores não correspondentes!',
@@ -79,6 +80,7 @@ class EditProductScreen extends StatelessWidget {
                                   fontColor: Colors.red,
                                   onPressed: () {
                                     context.read<ProductManager>().requestDelete(product!);
+                                    //TODO: usar until
                                     backScreen();
                                     backScreen();
                                   }),
@@ -95,8 +97,7 @@ class EditProductScreen extends StatelessWidget {
                           )
                         ],
                       ).alertContent(context),
-                semanticLabel: 'Deletar produto'
-              )
+                  semanticLabel: 'Deletar produto')
           ],
         ),
         backgroundColor: Colors.white,
@@ -187,25 +188,54 @@ class EditProductScreen extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
-                          MarkdownTextInput(
-                            (description) => product?.description = description,
-                            product!.description ?? '',
-                            label: 'Descrição',
-                            maxLines: null,
-                            actions: MarkdownType.values,
+                          MarkdownToolbar(
+                            useIncludedTextField: false,
                             controller: controller,
-                            textStyle: const TextStyle(fontSize: 16),
-                            validators: (description) {
-                              if (description!.trim().isEmpty) {
-                                return 'A descrição é obrigatória';
-                              }
-                              if (description.length < 10) {
-                                return 'A descrição deve ter no mínimo '
-                                    '10 caracteres';
-                              }
-                              return null;
+                            // focusNode: _focusNode,
+                            // You can customize the toolbar here as needed
+                            // For example:
+                            // backgroundColor: Colors.lightBlue,
+                            // iconColor: Colors.white,
+                            // iconSize: 30,
+                          ),
+                          const Divider(),
+                          TextField(
+                            controller: controller,
+                            // focusNode: _focusNode,
+                            minLines: 5,
+                            maxLines: null,
+                            style: const TextStyle(fontSize: 16),
+                            decoration: const InputDecoration(
+                              hintText: 'Placeholder text',
+                              labelText: 'Descrição',
+                              border: OutlineInputBorder(),
+                              enabledBorder: OutlineInputBorder(),
+                            ),
+                            onChanged: (description) {
+                              product?.description = description;
                             },
                           ),
+
+                          // MarkdownTextInput(
+                          //   (description) => product?.description = description,
+                          //   product!.description ?? '',
+                          //   label: 'Descrição',
+                          //   maxLines: null,
+                          //   actions: MarkdownType.values,
+                          //   controller: controller,
+                          //   textStyle: const TextStyle(fontSize: 16),
+                          //   validators: (description) {
+                          //     if (description!.trim().isEmpty) {
+                          //       return 'A descrição é obrigatória';
+                          //     }
+                          //     if (description.length < 10) {
+                          //       return 'A descrição deve ter no mínimo '
+                          //           '10 caracteres';
+                          //     }
+                          //     return null;
+                          //   },
+                          // ),
+
                           TextButton(
                             onPressed: () {
                               controller.clear();

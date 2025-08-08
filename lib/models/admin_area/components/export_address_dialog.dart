@@ -8,7 +8,7 @@ import 'package:brn_ecommerce/models/sales/order_client.dart';
 import 'package:custom_universal_html/html.dart' as html;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 
@@ -99,7 +99,7 @@ class ExportAddressDialog {
                 await imagePath.writeAsBytes(image!);
 
                 // Save a widget Capture to a Gallery using ImageGallerySaver
-                final result = await ImageGallerySaver.saveFile(imagePath.path);
+                final result = await ImageGallerySaverPlus.saveFile(imagePath.path);
                 if (result['isSuccess']) {
                   CustomScaffoldMessenger(
                     // ignore: use_build_context_synchronously

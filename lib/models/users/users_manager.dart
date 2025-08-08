@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+
 /// # UserManager (Folder: models/users)
 ///
 /// A class responsible for managing user authentication and data related to user accounts.
@@ -117,7 +118,7 @@ class UserManager extends ChangeNotifier {
     loading = true;
     try {
       final UserCredential result =
-          await _auth.signInWithEmailAndPassword(email: users.email, password: users.password!);
+      await _auth.signInWithEmailAndPassword(email: users.email, password: users.password!);
 
       await _loadCurrentUser(user: result.user);
 
@@ -151,16 +152,16 @@ class UserManager extends ChangeNotifier {
 
       switch (result.status) {
         case LoginStatus.success:
-          // Gets the user's access token
+        // Gets the user's access token
           final AccessToken accessToken = result.accessToken!;
 
           // Converte o token de acesso em uma credencial do Firebase
           final OAuthCredential credential =
-              FacebookAuthProvider.credential(accessToken.tokenString);
+          FacebookAuthProvider.credential(accessToken.tokenString);
 
           // Converts the access token to a Firebase credential
           final UserCredential userCredential =
-              await FirebaseAuth.instance.signInWithCredential(credential);
+          await FirebaseAuth.instance.signInWithCredential(credential);
 
           // Get authenticated user
           final User? user = userCredential.user;
@@ -168,7 +169,7 @@ class UserManager extends ChangeNotifier {
           if (user != null) {
             // Check if the user document already exists in Firestore
             final DocumentSnapshot userSnapshot =
-                await firestore.collection("users").doc(user.uid).get();
+            await firestore.collection("users").doc(user.uid).get();
 
             // Capture user data and save to FirebaseFirestore
             if (userSnapshot.exists) {
@@ -218,64 +219,151 @@ class UserManager extends ChangeNotifier {
     try {
       loadingGoogle = true;
 
-      // check if is running on Web
       if (kIsWeb) {
+        // Login via redirect no Web
         GoogleAuthProvider googleProvider = GoogleAuthProvider();
-
         googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
         googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
-        return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+
+        await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+        return;
       }
 
-      final GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
+      // Inicializa o GoogleSignIn (novo formato v7+)
+      await GoogleSignIn.instance.initialize();
 
-      // Realize authentication for the Google
-      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-      if (googleUser != null) {
-        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      // Login do usuário
+      final GoogleSignInAccount? googleUser =
+      await GoogleSignIn.instance.authenticate();
 
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
+      if (googleUser == null) {
+        onFail?.call("Login cancelado pelo usuário!");
+        loadingGoogle = false;
+        return;
+      }
 
-        final UserCredential userCredential = await _auth.signInWithCredential(credential);
-        final User? user = userCredential.user;
+      // Obter autenticação
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-        if (user != null) {
-          // Check if the user document already exists in Firestore
-          final DocumentSnapshot userSnapshot =
-              await firestore.collection("users").doc(user.uid).get();
+      // Criar credencial para o Firebase
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken,
+      );
 
-          // Capture user data and save to FirebaseFirestore
-          if (userSnapshot.exists) {
-            users = Users.fromDocument(userSnapshot);
-            await users?.updateUserData();
-          } else {
-            users = Users(
-              email: user.email ?? "",
-              userName: user.displayName,
-              id: user.uid,
-              phoneNumber: user.phoneNumber ?? "",
-              userPhotoURL: user.photoURL ?? "",
-            );
-            await users?.saveUserData();
-          }
+      // Login no Firebase
+      final UserCredential userCredential =
+      await _auth.signInWithCredential(credential);
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        final DocumentSnapshot userSnapshot =
+        await firestore.collection("users").doc(user.uid).get();
+
+        if (userSnapshot.exists) {
+          users = Users.fromDocument(userSnapshot);
+          await users?.updateUserData();
+        } else {
+          users = Users(
+            email: user.email ?? "",
+            userName: user.displayName,
+            id: user.uid,
+            phoneNumber: user.phoneNumber ?? "",
+            userPhotoURL: user.photoURL ?? "",
+          );
+          await users?.saveUserData();
         }
 
-        loadingGoogle = false;
-        onSuccess!();
+        onSuccess?.call();
       } else {
-        // Handle the case when the user cancels the login
-        onFail!("Login cancelado pelo usuário!");
-        loadingGoogle = false;
+        onFail?.call("Erro ao autenticar usuário.");
       }
+
+      loadingGoogle = false;
     } on FirebaseAuthException catch (error) {
-      onFail!(getErrorString(error.code));
+      onFail?.call(getErrorString(error.code));
+      loadingGoogle = false;
+    } catch (e) {
+      onFail?.call("Erro inesperado: $e");
       loadingGoogle = false;
     }
+
     PerformanceMonitoring().stopTrace('login-google');
   }
+
+  /* Future<void> loginOrSingUpWithGoogle({
+    required Function? onFail,
+    required Function? onSuccess,
+  }) async {
+    PerformanceMonitoring().startTrace('login-google', shouldStart: true);
+
+    try {
+      loadingGoogle = true;
+
+      if (kIsWeb) {
+        // Login via redirect no Web
+        GoogleAuthProvider googleProvider = GoogleAuthProvider();
+        googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+        googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
+
+        await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+        return;
+      }
+
+      // Instância do GoogleSignIn
+      final GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+      if (googleUser == null) {
+        // Usuário cancelou o login
+        onFail?.call("Login cancelado pelo usuário!");
+        loadingGoogle = false;
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final UserCredential userCredential = await _auth.signInWithCredential(credential);
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        final DocumentSnapshot userSnapshot =
+        await firestore.collection("users").doc(user.uid).get();
+
+        if (userSnapshot.exists) {
+          users = Users.fromDocument(userSnapshot);
+          await users?.updateUserData();
+        } else {
+          users = Users(
+            email: user.email ?? "",
+            userName: user.displayName,
+            id: user.uid,
+            phoneNumber: user.phoneNumber ?? "",
+            userPhotoURL: user.photoURL ?? "",
+          );
+          await users?.saveUserData();
+        }
+
+        onSuccess?.call();
+      } else {
+        onFail?.call("Erro ao autenticar usuário.");
+      }
+
+      loadingGoogle = false;
+    } on FirebaseAuthException catch (error) {
+      onFail?.call(getErrorString(error.code));
+      loadingGoogle = false;
+    } catch (e) {
+      onFail?.call("Erro inesperado: $e");
+      loadingGoogle = false;
+    }
+
+    PerformanceMonitoring().stopTrace('login-google');
+  } */
 
   /// Signs up with email and password.
   Future<void> singUpWithEmailAndPassword(
@@ -286,7 +374,7 @@ class UserManager extends ChangeNotifier {
 
     try {
       final UserCredential result =
-          await _auth.createUserWithEmailAndPassword(email: users.email, password: users.password!);
+      await _auth.createUserWithEmailAndPassword(email: users.email, password: users.password!);
 
       users.id = result.user!.uid;
       users.policyAndTerms = true;
@@ -316,7 +404,7 @@ class UserManager extends ChangeNotifier {
       final User currentUser = user ?? _auth.currentUser!;
       if (currentUser.uid.isNotEmpty) {
         final DocumentSnapshot docUsers =
-            await firestore.collection("users").doc(currentUser.uid).get();
+        await firestore.collection("users").doc(currentUser.uid).get();
         users = Users.fromDocument(docUsers);
 
         final docAdmin = await firestore.collection("admins").doc(users?.id).get();

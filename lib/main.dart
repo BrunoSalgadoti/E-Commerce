@@ -4,7 +4,7 @@ import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/services/config/debug_mode_and_first_start.dart';
 import 'package:brn_ecommerce/services/config/firebase_automated_maps_update.dart';
 import 'package:brn_ecommerce/services/db_api/firebase_options.dart';
-import 'package:device_preview_minus/device_preview_minus.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';

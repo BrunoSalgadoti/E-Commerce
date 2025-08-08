@@ -1,11 +1,13 @@
 import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
+import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:brn_ecommerce/models/views/who_we_are_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:markdown_editable_textinput/format_markdown.dart';
-import 'package:markdown_editable_textinput/markdown_text_input.dart';
+import 'package:markdown_toolbar/markdown_toolbar.dart';
+// import 'package:markdown_editable_textinput/format_markdown.dart';
+// import 'package:markdown_editable_textinput/markdown_text_input.dart';
 import 'package:provider/provider.dart';
 
 class FooterDescriptionWidget extends StatefulWidget {
@@ -47,27 +49,47 @@ class _FooterDescriptionWidgetState extends State<FooterDescriptionWidget> {
               children: [
             if (userManager.adminEnable)
               Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                child: MarkdownTextInput(
-                  (customText) => whoWeAreManager.footerDescription = customText,
-                  whoWeAreManager.footerDescription ?? adminCustomText,
-                  label: "Dados da Loja: Endereço, CNPJ, tel ...",
-                  maxLines: null,
-                  actions: const [
-                    MarkdownType.bold,
-                    MarkdownType.italic,
-                    MarkdownType.title,
-                    MarkdownType.separator,
-                    MarkdownType.strikethrough,
-                    MarkdownType.code,
-                    MarkdownType.link,
-                    MarkdownType.list,
-                    MarkdownType.blockquote,
-                  ],
+                padding: const EdgeInsets.only(left: 5, right: 5, bottom: 0),
+                child: MarkdownToolbar(
+                  useIncludedTextField: false,
                   controller: controllerText,
-                  textStyle: const TextStyle(fontSize: 16),
+                  // focusNode: _focusNode,
+                  // You can customize the toolbar here as needed
+                  // For example:
+                  // backgroundColor: Colors.lightBlue,
+                  // iconColor: Colors.white,
+                  // iconSize: 30,
                 ),
+
+                // MarkdownTextInput(
+                //   (customText) => whoWeAreManager.footerDescription = customText,
+                //   whoWeAreManager.footerDescription ?? adminCustomText,
+                //   label: "Dados da Loja: Endereço, CNPJ, tel ...",
+                //   maxLines: null,
+                //   actions: const [
+                //     MarkdownType.bold,
+                //     MarkdownType.italic,
+                //     MarkdownType.title,
+                //     MarkdownType.separator,
+                //     MarkdownType.strikethrough,
+                //     MarkdownType.code,
+                //     MarkdownType.link,
+                //     MarkdownType.list,
+                //     MarkdownType.blockquote,
+                //   ],
+                //   controller: controllerText,
+                //   textStyle: const TextStyle(fontSize: 16),
+                // ),
               ),
+            const Divider(),
+            CustomTextFormField(
+              title: whoWeAreManager.footerDescription ?? adminCustomText,
+              labelText: "Dados da Loja: Endereço, CNPJ, tel ...",
+              controller: controllerText,
+              titleSize: 16,
+              maxLength: null,
+              onChanged: (customText) => whoWeAreManager.footerDescription = customText,
+            ),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
