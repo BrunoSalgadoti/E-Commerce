@@ -30,17 +30,14 @@ android {
     ndkVersion "27.0.12077973"
 
     //APK Splitting
+    ///OBS: O Flutter, por padrão, já gera APKs separados por ABI quando você roda:
+    // flutter build apk --split-per-abi
     splits {
         abi {
             enable true
             reset()
-            include 'armeabi-v7a', 'x86', 'arm64-v8a', 'x86_64'
+            include "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
             universalApk true
-        }
-        density {
-            enable true
-            reset()
-            include 'mdpi', 'hdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi'
         }
     }
 
