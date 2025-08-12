@@ -1,23 +1,32 @@
-import 'package:brn_ecommerce/common/drawer/components/drawer_page_view.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 
-/// # PageManager (Folder: models/views)
-///
-/// A class responsible for managing the page navigation within a PageView.
 class PageManager extends ChangeNotifier {
-  // Proprieties
-
   int page = 0;
+  final PageController pageController;
 
-  // Methods
+  PageManager() : pageController = PageController(initialPage: 0);
 
-  /// Sets the current page to the specified value.
-  ///
-  /// If the specified value is equal to the current page, no action is taken.
   void setPage(int value) {
     if (value == page) return;
     page = value;
-    ControllerPageView.pageController.jumpToPage(value);
+
+    if (pageController.hasClients) {
+      pageController.jumpToPage(value);
+    } else {
+      // Agenda a tentativa para quando a árvore estiver pronta
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (pageController.hasClients) {
+          pageController.jumpToPage(value);
+        }
+      });
+    }
+
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 }

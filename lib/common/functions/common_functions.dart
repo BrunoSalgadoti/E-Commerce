@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/helpers/themes/factory_colors/android_factory_colors.dart';
 import 'package:brn_ecommerce/helpers/themes/factory_colors/ios_factory_colos.dart';
 import 'package:brn_ecommerce/helpers/themes/factory_colors/web_factory_colors.dart';
@@ -8,6 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
+import 'package:provider/provider.dart';
 
 /// # Utility functions and methods (Folder: common/functions)
 /// ## getColorFromString
@@ -173,4 +176,11 @@ Widget customProgressIndicator(
   } else {
     return const SizedBox.shrink();
   }
+}
+
+void navigateToPageWithDrawer(BuildContext context, int pageIndex) {
+  Navigator.popAndPushNamed(context, RoutesNavigator.homeScreen);
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    context.read<PageManager>().setPage(pageIndex);
+  });
 }

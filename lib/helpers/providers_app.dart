@@ -44,11 +44,11 @@ class ProvidersApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserManager(), lazy: false),
 
         // Providers for Products and Product Management
+        ChangeNotifierProvider(create: (_) => PageManager(), lazy: false),
         ChangeNotifierProvider(create: (_) => Product()),
         ChangeNotifierProvider(create: (_) => ProductManager(), lazy: false),
         ChangeNotifierProvider(create: (_) => ProductCategory()),
         ChangeNotifierProvider(create: (_) => DetailsProducts(stock: 0)),
-        ChangeNotifierProvider(create: (_) => PageManager(), child: const DrawerPageView()),
 
         // Providers for App Data and Settings
         ChangeNotifierProvider(create: (_) => WhoWeAreManager()),
