@@ -2,13 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart' show navigateToPageWithDrawer;
 import 'package:brn_ecommerce/common/images/root_assets.dart';
-import 'package:brn_ecommerce/models/products/product.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
+import 'package:brn_ecommerce/models/products/product_manager.dart' show ProductManager;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SalesSuggestionWidget extends StatefulWidget {
-  final List<Product>? suggestionProducts;
-
-  const SalesSuggestionWidget(this.suggestionProducts, {super.key});
+  const SalesSuggestionWidget({super.key});
 
   @override
   State<SalesSuggestionWidget> createState() => _SalesSuggestionWidgetState();
@@ -27,10 +27,9 @@ class _SalesSuggestionWidgetState extends State<SalesSuggestionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final totalItems = widget.suggestionProducts?.length ?? 5;
+    final suggestionProducts = context.watch<ProductManager>().allProducts;
+    final totalItems = suggestionProducts.length;
     final totalPages = (totalItems / itemsPerPage).ceil();
-
-    //TODO: EM CONSTRUÇÃO, init: 07/05/2024.
 
     return Container(
       width: double.infinity,
@@ -69,15 +68,15 @@ class _SalesSuggestionWidgetState extends State<SalesSuggestionWidget> {
                   final startIndex = pageIndex * itemsPerPage;
                   final endIndex = (startIndex + itemsPerPage).clamp(0, totalItems);
 
-                  final pageItems = widget.suggestionProducts?.sublist(startIndex, endIndex);
+                  final pageItems = suggestionProducts.sublist(startIndex, endIndex);
 
                   return ListView.separated(
-                    itemCount: pageItems?.length ?? 5,
+                    itemCount: pageItems.length,
                     separatorBuilder: (BuildContext context, int index) =>
                         const SizedBox(width: 0.2),
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
-                      final product = pageItems?[index];
+                      final product = pageItems[index];
 
                       return Card(
                         elevation: 2,
@@ -91,18 +90,19 @@ class _SalesSuggestionWidgetState extends State<SalesSuggestionWidget> {
                           child: Stack(
                             children: [
                               InkWell(
-                                child: product?.images?.first.isEmpty == null
+                                child: product.images?.first.isEmpty == null
                                     ? Image.asset(RootAssets.noImagePng)
-                                    : Image.network(product!.images!.first),
+                                    : Image.network(product.images!.first),
                                 onTap: () {
-                                  //TODO: Rota para o produto em exibição
+                                  Navigator.pushNamed(context, RoutesNavigator.productDetailsScreen,
+                                      arguments: product);
                                 },
                               ),
                               Positioned(
                                 bottom: 5,
                                 left: 5,
                                 child: Text(
-                                  product?.name ?? 'Nome do Produto',
+                                  product.name ?? 'Nome do Produto',
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -118,7 +118,7 @@ class _SalesSuggestionWidgetState extends State<SalesSuggestionWidget> {
             ),
           ),
           AutoSizeText(
-            'Seu pedido foi realizado, agradecemos a preferência, acompanhe o estatus do seu pedidos em:\n',
+            'Seu pedido foi realizado, agradecemos a preferência, acompanhe o status do seu pedidos em:\n',
             maxFontSize: 25,
             minFontSize: 12,
             textAlign: TextAlign.center,

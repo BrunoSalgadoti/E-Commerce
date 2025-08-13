@@ -55,7 +55,7 @@ class ProductManager extends ChangeNotifier {
   // Getters and Setters
 
   /// Returns the state of the selected product.
-  get selectedStatus => status;
+  StatusOfProducts? get selectedStatus => status;
 
   /// Sets the search query and notifies listeners.
   set search(String value) {

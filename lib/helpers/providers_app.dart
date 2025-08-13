@@ -1,4 +1,3 @@
-import 'package:brn_ecommerce/common/drawer/components/drawer_page_view.dart';
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:brn_ecommerce/models/admin_area/admin_orders_manager.dart';
 import 'package:brn_ecommerce/models/admin_area/admin_users_manager.dart';

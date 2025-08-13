@@ -1,27 +1,23 @@
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/models/products/categories/product_sub_category.dart';
-import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/sales/order_client.dart';
 import 'package:brn_ecommerce/views/orders/components/order_product_tile.dart';
 import 'package:brn_ecommerce/views/sales_confirmation/components/sales_suggestion_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../../common/formatted_fields/format_values.dart';
-
 class SalesConfirmationScreen extends StatelessWidget {
   final OrderClient? orderClient;
   final SubCategory? subCategories;
-  final List<Product>? suggestionProducts;
 
   const SalesConfirmationScreen(this.orderClient,
-      {super.key, this.subCategories, this.suggestionProducts});
+      {super.key, this.subCategories});
 
   @override
   Widget build(BuildContext context) {
     final orderId = orderClient?.orderId ?? '';
     final price = orderClient?.price ?? 0.0;
-    // final List<Product> suggestionProductsList;
 
     return Scaffold(
       drawer: const CustomDrawer(),
@@ -36,10 +32,7 @@ class SalesConfirmationScreen extends StatelessWidget {
           runAlignment: WrapAlignment.center,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            //TODO: parei aqui 08/05/2024
-
-            SalesSuggestionWidget(suggestionProducts),
-
+            SalesSuggestionWidget(),
             Card(
               margin: const EdgeInsets.all(16),
               child: ListView(
