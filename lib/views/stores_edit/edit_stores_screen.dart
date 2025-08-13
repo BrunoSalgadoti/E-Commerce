@@ -363,7 +363,7 @@ class EditStoresScreenState extends State<EditStoresScreen> {
     );
   }
 
-  backScreen() => Navigator.of(context).pop();
+  void backScreen() => Navigator.of(context).pop();
 
   Future<void> _saveOrUpdateStore(BuildContext context) async {
     final form = formKey.currentState;

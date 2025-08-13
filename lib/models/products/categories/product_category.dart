@@ -113,6 +113,7 @@ class ProductCategory extends ChangeNotifier {
   /// Parameters:
   /// - `image`: The new image to be set for the category.
   ///
+  // ignore: unintended_html_in_doc_comment
   /// Returns: Future<void>
   ///
   /// ```dart
