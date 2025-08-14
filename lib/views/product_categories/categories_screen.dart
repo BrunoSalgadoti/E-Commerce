@@ -102,8 +102,21 @@ class CategoriesScreen extends StatelessWidget {
                             return GestureDetector(
                               onTap: () {
                                 Navigator.of(context).pushNamed(
-                                    RoutesNavigator.categoryProductsScreen,
-                                    arguments: category);
+                                  RoutesNavigator.categoryProductsScreen,
+                                  arguments: category,
+                                );
+
+                                if (userManager.users?.id == null) {
+                                  debugPrint('Usuário não logado');
+                                  return;
+                                }
+
+                                productCategoryManager.visitCategory(
+                                  category.categoryID!,
+                                  userManager.users!,
+                                );
+
+                                debugPrint(category.categoryID!.toString());
                               },
                               child: MainCategoriesCard(productCategory: category),
                             );

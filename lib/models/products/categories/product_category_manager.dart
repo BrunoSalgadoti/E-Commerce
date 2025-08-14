@@ -2,11 +2,16 @@ import 'dart:async';
 
 import 'package:brn_ecommerce/helpers/product_categories_factory_lists/categories_factory.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category.dart';
+import 'package:brn_ecommerce/models/products/product.dart';
+import 'package:brn_ecommerce/models/products/product_manager.dart';
+import 'package:brn_ecommerce/models/users/users.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 /// # Manager for handling product categories (Folder: models/products/product_category)
 /// ## ProductCategoryManager
@@ -15,13 +20,13 @@ import 'package:flutter/foundation.dart';
 /// This manager handles the logic related to product categories, such as updating categories in Firebase,
 /// loading categories for users, configuring real-time updates for categories, and filtering activated categories.
 class ProductCategoryManager extends ChangeNotifier {
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
   UserManager? userManager;
   List<ProductCategory> _categoriesList = [];
+  List<Product> suggestionProducts = [];
   StreamSubscription<QuerySnapshot>? _categoriesListener;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   //Constructor
-
   ProductCategoryManager() {
     verifyUser(userManager ?? UserManager());
   }
@@ -76,7 +81,6 @@ class ProductCategoryManager extends ChangeNotifier {
     _categoriesListener?.cancel();
     _categoriesList.clear();
     if (userManager.adminEnable) {
-      _loadAllCategories();
       _setupRealTimeUpdatesAllCategories();
       notifyListeners();
     } else if (!userManager.adminEnable) {
@@ -116,29 +120,96 @@ class ProductCategoryManager extends ChangeNotifier {
       _categoriesList = event.docs.map((s) => ProductCategory.fromDocument(s)).toList();
       notifyListeners();
     });
+    PerformanceMonitoring().stopTrace('_loadCategoriesList');
   }
 
-  // Loads all categories from Firestore.
-  ///
-  /// This method retrieves all categories from Firestore, including both activated and deactivated categories.
-  Future<void> _loadAllCategories() async {
-    PerformanceMonitoring().startTrace('_loadCategoriesList', shouldStart: true);
-    if (kDebugMode) {
-      MonitoringLogger().logInfo('Info _loadAllCategories');
+  /// Increments the visit counter of a gallery/category for a user
+  static Future<void> saveGalleryVisit({
+    required Users user,
+    required String categoryId,
+  }) async {
+    if (user.id == null || user.id!.isEmpty) {
+      if (kDebugMode) debugPrint("Usuário sem ID!");
+      return;
     }
 
-    // Starts trying to get data from cache
-    QuerySnapshot<Map<String, dynamic>> snapshot =
-        await firestore.collection("categories").get(const GetOptions(source: Source.cache));
+    final userRef = user.firestoreRef;
 
-    if (snapshot.metadata.isFromCache) {
-      // If data is retrieved from the cache, update the UI...
-      // immediately with cached data
-      _categoriesList = snapshot.docs.map((s) => ProductCategory.fromDocument(s)).toList();
+    final snapshot = await userRef.get();
+
+    // Explicit cast for Map<String, dynamic>
+    final data = snapshot.data() as Map<String, dynamic>? ?? {};
+
+    // Existing galleries
+    Map<String, dynamic> galleries = (data['galleries'] as Map<String, dynamic>?) ?? {};
+
+    // Increments the counter
+    galleries[categoryId] = (galleries[categoryId] ?? 0) + 1;
+
+    // Saves to Firestore
+    await userRef.update({'galleries': galleries});
+
+    if (kDebugMode) debugPrint('Galeria visitada: $categoryId -> ${galleries[categoryId]}');
+  }
+
+  Future<void> visitCategory(String categoryId, Users user) async {
+    // Saves user visit
+    await saveGalleryVisit(
+      user: user,
+      categoryId: categoryId,
+    );
+
+    debugPrint("Categoria visitada: $categoryId");
+    notifyListeners();
+  }
+
+  Future<List<Product>> getProductsByVisitedGalleries(
+    Users user,
+    List<Product> allProducts,
+  ) async {
+    final snapshot = await FirebaseFirestore.instance.collection('users').doc(user.id).get();
+    final data = snapshot.data() ?? {};
+    final galleries = (data['galleries'] as Map<String, dynamic>?) ?? {};
+
+    if (galleries.isEmpty) return allProducts; // fallback
+
+    // Sort galleries by visits (desc)
+    final orderedGalleries = galleries.entries.toList()
+      ..sort((a, b) => (b.value as int).compareTo(a.value as int));
+
+    final List<Product> orderedProducts = [];
+
+    for (final gallery in orderedGalleries) {
+      // Here it's important to filter by the product category ID,
+      //  and not by the product ID itself.
+      final galleryProducts = allProducts
+          .where((p) => p.categoryOfProduct == gallery.key) //
+          .take(3)
+          .toList();
+      orderedProducts.addAll(galleryProducts);
       notifyListeners();
     }
 
-    PerformanceMonitoring().stopTrace('_loadCategoriesList');
+    return orderedProducts;
+  }
+
+  Future<void> loadSuggestions(BuildContext context) async {
+    final userManager = context.read<UserManager>();
+    final productManager = context.read<ProductManager>();
+
+    if (userManager.users == null) {
+      suggestionProducts = productManager.allProducts;
+      notifyListeners();
+      return;
+    }
+
+    final products = await getProductsByVisitedGalleries(
+      userManager.users!,
+      productManager.allProducts,
+    );
+
+    suggestionProducts = products;
+    notifyListeners();
   }
 
   /// Sets up real-time updates for all categories from Firestore.

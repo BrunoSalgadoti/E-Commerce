@@ -3,7 +3,7 @@ import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart' show navigateToPageWithDrawer;
 import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
-import 'package:brn_ecommerce/models/products/product_manager.dart' show ProductManager;
+import 'package:brn_ecommerce/models/products/categories/product_category_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,19 +15,22 @@ class SalesSuggestionWidget extends StatefulWidget {
 }
 
 class _SalesSuggestionWidgetState extends State<SalesSuggestionWidget> {
-  final int itemsPerPage = 6;
+  final int itemsPerPage = 10;
   int currentPage = 0;
   PageController pageControllerSuggest = PageController();
 
   @override
   void initState() {
     pageControllerSuggest = PageController();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ProductCategoryManager>().loadSuggestions(context);
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final suggestionProducts = context.watch<ProductManager>().allProducts;
+    final suggestionProducts = context.watch<ProductCategoryManager>().suggestionProducts;
     final totalItems = suggestionProducts.length;
     final totalPages = (totalItems / itemsPerPage).ceil();
 
@@ -67,50 +70,62 @@ class _SalesSuggestionWidgetState extends State<SalesSuggestionWidget> {
                 itemBuilder: (context, pageIndex) {
                   final startIndex = pageIndex * itemsPerPage;
                   final endIndex = (startIndex + itemsPerPage).clamp(0, totalItems);
-
                   final pageItems = suggestionProducts.sublist(startIndex, endIndex);
 
                   return ListView.separated(
-                    itemCount: pageItems.length,
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const SizedBox(width: 0.2),
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
+                    itemCount: pageItems.length,
+                    separatorBuilder: (_, __) => const SizedBox(width: 0.2),
+                    itemBuilder: (context, index) {
                       final product = pageItems[index];
 
-                      return Card(
-                        elevation: 2,
-                        clipBehavior: Clip.antiAlias,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: SizedBox(
-                          width: 150,
-                          height: double.infinity,
-                          child: Stack(
-                            children: [
-                              InkWell(
-                                child: product.images?.first.isEmpty == null
-                                    ? Image.asset(RootAssets.noImagePng)
-                                    : Image.network(product.images!.first),
-                                onTap: () {
-                                  Navigator.pushNamed(context, RoutesNavigator.productDetailsScreen,
-                                      arguments: product);
-                                },
+                      return TweenAnimationBuilder<double>(
+                          tween: Tween(begin: 50, end: 0), // deslocamento inicial (px)
+                          duration: const Duration(seconds: 3),
+                          curve: Curves.easeOutCubic,
+                          builder: (context, value, child) {
+                            return Opacity(
+                              opacity: (50 - value) / 50, // fade-in proporcional
+                              child: Transform.translate(
+                                offset: Offset(value, 0), // move da direita para a posição final
+                                child: child,
                               ),
-                              Positioned(
-                                bottom: 5,
-                                left: 5,
-                                child: Text(
-                                  product.name ?? 'Nome do Produto',
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                            );
+                          },
+                          child: Card(
+                            elevation: 2,
+                            clipBehavior: Clip.antiAlias,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: SizedBox(
+                              width: 150,
+                              height: double.infinity,
+                              child: Stack(
+                                children: [
+                                  InkWell(
+                                    child: (product.images == null || product.images!.isEmpty)
+                                        ? Image.asset(RootAssets.noImagePng)
+                                        : Image.network(product.images!.first),
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, RoutesNavigator.productDetailsScreen,
+                                          arguments: product);
+                                    },
+                                  ),
+                                  Positioned(
+                                    bottom: 5,
+                                    left: 5,
+                                    child: Text(
+                                      product.name ?? 'Nome do Produto',
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                      );
+                            ),
+                          ));
                     },
                   );
                 },

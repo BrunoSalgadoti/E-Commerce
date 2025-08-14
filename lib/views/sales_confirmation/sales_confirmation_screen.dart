@@ -1,4 +1,3 @@
-import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/models/products/categories/product_sub_category.dart';
@@ -11,8 +10,7 @@ class SalesConfirmationScreen extends StatelessWidget {
   final OrderClient? orderClient;
   final SubCategory? subCategories;
 
-  const SalesConfirmationScreen(this.orderClient,
-      {super.key, this.subCategories});
+  const SalesConfirmationScreen(this.orderClient, {super.key, this.subCategories});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +18,6 @@ class SalesConfirmationScreen extends StatelessWidget {
     final price = orderClient?.price ?? 0.0;
 
     return Scaffold(
-      drawer: const CustomDrawer(),
       appBar: AppBar(
         title: const Text('Pedido Confirmado!'),
         centerTitle: true,
