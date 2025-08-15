@@ -28,7 +28,9 @@ class IosFactoryColors {
   final Color iconDrawerColor;
 
   /// The color used for large-sized text in the iOS platform.
-  final Color bodyLargeColor;
+  final Color titleLargeColor;
+
+  final Color textSmall;
 
   /// The color used for labels in the iOS platform.
   final Color labelStyleColor;
@@ -95,10 +97,11 @@ class IosFactoryColors {
     this.scaffoldBackgroundColor = const Color.fromARGB(255, 211, 119, 206),
     this.appBarBackgroundColor = const Color.fromARGB(255, 169, 40, 175),
     this.titleMediumColor = const Color.fromARGB(255, 23, 56, 68),
+    this.titleLargeColor = const Color.fromARGB(255, 23, 56, 68),
+    this.textSmall = const Color.fromARGB(255, 243, 116, 116),
     this.appBarTextColor = const Color.fromARGB(255, 23, 56, 68),
     this.iconColor = const Color.fromARGB(255, 231, 180, 243),
     this.iconDrawerColor = const Color.fromARGB(255, 178, 103, 151),
-    this.bodyLargeColor = const Color.fromARGB(255, 23, 56, 68),
     this.labelStyleColor = const Color.fromARGB(255, 23, 56, 68),
     this.focusedBorderColor = const Color.fromARGB(255, 245, 183, 219),
     this.disabledBorderColor = const Color.fromARGB(0, 121, 121, 121),

@@ -14,6 +14,10 @@ class AndroidFactoryColors {
   /// The background color of scaffold components.
   final Color scaffoldBackgroundColor;
 
+  final Color titleLargeColor;
+
+  final Color textSmall;
+
   /// The background color of app bars.
   final Color appBarBackgroundColor;
 
@@ -28,9 +32,6 @@ class AndroidFactoryColors {
 
   /// The color of icons in the drawer.
   final Color iconDrawerColor;
-
-  /// The color of large-sized body text.
-  final Color bodyLargeColor;
 
   /// The color of label text styles.
   final Color labelStyleColor;
@@ -91,21 +92,22 @@ class AndroidFactoryColors {
   /// The [cardShadowColor] parameter represents the color of shadows on cards.
   const AndroidFactoryColors({
     Key? key,
-    this.primaryColor = const Color.fromARGB(255, 255, 0, 0),
-    this.scaffoldBackgroundColor = const Color.fromARGB(255, 255, 180, 180),
-    this.appBarBackgroundColor = const Color.fromARGB(255, 0, 0, 0),
-    this.appBarTextColor = const Color.fromARGB(255, 255, 134, 134),
-    this.titleMediumColor = const Color.fromARGB(255, 255, 89, 89),
-    this.iconColor = const Color.fromARGB(255, 255, 89, 89),
-    this.iconDrawerColor = const Color.fromARGB(255, 255, 0, 0),
-    this.bodyLargeColor = const Color.fromARGB(255, 255, 180, 180),
-    this.labelStyleColor = const Color.fromARGB(255, 141, 0, 0),
-    this.focusedBorderColor = const Color.fromARGB(255, 255, 134, 134),
-    this.disabledBorderColor = const Color.fromARGB(82, 243, 216, 216),
-    this.errorStyleColor = const Color.fromARGB(255, 238, 255, 0),
-    this.buttonColor = const Color.fromARGB(255, 82, 0, 0),
-    this.disabledButtonColor = const Color.fromARGB(255, 100, 62, 62),
+    this.primaryColor = const Color.fromARGB(255, 255, 98, 0),
+    this.scaffoldBackgroundColor = const Color.fromARGB(255, 251, 255, 181),
+    this.appBarBackgroundColor = const Color.fromARGB(255, 255, 234, 0),
+    this.titleMediumColor = const Color.fromARGB(255, 0, 0, 0),
+    this.titleLargeColor = const Color.fromARGB(255, 255, 0, 0),
+    this.textSmall = const Color.fromARGB(255, 0, 0, 0),
+    this.appBarTextColor = const Color.fromARGB(255, 255, 0, 0),
+    this.iconColor = const Color.fromARGB(255, 255, 0, 0),
+    this.iconDrawerColor = const Color.fromARGB(255, 168, 4, 4),
+    this.labelStyleColor = const Color.fromARGB(255, 9, 9, 9),
+    this.focusedBorderColor = const Color.fromARGB(255, 255, 153, 0),
+    this.disabledBorderColor = const Color.fromARGB(0, 237, 150, 150),
+    this.errorStyleColor = const Color.fromARGB(255, 255, 2, 2),
+    this.buttonColor = const Color.fromARGB(255, 255, 148, 78),
+    this.disabledButtonColor = const Color.fromARGB(255, 112, 107, 107),
     this.cardColor = const Color.fromARGB(255, 255, 255, 255),
-    this.cardShadowColor = const Color.fromARGB(255, 112, 107, 107),
+    this.cardShadowColor = const Color.fromARGB(255, 255, 113, 21),
   });
 }

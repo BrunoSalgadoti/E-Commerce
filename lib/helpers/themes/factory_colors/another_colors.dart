@@ -6,6 +6,19 @@ import 'package:flutter/material.dart';
 ///
 /// This class encapsulates the gradient color scheme used on the home screen for Android, iOS, and Web platforms.
 class AnotherColors {
+
+  final Color drawerCollorFirstAndroid;
+
+  final Color drawerCollorSecondAndroid;
+
+  final Color drawerCollorFirstWeb;
+
+  final Color drawerCollorSecondWeb;
+
+  final Color drawerCollorFirstIos;
+
+  final Color drawerCollorSecondIos;
+
   /// The first color of the gradient for Android.
   final Color homeGradientColor1Android;
 
@@ -41,11 +54,17 @@ class AnotherColors {
     // Gradient Colors of Home Screen Android
     this.homeGradientColor1Android = const Color.fromARGB(255, 245, 250, 82),
     this.homeGradientColor2Android = const Color.fromARGB(255, 255, 255, 255),
+    this.drawerCollorFirstAndroid = const Color.fromARGB(255, 240, 243, 177),
+    this.drawerCollorSecondAndroid = const Color.fromARGB(255, 255, 255, 255),
     // Gradient Colors of Home Screen IOS
     this.homeGradientColor1Ios = const Color.fromARGB(255, 169, 40, 175),
     this.homeGradientColor2Ios = const Color.fromARGB(255, 231, 180, 243),
+    this.drawerCollorFirstIos = const Color.fromARGB(255, 169, 40, 175),
+    this.drawerCollorSecondIos = const Color.fromARGB(255, 231, 180, 243),
     // Gradient Colors of Home Screen WEB
-    this.homeGradientColor1Web = const Color.fromARGB(255, 162, 225, 225),
-    this.homeGradientColor2Web = const Color.fromARGB(255, 217, 217, 217),
+    this.homeGradientColor1Web = const Color.fromARGB(255, 238, 255, 0),
+    this.homeGradientColor2Web = const Color.fromARGB(255, 255, 255, 255),
+    this.drawerCollorFirstWeb = const Color.fromARGB(255, 240, 243, 177),
+    this.drawerCollorSecondWeb = const Color.fromARGB(255, 255, 255, 255),
   });
 }

@@ -2,6 +2,7 @@ import 'package:brn_ecommerce/common/drawer/components/drawer_header.dart';
 import 'package:brn_ecommerce/common/drawer/components/drawer_title.dart';
 import 'package:brn_ecommerce/common/drawer/components/setting_drawer.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
+import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ import '../../models/users/users_manager.dart';
 /// ## CustomDrawer
 /// Widget that represents a custom drawer for navigation in the app.
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({super.key});
+  const CustomDrawer({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +29,11 @@ class CustomDrawer extends StatelessWidget {
             child: Stack(
               children: [
                 Container(
-                  decoration: const BoxDecoration(
+                  decoration:  BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Color.fromARGB(255, 203, 236, 241),
-                        Colors.white,
+                        getDrawerColorFirst(),
+                        getDrawerColorSecond(),
                       ],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,

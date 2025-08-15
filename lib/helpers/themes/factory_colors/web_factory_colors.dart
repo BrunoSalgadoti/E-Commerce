@@ -28,7 +28,9 @@ class WebFactoryColors {
   final Color iconDrawerColor;
 
   /// The color used for large-sized text in the Web platform.
-  final Color bodyLargeColor;
+  final Color titleLargeColor;
+
+  final Color textSmall;
 
   /// The color used for labels in the Web platform.
   final Color labelStyleColor;
@@ -70,7 +72,7 @@ class WebFactoryColors {
   ///
   /// The [iconDrawerColor] parameter represents the color of icons in the drawer.
   ///
-  /// The [bodyLargeColor] parameter represents the color of large-sized body text.
+  /// The [titleLargeColor] parameter represents the color of large-sized body text.
   ///
   /// The [labelStyleColor] parameter represents the color of label text styles.
   ///
@@ -89,21 +91,22 @@ class WebFactoryColors {
   /// The [cardShadowColor] parameter represents the color of shadows on cards.
   const WebFactoryColors({
     Key? key,
-    this.primaryColor = const Color.fromARGB(255, 96, 136, 159),
-    this.scaffoldBackgroundColor = const Color.fromARGB(255, 255, 255, 255),
-    this.appBarBackgroundColor = const Color.fromARGB(255, 23, 56, 68),
-    this.titleMediumColor = const Color.fromARGB(255, 253, 253, 253),
-    this.appBarTextColor = const Color.fromARGB(255, 160, 196, 215),
-    this.iconColor = const Color.fromARGB(255, 255, 255, 255),
-    this.iconDrawerColor = const Color.fromARGB(255, 96, 136, 159),
-    this.bodyLargeColor = const Color.fromARGB(255, 0, 0, 0),
+    this.primaryColor = const Color.fromARGB(255, 255, 98, 0),
+    this.scaffoldBackgroundColor = const Color.fromARGB(255, 237, 236, 236),
+    this.appBarBackgroundColor = const Color.fromARGB(255, 255, 234, 0),
+    this.titleMediumColor = const Color.fromARGB(255, 0, 0, 0),
+    this.titleLargeColor = const Color.fromARGB(255, 0, 0, 0),
+    this.textSmall = const Color.fromARGB(255, 243, 116, 116),
+    this.appBarTextColor = const Color.fromARGB(255, 255, 0, 0),
+    this.iconColor = const Color.fromARGB(255, 255, 0, 0),
+    this.iconDrawerColor = const Color.fromARGB(255, 168, 4, 4),
     this.labelStyleColor = const Color.fromARGB(255, 9, 9, 9),
-    this.focusedBorderColor = const Color.fromARGB(255, 162, 225, 225),
-    this.disabledBorderColor = const Color.fromARGB(0, 121, 121, 121),
+    this.focusedBorderColor = const Color.fromARGB(255, 255, 0, 0),
+    this.disabledBorderColor = const Color.fromARGB(0, 237, 150, 150),
     this.errorStyleColor = const Color.fromARGB(255, 255, 2, 2),
-    this.buttonColor = const Color.fromARGB(255, 23, 56, 68),
-    this.disabledButtonColor = const Color.fromARGB(255, 112, 107, 107),
-    this.cardColor = const Color.fromARGB(255, 255, 255, 255),
-    this.cardShadowColor = const Color.fromARGB(255, 112, 107, 107),
+    this.buttonColor = const Color.fromARGB(255, 255, 148, 78),
+    this.disabledButtonColor = const Color.fromARGB(255, 159, 153, 153),
+    this.cardColor = const Color.fromARGB(255, 255, 232, 155),
+    this.cardShadowColor = const Color.fromARGB(255, 255, 113, 21),
   });
 }

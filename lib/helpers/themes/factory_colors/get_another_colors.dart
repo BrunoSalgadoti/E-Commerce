@@ -8,6 +8,29 @@ import 'package:flutter/material.dart';
 
 import 'web_factory_colors.dart';
 
+Color getDrawerColorSecond([BuildContext? context]) {
+  if (kIsWeb) {
+    return const AnotherColors().drawerCollorSecondWeb;
+  } else if (Platform.isAndroid) {
+    return const AnotherColors().drawerCollorSecondAndroid;
+  } else if (Platform.isIOS) {
+    return const AnotherColors().drawerCollorFirstIos;
+  } else {
+    return Colors.lightBlueAccent;
+  }
+}
+
+Color getDrawerColorFirst([BuildContext? context]) {
+  if (kIsWeb) {
+    return const AnotherColors().drawerCollorFirstWeb;
+  } else if (Platform.isAndroid) {
+    return const AnotherColors().drawerCollorFirstAndroid;
+  } else if (Platform.isIOS) {
+    return const AnotherColors().drawerCollorFirstIos;
+  } else {
+    return Colors.lightBlueAccent;
+  }
+}
 /// ## Color Helper Functions  (Folder: helpers/themes/factory_colors)
 /// ### getEspecialColor
 /// Returns a special color based on the platform or device type.

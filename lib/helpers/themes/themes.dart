@@ -41,11 +41,14 @@ class Themes with ChangeNotifier {
         ),
       ),
       textTheme: TextTheme(
+        titleSmall: TextStyle(
+          color: androidFactoryColors.textSmall,
+        ),
         titleLarge: TextStyle(
           color: androidFactoryColors.titleMediumColor,
         ),
         bodyMedium: TextStyle(
-          color: androidFactoryColors.bodyLargeColor,
+          color: androidFactoryColors.titleLargeColor,
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -95,11 +98,14 @@ class Themes with ChangeNotifier {
         ),
       ),
       textTheme: TextTheme(
+        titleSmall: TextStyle(
+          color: androidFactoryColors.textSmall,
+        ),
         titleLarge: TextStyle(
           color: iosFactoryColors.titleMediumColor,
         ),
         bodyMedium: TextStyle(
-          color: iosFactoryColors.bodyLargeColor,
+          color: iosFactoryColors.titleLargeColor,
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -149,11 +155,14 @@ class Themes with ChangeNotifier {
         ),
       ),
       textTheme: TextTheme(
+        titleSmall: TextStyle(
+          color: androidFactoryColors.textSmall,
+        ),
         titleLarge: TextStyle(
           color: webFactoryColors.titleMediumColor,
         ),
         bodyMedium: TextStyle(
-          color: webFactoryColors.bodyLargeColor,
+          color: webFactoryColors.titleLargeColor,
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -177,7 +186,7 @@ class Themes with ChangeNotifier {
       buttonTheme: ButtonThemeData(
         buttonColor: webFactoryColors.buttonColor,
         disabledColor: webFactoryColors.disabledButtonColor,
-        textTheme: ButtonTextTheme.primary,
+        textTheme: ButtonTextTheme.normal,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       ),
       cardTheme: CardThemeData(
