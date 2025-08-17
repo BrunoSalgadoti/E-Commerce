@@ -1,7 +1,7 @@
 import 'package:brn_ecommerce/common/cards/flexible_product_card.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
-import 'package:brn_ecommerce/common/search/search_products.dart';
+import 'package:brn_ecommerce/common/search/search_products_app_bar.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/controller.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/filters_result.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/sliding_filters_products.dart';
@@ -39,7 +39,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
     return Scaffold(
       drawer: const CustomDrawer(),
-      appBar: searchProducts(context: context),
+      appBar: searchProductsAppBar(context: context),
       body: Consumer<ProductManager>(builder: (_, productManager, __) {
         final filteredProducts = productManager.filteredProducts;
         return Align(

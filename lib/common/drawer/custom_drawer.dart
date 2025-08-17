@@ -13,7 +13,9 @@ import '../../models/users/users_manager.dart';
 /// ## CustomDrawer
 /// Widget that represents a custom drawer for navigation in the app.
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({super.key,});
+  const CustomDrawer({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +24,14 @@ class CustomDrawer extends StatelessWidget {
         constraints: constraints.maxWidth <= mobileBreakpoint
             ? BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.8)
             : BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
-        child: Drawer(
-          semanticLabel: "Menu de opções",
-          child: Padding(
-            padding: const EdgeInsets.only(right: 8.0),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 10, 5, 10),
+          child: Drawer(
+            semanticLabel: "Menu de opções",
             child: Stack(
               children: [
                 Container(
-                  decoration:  BoxDecoration(
+                  decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
                         getDrawerColorFirst(),

@@ -17,9 +17,15 @@ class FlexibleProductCard extends StatelessWidget {
   // Determines whether the card should be displayed vertically or horizontally.
   final bool isVertical;
   final Product? product;
+  final VoidCallback? onTap;
 
   /// Creates a flexible product card.
-  const FlexibleProductCard({super.key, this.product, required this.isVertical});
+  const FlexibleProductCard({
+    super.key,
+    required this.product,
+    required this.isVertical,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +37,18 @@ class FlexibleProductCard extends StatelessWidget {
     UserManager userManager = UserManager();
 
     return GestureDetector(
-      onTap: () {
-        if (imageNotAvailable && userManager.adminEnable) {
-          Navigator.pushNamed(context, RoutesNavigator.editProductScreen, arguments: product);
-        }
-        if (!imageNotAvailable) {
-          Navigator.pushNamed(context, RoutesNavigator.productDetailsScreen, arguments: product);
-        }
-      },
+      onTap: onTap ??
+          () {
+            // Default navigation only if there is no external onTap
+            if (onTap == null) {
+              if (imageNotAvailable && userManager.adminEnable) {
+                Navigator.pushNamed(context, RoutesNavigator.editProductScreen, arguments: product);
+              } else if (!imageNotAvailable) {
+                Navigator.pushNamed(context, RoutesNavigator.productDetailsScreen,
+                    arguments: product);
+              }
+            }
+          },
       child: product!.isValid!
           ? isVertical == true
 

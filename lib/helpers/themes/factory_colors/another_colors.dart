@@ -19,6 +19,12 @@ class AnotherColors {
 
   final Color drawerCollorSecondIos;
 
+  final Color complementHomeAppBarCollorIos;
+
+  final Color complementHomeAppBarCollorWeb;
+
+  final Color complementHomeAppBarCollorAndroid;
+
   /// The first color of the gradient for Android.
   final Color homeGradientColor1Android;
 
@@ -56,15 +62,18 @@ class AnotherColors {
     this.homeGradientColor2Android = const Color.fromARGB(255, 255, 255, 255),
     this.drawerCollorFirstAndroid = const Color.fromARGB(255, 240, 243, 177),
     this.drawerCollorSecondAndroid = const Color.fromARGB(255, 255, 255, 255),
+    this.complementHomeAppBarCollorAndroid = const Color.fromARGB(200, 236, 236, 66),
     // Gradient Colors of Home Screen IOS
     this.homeGradientColor1Ios = const Color.fromARGB(255, 169, 40, 175),
     this.homeGradientColor2Ios = const Color.fromARGB(255, 231, 180, 243),
     this.drawerCollorFirstIos = const Color.fromARGB(255, 169, 40, 175),
     this.drawerCollorSecondIos = const Color.fromARGB(255, 231, 180, 243),
+    this.complementHomeAppBarCollorIos = const Color.fromARGB(200, 213, 120, 223),
     // Gradient Colors of Home Screen WEB
     this.homeGradientColor1Web = const Color.fromARGB(255, 238, 255, 0),
     this.homeGradientColor2Web = const Color.fromARGB(255, 255, 255, 255),
     this.drawerCollorFirstWeb = const Color.fromARGB(255, 240, 243, 177),
     this.drawerCollorSecondWeb = const Color.fromARGB(255, 255, 255, 255),
+    this.complementHomeAppBarCollorWeb = const Color.fromARGB(200, 236, 236, 66),
   });
 }

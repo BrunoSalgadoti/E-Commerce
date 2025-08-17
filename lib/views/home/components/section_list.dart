@@ -19,49 +19,50 @@ class SectionList extends StatelessWidget {
     final ScrollController scrollController = ScrollController();
 
     return ChangeNotifierProvider.value(
-        value: section,
-        child: LayoutBuilder(builder: (context, constraints) {
-          return ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
-            child: Container(
-              margin: const EdgeInsets.fromLTRB(18, 8, 18, 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SectionHeader(section: section),
-                  SizedBox(
-                      height: constraints.maxWidth <= mobileBreakpoint ? 160 : 280,
-                      child: Consumer<Section>(
-                        builder: (_, section, __) {
-                          return Scrollbar(
-                            scrollbarOrientation: ScrollbarOrientation.bottom,
-                            thumbVisibility: kIsWeb ? true : false,
-                            trackVisibility: kIsWeb ? true : false,
-                            interactive: kIsWeb ? true : false,
+      value: section,
+      child: LayoutBuilder(builder: (context, constraints) {
+        return ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
+          child: Container(
+            margin: const EdgeInsets.fromLTRB(18, 8, 18, 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SectionHeader(section: section),
+                SizedBox(
+                    height: constraints.maxWidth <= mobileBreakpoint ? 160 : 280,
+                    child: Consumer<Section>(
+                      builder: (_, section, __) {
+                        return Scrollbar(
+                          scrollbarOrientation: ScrollbarOrientation.bottom,
+                          thumbVisibility: kIsWeb ? true : false,
+                          trackVisibility: kIsWeb ? true : false,
+                          interactive: kIsWeb ? true : false,
+                          controller: scrollController,
+                          child: ListView.separated(
                             controller: scrollController,
-                            child: ListView.separated(
-                              controller: scrollController,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (_, index) {
-                                if (index < section.items!.length) {
-                                  return ItemTile(item: section.items!.reversed.toList()[index]);
-                                } else {
-                                  return const AddTileWidget();
-                                }
-                              },
-                              separatorBuilder: (_, __) => const SizedBox(width: 4),
-                              itemCount: homeManager.editing
-                                  ? section.items!.length + 1
-                                  : section.items!.length,
-                            ),
-                          );
-                        },
-                      ))
-                ],
-              ),
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (_, index) {
+                              if (index < section.items!.length) {
+                                return ItemTile(item: section.items!.reversed.toList()[index]);
+                              } else {
+                                return const AddTileWidget();
+                              }
+                            },
+                            separatorBuilder: (_, __) => const SizedBox(width: 4),
+                            itemCount: homeManager.editing
+                                ? section.items!.length + 1
+                                : section.items!.length,
+                          ),
+                        );
+                      },
+                    ))
+              ],
             ),
-          );
-        }));
+          ),
+        );
+      }),
+    );
   }
 }

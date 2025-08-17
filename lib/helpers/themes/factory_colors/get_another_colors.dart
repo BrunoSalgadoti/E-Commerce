@@ -8,6 +8,18 @@ import 'package:flutter/material.dart';
 
 import 'web_factory_colors.dart';
 
+
+Color getComplementHomeAppBarCollor([BuildContext? context]) {
+  if (kIsWeb) {
+    return const AnotherColors().complementHomeAppBarCollorWeb;
+  } else if (Platform.isAndroid) {
+    return const AnotherColors().complementHomeAppBarCollorAndroid;
+  } else if (Platform.isIOS) {
+    return const AnotherColors().complementHomeAppBarCollorIos;
+  } else {
+    return Colors.lightBlueAccent;
+  }
+}
 Color getDrawerColorSecond([BuildContext? context]) {
   if (kIsWeb) {
     return const AnotherColors().drawerCollorSecondWeb;
