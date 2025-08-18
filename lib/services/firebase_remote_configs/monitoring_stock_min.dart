@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 class MonitoringStockMin {
   //TODO: quando configurar o firebase
   HandleErrors handleErrorsEmail = HandleErrors.withEmailMessage(
-      recipientEmail: 'suporte@brninfodev.com',
+      recipientEmail: 'brunosalgadoti@gmail.com',
       emailSubject: 'Erro no monitoramento do Estoque',
       emailMessage: '');
 
@@ -39,7 +39,7 @@ class MonitoringStockMin {
     } catch (error) {
       //TODO: quando configurar o firebase
       final handleErrors = HandleErrors.withEmailMessage(
-        recipientEmail: 'suporte@brninfodev.com',
+        recipientEmail: 'brunosalgadoti@gmail.com',
         emailSubject: 'Erro no monitoramento do Estoque',
       );
 
@@ -68,7 +68,7 @@ class MonitoringStockMin {
       // Handle any network error or failure to obtain value
       debugPrint('Erro ao buscar o valor do parâmetro remoto: $error');
       final handleErrors = HandleErrors.withEmailMessage(
-        recipientEmail: 'suporte@brninfodev.com',
+        recipientEmail: 'brunosalgadoti@gmail.com',
         emailSubject: 'Erro no monitoramento do Estoque',
       );
 
