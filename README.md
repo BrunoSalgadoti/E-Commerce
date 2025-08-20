@@ -66,5 +66,5 @@ Este projeto está licenciado sob a Licença MIT - consulte o arquivo [LICENSE](
 detalhes.
 
 ## Desenvolvido pelo Analista e Dev. Bruno Salgado.
-### Contato: suporte@brninfodev.com
+### Contato: brunosalgadoti@gmail.com
 ## Copyright 2024.
