@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
-import 'package:brn_ecommerce/views/home/components/complement_home_app_bar.dart';
+import 'package:brn_ecommerce/common/complement_app_bar/complement_app_bar.dart';
 import 'package:brn_ecommerce/views/home/components/content_home_app_bar.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
           drawer: const CustomDrawer(),
           body: Stack(
             children: [
-              // fundo gradiente
+              // home gradient background
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -42,10 +42,10 @@ class HomeScreen extends StatelessWidget {
               CustomScrollView(
                 slivers: [
                   // Complement AppBar with search
-                  ComplementHomeAppBar(),
+                  ComplementAppBar(),
                   ContentHomeAppBar(),
 
-                  // corpo da home
+                  // home body
                   Consumer<HomeManager>(
                     builder: (_, homeManager, __) {
                       if (homeManager.loading) {
@@ -59,7 +59,7 @@ class HomeScreen extends StatelessWidget {
 
                       final List<Widget> emptyPage = [const WhoWeAreScreen()];
 
-                      // mapear seções
+                      // map sections
                       final List<Widget> children = homeManager.sections.map<Widget>((section) {
                         switch (section.type) {
                           case 'List':
