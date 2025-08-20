@@ -4,7 +4,7 @@ import 'package:brn_ecommerce/common/search/search_products_field.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
-import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
+import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 
 class ComplementAppBar extends StatelessWidget {
   const ComplementAppBar({super.key});
@@ -18,7 +18,7 @@ class ComplementAppBar extends StatelessWidget {
           height: kIsWeb ? 120 : 85,
           width: tabletBreakpoint,
           decoration: BoxDecoration(
-            color: getComplementHomeAppBarCollor(),
+            color: getComplementAppBarCollor(),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Row(

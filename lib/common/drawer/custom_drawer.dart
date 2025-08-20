@@ -2,7 +2,7 @@ import 'package:brn_ecommerce/common/drawer/components/drawer_header.dart';
 import 'package:brn_ecommerce/common/drawer/components/drawer_title.dart';
 import 'package:brn_ecommerce/common/drawer/components/setting_drawer.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
-import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
+import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';

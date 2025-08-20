@@ -70,7 +70,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return ChangeNotifierProvider.value(
       value: widget.product,
       child: Scaffold(
-          backgroundColor: Colors.white,
           appBar: AppBar(
             title: Text(widget.product!.name ?? ''),
             centerTitle: true,

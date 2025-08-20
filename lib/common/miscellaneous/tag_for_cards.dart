@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/common/functions/common_functions.dart';
+import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:decorated_text/decorated_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

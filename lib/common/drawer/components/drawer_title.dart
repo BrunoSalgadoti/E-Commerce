@@ -1,5 +1,5 @@
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
-import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
+import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

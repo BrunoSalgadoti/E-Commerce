@@ -1,10 +1,6 @@
-import 'dart:io';
 
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
-import 'package:brn_ecommerce/helpers/themes/factory_colors/android_factory_colors.dart';
-import 'package:brn_ecommerce/helpers/themes/factory_colors/ios_factory_colos.dart';
-import 'package:brn_ecommerce/helpers/themes/factory_colors/web_factory_colors.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -41,50 +37,6 @@ Color getColorFromString(String color) {
 String getHexColor(Color color) {
   String hexColor = '#${color.value.toRadixString(16).padLeft(8, '0').substring(2).toUpperCase()}';
   return hexColor;
-}
-
-/// ## getTextColorBasedOnBackground
-/// Determines the optimal text color based on the background color's luminance.
-///
-/// Takes a [backgroundColor] and returns the optimal text color (black or white) for readability.
-Color getTextColorBasedOnBackground(Color backgroundColor) {
-  // Calculates the luminosity of the background color.
-  final luminance = backgroundColor.computeLuminance();
-
-  // Sets the text color based on luminosity.
-  final textColor = luminance > 0.2 ? Colors.black : Colors.white;
-
-  return textColor;
-}
-
-/// ## getBorderColorInvertedTextColor
-/// Determines the optimal text color (inverted) based on the background color's luminance.
-///
-/// Takes a [backgroundColor] and returns the inverted optimal text color (black or white) for readability.
-Color getBorderColorInvertedTextColor(Color backgroundColor) {
-  // Calculates the luminosity of the background color.
-  final luminance = backgroundColor.computeLuminance();
-
-  // Sets the text color based on luminosity.
-  final textColor = luminance < 0.2 ? Colors.black : Colors.white;
-
-  return textColor;
-}
-
-/// ## getFocusBorderColor
-/// Gets the focus border color based on the platform (Web, Android, iOS).
-///
-/// Optionally takes a [context] to provide platform-specific colors.
-Color getFocusBorderColor([BuildContext? context]) {
-  if (kIsWeb) {
-    return const WebFactoryColors().focusedBorderColor;
-  } else if (Platform.isAndroid) {
-    return const AndroidFactoryColors().focusedBorderColor;
-  } else if (Platform.isIOS) {
-    return const IosFactoryColors().focusedBorderColor;
-  } else {
-    return Colors.blue;
-  }
 }
 
 /// ## sendEmailNotification

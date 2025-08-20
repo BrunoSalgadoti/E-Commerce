@@ -1,5 +1,5 @@
 import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
-import 'package:brn_ecommerce/helpers/themes/factory_colors/get_another_colors.dart';
+import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/models/views/home_manager.dart';
 import 'package:brn_ecommerce/views/home/components/add_section_widget.dart' show AddSectionWidget;
 import 'package:brn_ecommerce/views/home/components/section_header.dart';
