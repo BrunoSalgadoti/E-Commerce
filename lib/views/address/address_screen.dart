@@ -1,3 +1,4 @@
+import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
 import 'package:brn_ecommerce/common/cards/price_card.dart';
 import 'package:brn_ecommerce/common/messengers/components/text_of_alerts_and_messengers.dart';
@@ -31,15 +32,16 @@ class AddressScreen extends StatelessWidget {
 
     return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
-          appBar: AppBar(
-            title: const Text('Endereço de entrega:'),
-            centerTitle: true,
-          ),
-          body: Center(
-              child: Padding(
+        appBar: CustomAppBar(
+          title: const Text('Endereço de entrega:'),
+          showDrawerIcon: false,
+          showSearchButton: false,
+        ),
+        body: Center(
+          child: Padding(
             padding: kIsWeb ? const EdgeInsets.only(top: 0) : MediaQuery.of(context).padding,
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
+              constraints: const BoxConstraints(maxWidth: mobileBreakpoint),
               child: ListView(
                 children: [
                   const AddressCard(),
@@ -144,8 +146,9 @@ class AddressScreen extends StatelessWidget {
                 ],
               ),
             ),
-            // ),
-          )));
+          ),
+        ),
+      );
     });
   }
 }

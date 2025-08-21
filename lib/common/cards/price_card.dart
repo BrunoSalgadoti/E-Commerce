@@ -38,7 +38,6 @@ class PriceCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15, 30, 15, 16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -151,10 +150,12 @@ class PriceCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            CustomButton(
-              text: buttonText,
-              onPressed: onPressed,
-            )
+             CustomButton(
+                text: buttonText,
+                onPressed: onPressed,
+                widthButton: 350,
+              ),
+
           ],
         ),
       ),
