@@ -5,9 +5,9 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String? title;
+  final Object? title; // <-- can be String or Widget
   final List<Widget>? actions;
-  final bool showDrawerIcon;
+  final bool? showDrawerIcon;
   final double elevation;
   final Widget? flexibleContent;
 
@@ -15,7 +15,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     this.title,
     this.actions,
-    this.showDrawerIcon = true,
+    required this.showDrawerIcon,
     this.elevation = 4.0,
     this.flexibleContent,
   });
@@ -30,49 +30,45 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: AppBar(
             elevation: elevation,
             backgroundColor: getCustomAppBarColorBackground(),
+            centerTitle: true,
             automaticallyImplyLeading: false,
-            title: null, // Everything will be managed within flexibleSpace
+            title: null, // let's control in flexibleSpace
             flexibleSpace: Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Drawer manual icon
-                    if (showDrawerIcon)
+                    // Ícone do Drawer
+                    if (showDrawerIcon != false)
                       IconButton(
                         color: getCustomAppBarColorIcons(),
                         icon: const Icon(Icons.menu),
                         onPressed: () {
                           Scaffold.of(context).openDrawer();
                         },
-                      ),
-                    // Centered title
+                      )
+                    else
+                      const SizedBox(width: 48), // reserve space to keep the central title
+
+                    // --- Title dinâmico ---
                     if (title != null)
                       Expanded(
-                        child: AutoSizeText(
-                          maxLines: 1,
-                          minFontSize: 12,
-                          maxFontSize: 20,
-                          title!,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: getCustomAppBarColorTitle(),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
+                        child: Center(
+                          child: _buildTitle(),
                         ),
                       ),
-                    // Extra flexible content (e.g. search box)
-                    if (flexibleContent != null)
-                      Flexible(child: flexibleContent!),
-                    // Actions, respecting maxWidth
-                    if (actions != null)
+
+                    // Flexible content (ex: barra de busca)
+                    if (flexibleContent != null) Flexible(child: flexibleContent!),
+
+                    // Actions
+                    if (actions != null && actions!.isNotEmpty)
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: actions!,
-                      ),
+                      )
+                    else
+                      const SizedBox(width: 48), // reserves symmetrical space to the drawer
                   ],
                 ),
               ),
@@ -81,6 +77,37 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildTitle() {
+    if (title is String) {
+      return AutoSizeText(
+        title as String,
+        maxLines: 1,
+        minFontSize: 12,
+        maxFontSize: 20,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: getCustomAppBarColorTitle(),
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      );
+    } else if (title is Widget) {
+      return Align(
+        alignment: Alignment.center,
+        child: DefaultTextStyle(
+          style: TextStyle(
+            color: getCustomAppBarColorTitle(),
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+          child: title as Widget,
+        ),
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 
   @override
