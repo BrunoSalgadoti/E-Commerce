@@ -51,6 +51,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                           Scaffold.of(context).openDrawer();
                         },
                       )
+                    else if (Navigator.of(context).canPop())
+                      IconButton(
+                        color: getCustomAppBarColorIcons(),
+                        icon: const Icon(Icons.arrow_back),
+                        onPressed: () {
+                          Navigator.of(context).maybePop();
+                        },
+                      )
                     else
                       const SizedBox(width: 48),
 
