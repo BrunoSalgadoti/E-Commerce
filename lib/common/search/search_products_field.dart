@@ -34,7 +34,7 @@ class _SearchProductsFieldState extends State<SearchProductsField> {
 
     return OverlayEntry(
       builder: (context) => Positioned(
-        top: 60, // below the AppBar
+        top: 50, // below the AppBar
         left: 16,
         right: 16,
         child: Material(

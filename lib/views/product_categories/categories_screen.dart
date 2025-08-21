@@ -1,5 +1,5 @@
+import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/custom_app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
@@ -24,6 +24,8 @@ class CategoriesScreen extends StatelessWidget {
               title: userManager.editingCategories
                   ? 'Editando Categorias!'
                   : 'Produtos por Categorias',
+              showDrawerIcon: true,
+              showSearchButton: false,
                 actions: [
                   userManager.adminEnable && userManager.editingCategories == false
                       ? CustomIconButton(

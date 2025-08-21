@@ -1,7 +1,9 @@
+import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
+import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/cards/flexible_product_card.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
-import 'package:brn_ecommerce/common/search/search_products_app_bar.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/controller.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/filters_result.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/sliding_filters_products.dart';
@@ -39,7 +41,28 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
     return Scaffold(
       drawer: const CustomDrawer(),
-      appBar: searchProductsAppBar(context: context),
+      appBar: CustomAppBar(
+        showSearchButton: true,
+        title: 'Todos os Produtos',
+        showDrawerIcon: true,
+        actions: [
+          Consumer<UserManager>(
+            builder: (_, userManager, __) {
+              if (userManager.adminEnable) {
+                return CustomIconButton(
+                  iconData: Icons.add,
+                  size: 30,
+                  semanticLabel: '',
+                  onTap: () => Navigator.pushNamed(context, RoutesNavigator.editProductScreen),
+                );
+              } else {
+                return Container();
+              }
+            },
+          )
+        ],
+      ),
+
       body: Consumer<ProductManager>(builder: (_, productManager, __) {
         final filteredProducts = productManager.filteredProducts;
         return Align(
@@ -72,7 +95,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                               )
                             : const EmptyPageIndicator(
                                 title: "Carregando Produtos...",
-                                image: "assets/images/await.gif",
+                                image: RootAssets.cartAwaitGif,
                                 iconData: null,
                               )
                       else
