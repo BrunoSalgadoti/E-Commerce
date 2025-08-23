@@ -1,6 +1,7 @@
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
 import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
+import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:flutter/material.dart';
@@ -33,130 +34,134 @@ class PriceCard extends StatelessWidget {
     final totalPrice = cartManager.totalPrice;
     final totalItens = cartManager.totalQuantity;
 
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 30, 15, 16),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: tabletBreakpoint),
+        child: Card(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(15, 30, 15, 16),
+            child: Column(
               children: [
-                Visibility(
-                  visible: showIcon == false ? false : true,
-                  child: CustomIconButton(
-                      iconData: Icons.add_shopping_cart_rounded,
-                      padding: EdgeInsets.zero,
-                      semanticLabel: 'Voltar \n ao carrinho',
-                      onTap: () =>
-                          Navigator.pushReplacementNamed(context, RoutesNavigator.cartScreen)),
-                ),
-              ],
-            ),
-            const Text(
-              'Resumo do pedido:',
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Expanded(child: Text('Total de ítens:')),
-                Expanded(
-                  child: Text(
-                    totalItens.toString(),
-                    textAlign: TextAlign.end,
-                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
-                  ),
-                ),
-              ],
-            ),
-            const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Expanded(
-                  child: Text(
-                    'Subtotal:',
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    formattedRealText(productsPrice),
-                    textAlign: TextAlign.end,
-                  ),
-                )
-              ],
-            ),
-            const Divider(),
-            if (deliveryPrice != null && cartManager.hasFreeShippingProduct) ...[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Expanded(child: Text('Envio:')),
-                  Expanded(
-                    child: Text(
-                      formattedRealText(deliveryPrice),
-                      textAlign: TextAlign.end,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Visibility(
+                      visible: showIcon == false ? false : true,
+                      child: CustomIconButton(
+                          iconData: Icons.add_shopping_cart_rounded,
+                          padding: EdgeInsets.zero,
+                          semanticLabel: 'Voltar \n ao carrinho',
+                          onTap: () =>
+                              Navigator.pushReplacementNamed(context, RoutesNavigator.cartScreen)),
                     ),
-                  )
-                ],
-              ),
-              const Divider(),
-            ] else ...[
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(child: Text('Envio:')),
-                  Expanded(
-                    child: Text(
-                      'Frete Grátis',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.green,
-                        fontSize: 14,
+                  ],
+                ),
+                const Text(
+                  'Resumo do pedido:',
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Expanded(child: Text('Total de ítens:')),
+                    Expanded(
+                      child: Text(
+                        totalItens.toString(),
+                        textAlign: TextAlign.end,
+                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const Divider(),
-            ],
-            const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Expanded(
-                  child: Text(
-                    'Total:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                  ],
                 ),
-                Expanded(
-                  child: Text(
-                    formattedRealText(totalPrice),
-                    textAlign: TextAlign.end,
-                    style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16),
+                const Divider(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Expanded(
+                      child: Text(
+                        'Subtotal:',
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        formattedRealText(productsPrice),
+                        textAlign: TextAlign.end,
+                      ),
+                    )
+                  ],
+                ),
+                const Divider(),
+                if (deliveryPrice != null && cartManager.hasFreeShippingProduct) ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Expanded(child: Text('Envio:')),
+                      Expanded(
+                        child: Text(
+                          formattedRealText(deliveryPrice),
+                          textAlign: TextAlign.end,
+                        ),
+                      )
+                    ],
                   ),
+                  const Divider(),
+                ] else ...[
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(child: Text('Envio:')),
+                      Expanded(
+                        child: Text(
+                          'Frete Grátis',
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.green,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(),
+                ],
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Expanded(
+                      child: Text(
+                        'Total:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        formattedRealText(totalPrice),
+                        textAlign: TextAlign.end,
+                        style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                CustomButton(
+                  text: buttonText,
+                  onPressed: onPressed,
+                  widthButton: 350,
                 ),
               ],
             ),
-            const SizedBox(height: 8),
-             CustomButton(
-                text: buttonText,
-                onPressed: onPressed,
-                widthButton: 350,
-              ),
-
-          ],
+          ),
         ),
       ),
     );

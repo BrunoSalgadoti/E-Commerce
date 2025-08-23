@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
+import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/products_recently_added.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,15 +33,20 @@ class RecentlyAddedProducts extends StatelessWidget {
         if (recentProducts.isEmpty) return const SizedBox.shrink();
 
         if (carrossel == true) {
-          return SizedBox(
-            height: 150,
-            child: carouselForProducts(
-              context: context,
-              productsForCarousel: recentProducts,
+          return Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: tabletBreakpoint),
+              child: SizedBox(
+                height: 150,
+                child: carouselForProducts(
+                  context: context,
+                  productsForCarousel: recentProducts,
+                ),
+              ),
             ),
           );
         } else {
-            // Animated effect showing 3 products side by side
+          // Animated effect showing 3 products side by side
           return RecentlyAddedProductsAnimated(products: recentProducts);
         }
       },
@@ -105,49 +112,59 @@ class _RecentlyAddedProductsAnimatedState extends State<RecentlyAddedProductsAni
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 150,
-      child: PageView.builder(
-        controller: _pageController,
-        itemCount: _numPages,
-        itemBuilder: (context, pageIndex) {
-          final startIndex = pageIndex * 4;
-          final endIndex = (startIndex + 3).clamp(0, widget.products.length);
-          final pageProducts = widget.products.sublist(startIndex, endIndex);
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: tabletBreakpoint),
+        child: SizedBox(
+          height: 150,
+          width: double.infinity,
+          child: PageView.builder(
+            controller: _pageController,
+            itemCount: _numPages,
+            itemBuilder: (context, pageIndex) {
+              final startIndex = pageIndex * (kIsWeb ? 3 : 4);
+              final endIndex = (startIndex + (kIsWeb ? 4 : 3)).clamp(0, widget.products.length);
+              final pageProducts = widget.products.sublist(startIndex, endIndex);
 
-          return AnimatedOpacity(
-            opacity: _fadeIn ? 1.0 : 0.0,
-            duration: const Duration(seconds: 3),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: pageProducts.map((product) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed(
-                      RoutesNavigator.productDetailsScreen,
-                      arguments: product,
-                    );
-                  },
-                  child: Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.network(
-                        product.images!.first,
-                        width: 150,
-                        height: 150,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+              return AnimatedOpacity(
+                opacity: _fadeIn ? 1.0 : 0.0,
+                duration: const Duration(seconds: 3),
+                child: FittedBox(
+                  fit: BoxFit.fill,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: pageProducts.map((product) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            RoutesNavigator.productDetailsScreen,
+                            arguments: product,
+                          );
+                        },
+                        child: Card(
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(
+                              product.images!.first,
+                              width: 150,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
                   ),
-                );
-              }).toList(),
-            ),
-          );
-        },
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }

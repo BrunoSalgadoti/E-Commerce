@@ -1,5 +1,7 @@
 import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
+import 'package:brn_ecommerce/common/functions/common_functions.dart';
+import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/models/views/home_manager.dart';
 import 'package:brn_ecommerce/models/views/section.dart';
 import 'package:decorated_text/decorated_text.dart';
@@ -35,14 +37,14 @@ class SectionHeader extends StatelessWidget {
                 hintText: 'Adicionar Título',
                 focusedBorder: InputBorder.none,
                 enabledBorder: InputBorder.none,
-                textFormFieldColor: Colors.white,
+                textFormFieldColor: getCustomAppBarColorIcons().withAlpha(90),
                 textFormFieldBold: true,
                 textFormFieldSize: 18,
                 onChanged: (text) => section.name = text,
               )),
               CustomIconButton(
                 iconData: Icons.move_up,
-                color: Colors.white,
+                color: getCustomAppBarColorIcons(),
                 onTap: isFirstSection
                     ? null
                     : () {
@@ -52,7 +54,7 @@ class SectionHeader extends StatelessWidget {
               ),
               CustomIconButton(
                 iconData: Icons.move_down,
-                color: Colors.white,
+                color: getCustomAppBarColorIcons(),
                 onTap: isLastSection
                     ? null
                     : () {
@@ -65,7 +67,7 @@ class SectionHeader extends StatelessWidget {
               ),
               CustomIconButton(
                 iconData: Icons.remove,
-                color: Colors.white,
+                color: getCustomAppBarColorIcons(),
                 onTap: () {
                   homeManager.removeSection(section);
                 },
@@ -79,7 +81,7 @@ class SectionHeader extends StatelessWidget {
               child: Text(
                 section.error!,
                 style: const TextStyle(
-                  color: Colors.yellow,
+                  color: Colors.red,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -87,16 +89,9 @@ class SectionHeader extends StatelessWidget {
         ],
       );
     } else {
-      return Padding(
-        padding: const EdgeInsets.all(8),
-        child: DecoratedGoogleFontText(
-          section.name!,
-          fontMethod: GoogleFonts.bungeeSpice,
-          fillColor: Colors.transparent,
-          fontSize: 22,
-          fontWeight: FontWeight.w800,
-          borderWidth: 0.8,
-        ),
+      return textForGoogleDecorations(
+        titleForDecorations: section.name!,
+        fontMethod: GoogleFonts.bungeeSpice,
       );
     }
   }

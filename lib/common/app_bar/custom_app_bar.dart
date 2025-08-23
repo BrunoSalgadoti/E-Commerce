@@ -14,12 +14,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showDrawerIcon;
   final bool showSearchButton; // controls if search logic is active
   final double elevation;
+  final bool? removePadding;
 
   const CustomAppBar({
     super.key,
     required this.title,
     required this.showDrawerIcon,
     required this.showSearchButton,
+    this.removePadding,
     this.actions,
     this.elevation = 4.0,
   });
@@ -28,7 +30,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: kIsWeb ? const EdgeInsets.only(top: 0) : MediaQuery.of(context).padding,
+        padding: kIsWeb
+            ? EdgeInsets.only(top: 0)
+            : removePadding == null
+                ? MediaQuery.of(context).padding
+                : EdgeInsets.zero,
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: wildBreakpoint),
           child: AppBar(

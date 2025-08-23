@@ -3,6 +3,7 @@ import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/cards/flexible_product_card.dart';
 import 'package:brn_ecommerce/common/cards/recently_added_Products.dart';
 import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
+import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/controller.dart';
@@ -15,6 +16,7 @@ import 'package:brn_ecommerce/models/products/product_manager.dart';
 import 'package:brn_ecommerce/views/product_categories/components/sub_categories_widget.dart';
 import 'package:brn_ecommerce/views/product_categories/components/utils_for_category.dart';
 import 'package:decorated_text/decorated_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -64,8 +66,6 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
         }
 
         return Scaffold(
-            //TODO: ajustar cor com web e dispositivos
-            backgroundColor: Colors.white,
             body: allProductsFromCategory.isEmpty &&
                     productManager.filtersOn == false &&
                     productManager.search.isEmpty
@@ -101,14 +101,12 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                     ),
                                     FittedBox(
                                       fit: BoxFit.scaleDown,
-                                      child: DecoratedGoogleFontText(
-                                        'Categoria:\n'
-                                        '${widget.productCategory.categoryTitle}',
+                                      child: textForGoogleDecorations(
+                                        titleForDecorations: 'Categoria:\n'
+                                            '${widget.productCategory.categoryTitle}',
                                         fontMethod: GoogleFonts.croissantOne,
-                                        fillColor: Colors.black,
                                         fontSize: 26,
-                                        fontWeight: FontWeight.w800,
-                                        borderWidth: 0.8,
+                                        fillColor: Colors.black,
                                         borderColor: Colors.white,
                                       ),
                                     ),
@@ -162,18 +160,15 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                       ),
                                     ),
                                     if (productManager.search.isEmpty)
-                                      const Align(
+                                      Align(
                                         alignment: Alignment(-1, 0),
                                         child: Padding(
                                           padding: EdgeInsets.fromLTRB(10, 10, 0, 13),
-                                          child: DecoratedGoogleFontText(
-                                            'Adicionados Recentemente!',
+                                          child: textForGoogleDecorations(
+                                            titleForDecorations: 'Adicionados recentemente...',
                                             fontMethod: GoogleFonts.amaranth,
-                                            fillColor: Colors.black,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w800,
-                                            borderWidth: 0.8,
-                                            borderColor: Colors.white,
+                                            borderWidth: 0.2,
+                                            fontWeight: FontWeight.normal,
                                           ),
                                         ),
                                       ),
@@ -205,15 +200,13 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
                                                   const Icon(Icons.filter_list, size: 20),
                                                   FittedBox(
                                                     fit: BoxFit.scaleDown,
-                                                    child: DecoratedGoogleFontText(
-                                                      'Seções de: '
-                                                      '${widget.productCategory.categoryTitle}',
-                                                      fontMethod: GoogleFonts.amaranth,
-                                                      fillColor: Colors.black,
-                                                      fontSize: 20,
-                                                      fontWeight: FontWeight.w800,
-                                                      borderWidth: 0.8,
+                                                    child: textForGoogleDecorations(
+                                                      titleForDecorations: 'Seções de: '
+                                                          '${widget.productCategory.categoryTitle}',
                                                       borderColor: Colors.white,
+                                                      fontSize: 20,
+                                                      fillColor: Colors.black,
+                                                      fontMethod: GoogleFonts.amaranth,
                                                     ),
                                                   ),
                                                 ],
