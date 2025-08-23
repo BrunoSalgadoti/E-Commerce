@@ -15,8 +15,6 @@ import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
 import 'package:brn_ecommerce/views/product_categories/components/sub_categories_widget.dart';
 import 'package:brn_ecommerce/views/product_categories/components/utils_for_category.dart';
-import 'package:decorated_text/decorated_text.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
