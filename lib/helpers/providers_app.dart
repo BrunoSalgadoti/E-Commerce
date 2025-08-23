@@ -7,6 +7,7 @@ import 'package:brn_ecommerce/models/products/categories/product_category_manage
 import 'package:brn_ecommerce/models/products/details_products.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
+import 'package:brn_ecommerce/models/products/products_recently_added.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:brn_ecommerce/models/sales/checkout_manager.dart';
 import 'package:brn_ecommerce/models/sales/orders_manager.dart';
@@ -64,6 +65,18 @@ class ProvidersApp extends StatelessWidget {
             create: (_) => ProductCategoryManager(),
             update: (_, userManager, productCategoryManager) =>
                 productCategoryManager!..verifyUser(userManager)),
+        ChangeNotifierProxyProvider2<ProductManager, ProductCategory?, ProductsRecentlyAdded>(
+          create: (context) => ProductsRecentlyAdded(
+            allProducts: context.read<ProductManager>().allProducts,
+          ),
+          update: (context, productManager, productCategory, previous) {
+            final instance =
+                previous ?? ProductsRecentlyAdded(allProducts: productManager.allProducts);
+
+            instance.updateRecentProducts(productCategory: productCategory);
+            return instance;
+          },
+        ),
         ChangeNotifierProxyProvider<UserManager, CartManager>(
             lazy: false,
             create: (_) => CartManager(),

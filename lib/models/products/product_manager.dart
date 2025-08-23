@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/products_best_selling.dart';
+import 'package:brn_ecommerce/models/products/products_recently_added.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -15,6 +15,7 @@ import '../../services/development_monitoring/monitoring_logger.dart';
 /// This enum defines the possible product states that can be used to filter products.
 enum StatusOfProducts {
   bestSellers,
+  recentlyAdded,
   lowestPrice,
   brand,
   freight,
@@ -38,6 +39,7 @@ class ProductManager extends ChangeNotifier {
   List<Product> allProducts = [];
   StatusOfProducts? status;
   ProductsBestSelling? bestSellingProductsManager;
+  ProductsRecentlyAdded? recentlyAddedProducts;
   StreamSubscription<dynamic>? _subscription;
 
   // Constructor
@@ -49,6 +51,10 @@ class ProductManager extends ChangeNotifier {
     bestSellingProductsManager = ProductsBestSelling(
       allProducts: allProducts,
       salesThreshold: 10, // Set the appropriate sales margin
+    );
+
+    recentlyAddedProducts = ProductsRecentlyAdded(
+      allProducts: allProducts,
     );
   }
 
@@ -80,6 +86,12 @@ class ProductManager extends ChangeNotifier {
       List<Product> bestSellingProducts = bestSellingProductsManager!.getBestSellingProducts(15);
       filteredProducts =
           filteredProducts.where((product) => bestSellingProducts.contains(product)).toList();
+    }
+
+    if (statusFilter.contains(StatusOfProducts.recentlyAdded)) {
+      List<Product> recentlyAdded = recentlyAddedProducts!.getRecentProducts(productCategory: null);
+      filteredProducts =
+          filteredProducts.where((product) => recentlyAdded.contains(product)).toList();
     }
 
     if (statusFilter.contains(StatusOfProducts.lowestPrice)) {
@@ -115,7 +127,6 @@ class ProductManager extends ChangeNotifier {
     if (kDebugMode) {
       MonitoringLogger().logInfo('Starting listen products');
     }
-
     _subscription = firestore
         .collection("products")
         .where("deleted", isEqualTo: false)
@@ -210,6 +221,8 @@ class ProductManager extends ChangeNotifier {
         return 'Mais Vendidos';
       case StatusOfProducts.lowestPrice:
         return 'Menor Preço';
+      case StatusOfProducts.recentlyAdded:
+        return 'Adicionados recentemente';
       case StatusOfProducts.brand:
         return 'Por Marca';
       case StatusOfProducts.freight:
@@ -218,7 +231,7 @@ class ProductManager extends ChangeNotifier {
         return 'De A-Z';
       case StatusOfProducts.sortedZA:
         return 'De Z-A';
-      }
+    }
   }
 
   @override

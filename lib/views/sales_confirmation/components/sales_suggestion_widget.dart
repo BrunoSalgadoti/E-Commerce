@@ -23,7 +23,7 @@ class _SalesSuggestionWidgetState extends State<SalesSuggestionWidget> {
   void initState() {
     pageControllerSuggest = PageController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ProductCategoryManager>().loadSuggestions(context);
+      context.read<ProductCategoryManager>().loadSuggestionsBasedOnVisitGalleryProducts(context);
     });
     super.initState();
   }
@@ -80,14 +80,15 @@ class _SalesSuggestionWidgetState extends State<SalesSuggestionWidget> {
                       final product = pageItems[index];
 
                       return TweenAnimationBuilder<double>(
-                          tween: Tween(begin: 50, end: 0), // deslocamento inicial (px)
+                          tween: Tween(begin: 50, end: 0), // initial offset (px)
                           duration: const Duration(seconds: 3),
                           curve: Curves.easeOutCubic,
                           builder: (context, value, child) {
                             return Opacity(
-                              opacity: (50 - value) / 50, // fade-in proporcional
+                              opacity: (50 - value) / 50, // fade-in proportional
                               child: Transform.translate(
-                                offset: Offset(value, 0), // move da direita para a posição final
+                                offset:
+                                    Offset(value, 0), // move from the right to the final position
                                 child: child,
                               ),
                             );
@@ -133,7 +134,8 @@ class _SalesSuggestionWidgetState extends State<SalesSuggestionWidget> {
             ),
           ),
           AutoSizeText(
-            'Seu pedido foi realizado, agradecemos a preferência, acompanhe o status do seu pedidos em:\n',
+            'Seu pedido foi realizado, agradecemos a preferência, '
+            'acompanhe o status do seu pedidos em:\n',
             maxFontSize: 25,
             minFontSize: 12,
             textAlign: TextAlign.center,
@@ -148,7 +150,7 @@ class _SalesSuggestionWidgetState extends State<SalesSuggestionWidget> {
               fontColor: Colors.lightGreen,
               fontWeight: FontWeight.w900,
               fontSize: 20,
-              onPressed: () => navigateToPageWithDrawer(context, 3)) // Página de Minhas Compras
+              onPressed: () => navigateToPageWithDrawer(context, 3))
         ],
       ),
     );

@@ -163,6 +163,7 @@ class ProductCategoryManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  //TODO:Observar comportamento
   Future<List<Product>> getProductsByVisitedGalleries(
     Users user,
     List<Product> allProducts,
@@ -193,7 +194,7 @@ class ProductCategoryManager extends ChangeNotifier {
     return orderedProducts;
   }
 
-  Future<void> loadSuggestions(BuildContext context) async {
+  Future<void> loadSuggestionsBasedOnVisitGalleryProducts(BuildContext context) async {
     final userManager = context.read<UserManager>();
     final productManager = context.read<ProductManager>();
 

@@ -1,6 +1,8 @@
 import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
+import 'package:brn_ecommerce/common/cards/recently_added_Products.dart';
 import 'package:brn_ecommerce/common/cards/price_card.dart';
+import 'package:brn_ecommerce/common/complement_app_bar/complement_app_bar.dart';
 import 'package:brn_ecommerce/common/messengers/components/text_of_alerts_and_messengers.dart';
 import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
@@ -30,125 +32,134 @@ class AddressScreen extends StatelessWidget {
             context: context, message: AlertsMessengersText.policyAndTermsConfirmation)
         .alertScaffold();
 
-    return LayoutBuilder(builder: (context, constraints) {
-      return Scaffold(
-        appBar: CustomAppBar(
-          title: const Text('Endereço de entrega:'),
-          showDrawerIcon: false,
-          showSearchButton: false,
-        ),
-        body: Center(
-          child: Padding(
-            padding: kIsWeb ? const EdgeInsets.only(top: 0) : MediaQuery.of(context).padding,
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: mobileBreakpoint),
-              child: ListView(
-                children: [
-                  const AddressCard(),
-                  Consumer4<CartManager, PolicyAndDocuments, VersionManager, UserManager>(builder:
-                      (_, cartManager, policyAndDocuments, versionManager, userManager, __) {
-                    void checkPolicyAndTerms() {
-                      if (userManager.users!.policyAndTerms == false ||
-                          userManager.users!.policyAndTerms == null) {
-                        CustomAlertDialogAdaptive(
-                          titleText: 'A T E N Ç Ã O!',
-                          bodyText: AlertsMessengersText.policyAndTermsUnchecked,
-                          actions: [
-                            const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                PrivacyPolicyWidget(),
-                                TermsOfServiceWidget(),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                CustomButton(
-                                  text: 'Rejeitar',
-                                  widthButton: 100,
-                                  heightButton: 40,
-                                  onPressed: () {
-                                    backScreen();
-                                  },
-                                ),
-                                CustomButton(
-                                  text: 'Aceitar',
-                                  widthButton: 100,
-                                  heightButton: 40,
-                                  onPressed: () async {
-                                    if (policyAndDocuments.agreedToPolicyTerms == false ||
-                                        policyAndDocuments.agreedToTermsOfService == false) {
-                                      alertPolicyAndTerms();
-                                    } else {
-                                      userManager.users!.policyAndTerms = true;
-                                      await userManager.users!.updateUserData();
-                                      goToScreen();
-                                    }
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        ).alertContent(context);
-                      } else {
-                        goToScreen();
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Scaffold(
+          body: Center(
+            child: Padding(
+              padding: kIsWeb ? const EdgeInsets.only(top: 0) : MediaQuery.of(context).padding,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: mobileBreakpoint),
+                child: ListView(
+                  children: [
+                    const ComplementAppBar(
+                      asSliver: false,
+                    ),
+                    const CustomAppBar(
+                      title: Text('Endereço de entrega:'),
+                      showDrawerIcon: false,
+                      showSearchButton: false,
+                    ),
+                    const AddressCard(),
+                    const RecentlyAddedProducts(
+                      carrossel: false,
+                      productCategory: null,
+                    ),
+                    Consumer4<CartManager, PolicyAndDocuments, VersionManager, UserManager>(builder:
+                        (_, cartManager, policyAndDocuments, versionManager, userManager, __) {
+                      void checkPolicyAndTerms() {
+                        if (userManager.users!.policyAndTerms == false ||
+                            userManager.users!.policyAndTerms == null) {
+                          CustomAlertDialogAdaptive(
+                            titleText: 'A T E N Ç Ã O!',
+                            bodyText: AlertsMessengersText.policyAndTermsUnchecked,
+                            actions: [
+                              const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  PrivacyPolicyWidget(),
+                                  TermsOfServiceWidget(),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  CustomButton(
+                                    text: 'Rejeitar',
+                                    widthButton: 100,
+                                    heightButton: 40,
+                                    onPressed: () {
+                                      backScreen();
+                                    },
+                                  ),
+                                  CustomButton(
+                                    text: 'Aceitar',
+                                    widthButton: 100,
+                                    heightButton: 40,
+                                    onPressed: () async {
+                                      if (policyAndDocuments.agreedToPolicyTerms == false ||
+                                          policyAndDocuments.agreedToTermsOfService == false) {
+                                        alertPolicyAndTerms();
+                                      } else {
+                                        userManager.users!.policyAndTerms = true;
+                                        await userManager.users!.updateUserData();
+                                        goToScreen();
+                                      }
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ).alertContent(context);
+                        } else {
+                          goToScreen();
+                        }
                       }
-                    }
 
-                    void checkAndHandleVersion() {
-                      if (!versionManager.compatibleVersion) {
-                        CustomAlertDialogAdaptive(
-                          titleText: 'Atualização necessária!',
-                          bodyText: AlertsMessengersText.appUpdateRequired,
-                          actions: [
-                            CustomButton(
-                              text: 'Atualizar',
-                              widthButton: 100,
-                              heightButton: 40,
-                              onPressed: () {
-                                if (kIsWeb) {
-                                  // Refresh the web page and clear cache
-                                  html.window.location.reload();
-                                } else {
-                                  //TODO: Quando publicado
-                                  // Redirect to app store for updating the app
-                                  // Example for Android:
-                                  // launch('https://play.google.com/store/apps/details?id=com.example.app');
-                                  // Example for iOS:
-                                  // launch('https://apps.apple.com/app/id<your_app_id>');
-                                }
-                                backScreen();
-                              },
-                            )
-                          ],
-                        ).alertContent(context);
-                        userManager.loading = false;
-                      } else {
-                        checkPolicyAndTerms();
+                      void checkAndHandleVersion() {
+                        if (!versionManager.compatibleVersion) {
+                          CustomAlertDialogAdaptive(
+                            titleText: 'Atualização necessária!',
+                            bodyText: AlertsMessengersText.appUpdateRequired,
+                            actions: [
+                              CustomButton(
+                                text: 'Atualizar',
+                                widthButton: 100,
+                                heightButton: 40,
+                                onPressed: () {
+                                  if (kIsWeb) {
+                                    // Refresh the web page and clear cache
+                                    html.window.location.reload();
+                                  } else {
+                                    //TODO: Quando publicado
+                                    // Redirect to app store for updating the app
+                                    // Example for Android:
+                                    // launch('https://play.google.com/store/apps/details?id=com.example.app');
+                                    // Example for iOS:
+                                    // launch('https://apps.apple.com/app/id<your_app_id>');
+                                  }
+                                  backScreen();
+                                },
+                              )
+                            ],
+                          ).alertContent(context);
+                          userManager.loading = false;
+                        } else {
+                          checkPolicyAndTerms();
+                        }
                       }
-                    }
 
-                    return PriceCard(
-                      buttonText: 'Prosseguir para pagamento',
-                      onPressed: cartManager.isAddressValid
-                          ? () async {
-                              userManager.loading = true;
-                              await versionManager.checkVersion();
-                              checkAndHandleVersion();
-                              userManager.loading = false;
-                            }
-                          : null,
-                      showIcon: true,
-                    );
-                  })
-                ],
+                      return PriceCard(
+                        buttonText: 'Prosseguir para pagamento',
+                        onPressed: cartManager.isAddressValid
+                            ? () async {
+                                userManager.loading = true;
+                                await versionManager.checkVersion();
+                                checkAndHandleVersion();
+                                userManager.loading = false;
+                              }
+                            : null,
+                        showIcon: true,
+                      );
+                    })
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

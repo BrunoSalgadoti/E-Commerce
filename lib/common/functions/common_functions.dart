@@ -1,12 +1,17 @@
-
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
+import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
+import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:provider/provider.dart';
+
+import '../../models/products/product.dart' show Product;
 
 /// # Utility functions and methods (Folder: common/functions)
 /// ## getColorFromString
@@ -135,4 +140,82 @@ void navigateToPageWithDrawer(BuildContext context, int pageIndex) {
   WidgetsBinding.instance.addPostFrameCallback((_) {
     context.read<PageManager>().setPage(pageIndex);
   });
+}
+
+Widget carouselForProducts(
+    {required BuildContext context, required List<Product> productsForCarousel}) {
+  final CarouselSliderControllerImpl carouselController = CarouselSliderControllerImpl();
+
+  return CarouselSlider(
+      carouselController: carouselController,
+      options: CarouselOptions(
+        aspectRatio: 1 / 1,
+        initialPage: 0,
+        height: 280,
+        viewportFraction: 0.5,
+        disableCenter: true,
+        enlargeCenterPage: true,
+        enlargeFactor: 0.27,
+        enableInfiniteScroll: true,
+        scrollDirection: Axis.horizontal,
+        autoPlay: true,
+      ),
+      items: productsForCarousel.map<Widget>((product) {
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 1.5,
+                      blurRadius: 4,
+                      offset: const Offset(0, 5),
+                    ),
+                  ]),
+              clipBehavior: Clip.antiAlias,
+              child: Image.network(
+                product.images!.first,
+                fit: BoxFit.fill,
+              ),
+            ),
+            Padding(
+                padding: const EdgeInsets.all(10),
+                child: TagForCard(
+                  data: 'A partir:\n '
+                      '${formattedRealText(product.basePrice)}',
+                  googleFonts: GoogleFonts.akayaTelivigala,
+                  textFontSize: 16,
+                  alignment: Alignment.bottomLeft,
+                  backgroundColor: Colors.white,
+                  containerWidth: 90,
+                )),
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: Material(
+                  color: Theme.of(context).primaryColor.withAlpha(90),
+                  child: IconButton(
+                      icon: const Icon(
+                        Icons.open_in_new,
+                        semanticLabel: 'Visualizar Produto',
+                        size: 20,
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, RoutesNavigator.productDetailsScreen,
+                            arguments: product);
+                      })),
+            ),
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: Container(),
+            ),
+          ],
+        );
+      }).toList());
 }

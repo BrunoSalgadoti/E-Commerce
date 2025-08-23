@@ -42,7 +42,9 @@ class HomeScreen extends StatelessWidget {
               CustomScrollView(
                 slivers: [
                   // Complement AppBar with search
-                  ComplementAppBar(),
+                  ComplementAppBar(
+                    asSliver: true,
+                  ),
                   ContentHomeAppBar(),
 
                   // home body
