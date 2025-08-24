@@ -36,6 +36,7 @@ class CheckoutManager extends ChangeNotifier {
   /// Updates the cart manager instance for checkout.
   void updateCart(CartManager cartManager) {
     this.cartManager = cartManager;
+    notifyListeners();
   }
 
   /// Initiates the checkout process.
@@ -67,6 +68,7 @@ class CheckoutManager extends ChangeNotifier {
 
     onSuccess(order);
     loading = false;
+    notifyListeners();
   }
 
   /// Checks the consistency of order counter and existing orders.

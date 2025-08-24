@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
-import 'package:brn_ecommerce/common/complement_app_bar/complement_app_bar.dart';
+import 'package:brn_ecommerce/common/app_bar/complement_app_bar.dart';
 import 'package:brn_ecommerce/views/home/components/content_home_app_bar.dart';
 
 class HomeScreen extends StatelessWidget {

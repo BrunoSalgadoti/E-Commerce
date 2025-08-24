@@ -43,4 +43,11 @@ mixin AlertsMessengersText {
   /// ### [cart_screen.dart]
   static const String infoMarqueeOfCartScreen = 'Continue comprando em nossa loja!! Contamos com '
       'diversos produtos em promoção, confira! Clique aqui! E boas compras!';
+
+  /// # [SALES_SUGGESTIONS_WIDGET]
+  /// ## message Info-marquee in [SalesSuggestionsWidget]
+  //
+  /// ### [sales_confirmation_screen.dart]
+  static const String salesSuggestionMessage = 'Seu pedido foi realizado, agradecemos a preferência, '
+      'acompanhe o status do seu pedidos em:\n';
 }

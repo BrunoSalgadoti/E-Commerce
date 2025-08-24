@@ -64,222 +64,223 @@ class CategoryProductScreenState extends State<CategoryProductScreen> {
         }
 
         return Scaffold(
-            body: allProductsFromCategory.isEmpty &&
-                    productManager.filtersOn == false &&
-                    productManager.search.isEmpty
-                ? const EmptyPageIndicator(
-                    title: 'Carregando...',
-                    titleColor: Colors.black,
-                    iconData: null,
-                    iconColor: Colors.black,
-                    image: RootAssets.cartAwaitGif,
-                  )
-                : SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: categoryImage,
-                            ),
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(20, 30, 30, 0),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 13),
-                                      child: Image.asset(
-                                        RootAssets.storeImgLogo,
-                                        width: 200,
-                                        fit: BoxFit.fill,
-                                      ),
+          body: allProductsFromCategory.isEmpty &&
+                  productManager.filtersOn == false &&
+                  productManager.search.isEmpty
+              ? const EmptyPageIndicator(
+                  title: 'Carregando...',
+                  titleColor: Colors.black,
+                  iconData: null,
+                  iconColor: Colors.black,
+                  image: RootAssets.cartAwaitGif,
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: categoryImage,
+                          ),
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(20, 30, 30, 0),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 13),
+                                    child: Image.asset(
+                                      RootAssets.storeImgLogo,
+                                      width: 200,
+                                      fit: BoxFit.fill,
                                     ),
-                                    FittedBox(
-                                      fit: BoxFit.scaleDown,
-                                      child: textForGoogleDecorations(
-                                        titleForDecorations: 'Categoria:\n'
-                                            '${widget.productCategory.categoryTitle}',
-                                        fontMethod: GoogleFonts.croissantOne,
-                                        fontSize: 26,
-                                        fillColor: Colors.black,
-                                        borderColor: Colors.white,
-                                      ),
+                                  ),
+                                  FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: textForGoogleDecorations(
+                                      titleForDecorations: 'Categoria:\n'
+                                          '${widget.productCategory.categoryTitle}',
+                                      fontMethod: GoogleFonts.croissantOne,
+                                      fontSize: 26,
+                                      fillColor: Colors.black,
+                                      borderColor: Colors.white,
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 5),
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: 52,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(8),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                          child: Row(
-                                            children: [
-                                              CustomIconButton(
-                                                iconData: Icons.search,
-                                                size: 24,
-                                                color: Colors.black,
-                                                onTap: goSearch,
-                                                semanticLabel: 'Pesquisar na categoria',
-                                              ),
-                                              Expanded(
-                                                child: Padding(
-                                                    padding: const EdgeInsets.fromLTRB(6, 6, 0, 0),
-                                                    child: CustomTextFormField(
-                                                      controller: textController,
-                                                      focusedBorder: InputBorder.none,
-                                                      textFormFieldSize: 14,
-                                                      obscureText: false,
-                                                      hintText: 'Procurar produtos na categoria...',
-                                                      hintSize: 14,
-                                                      onSubmitted: (value) => goSearch,
-                                                    )),
-                                              ),
-                                              CustomIconButton(
-                                                iconData: Icons.close,
-                                                color: productManager.search.isEmpty
-                                                    ? Colors.black
-                                                    : Colors.red,
-                                                onTap: () {
-                                                  productManager.search = '';
-                                                  textController.clear();
-                                                },
-                                                semanticLabel: 'Limpar busca',
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5),
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 52,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
-                                    ),
-                                    if (productManager.search.isEmpty)
-                                      Align(
-                                        alignment: Alignment(-1, 0),
-                                        child: Padding(
-                                          padding: EdgeInsets.fromLTRB(10, 10, 0, 13),
-                                          child: textForGoogleDecorations(
-                                            titleForDecorations: 'Adicionados recentemente...',
-                                            fontMethod: GoogleFonts.amaranth,
-                                            borderWidth: 0.2,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                        ),
-                                      ),
-                                    if (productManager.search.isEmpty)
-                                      RecentlyAddedProducts(
-                                        carrossel: true,
-                                        productCategory: widget.productCategory,
-                                      ),
-                                    customSlidingUpPainel(
-                                      slidingTitleColor: primaryColor,
-                                      textOfSlidingUpPanel: 'FILTRAR: Produtos na Categoria...',
-                                      context: context,
-                                      childrenOfPainel: SlidingFiltersProducts(
-                                        selectedStatus: selectedStatus,
-                                      ),
-                                      body: null,
-                                    ),
-                                    widget.productCategory.subCategoryList!.isEmpty
-                                        ? Container()
-                                        : Padding(
-                                            padding: const EdgeInsets.only(
-                                              top: 10,
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                        child: Row(
+                                          children: [
+                                            CustomIconButton(
+                                              iconData: Icons.search,
+                                              size: 24,
+                                              color: Colors.black,
+                                              onTap: goSearch,
+                                              semanticLabel: 'Pesquisar na categoria',
                                             ),
-                                            child: ExpansionTile(
-                                              title: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  const Icon(Icons.filter_list, size: 20),
-                                                  FittedBox(
-                                                    fit: BoxFit.scaleDown,
-                                                    child: textForGoogleDecorations(
-                                                      titleForDecorations: 'Seções de: '
-                                                          '${widget.productCategory.categoryTitle}',
-                                                      borderColor: Colors.white,
-                                                      fontSize: 20,
-                                                      fillColor: Colors.black,
-                                                      fontMethod: GoogleFonts.amaranth,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                            Expanded(
+                                              child: Padding(
+                                                  padding: const EdgeInsets.fromLTRB(6, 6, 0, 0),
+                                                  child: CustomTextFormField(
+                                                    controller: textController,
+                                                    focusedBorder: InputBorder.none,
+                                                    textFormFieldSize: 14,
+                                                    obscureText: false,
+                                                    hintText: 'Procurar produtos na categoria...',
+                                                    hintSize: 14,
+                                                    onSubmitted: (value) => goSearch,
+                                                  )),
+                                            ),
+                                            CustomIconButton(
+                                              iconData: Icons.close,
+                                              color: productManager.search.isEmpty
+                                                  ? Colors.black
+                                                  : Colors.red,
+                                              onTap: () {
+                                                productManager.search = '';
+                                                textController.clear();
+                                              },
+                                              semanticLabel: 'Limpar busca',
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  if (productManager.search.isEmpty)
+                                    Align(
+                                      alignment: Alignment(-1, 0),
+                                      child: Padding(
+                                        padding: EdgeInsets.fromLTRB(10, 10, 0, 13),
+                                        child: textForGoogleDecorations(
+                                          titleForDecorations: 'Adicionados recentemente...',
+                                          fontMethod: GoogleFonts.amaranth,
+                                          borderWidth: 0.2,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ),
+                                  if (productManager.search.isEmpty)
+                                    RecentlyAddedProducts(
+                                      carrossel: true,
+                                      productCategory: widget.productCategory,
+                                    ),
+                                  customSlidingUpPainel(
+                                    slidingTitleColor: primaryColor,
+                                    textOfSlidingUpPanel: 'FILTRAR: Produtos na Categoria...',
+                                    context: context,
+                                    childrenOfPainel: SlidingFiltersProducts(
+                                      selectedStatus: selectedStatus,
+                                    ),
+                                    body: null,
+                                  ),
+                                  widget.productCategory.subCategoryList!.isEmpty
+                                      ? Container()
+                                      : Padding(
+                                          padding: const EdgeInsets.only(
+                                            top: 10,
+                                          ),
+                                          child: ExpansionTile(
+                                            title: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
-                                                SubCategoriesWidget(
-                                                  subCategories: widget
-                                                      .productCategory.subCategoryList!
-                                                      .toList(),
+                                                const Icon(Icons.filter_list, size: 20),
+                                                FittedBox(
+                                                  fit: BoxFit.scaleDown,
+                                                  child: textForGoogleDecorations(
+                                                    titleForDecorations: 'Seções de: '
+                                                        '${widget.productCategory.categoryTitle}',
+                                                    borderColor: Colors.white,
+                                                    fontSize: 20,
+                                                    fillColor: Colors.black,
+                                                    fontMethod: GoogleFonts.amaranth,
+                                                  ),
                                                 ),
                                               ],
-                                            )),
-                                  ],
-                                ),
+                                            ),
+                                            children: [
+                                              SubCategoriesWidget(
+                                                subCategories: widget
+                                                    .productCategory.subCategoryList!
+                                                    .toList(),
+                                              ),
+                                            ],
+                                          )),
+                                ],
                               ),
-                            )
+                            ),
+                          )
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 15),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  if (productManager.filtersOn == true) filtersResult(),
+                                  if (allProductsFromCategory.isEmpty)
+                                    productManager.filtersOn == true ||
+                                            productManager.search.isNotEmpty
+                                        ? EmptyPageIndicator(
+                                            title: productManager.filtersOn == true
+                                                ? 'Filtro sem retorno...'
+                                                : 'Pesquisa não encontrada...',
+                                            iconData: Icons.search_off,
+                                            image: null,
+                                            duration: null,
+                                            titleColor: Colors.black,
+                                            iconColor: Colors.black,
+                                          )
+                                        : const EmptyPageIndicator(
+                                            title: 'Carregando Produtos...',
+                                            image: "assets/images/await.gif",
+                                            iconData: null,
+                                            titleColor: Colors.black,
+                                          )
+                                  else
+                                    Builder(
+                                      builder: (context) {
+                                        final categoryItens = allProductsFromCategory;
+                                        return ListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          primary: false,
+                                          shrinkWrap: true,
+                                          itemCount: categoryItens.length,
+                                          itemBuilder: (context, index) {
+                                            final categoryItens = allProductsFromCategory[index];
+                                            return FlexibleProductCard(
+                                              product: categoryItens,
+                                              isVertical: false,
+                                            );
+                                          },
+                                        );
+                                      },
+                                    )
+                                ],
+                              ),
+                            ),
                           ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 20, 0, 15),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    if (productManager.filtersOn == true) filtersResult(),
-                                    if (allProductsFromCategory.isEmpty)
-                                      productManager.filtersOn == true ||
-                                              productManager.search.isNotEmpty
-                                          ? EmptyPageIndicator(
-                                              title: productManager.filtersOn == true
-                                                  ? 'Filtro sem retorno...'
-                                                  : 'Pesquisa não encontrada...',
-                                              iconData: Icons.search_off,
-                                              image: null,
-                                              duration: null,
-                                              titleColor: Colors.black,
-                                              iconColor: Colors.black,
-                                            )
-                                          : const EmptyPageIndicator(
-                                              title: 'Carregando Produtos...',
-                                              image: "assets/images/await.gif",
-                                              iconData: null,
-                                              titleColor: Colors.black,
-                                            )
-                                    else
-                                      Builder(
-                                        builder: (context) {
-                                          final categoryItens = allProductsFromCategory;
-                                          return ListView.builder(
-                                            padding: EdgeInsets.zero,
-                                            primary: false,
-                                            shrinkWrap: true,
-                                            itemCount: categoryItens.length,
-                                            itemBuilder: (context, index) {
-                                              final categoryItens = allProductsFromCategory[index];
-                                              return FlexibleProductCard(
-                                                product: categoryItens,
-                                                isVertical: false,
-                                              );
-                                            },
-                                          );
-                                        },
-                                      )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-            bottomNavigationBar: customBottomNavigatorBar(context: context));
+                ),
+          bottomNavigationBar: customBottomNavigatorBar(context: context, withDrawer: true),
+        );
       },
     );
   }

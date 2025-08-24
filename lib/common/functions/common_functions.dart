@@ -5,7 +5,6 @@ import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:decorated_text/decorated_text.dart' show DecoratedGoogleFontText;
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mailer/mailer.dart';
@@ -136,7 +135,7 @@ Widget customProgressIndicator(
   }
 }
 
-void navigateToPageWithDrawer(BuildContext context, int pageIndex) {
+void navigateToPageWithDrawer({required BuildContext context, required int pageIndex}) {
   Navigator.popAndPushNamed(context, RoutesNavigator.homeScreen);
   WidgetsBinding.instance.addPostFrameCallback((_) {
     context.read<PageManager>().setPage(pageIndex);

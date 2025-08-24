@@ -62,7 +62,7 @@ class MonitoringStockMin {
           fetchTimeout: const Duration(minutes: 1),
           minimumFetchInterval: const Duration(minutes: 30)));
       await remoteConfig.fetchAndActivate();
-      final estoqueMinimo = remoteConfig.getInt('estoqueMinimoNotificacao');
+      final estoqueMinimo = remoteConfig.getInt('estoqueMinimoNotificação');
       return estoqueMinimo;
     } catch (error) {
       // Handle any network error or failure to obtain value

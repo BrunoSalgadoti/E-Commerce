@@ -1,20 +1,19 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
-import 'package:brn_ecommerce/common/functions/common_functions.dart' show navigateToPageWithDrawer;
+import 'package:brn_ecommerce/common/functions/common_functions.dart'
+    show textForGoogleDecorations;
 import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SalesSuggestionWidget extends StatefulWidget {
-  const SalesSuggestionWidget({super.key});
+class SalesSuggestionVisitedProducts extends StatefulWidget {
+  const SalesSuggestionVisitedProducts({super.key});
 
   @override
-  State<SalesSuggestionWidget> createState() => _SalesSuggestionWidgetState();
+  State<SalesSuggestionVisitedProducts> createState() => _SalesSuggestionVisitedProductsState();
 }
 
-class _SalesSuggestionWidgetState extends State<SalesSuggestionWidget> {
+class _SalesSuggestionVisitedProductsState extends State<SalesSuggestionVisitedProducts> {
   final int itemsPerPage = 10;
   int currentPage = 0;
   PageController pageControllerSuggest = PageController();
@@ -40,16 +39,11 @@ class _SalesSuggestionWidgetState extends State<SalesSuggestionWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(
-            'Continue comprando...',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-              color: Colors.black,
-            ),
-            overflow: TextOverflow.fade,
+          textForGoogleDecorations(
+            titleForDecorations: 'Você também pode gostar',
+            fontSize: 18,
           ),
           Container(
             width: double.infinity,
@@ -133,24 +127,6 @@ class _SalesSuggestionWidgetState extends State<SalesSuggestionWidget> {
               ),
             ),
           ),
-          AutoSizeText(
-            'Seu pedido foi realizado, agradecemos a preferência, '
-            'acompanhe o status do seu pedidos em:\n',
-            maxFontSize: 25,
-            minFontSize: 12,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.w800,
-              color: Colors.black,
-            ),
-            overflow: TextOverflow.fade,
-          ),
-          CustomTextButton(
-              text: 'Meus Pedidos',
-              fontColor: Colors.lightGreen,
-              fontWeight: FontWeight.w900,
-              fontSize: 20,
-              onPressed: () => navigateToPageWithDrawer(context, 3))
         ],
       ),
     );

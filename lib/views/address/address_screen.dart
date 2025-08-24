@@ -1,6 +1,6 @@
 import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/cards/recently_added_Products.dart';
-import 'package:brn_ecommerce/common/complement_app_bar/complement_app_bar.dart';
+import 'package:brn_ecommerce/common/app_bar/complement_app_bar.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/views/address/components/address_card.dart';

@@ -7,7 +7,7 @@ import 'package:brn_ecommerce/models/products/categories/product_category_manage
 import 'package:brn_ecommerce/models/products/details_products.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
-import 'package:brn_ecommerce/models/products/products_recently_added.dart';
+import 'package:brn_ecommerce/models/products/components/products_recently_added.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:brn_ecommerce/models/sales/checkout_manager.dart';
 import 'package:brn_ecommerce/models/sales/orders_manager.dart';

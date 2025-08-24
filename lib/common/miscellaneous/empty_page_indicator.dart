@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:brn_ecommerce/common/messengers/components/text_of_alerts_and_messengers.dart';
+import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:flutter/material.dart';
 
 /// # Widget for displaying an empty page indicator with alternating content (Folder: common/miscellaneous)
@@ -113,7 +114,7 @@ class EmptyPageIndicatorState extends State<EmptyPageIndicator> {
                     : Icon(
                         widget.iconData,
                         size: widget.iconSize ?? 80.0,
-                        color: widget.iconColor ?? Colors.white,
+                        color: widget.iconColor ?? getCustomAppBarColorIcons(),
                       ),
                 const SizedBox(height: 16),
                 Text(
@@ -121,7 +122,7 @@ class EmptyPageIndicatorState extends State<EmptyPageIndicator> {
                   style: TextStyle(
                     fontSize: widget.iconSize ?? 20,
                     fontWeight: FontWeight.bold,
-                    color: widget.titleColor ?? Colors.white,
+                    color: widget.titleColor ?? getTextColor(),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -135,14 +136,14 @@ class EmptyPageIndicatorState extends State<EmptyPageIndicator> {
                 Icon(
                   Icons.wifi_sharp,
                   size: widget.iconSize ?? 100.0,
-                  color: widget.iconColor ?? Colors.white,
+                  color: widget.iconColor ?? getCustomAppBarColorIcons(),
                 ),
                 Text(
                   AlertsMessengersText.erroEmptyPageIndicator,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: widget.titleColor ?? Colors.white,
+                    color: widget.titleColor ?? getTextColor(),
                   ),
                   textAlign: TextAlign.center,
                 ),

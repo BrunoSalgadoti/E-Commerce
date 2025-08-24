@@ -4,7 +4,7 @@ import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
-import 'package:brn_ecommerce/models/products/products_recently_added.dart';
+import 'package:brn_ecommerce/models/products/components/products_recently_added.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
