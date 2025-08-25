@@ -30,7 +30,7 @@ class CustomIconButton extends StatelessWidget {
     super.key,
     required this.iconData,
     required this.semanticLabel,
-    this.onTap,
+    required this.onTap,
     this.color,
     this.size,
     this.weight,

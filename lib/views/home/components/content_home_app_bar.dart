@@ -1,8 +1,11 @@
+import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart' show RoutesNavigator;
 import 'package:brn_ecommerce/models/users/users_manager.dart' show UserManager;
 import 'package:brn_ecommerce/models/views/home_manager.dart' show HomeManager;
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class ContentHomeAppBar extends StatelessWidget {
@@ -11,6 +14,8 @@ class ContentHomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double iconsSize = 33;
+    final userIsLoggedIn = context.watch<UserManager>().isLoggedIn;
+    final getUsers = context.watch<UserManager>();
 
     return SliverAppBar(
       primary: false,
@@ -30,30 +35,42 @@ class ContentHomeAppBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // Manually created Drawer icon
-              IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () {
+              CustomIconButton(
+                iconData: Icons.menu,
+                semanticLabel: 'Ícone do Drawer',
+                size: iconsSize,
+                onTap: () {
                   Scaffold.of(context).openDrawer();
                 },
               ),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      if (context.read<UserManager>().isLoggedIn) {
-                        Navigator.pushNamed(context, RoutesNavigator.cartScreen);
-                      } else {
-                        Navigator.pushNamed(context, RoutesNavigator.loginScreen);
-                      }
+                  CustomIconButton(
+                    iconData: FontAwesomeIcons.rankingStar,
+                    semanticLabel: 'Meus Desejos',
+                    color: Colors.red,
+                    size: iconsSize,
+                    onTap: () {
+                      //TODO: rota, tela de meus desejos e lógica
                     },
-                    icon: Consumer<UserManager>(
-                      builder: (_, userManager, __) {
-                        return userManager.isLoggedIn
-                            ? Icon(Icons.shopping_cart, size: iconsSize)
-                            : Icon(Icons.account_circle, size: iconsSize);
-                      },
-                    ),
+                  ),
+                  CustomIconButton(
+                    iconData: Icons.favorite,
+                    semanticLabel: 'Meus Favoritos',
+                    color: Colors.red,
+                    size: iconsSize,
+                    onTap: () {
+                      //TODO: rota, tela de meus favoritos e lógica
+                    },
+                  ),
+                  CustomIconButton(
+                    iconData: userIsLoggedIn ? Icons.shopping_cart : Icons.account_circle,
+                    size: iconsSize,
+                    semanticLabel: 'Login ou Cart Logo',
+                    onTap: () => userIsLoggedIn
+                        ? Navigator.pushNamed(context, RoutesNavigator.cartScreen)
+                        : Navigator.pushNamed(context, RoutesNavigator.loginScreen),
                   ),
                   Consumer2<UserManager, HomeManager>(
                     builder: (_, userManager, homeManager, __) {
@@ -76,15 +93,26 @@ class ContentHomeAppBar extends StatelessWidget {
                                   }).toList();
                                 },
                               )
-                            : IconButton(
-                                icon: Icon(Icons.edit, size: iconsSize),
-                                onPressed: homeManager.enterEditing,
+                            : CustomIconButton(
+                                iconData: Icons.edit,
+                                size: iconsSize,
+                                semanticLabel: 'Editar Tela',
+                                onTap: homeManager.enterEditing,
                               );
                       } else {
                         return const SizedBox();
                       }
                     },
                   ),
+                  userIsLoggedIn
+                      ? // User avatar
+                      getUsers.users?.userPhotoURL == null || getUsers.users?.userPhotoURL == ''
+                          ? CircleAvatar(
+                              backgroundImage: AssetImage(RootAssets.iconUserNoImage),
+                            )
+                          : CircleAvatar(
+                              backgroundImage: NetworkImage(getUsers.users?.userPhotoURL ?? ''))
+                      : Container()
                 ],
               ),
             ],

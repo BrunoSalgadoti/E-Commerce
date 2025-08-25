@@ -26,7 +26,7 @@ mixin RootAssets {
   static const String iconFirebaseLogo = "assets/icons/firebase.svg";
   static const String iconGoogleLogo = "assets/icons/googleLogo.svg";
   static const String iconPadlock = "assets/icons/locked.svg";
-  static const String iconUserNoImage = "assets/icons/userWithoutImage.svg";
+  static const String iconUserNoImage = "assets/images/userWithoutImage.png";
 
   //Documents Assets
   static const String termsPrivacyPolicy = "assets/docs/privacyPolicy.md";

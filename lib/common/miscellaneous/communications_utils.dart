@@ -1,5 +1,7 @@
+import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/messengers/components/text_of_alerts_and_messengers.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:map_launcher/map_launcher.dart';
@@ -194,8 +196,12 @@ class CommunicationsUtils<T, U> {
       hasError = true;
       alertForCall(context, 'Número telefônico indisponível!');
     } else {
+      final String webPhoneNumber = unFormatPhone('+55$phoneNumber');
       try {
-        if (await canLaunchUrl(Uri.parse('tel:$phoneNumber'))) {
+        if (kIsWeb) {
+          await canLaunchUrl(Uri.parse('tel:$webPhoneNumber'));
+          launchUrl(Uri.parse('tel:$webPhoneNumber'));
+        } else if (await canLaunchUrl(Uri.parse('tel:$phoneNumber'))) {
           launchUrl(Uri.parse('tel:$phoneNumber'));
         }
       } catch (error) {
