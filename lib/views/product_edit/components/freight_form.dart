@@ -37,7 +37,7 @@ class FreightForm extends StatelessWidget {
               borderRadius: BorderRadius.circular(5),
             ),
             child: DropdownButtonFormField<bool>(
-              value: product?.freight,
+              initialValue: product?.freight,
               icon: const Icon(Icons.keyboard_arrow_down),
               iconSize: 24,
               isDense: true,
