@@ -17,14 +17,30 @@ class AdminUsersSearch extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   final List<String> email = [];
-  List<Widget> favouriteList = [];
-  List<Widget> normalList = [];
+  final List<Users> _favouriteUsers = [];
+  final List<Users> _normalUsers = [];
   List<Users> allUsers = [];
+
   String _search = '';
 
   List<String> get allEmails => allUsers.map((e) => e.email).toList();
 
-  /// Updates all users and populates the lists (respecting search, if any)
+  /// Exhibition of MODELS
+  List<Users> get favouriteUsers => List.unmodifiable(_favouriteUsers);
+  List<Users> get normalUsers => List.unmodifiable(_normalUsers);
+
+  /// Widgets Exhibition
+  List<Widget> get favouriteList => _favouriteUsers.map((u) => _buildUserTile(u)).toList();
+  List<Widget> get normalList => _normalUsers.map((u) => _buildUserTile(u)).toList();
+
+  String get search => _search;
+  set search(String value) {
+    _search = value;
+    setUsers(allUsers); // reaplica filtro
+    notifyListeners();
+  }
+
+  /// AUpdates all users and populates the lists
   void setUsers(List<Users> users) {
     allUsers = users;
     final current = _search.trim().isEmpty
@@ -35,34 +51,23 @@ class AdminUsersSearch extends ChangeNotifier {
     filterList(current);
   }
 
-  String get search => _search;
-  set search(String value) {
-    _search = value;
-    // re-filters using the already loaded list
-    setUsers(allUsers);
-    notifyListeners();
-  }
-
-  /// Create lists (favorites and normal) and prepare the email list
+  /// Create favorite and normal lists
   void filterList(List<Users> users) {
-    favouriteList = [];
-    normalList = [];
-    email.clear();
+    _favouriteUsers
+      ..clear()
+      ..addAll(users.where((u) => u.favourite == true));
+    _normalUsers
+      ..clear()
+      ..addAll(users.where((u) => u.favourite != true));
 
-    for (var user in users) {
-      email.add(user.email);
+    email
+      ..clear()
+      ..addAll(users.map((e) => e.email));
 
-      final tile = _buildUserTile(user);
-      if (user.favourite == true) {
-        favouriteList.add(tile);
-      } else {
-        normalList.add(tile);
-      }
-    }
     notifyListeners();
   }
 
-  /// Dynamically build user widget with Slidable and star overlay
+  /// Build dinâmico do Tile
   Widget _buildUserTile(Users user) {
     final isFav = user.favourite == true;
 
@@ -146,14 +151,14 @@ class AdminUsersSearch extends ChangeNotifier {
               user.userName ?? '',
               style: TextStyle(
                 fontWeight: FontWeight.w800,
-                color: isFav ? Colors.yellow : getTextColor(),
+                color: isFav ? getEspecialColor() : getTextColor(),
               ),
             ),
             subtitle: Text(
               "${user.email}\nTel.: ${user.phoneNumber ?? ""}",
               style: TextStyle(
                 fontSize: 16,
-                color: isFav ? Colors.yellow : getTextColor(),
+                color: isFav ? getEspecialColor() : getTextColor(),
               ),
             ),
             onTap: () {
@@ -166,7 +171,7 @@ class AdminUsersSearch extends ChangeNotifier {
     );
   }
 
-  /// Dialog to confirm sending mass email
+  /// Email sending dialog
   void _showEmailDialog(BuildContext context, Users user) {
     showDialog(
       context: context,
@@ -177,7 +182,7 @@ class AdminUsersSearch extends ChangeNotifier {
           TextButton(
             onPressed: () {
               CommunicationsUtils(parameterClass1Of2: user).sendEmail(null, null, allEmails);
-              Navigator.of(dialogContext).pop(); // <- uses the context of the dialogue
+              Navigator.of(dialogContext).pop();
             },
             child: const Text('Sim'),
           ),
@@ -185,7 +190,7 @@ class AdminUsersSearch extends ChangeNotifier {
             onPressed: () {
               CommunicationsUtils(parameterClass1Of2: user)
                   .sendEmail(user.email, user.userName, email);
-              Navigator.of(dialogContext).pop(); // <- uses the context of the dialogue
+              Navigator.of(dialogContext).pop();
             },
             child: const Text('Não'),
           ),
@@ -194,7 +199,6 @@ class AdminUsersSearch extends ChangeNotifier {
     );
   }
 
-  /// Favorite User — Persists in Firestore and updates locally
   Future<void> _favoringUser(String? userId) async {
     if (userId == null) return;
     try {
@@ -205,12 +209,10 @@ class AdminUsersSearch extends ChangeNotifier {
     final idx = allUsers.indexWhere((u) => u.id == userId);
     if (idx != -1) {
       allUsers[idx].favourite = true;
-      // re-aplica o filtro atual
       setUsers(allUsers);
     }
   }
 
-  /// Unfavorite user — persists in Firestore and updates locally
   Future<void> _disfavoringUser(String? userId) async {
     if (userId == null) return;
     try {
@@ -221,7 +223,6 @@ class AdminUsersSearch extends ChangeNotifier {
     final idx = allUsers.indexWhere((u) => u.id == userId);
     if (idx != -1) {
       allUsers[idx].favourite = false;
-      // reapplies the current filter
       setUsers(allUsers);
     }
   }
