@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/communications_utils.dart';
@@ -7,11 +5,11 @@ import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/models/admin_area/admin_orders_manager.dart';
 import 'package:brn_ecommerce/models/users/users.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class AdminUsersSearch extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
