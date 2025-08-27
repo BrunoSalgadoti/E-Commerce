@@ -23,41 +23,43 @@ class SlidingFiltersProductsState extends State<SlidingFiltersProducts>
     return Consumer<ProductManager>(
       builder: (_, productManager, __) {
         return ListView(
-            itemExtent: 45,
-            children: StatusOfProducts.values.map((s) {
-              final isSelected = widget.selectedStatus.contains(s);
-              return CheckboxListTile.adaptive(
-                title: Text(ProductManager.getStatusText(s)),
-                dense: true,
-                activeColor: primaryColor,
-                value: isSelected,
-                onChanged: (bool? v) {
-                  if (v != null) {
-                    setState(() {
-                      if (v) {
-                        if (widget.selectedStatus.contains(s)) {
-                          widget.selectedStatus.remove(s);
-                        } else {
-                          widget.selectedStatus.add(s);
-                        }
-                      } else {
+          shrinkWrap: true,
+          padding: EdgeInsets.zero,
+          children: StatusOfProducts.values.map((s) {
+            final isSelected = widget.selectedStatus.contains(s);
+            return CheckboxListTile.adaptive(
+              title: Text(ProductManager.getStatusText(s)),
+              dense: true,
+              activeColor: primaryColor,
+              value: isSelected,
+              onChanged: (bool? v) {
+                if (v != null) {
+                  setState(() {
+                    if (v) {
+                      if (widget.selectedStatus.contains(s)) {
                         widget.selectedStatus.remove(s);
-                        widget.selectedStatus.clear();
+                      } else {
+                        widget.selectedStatus.add(s);
                       }
-                      productManager.setStatusFilter(
-                        status: s,
-                        enabled: widget.selectedStatus.contains(s),
-                      );
-                    });
-                    if (productManager.filtersOn == false) {
-                      widget.selectedStatus.clear();
+                    } else {
                       widget.selectedStatus.remove(s);
-                      debugPrint(productManager.filtersOn.toString());
+                      widget.selectedStatus.clear();
                     }
+                    productManager.setStatusFilter(
+                      status: s,
+                      enabled: widget.selectedStatus.contains(s),
+                    );
+                  });
+                  if (productManager.filtersOn == false) {
+                    widget.selectedStatus.clear();
+                    widget.selectedStatus.remove(s);
+                    debugPrint(productManager.filtersOn.toString());
                   }
-                },
-              );
-            }).toList());
+                }
+              },
+            );
+          }).toList(),
+        );
       },
     );
   }

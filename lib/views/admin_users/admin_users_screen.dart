@@ -51,13 +51,13 @@ class AdminUsersScreen extends StatelessWidget {
               return Center(
                 child: Container(
                   constraints: BoxConstraints(
-                    maxWidth: kIsWeb ? mobileBreakpoint : tabletBreakpoint,
+                    maxWidth: mobileBreakpoint,
                   ),
                   color: kIsWeb ? Colors.white : Colors.yellow.withAlpha(90),
                   child: AlphabetScrollView(
                     list: visibleUsers.map((u) => AlphaModel(u.userName ?? '')).toList(),
                     alignment: LetterAlignment.right,
-                    itemExtent: 70,
+                    itemExtent: 75,
                     unselectedTextStyle: TextStyle(
                       fontSize: 18,
                       color: getTextColor(),

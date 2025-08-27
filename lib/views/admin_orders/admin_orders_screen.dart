@@ -1,3 +1,4 @@
+import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
@@ -25,94 +26,101 @@ class AdminOrdersScreen extends StatelessWidget {
           child: Scaffold(
             backgroundColor: Colors.black45,
             drawer: const CustomDrawer(),
-            appBar: AppBar(
-              title: const Text('Pedido(s) Realizado(s)'),
-              centerTitle: true,
+            appBar: CustomAppBar(
+              title: 'Pedido(s) Realizado(s)',
+              showDrawerIcon: true,
+              showSearchButton: false,
             ),
             body: Center(
-              child: Consumer<AdminOrdersManager>(
-                builder: (_, adminOrdersManager, __) {
-                  final filteredOrders = adminOrdersManager.filteredOrders.toList()
-                    ..sort((a, b) => b.formattedId.compareTo(a.formattedId));
+              child: Container(
+                constraints: BoxConstraints(maxWidth: mobileBreakpoint),
+                child: Consumer<AdminOrdersManager>(
+                  builder: (_, adminOrdersManager, __) {
+                    final filteredOrders = adminOrdersManager.filteredOrders.toList()
+                      ..sort((a, b) => b.formattedId.compareTo(a.formattedId));
 
-                  return ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
-                    child: customSlidingUpPainel(
-                        context: context,
-                        slidingTitleColor: primaryColor,
-                        textOfSlidingUpPanel: 'Filtrar por status de entrega',
-                        borderRadiosBottomLeft: 0,
-                        borderRadiosBottomRight: 0,
-                        borderRadiosTopLeft: 10,
-                        borderRadiosTopRight: 10,
-                        body: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
-                          child: Column(
-                            children: [
-                              if (adminOrdersManager.userFilter != null)
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 2),
-                                  child: Row(
-                                    children: [
-                                      Flexible(
-                                        child: Text(
-                                          'Pedidos de: '
-                                          '${adminOrdersManager.userFilter!.userName ?? ''}',
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w800,
-                                            color: Colors.white,
-                                          ),
+                    return customSlidingUpPainel(
+                      context: context,
+                      slidingTitleColor: primaryColor,
+                      textOfSlidingUpPanel: 'Filtrar por status de entrega',
+                      borderRadiosBottomLeft: 0,
+                      borderRadiosBottomRight: 0,
+                      borderRadiosTopLeft: 10,
+                      borderRadiosTopRight: 10,
+                      body: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: mobileBreakpoint),
+                        child: ListView(
+                          padding: EdgeInsets.zero,
+                          children: [
+                            if (adminOrdersManager.userFilter != null)
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(16, 0, 16, 2),
+                                child: Row(
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                        'Pedidos de: '
+                                        '${adminOrdersManager.userFilter!.userName ?? ''}',
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w800,
+                                          color: Colors.white,
                                         ),
                                       ),
-                                      CustomIconButton(
-                                        iconData: Icons.close,
-                                        color: Colors.white,
-                                        onTap: () {
-                                          adminOrdersManager.setUserFilter(null);
-                                        },
-                                        semanticLabel: 'Fechar',
-                                      )
-                                    ],
+                                    ),
+                                    CustomIconButton(
+                                      iconData: Icons.close,
+                                      color: Colors.white,
+                                      onTap: () {
+                                        adminOrdersManager.setUserFilter(null);
+                                      },
+                                      semanticLabel: 'Fechar',
+                                    )
+                                  ],
+                                ),
+                              ),
+                            if (filteredOrders.isEmpty)
+                              const EmptyPageIndicator(
+                                title: 'Aguardando vendas...',
+                                iconData: Icons.border_clear,
+                                image: null,
+                                duration: null,
+                              )
+                            else
+                              ...filteredOrders.map(
+                                (order) => Center(
+                                  child: Container(
+                                    constraints: BoxConstraints(maxWidth: mobileBreakpoint),
+                                    child: OrderTile(order, showControls: true),
                                   ),
                                 ),
-                              if (filteredOrders.isEmpty)
-                                const Flexible(
-                                    child: EmptyPageIndicator(
-                                  title: 'Aguardando vendas...',
-                                  iconData: Icons.border_clear,
-                                  image: null,
-                                  duration: null,
-                                ))
-                              else
-                                Flexible(
-                                  child: ListView.builder(
-                                      itemCount: filteredOrders.length,
-                                      itemBuilder: (_, index) {
-                                        return OrderTile(
-                                          filteredOrders[index],
-                                          showControls: true,
-                                        );
-                                      }),
-                                ),
-                              const SizedBox(height: 125)
-                            ],
-                          ),
+                              ),
+                            const SizedBox(height: 80), // margem final
+                          ],
                         ),
-                        childrenOfPainel: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: StatusOfOrders.values.map((s) {
-                            return CheckboxListTile(
+                      ),
+                      childrenOfPainel: Center(
+                        child: Container(
+                          constraints: BoxConstraints(maxWidth: mobileBreakpoint),
+                          child: ListView(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            children: StatusOfOrders.values.map((s) {
+                              return CheckboxListTile(
                                 title: Text(OrderClient.getStatusText(s)),
                                 dense: true,
                                 activeColor: primaryColor,
                                 value: adminOrdersManager.statusFilter.contains(s),
                                 onChanged: (v) {
                                   adminOrdersManager.setStatusFilter(status: s, enabled: v);
-                                });
-                          }).toList(),
-                        )),
-                  );
-                },
+                                },
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),

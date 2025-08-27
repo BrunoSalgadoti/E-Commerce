@@ -62,17 +62,77 @@ class _ProductsScreenState extends State<ProductsScreen> {
           )
         ],
       ),
-
-      body: Consumer<ProductManager>(builder: (_, productManager, __) {
-        final filteredProducts = productManager.filteredProducts;
-        return Align(
-          alignment: Alignment.center,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                customSlidingUpPainel(
+      body: Stack(
+        children: [
+          Consumer<ProductManager>(builder: (_, productManager, __) {
+            final filteredProducts = productManager.filteredProducts;
+            return Align(
+              alignment: Alignment.center,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
+                child: Column(
+                  children: [
+                    if (productManager.filtersOn == true)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 30),
+                        child: Center(child: filtersResult()),
+                      ),
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          if (filteredProducts.isEmpty)
+                            productManager.filtersOn == true || productManager.search.isNotEmpty
+                                ? const EmptyPageIndicator(
+                                    title: 'Pesquisa não encontrada...',
+                                    iconData: Icons.search_off,
+                                    image: null,
+                                    duration: null,
+                                  )
+                                : const EmptyPageIndicator(
+                                    title: "Carregando Produtos...",
+                                    image: RootAssets.cartAwaitGif,
+                                    iconData: null,
+                                  )
+                          else
+                            Padding(
+                              padding: productManager.filtersOn == true
+                                  ? const EdgeInsets.fromLTRB(15, 5, 15, 30)
+                                  : const EdgeInsets.fromLTRB(15, 45, 15, 30),
+                              child: GridView.builder(
+                                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 260,
+                                  mainAxisExtent: 318,
+                                  crossAxisSpacing: 15,
+                                  mainAxisSpacing: 10,
+                                ),
+                                itemCount: filteredProducts.length,
+                                itemBuilder: (_, index) {
+                                  return FlexibleProductCard(
+                                    product: productManager.filtersOn == true
+                                        ? filteredProducts.toList()[index]
+                                        : filteredProducts.reversed.toList()[index],
+                                    isVertical: true,
+                                  );
+                                },
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: mobileBreakpoint),
+                child: customSlidingUpPainel(
                   slidingTitleColor: primaryColor,
                   textOfSlidingUpPanel: null,
                   context: context,
@@ -81,52 +141,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   ),
                   body: null,
                 ),
-                if (productManager.filtersOn == true) filtersResult(),
-                Expanded(
-                  child: Stack(
-                    children: [
-                      if (filteredProducts.isEmpty)
-                        productManager.filtersOn == true || productManager.search.isNotEmpty
-                            ? const EmptyPageIndicator(
-                                title: 'Pesquisa não encontrada...',
-                                iconData: Icons.search_off,
-                                image: null,
-                                duration: null,
-                              )
-                            : const EmptyPageIndicator(
-                                title: "Carregando Produtos...",
-                                image: RootAssets.cartAwaitGif,
-                                iconData: null,
-                              )
-                      else
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 30, 15, 40),
-                          child: GridView.builder(
-                            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: 260,
-                              mainAxisExtent: 318,
-                              crossAxisSpacing: 15,
-                              mainAxisSpacing: 10,
-                            ),
-                            itemCount: filteredProducts.length,
-                            itemBuilder: (_, index) {
-                              return FlexibleProductCard(
-                                product: productManager.filtersOn == true
-                                    ? filteredProducts.toList()[index]
-                                    : filteredProducts.reversed.toList()[index],
-                                isVertical: true,
-                              );
-                            },
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
-        );
-      }),
+        ],
+      ),
       floatingActionButton: Consumer<UserManager>(builder: (_, userManager, __) {
         return FloatingActionButton(
           backgroundColor: Colors.white,

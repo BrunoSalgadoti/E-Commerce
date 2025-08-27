@@ -26,7 +26,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "br.com.brninfodev.brn_ecommerce"
-    compileSdkVersion 35
+    compileSdkVersion 36
     ndkVersion "27.0.12077973"
 
     //APK Splitting
