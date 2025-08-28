@@ -167,16 +167,17 @@ Widget carouselForProducts(
             Container(
               padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1.5,
-                      blurRadius: 4,
-                      offset: const Offset(0, 5),
-                    ),
-                  ]),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 1.5,
+                    blurRadius: 4,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
               clipBehavior: Clip.antiAlias,
               child: Image.network(
                 product.images!.first,
@@ -184,31 +185,34 @@ Widget carouselForProducts(
               ),
             ),
             Padding(
-                padding: const EdgeInsets.all(10),
-                child: TagForCard(
-                  data: 'A partir:\n '
-                      '${formattedRealText(product.basePrice)}',
-                  googleFonts: GoogleFonts.akayaTelivigala,
-                  textFontSize: 16,
-                  alignment: Alignment.bottomLeft,
-                  backgroundColor: Colors.white,
-                  containerWidth: 90,
-                )),
+              padding: const EdgeInsets.all(10),
+              child: TagForCard(
+                data: 'A partir:\n '
+                    '${formattedRealText(product.basePrice)}',
+                googleFonts: GoogleFonts.akayaTelivigala,
+                textFontSize: 16,
+                alignment: Alignment.bottomLeft,
+                backgroundColor: Colors.white,
+                containerWidth: 90,
+              ),
+            ),
             Positioned(
               bottom: 10,
               right: 10,
               child: Material(
-                  color: Theme.of(context).primaryColor.withAlpha(90),
-                  child: IconButton(
-                      icon: const Icon(
-                        Icons.open_in_new,
-                        semanticLabel: 'Visualizar Produto',
-                        size: 20,
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, RoutesNavigator.productDetailsScreen,
-                            arguments: product);
-                      })),
+                color: Theme.of(context).primaryColor.withAlpha(90),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.open_in_new,
+                    semanticLabel: 'Visualizar Produto',
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, RoutesNavigator.productDetailsScreen,
+                        arguments: product);
+                  },
+                ),
+              ),
             ),
             Positioned(
               bottom: 10,

@@ -1,13 +1,18 @@
 import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
+import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/common/cards/price_card.dart';
+import 'package:brn_ecommerce/common/cards/recently_added_products.dart';
+import 'package:brn_ecommerce/common/cards/sales_suggestion_visited_products.dart';
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
+import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/messengers/components/text_of_alerts_and_messengers.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/common/advertising/info_marquee_widget.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
+import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:brn_ecommerce/views/cart/components/cart_tile.dart';
 import 'package:decorated_text/decorated_text.dart';
@@ -28,9 +33,10 @@ class CartScreen extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: wildBreakpoint),
           child: Scaffold(
-            appBar: AppBar(
-              title: const Text('Meu Carrinho'),
-              centerTitle: true,
+            appBar: CustomAppBar(
+              title: 'Meu Carrinho',
+              showDrawerIcon: false,
+              showSearchButton: false,
             ),
             body: LayoutBuilder(
               builder: (context, constraints) {
@@ -43,14 +49,14 @@ class CartScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const DecoratedGoogleFontText(
+                            DecoratedGoogleFontText(
                               'O seu carrinho está vazio.',
                               fontMethod: GoogleFonts.merienda,
-                              fillColor: Colors.black,
+                              fillColor: Colors.amber,
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
                               borderWidth: 0.4,
-                              borderColor: Colors.white,
+                              borderColor: getEspecialColor(),
                             ),
                             CustomTextButton(
                               onPressed: () {
@@ -70,23 +76,25 @@ class CartScreen extends StatelessWidget {
                         ),
                       );
                     }
+
+                    final isWide = constraints.maxWidth >= mobileBreakpoint;
+
                     return SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           const AdvertisingWidget(),
                           Padding(
-                            padding: const EdgeInsets.only(top: 20, bottom: 15),
+                            padding: const EdgeInsets.symmetric(vertical: 12),
                             child: InfoMarqueeWidget(
                               text: AlertsMessengersText.infoMarqueeOfCartScreen,
-                              color: const Color.fromARGB(197, 225, 218, 218),
+                              color: getCustomAppBarColorBackground(),
                               fontWeight: FontWeight.w800,
-                              glowColor: const Color.fromARGB(255, 81, 255, 255),
+                              glowColor: Colors.orange,
                               marqueeWidth: tabletBreakpoint,
                               onPressed: () {
-                                context.read<PageManager>().setPage(1);
+                                // context.read<PageManager>().pageController.page(2)
+                                context.read<PageManager>().setPage(2);
                                 Navigator.of(context).pop();
                               },
                               marqueeSpeed: MediaQuery.of(context).size.width >= 900 ? 24 : 22,
@@ -96,49 +104,103 @@ class CartScreen extends StatelessWidget {
                           ),
                           ConstrainedBox(
                             constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Wrap(
-                                      alignment: WrapAlignment.center,
-                                      runAlignment: WrapAlignment.center,
-                                      crossAxisAlignment: WrapCrossAlignment.center,
-                                      children: [
-                                        Container(
-                                          constraints: BoxConstraints(
-                                            maxWidth: constraints.maxWidth >= tabletBreakpoint
-                                                ? tabletBreakpoint / 100 * 70
-                                                : tabletBreakpoint,
-                                          ),
-                                          child: Wrap(
-                                            alignment: WrapAlignment.center,
-                                            runAlignment: WrapAlignment.center,
-                                            crossAxisAlignment: WrapCrossAlignment.center,
-                                            children: cartManager.items
-                                                .map(
-                                                  (cartProduct) =>
-                                                      CartTile(cartProduct: cartProduct),
-                                                )
-                                                .toList(),
-                                          ),
+                            child: isWide
+                                ? Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      // LEFT SIDE
+                                      Expanded(
+                                        flex: (constraints.minWidth < 1625) ? 7 : 8,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Wrap(
+                                              spacing: 3,
+                                              runSpacing: 3,
+                                              children: cartManager.items
+                                                  .map((cartProduct) =>
+                                                      CartTile(cartProduct: cartProduct))
+                                                  .toList(),
+                                            ),
+                                            const SizedBox(height: 15),
+                                            SalesSuggestionVisitedProducts(), // “You may also like”
+                                          ],
                                         ),
-                                        Container(
-                                          constraints: BoxConstraints(
-                                              maxWidth: constraints.maxWidth >= tabletBreakpoint
-                                                  ? tabletBreakpoint / 100 * 30
-                                                  : tabletBreakpoint / 100 * 80),
-                                          child: PriceCard(
+                                      ),
+                                      const SizedBox(width: 20),
+                                        // RIGHT SIDE
+                                      Expanded(
+                                        flex: (constraints.minWidth < 1625) ? 4 : 2,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Align(
+                                              alignment: Alignment(-1, 0),
+                                              child: Padding(
+                                                padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                                child: textForGoogleDecorations(
+                                                  titleForDecorations: 'Adicionados recentemente...',
+                                                  fontMethod: GoogleFonts.amaranth,
+                                                  borderWidth: 0.2,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                              ),
+                                            ),
+                                            RecentlyAddedProducts(carrossel: false),
+                                            const SizedBox(height: 15),
+                                            PriceCard(
                                               buttonText: 'Continuar para Entrega',
                                               onPressed: cartManager.isCartValid
                                                   ? () => Navigator.pushNamed(
                                                       context, RoutesNavigator.addressScreen)
                                                   : null,
-                                              showIcon: false),
+                                              showIcon: false,
+                                            ),
+                                          ],
                                         ),
-                                      ]),
-                                ]),
-                          )
+                                      ),
+                                    ],
+                                  )
+                                : Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Wrap(
+                                        spacing: 5,
+                                        runSpacing: 5,
+                                        alignment: WrapAlignment.center,
+                                        children: cartManager.items
+                                            .map(
+                                                (cartProduct) => CartTile(cartProduct: cartProduct))
+                                            .toList(),
+                                      ),
+                                      const SizedBox(height: 15),
+                                      SalesSuggestionVisitedProducts(),
+                                      const SizedBox(height: 15),
+                                      PriceCard(
+                                        buttonText: 'Continuar para Entrega',
+                                        onPressed: cartManager.isCartValid
+                                            ? () => Navigator.pushNamed(
+                                                context, RoutesNavigator.addressScreen)
+                                            : null,
+                                        showIcon: false,
+                                      ),
+                                      Align(
+                                        alignment: Alignment(-1, 0),
+                                        child: Padding(
+                                          padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                          child: textForGoogleDecorations(
+                                            titleForDecorations: 'Adicionados recentemente...',
+                                            fontMethod: GoogleFonts.amaranth,
+                                            borderWidth: 0.2,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ),
+                                      RecentlyAddedProducts(carrossel: false),
+                                      const SizedBox(height: 15),
+                                    ],
+                                  ),
+                          ),
                         ],
                       ),
                     );
