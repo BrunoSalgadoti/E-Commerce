@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:flutter/material.dart';
 
@@ -104,8 +105,9 @@ class _RecentlyAddedProductsAnimatedState extends State<RecentlyAddedProductsAni
                     children: pageProducts.map((product) {
                       return GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pushNamed(
-                            '/productDetailsScreen',
+                          Navigator.pushNamed(
+                            context,
+                            RoutesNavigator.productDetailsScreen,
                             arguments: product,
                           );
                         },

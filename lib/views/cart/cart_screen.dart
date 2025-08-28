@@ -93,7 +93,6 @@ class CartScreen extends StatelessWidget {
                               glowColor: Colors.orange,
                               marqueeWidth: tabletBreakpoint,
                               onPressed: () {
-                                // context.read<PageManager>().pageController.page(2)
                                 context.read<PageManager>().setPage(2);
                                 Navigator.of(context).pop();
                               },
@@ -140,7 +139,6 @@ class CartScreen extends StatelessWidget {
                                                 padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
                                                 child: textForGoogleDecorations(
                                                   titleForDecorations: 'Adicionados recentemente...',
-                                                  fontMethod: GoogleFonts.amaranth,
                                                   borderWidth: 0.2,
                                                   fontWeight: FontWeight.normal,
                                                 ),
@@ -190,7 +188,6 @@ class CartScreen extends StatelessWidget {
                                           padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
                                           child: textForGoogleDecorations(
                                             titleForDecorations: 'Adicionados recentemente...',
-                                            fontMethod: GoogleFonts.amaranth,
                                             borderWidth: 0.2,
                                             fontWeight: FontWeight.normal,
                                           ),
