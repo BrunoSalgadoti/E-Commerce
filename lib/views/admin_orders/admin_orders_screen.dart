@@ -1,9 +1,11 @@
 import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/custom_sliding_up_painel.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
+import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/models/admin_area/admin_orders_manager.dart';
 import 'package:brn_ecommerce/models/sales/order_client.dart';
 import 'package:brn_ecommerce/views/orders/components/order_tile.dart';
@@ -24,7 +26,6 @@ class AdminOrdersScreen extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: wildBreakpoint),
           child: Scaffold(
-            backgroundColor: Colors.black45,
             drawer: const CustomDrawer(),
             appBar: CustomAppBar(
               title: 'Pedido(s) Realizado(s)',
@@ -56,22 +57,25 @@ class AdminOrdersScreen extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 2),
                                 child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Flexible(
                                       child: Text(
                                         'Pedidos de: '
                                         '${adminOrdersManager.userFilter!.userName ?? ''}',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontWeight: FontWeight.w800,
-                                          color: Colors.white,
+                                          color: getEspecialColor(),
                                         ),
                                       ),
                                     ),
                                     CustomIconButton(
                                       iconData: Icons.close,
-                                      color: Colors.white,
+                                      color: getEspecialColor(),
                                       onTap: () {
                                         adminOrdersManager.setUserFilter(null);
+                                        context.read<PageManager>().setPage(6);
                                       },
                                       semanticLabel: 'Fechar',
                                     )
