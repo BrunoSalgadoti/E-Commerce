@@ -21,106 +21,109 @@ class CheckoutScreen extends StatelessWidget {
     final iconSize = screenHeight * 0.043;
     final fontSize = screenHeight * 0.025;
 
-    return Consumer<CheckoutManager>(builder: (_, checkoutManager, __) {
-      return Scaffold(
-        body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                snap: true,
-                floating: true,
-                elevation: 4,
-                backgroundColor: Colors.green,
-                flexibleSpace: FlexibleSpaceBar(
-                  title: Text('Pagamento Seguro!',
-                      style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold)),
-                  centerTitle: true,
+    return Consumer<CheckoutManager>(
+      builder: (_, checkoutManager, __) {
+        return Scaffold(
+          body: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  snap: true,
+                  floating: true,
+                  elevation: 4,
+                  backgroundColor: Colors.green,
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: Text('Pagamento Seguro!',
+                        style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold)),
+                    centerTitle: true,
+                  ),
+                  actions: [
+                    const SizedBox(width: 150),
+                    CustomTextButton(
+                      style: ButtonStyle(
+                          padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero)),
+                      imageAssetsTarget: RootAssets.iconPadlock,
+                      imageWidth: iconSize,
+                      imageHeight: iconSize,
+                      isSvg: true,
+                      onPressed: null,
+                    ),
+                    CustomTextButton(
+                      style: ButtonStyle(
+                          padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero)),
+                      imageAssetsTarget: RootAssets.iconFirebaseLogo,
+                      imageWidth: iconSize,
+                      imageHeight: iconSize,
+                      isSvg: true,
+                      onPressed: null,
+                    ),
+                    const SizedBox(width: 16)
+                  ],
                 ),
-                actions: [
-                  const SizedBox(width: 150),
-                  CustomTextButton(
-                    style:
-                        ButtonStyle(padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero)),
-                    imageAssetsTarget: RootAssets.iconPadlock,
-                    imageWidth: iconSize,
-                    imageHeight: iconSize,
-                    isSvg: true,
-                    onPressed: null,
-                  ),
-                  CustomTextButton(
-                    style:
-                        ButtonStyle(padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero)),
-                    imageAssetsTarget: RootAssets.iconFirebaseLogo,
-                    imageWidth: iconSize,
-                    imageHeight: iconSize,
-                    isSvg: true,
-                    onPressed: null,
-                  ),
-                  const SizedBox(width: 16)
-                ],
-              ),
-              checkoutManager.loading
-                  ? const SliverToBoxAdapter(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation(Colors.white),
-                            ),
-                            SizedBox(height: 16),
-                            Text('Processando seu pagamento...',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 16,
-                                ))
-                          ],
+                checkoutManager.loading
+                    ? const SliverToBoxAdapter(
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation(Colors.white),
+                              ),
+                              SizedBox(height: 16),
+                              Text('Processando seu pagamento...',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 16,
+                                  ))
+                            ],
+                          ),
                         ),
-                      ),
-                    )
-                  : const SliverToBoxAdapter(child: SizedBox.shrink()),
-              SliverToBoxAdapter(
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      const CreditCardWidget(),
-                      PriceCard(
-                        buttonText: 'Finalizar Pedido',
-                        showIcon: true,
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            checkoutManager.checkout(onStockFail: (error) {
-                              CustomScaffoldMessenger(context: context, message: '$error')
-                                  .alertScaffold();
-                              Navigator.popUntil(context,
-                                  (route) => route.settings.name == RoutesNavigator.cartScreen);
-                            }, onSuccess: (order) {
-                              Navigator.popUntil(
+                      )
+                    : const SliverToBoxAdapter(child: SizedBox.shrink()),
+                SliverToBoxAdapter(
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        const CreditCardWidget(),
+                        PriceCard(
+                          buttonText: 'Finalizar Pedido',
+                          showIcon: true,
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              checkoutManager.checkout(onStockFail: (error) {
+                                CustomScaffoldMessenger(context: context, message: '$error')
+                                    .alertScaffold();
+                                Navigator.popUntil(context,
+                                    (route) => route.settings.name == RoutesNavigator.cartScreen);
+                              }, onSuccess: (order) {
+                                Navigator.popUntil(
+                                    context,
+                                    (route) =>
+                                        route.settings.name ==
+                                        RoutesNavigator.productDetailsScreen);
+                                Navigator.pushNamed(
                                   context,
-                                  (route) =>
-                                      route.settings.name == RoutesNavigator.productDetailsScreen);
-                              Navigator.pushNamed(
-                                context,
-                                RoutesNavigator.salesConfirmationScreen,
-                                arguments: order,
-                              );
-                            });
-                          }
-                        },
-                      ),
-                    ],
+                                  RoutesNavigator.salesConfirmationScreen,
+                                  arguments: order,
+                                );
+                              });
+                            }
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

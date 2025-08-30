@@ -1,6 +1,7 @@
 import 'package:brn_ecommerce/models/locations_services/viacep_map_api.dart';
 import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import '../users/users.dart';
 import '../users/users_manager.dart';
 import '../products/cart_product.dart';
@@ -82,11 +83,15 @@ class CartManager extends ChangeNotifier {
     removeAddress();
 
     if (users?.id != null) {
-      _loadCartItems();
-      _loadUserAddress();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _loadCartItems();
+        _loadUserAddress();
+      });
     } else {
-      users = null;
-      notifyListeners();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        users = null;
+        notifyListeners();
+      });
     }
   }
 
@@ -283,8 +288,11 @@ class CartManager extends ChangeNotifier {
   }
 
   void removeAddress() {
-    address = null;
-    deliveryPrice = null;
-    notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      address = null;
+      deliveryPrice = null;
+      notifyListeners();
+    });
+
   }
 }

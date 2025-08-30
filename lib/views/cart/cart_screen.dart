@@ -114,7 +114,8 @@ class CartScreen extends StatelessWidget {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            // Title + Container with amber background for products
+                                            // Title + Container with amber
+                                            // background for products WEB
                                             const SizedBox(height: 8),
                                             textForGoogleDecorations(
                                                 titleForDecorations: "Seus produtos no carrinho:"),
