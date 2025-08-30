@@ -16,6 +16,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double elevation;
   final bool? removePadding;
   final bool isSilver; // <<< true if to be used inside a Sliver
+  final Color? backgroundColor;
+  final Color? titleColor;
+  final Color? buttonColor;
 
   const CustomAppBar({
     super.key,
@@ -25,7 +28,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.removePadding,
     this.actions,
     this.elevation = 4.0,
-    this.isSilver = false, // default false
+    this.isSilver = false,
+    this.backgroundColor,
+    this.titleColor,
+    this.buttonColor, // default false
   });
 
   @override
@@ -35,25 +41,25 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         padding: kIsWeb
             ? EdgeInsets.only(top: 0)
             : removePadding == null
-            ? MediaQuery.of(context).padding
-            : EdgeInsets.zero,
+                ? MediaQuery.of(context).padding
+                : EdgeInsets.zero,
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: wildBreakpoint),
           child: AppBar(
             elevation: elevation,
-            backgroundColor: getCustomAppBarColorBackground(),
+            backgroundColor: backgroundColor ?? getCustomAppBarColorBackground(),
             centerTitle: true,
             automaticallyImplyLeading: false,
             title: null, // controlled in flexibleSpace
             flexibleSpace: Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
-                child:Row(
+                child: Row(
                   children: [
                     // Leading (menu/back)
                     if (showDrawerIcon)
                       IconButton(
-                        color: getCustomAppBarColorIcons(),
+                        color: buttonColor ?? getCustomAppBarColorIcons(),
                         icon: const Icon(Icons.menu),
                         onPressed: () {
                           Scaffold.of(context).openDrawer();
@@ -61,7 +67,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       )
                     else if (Navigator.of(context).canPop())
                       IconButton(
-                        color: getCustomAppBarColorIcons(),
+                        color: buttonColor ?? getCustomAppBarColorIcons(),
                         icon: const Icon(Icons.arrow_back),
                         onPressed: () => Navigator.of(context).maybePop(),
                       )
@@ -102,10 +108,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     }
   }
 
-
   /// Centralized TextStyle for AppBar titles
   TextStyle get _titleTextStyle => TextStyle(
-        color: getCustomAppBarColorTitle(),
+        color: titleColor ?? getCustomAppBarColorTitle(),
         fontWeight: FontWeight.bold,
         fontSize: 20,
       );
@@ -190,9 +195,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     if (title is String) {
       return AutoSizeText(
         title as String,
-        maxLines: 1,
+        maxLines: 2,
         minFontSize: 12,
         maxFontSize: 20,
+        overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,
         style: _titleTextStyle,
       );
