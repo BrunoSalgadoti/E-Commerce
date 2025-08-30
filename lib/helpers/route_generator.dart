@@ -35,8 +35,6 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const CartScreen());
       case RoutesNavigator.ordersClientScreen:
         return MaterialPageRoute(builder: (_) => const OrdersScreen());
-
-      //TODO: Verificar uso depois de implementações
       case RoutesNavigator.categoryProductsScreen:
         return MaterialPageRoute(
             builder: (_) => CategoryProductScreen(

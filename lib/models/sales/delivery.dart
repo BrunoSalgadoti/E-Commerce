@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/services/db_api/config.dart';
+import 'package:brn_ecommerce/services/db_api/config_environment_variables.dart';
 
 /// # Delivery (Folder: models/sales)
 ///

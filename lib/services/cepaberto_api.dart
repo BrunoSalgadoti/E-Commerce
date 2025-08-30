@@ -1,5 +1,5 @@
 import 'package:brn_ecommerce/models/locations_services/cepaberto_map_api.dart';
-import 'package:brn_ecommerce/services/db_api/config.dart';
+import 'package:brn_ecommerce/services/db_api/config_environment_variables.dart';
 import 'package:dio/dio.dart';
 
 const token = Config.cepabertoServiceToken;

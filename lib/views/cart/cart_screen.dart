@@ -114,16 +114,29 @@ class CartScreen extends StatelessWidget {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Wrap(
-                                              spacing: 3,
-                                              runSpacing: 3,
-                                              children: cartManager.items
-                                                  .map((cartProduct) =>
-                                                      CartTile(cartProduct: cartProduct))
-                                                  .toList(),
+                                            // Title + Container with amber background for products
+                                            const SizedBox(height: 8),
+                                            textForGoogleDecorations(
+                                                titleForDecorations: "Seus produtos no carrinho:"),
+                                            const SizedBox(height: 8),
+                                            Container(
+                                              width: double.infinity,
+                                              padding: const EdgeInsets.only(top: 8, bottom: 8),
+                                              decoration: BoxDecoration(
+                                                color: Colors.amber.withAlpha(50),
+                                                borderRadius: BorderRadius.circular(20),
+                                              ),
+                                              child: Wrap(
+                                                spacing: 3,
+                                                runSpacing: 3,
+                                                children: cartManager.items
+                                                    .map((cartProduct) =>
+                                                        CartTile(cartProduct: cartProduct))
+                                                    .toList(),
+                                              ),
                                             ),
                                             const SizedBox(height: 15),
-                                            SalesSuggestionVisitedProducts(), // “You may also like”
+                                            SalesSuggestionVisitedProducts(),
                                           ],
                                         ),
                                       ),
@@ -135,9 +148,9 @@ class CartScreen extends StatelessWidget {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Align(
-                                              alignment: Alignment(-1, 0),
+                                              alignment: const Alignment(-1, 0),
                                               child: Padding(
-                                                padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                                padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                                 child: textForGoogleDecorations(
                                                   titleForDecorations:
                                                       'Adicionados recentemente...',
@@ -164,14 +177,26 @@ class CartScreen extends StatelessWidget {
                                 : Column(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      Wrap(
-                                        spacing: 5,
-                                        runSpacing: 5,
-                                        alignment: WrapAlignment.center,
-                                        children: cartManager.items
-                                            .map(
-                                                (cartProduct) => CartTile(cartProduct: cartProduct))
-                                            .toList(),
+                                      // Title + Container with amber background on mobile
+                                      textForGoogleDecorations(
+                                          titleForDecorations: "Seus produtos no carrinho:"),
+                                      const SizedBox(height: 8),
+                                      Container(
+                                        width: double.infinity,
+                                        padding: const EdgeInsets.only(top: 8, bottom: 8),
+                                        decoration: BoxDecoration(
+                                          color: Colors.amber.withAlpha(50),
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        child: Wrap(
+                                          spacing: 5,
+                                          runSpacing: 5,
+                                          alignment: WrapAlignment.center,
+                                          children: cartManager.items
+                                              .map((cartProduct) =>
+                                                  CartTile(cartProduct: cartProduct))
+                                              .toList(),
+                                        ),
                                       ),
                                       const SizedBox(height: 15),
                                       SalesSuggestionVisitedProducts(),
@@ -185,9 +210,9 @@ class CartScreen extends StatelessWidget {
                                         showIcon: false,
                                       ),
                                       Align(
-                                        alignment: Alignment(-1, 0),
+                                        alignment: const Alignment(-1, 0),
                                         child: Padding(
-                                          padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                          padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                           child: textForGoogleDecorations(
                                             titleForDecorations: 'Adicionados recentemente...',
                                             borderWidth: 0.2,
@@ -201,10 +226,11 @@ class CartScreen extends StatelessWidget {
                                   ),
                           ),
                           Center(
-                              child: ConstrainedBox(
-                            constraints: BoxConstraints(maxWidth: tabletBreakpoint),
-                            child: PurchaseSuggestionsWidget(),
-                          )),
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
+                              child: PurchaseSuggestionsWidget(),
+                            ),
+                          ),
                           const SizedBox(height: 16),
                         ],
                       ),

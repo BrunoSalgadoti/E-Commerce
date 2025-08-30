@@ -10,7 +10,7 @@ class MonitoringStockMin {
   HandleErrors handleErrorsEmail = HandleErrors.withEmailMessage(
       recipientEmail: 'brunosalgadoti@gmail.com',
       emailSubject: 'Erro no monitoramento do Estoque',
-      emailMessage: '');
+      emailMessage: 'Erro ao calcular estoque mínimo');
 
   // Function to check the minimum stock of products
   static Future<void> checkMinimumStock(
