@@ -34,9 +34,13 @@ class Product extends ChangeNotifier {
   bool? isValid;
   List<String>? images;
   List<dynamic>? newImages;
-  List<DetailsProducts>? itemProducts;
   Timestamp? insertionDate;
+
+  /// If you need to use only one detail (selected variation, for example)
   DetailsProducts? details;
+
+  /// List of variations/product details (colors, sizes, etc.)
+  List<DetailsProducts>? itemProducts;
 
   // Constructor
 

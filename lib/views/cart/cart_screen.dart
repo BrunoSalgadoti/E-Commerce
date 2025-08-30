@@ -1,4 +1,5 @@
 import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
+import 'package:brn_ecommerce/common/advertising/purchase_suggestions_widget.dart';
 import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/common/cards/price_card.dart';
@@ -127,7 +128,7 @@ class CartScreen extends StatelessWidget {
                                         ),
                                       ),
                                       const SizedBox(width: 20),
-                                        // RIGHT SIDE
+                                      // RIGHT SIDE
                                       Expanded(
                                         flex: (constraints.minWidth < 1625) ? 4 : 2,
                                         child: Column(
@@ -138,7 +139,8 @@ class CartScreen extends StatelessWidget {
                                               child: Padding(
                                                 padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
                                                 child: textForGoogleDecorations(
-                                                  titleForDecorations: 'Adicionados recentemente...',
+                                                  titleForDecorations:
+                                                      'Adicionados recentemente...',
                                                   borderWidth: 0.2,
                                                   fontWeight: FontWeight.normal,
                                                 ),
@@ -194,10 +196,16 @@ class CartScreen extends StatelessWidget {
                                         ),
                                       ),
                                       RecentlyAddedProducts(carrossel: false),
-                                      const SizedBox(height: 15),
+                                      const SizedBox(height: 2),
                                     ],
                                   ),
                           ),
+                          Center(
+                              child: ConstrainedBox(
+                            constraints: BoxConstraints(maxWidth: tabletBreakpoint),
+                            child: PurchaseSuggestionsWidget(),
+                          )),
+                          const SizedBox(height: 16),
                         ],
                       ),
                     );

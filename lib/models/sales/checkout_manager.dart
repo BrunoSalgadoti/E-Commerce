@@ -1,9 +1,9 @@
-import 'package:brn_ecommerce/models/products/product.dart';
+import 'package:brn_ecommerce/models/products/components/purchase_model.dart';
+import 'package:brn_ecommerce/models/products/product.dart' show Product;
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:brn_ecommerce/models/sales/order_client.dart';
 import 'package:brn_ecommerce/services/firebase_remote_configs/monitoring_stock_min.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 /// # CheckoutManager (Folder: models/sales)
@@ -43,7 +43,15 @@ class CheckoutManager extends ChangeNotifier {
   ///
   /// Calls the specified [onStockFail] function if there is an issue with stock availability,
   /// and calls [onSuccess] function if the checkout is successful.
-  Future<void> checkout({required Function onStockFail, required Function onSuccess}) async {
+  Future<void> checkout({
+    required Function onStockFail,
+    required Function onSuccess,
+  }) async {
+    if (cartManager == null) {
+      onStockFail('CartManager não inicializado');
+      return;
+    }
+
     loading = true;
 
     try {
@@ -58,14 +66,14 @@ class CheckoutManager extends ChangeNotifier {
     //TODO: PROCESSAR PAGAMENTO
 
     final orderId = await _getOrderId();
-
     final order = OrderClient.fromCartManager(cartManager!);
     order.orderId = orderId.toString();
-
     await order.saveOrder();
 
-    cartManager!.clearCart();
+    // Salva compra no PurchaseModel
+    await _savePurchase();
 
+    cartManager!.clearCart();
     onSuccess(order);
     loading = false;
     notifyListeners();
@@ -77,15 +85,12 @@ class CheckoutManager extends ChangeNotifier {
     final orderCounterCurrent = orderCounterSnapshot.get("current") as int;
 
     final QuerySnapshot ordersSnapshot = await firestore.collection("orders").get();
-
     int lastOrderId = 0;
 
     if (ordersSnapshot.docs.isNotEmpty) {
       for (final orderDoc in ordersSnapshot.docs) {
         final orderId = int.tryParse(orderDoc.id);
-        if (orderId != null && orderId > lastOrderId) {
-          lastOrderId = orderId;
-        }
+        if (orderId != null && orderId > lastOrderId) lastOrderId = orderId;
       }
     }
 
@@ -102,7 +107,6 @@ class CheckoutManager extends ChangeNotifier {
   /// Generates a new order ID for the checkout process.
   Future<int> _getOrderId() async {
     await _checkConsistenceOfCounterAndOrders();
-
     final transactionRef = firestore.doc("aux/orderCounter");
 
     try {
@@ -129,17 +133,8 @@ class CheckoutManager extends ChangeNotifier {
       final List<Product> productsWithoutStock = [];
 
       for (final cartProduct in cartManager!.items) {
-        Product product;
-
-        if (productsToUpdate.any((p) => p.id == cartProduct.productId)) {
-          product = productsToUpdate.firstWhere((p) => p.id == cartProduct.productId);
-        } else {
-          final doc = await tx.get(firestore.doc("products/${cartProduct.productId}"));
-          product = Product.fromDocument(doc);
-        }
-
-        cartProduct.product = product;
-        notifyListeners();
+        final doc = await tx.get(firestore.doc("products/${cartProduct.productId}"));
+        final product = cartProduct.product = Product.fromDocument(doc);
 
         final details = product.findSize(cartProduct.size!);
         if (details!.stock - cartProduct.quantity! < 0 ||
@@ -147,16 +142,16 @@ class CheckoutManager extends ChangeNotifier {
           productsWithoutStock.add(product);
         } else {
           details.stock -= cartProduct.quantity!;
-          details.colorProducts?.firstWhere((color) => color.color == cartProduct.color).amount -=
-              cartProduct.quantity!;
+          details.colorProducts
+              ?.firstWhere((color) => color.color == cartProduct.color)
+              .amount -= cartProduct.quantity!;
           details.sellers += cartProduct.quantity!;
           productsToUpdate.add(product);
         }
       }
 
       if (productsWithoutStock.isNotEmpty) {
-        return Future.error('${productsWithoutStock.length} '
-            'Estoque modificado antes da finalização da compra!'
+        return Future.error('${productsWithoutStock.length} Estoque modificado antes da compra!'
             'Favor verificar quantidade disponível!');
       }
 
@@ -165,7 +160,24 @@ class CheckoutManager extends ChangeNotifier {
             firestore.doc("products/${product.id}"), {"details": product.exportDetailsList()});
       }
 
+      // MonitoringStockMin continua sendo chamado
       MonitoringStockMin.checkMinimumStock(productsToUpdate, productsWithoutStock);
     });
+  }
+
+  /// Apenas chama o método do PurchaseModel
+  Future<void> _savePurchase() async {
+    if (cartManager == null || cartManager!.items.isEmpty) return;
+
+    final productIds =
+    cartManager!.items.map((e) => e.productId).whereType<String>().toList();
+
+    final purchase = PurchaseModel(
+      userId: cartManager!.users!.id!,
+      items: productIds,
+      createdAt: DateTime.now(),
+    );
+
+    await PurchaseModel.savePurchase(purchase);
   }
 }

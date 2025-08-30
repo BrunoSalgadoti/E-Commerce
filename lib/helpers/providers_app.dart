@@ -19,7 +19,6 @@ import 'package:brn_ecommerce/models/views/stores.dart';
 import 'package:brn_ecommerce/models/views/stores_manager.dart';
 import 'package:brn_ecommerce/models/views/who_we_are_manager.dart';
 import 'package:brn_ecommerce/services/config/version_manager.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,10 +44,11 @@ class ProvidersApp extends StatelessWidget {
 
         // Providers for Products and Product Management
         ChangeNotifierProvider(create: (_) => PageManager(), lazy: false),
-        ChangeNotifierProvider(create: (_) => Product()),
+        ChangeNotifierProvider(create: (_) => Product() ),
         ChangeNotifierProvider(create: (_) => ProductManager(), lazy: false),
         ChangeNotifierProvider(create: (_) => ProductCategory()),
         ChangeNotifierProvider(create: (_) => DetailsProducts(stock: 0)),
+        ChangeNotifierProvider<CartManager>.value(value: CartManager.instance),
 
         // Providers for App Data and Settings
         ChangeNotifierProvider(create: (_) => WhoWeAreManager()),
@@ -61,46 +61,56 @@ class ProvidersApp extends StatelessWidget {
 
         // Proxy Providers for managing dependencies between providers
         ChangeNotifierProxyProvider<UserManager, ProductCategoryManager>(
-            lazy: false,
-            create: (_) => ProductCategoryManager(),
-            update: (_, userManager, productCategoryManager) =>
-                productCategoryManager!..verifyUser(userManager)),
+          lazy: false,
+          create: (_) => ProductCategoryManager(),
+          update: (_, userManager, productCategoryManager) =>
+          productCategoryManager!..verifyUser(userManager),
+        ),
+
         ChangeNotifierProxyProvider2<ProductManager, ProductCategory?, ProductsRecentlyAdded>(
           create: (context) => ProductsRecentlyAdded(
             allProducts: context.read<ProductManager>().allProducts,
           ),
           update: (context, productManager, productCategory, previous) {
-            final instance =
-                previous ?? ProductsRecentlyAdded(allProducts: productManager.allProducts);
-
+            final instance = previous ?? ProductsRecentlyAdded(allProducts: productManager.allProducts);
             instance.updateRecentProducts(productCategory: productCategory);
             return instance;
           },
         ),
+
+        // Proxy Providers dependentes
         ChangeNotifierProxyProvider<UserManager, CartManager>(
-            lazy: false,
-            create: (_) => CartManager(),
-            update: (_, userManager, cartManager) => cartManager!..updateUser(userManager)),
+          lazy: false,
+          create: (_) => CartManager.instance,
+          update: (_, userManager, cartManager) => cartManager!..updateUser(userManager),
+        ),
+
         ChangeNotifierProxyProvider<UserManager, OrdersManager>(
-            lazy: false,
-            create: (_) => OrdersManager(),
-            update: (_, userManager, ordersManager) =>
-                ordersManager!..updateUser(userManager.users ?? Users(email: ""))),
+          lazy: false,
+          create: (_) => OrdersManager(),
+          update: (_, userManager, ordersManager) =>
+          ordersManager!..updateUser(userManager.users ?? Users(email: "")),
+        ),
+
         ChangeNotifierProxyProvider<UserManager, AdminUsersManager>(
-            lazy: false,
-            create: (_) => AdminUsersManager(),
-            update: (_, userManager, adminUsersManager) =>
-                adminUsersManager!..updateUser(userManager)),
+          lazy: false,
+          create: (_) => AdminUsersManager(),
+          update: (_, userManager, adminUsersManager) =>
+          adminUsersManager!..updateUser(userManager),
+        ),
+
         ChangeNotifierProxyProvider<UserManager, AdminOrdersManager>(
           lazy: false,
           create: (_) => AdminOrdersManager(),
           update: (_, userManager, adminOrdersManager) =>
-              adminOrdersManager!..updateAdmin(adminEnable: userManager.adminEnable),
+          adminOrdersManager!..updateAdmin(adminEnable: userManager.adminEnable),
         ),
+
         ChangeNotifierProxyProvider<CartManager, CheckoutManager>(
           lazy: false,
           create: (_) => CheckoutManager(),
-          update: (_, cartManager, checkoutManager) => checkoutManager!..updateCart(cartManager),
+          update: (_, cartManager, checkoutManager) =>
+          checkoutManager!..updateCart(cartManager),
         ),
       ],
       child: child,
