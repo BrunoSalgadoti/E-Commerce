@@ -12,9 +12,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Object? title; // can be String or Widget
   final List<Widget>? actions;
   final bool showDrawerIcon;
-  final bool showSearchButton; // controls if search logic is active
+  final bool showSearchButton;
   final double elevation;
   final bool? removePadding;
+  final bool isSilver; // <<< true if to be used inside a Sliver
 
   const CustomAppBar({
     super.key,
@@ -24,17 +25,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.removePadding,
     this.actions,
     this.elevation = 4.0,
+    this.isSilver = false, // default false
   });
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    final appBarContent = Center(
       child: Padding(
         padding: kIsWeb
             ? EdgeInsets.only(top: 0)
             : removePadding == null
-                ? MediaQuery.of(context).padding
-                : EdgeInsets.zero,
+            ? MediaQuery.of(context).padding
+            : EdgeInsets.zero,
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: wildBreakpoint),
           child: AppBar(
@@ -46,9 +48,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             flexibleSpace: Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
-                child: Row(
+                child:Row(
                   children: [
-                    // Drawer Icon
+                    // Leading (menu/back)
                     if (showDrawerIcon)
                       IconButton(
                         color: getCustomAppBarColorIcons(),
@@ -61,30 +63,27 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       IconButton(
                         color: getCustomAppBarColorIcons(),
                         icon: const Icon(Icons.arrow_back),
-                        onPressed: () {
-                          Navigator.of(context).maybePop();
-                        },
+                        onPressed: () => Navigator.of(context).maybePop(),
                       )
                     else
-                      const SizedBox(width: 48),
+                      const SizedBox(width: 48), // placeholder para equilibrar
 
-                    // Title or Search
+                    // Central title
                     Expanded(
-                      child: Center(
-                        child: _buildDynamicTitle(context),
-                      ),
+                      child: Center(child: _buildDynamicTitle(context)),
                     ),
 
-                    // Search Button
-                    if (showSearchButton) _buildSearchButton(context),
+                    // Actions (search + outros)
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (showSearchButton) _buildSearchButton(context),
+                        if (actions != null && actions!.isNotEmpty) ...actions!,
+                      ],
+                    ),
 
-                    // Additional Actions
-                    if (actions != null && actions!.isNotEmpty)
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: actions!,
-                      )
-                    else
+                    // Garantir simetria: mesmo espaço mínimo da esquerda
+                    if (!showSearchButton && (actions == null || actions!.isEmpty))
                       const SizedBox(width: 48),
                   ],
                 ),
@@ -94,7 +93,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
     );
+
+    // Return as Sliver or normal widget
+    if (isSilver) {
+      return SliverToBoxAdapter(child: appBarContent);
+    } else {
+      return appBarContent;
+    }
   }
+
 
   /// Centralized TextStyle for AppBar titles
   TextStyle get _titleTextStyle => TextStyle(
