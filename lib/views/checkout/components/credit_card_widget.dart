@@ -6,16 +6,25 @@ import 'package:flutter/material.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
 class CreditCardWidget extends StatefulWidget {
-  const CreditCardWidget({super.key});
+  final GlobalKey<FlipCardState>? cardKey;
+
+  const CreditCardWidget({super.key, this.cardKey});
 
   @override
   State<CreditCardWidget> createState() => _CreditCardWidgetState();
 }
 
 class _CreditCardWidgetState extends State<CreditCardWidget> {
-  final GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
+  late final GlobalKey<FlipCardState> cardKey;
 
-  dynamic toggleCard() {
+  @override
+  void initState() {
+    super.initState();
+    // Garante que cada instância tem uma key única
+    cardKey = widget.cardKey ?? GlobalKey<FlipCardState>();
+  }
+
+  void toggleCard() {
     cardKey.currentState?.toggleCard();
     cvvFocus.requestFocus();
   }
@@ -25,28 +34,30 @@ class _CreditCardWidgetState extends State<CreditCardWidget> {
   final FocusNode nameFocus = FocusNode();
   final FocusNode cvvFocus = FocusNode();
 
-  //Actions for Ios keyboard
+  //Actions for iOS keyboard
   KeyboardActionsConfig _buildConfig(BuildContext context) {
     return KeyboardActionsConfig(
-        keyboardActionsPlatform: KeyboardActionsPlatform.IOS,
-        keyboardBarColor: Colors.grey[200],
-        actions: [
-          KeyboardActionsItem(focusNode: numberFocus, displayDoneButton: false),
-          KeyboardActionsItem(focusNode: dateFocus, displayDoneButton: false),
-          KeyboardActionsItem(focusNode: nameFocus, toolbarButtons: [
-            (_) {
+      keyboardActionsPlatform: KeyboardActionsPlatform.IOS,
+      keyboardBarColor: Colors.grey[200],
+      actions: [
+        KeyboardActionsItem(focusNode: numberFocus, displayDoneButton: false),
+        KeyboardActionsItem(focusNode: dateFocus, displayDoneButton: false),
+        KeyboardActionsItem(
+          focusNode: nameFocus,
+          toolbarButtons: [
+                (_) {
               return GestureDetector(
-                onTap: () {
-                  toggleCard();
-                },
+                onTap: toggleCard,
                 child: const Padding(
                   padding: EdgeInsets.only(right: 25),
                   child: Text('CONTINUAR'),
                 ),
               );
             }
-          ]),
-        ]);
+          ],
+        ),
+      ],
+    );
   }
 
   @override
@@ -56,39 +67,36 @@ class _CreditCardWidgetState extends State<CreditCardWidget> {
       autoScroll: false,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            FlipCard(
-                key: cardKey,
-                direction: FlipDirection.HORIZONTAL,
-                speed: 700,
-                flipOnTouch: false,
-                front: CardFront(
-                  numberFocus: numberFocus,
-                  dateFocus: dateFocus,
-                  nameFocus: nameFocus,
-                  finishedFront: () {
-                    toggleCard();
-                  },
-                ),
-                back: CardBack(
-                  cvvFocus: cvvFocus,
-                )),
-            const SizedBox(
-              height: 5,
-            ),
-            CustomTextButton(
-              icon: const Icon(
-                Icons.trending_flat_outlined,
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              ConstrainedBox(constraints: BoxConstraints(maxWidth: 450, minWidth: 350),
+              child: FlipCard(
+                  key: cardKey,
+                  direction: FlipDirection.HORIZONTAL,
+                  speed: 700,
+                  flipOnTouch: false,
+                  front: CardFront(
+                    numberFocus: numberFocus,
+                    dateFocus: dateFocus,
+                    nameFocus: nameFocus,
+                    finishedFront: toggleCard,
+                  ),
+                back: CardBack(cvvFocus: cvvFocus),
               ),
-              text: 'Virar Cartão',
-              fontSize: 16,
-              onPressed: () {
-                cardKey.currentState?.toggleCard();
-              },
-            )
-          ],
+
+
+              ),
+              const SizedBox(height: 5),
+              CustomTextButton(
+                icon: const Icon(Icons.trending_flat_outlined),
+                text: 'Virar Cartão',
+                fontSize: 20,
+                onPressed: toggleCard,
+              ),
+            ],
+          ),
         ),
       ),
     );

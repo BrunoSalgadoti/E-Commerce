@@ -36,7 +36,7 @@ class PriceCard extends StatelessWidget {
 
     return Center(
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: tabletBreakpoint),
+        constraints: BoxConstraints(maxWidth: mobileBreakpoint),
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Padding(

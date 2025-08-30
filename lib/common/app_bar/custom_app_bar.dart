@@ -182,7 +182,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           return CustomIconButton(
             onTap: () async => productManager.search = '',
             iconData: Icons.close,
-            size: 40,
+            size: 36,
             semanticLabel: 'Clear search',
           );
         }
