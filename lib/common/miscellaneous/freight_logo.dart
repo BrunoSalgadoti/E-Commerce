@@ -93,7 +93,7 @@ class FreightLogo extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(5),
           child: CustomTextButton(
-            style: ButtonStyle(
+            buttonStyle: ButtonStyle(
               padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                 const EdgeInsets.all(2),
               ),

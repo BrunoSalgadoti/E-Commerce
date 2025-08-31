@@ -1,3 +1,4 @@
+import 'package:brn_ecommerce/common/Progress_indicators/custom_loading_overlay.dart';
 import 'package:brn_ecommerce/common/app_bar/complement_app_bar.dart';
 import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
@@ -25,7 +26,6 @@ class CheckoutScreen extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final iconSize = screenHeight * 0.043;
 
-
     return Consumer<CheckoutManager>(
       builder: (_, checkoutManager, __) {
         return Scaffold(
@@ -38,7 +38,7 @@ class CheckoutScreen extends StatelessWidget {
                   slivers: [
                     ComplementAppBar(
                       asSliver: true,
-                      padding: kIsWeb ? EdgeInsets.only(bottom: 10): EdgeInsets.only(top: 30),
+                      padding: kIsWeb ? EdgeInsets.only(bottom: 10) : EdgeInsets.only(top: 30),
                     ),
                     CustomAppBar(
                       title: 'Pagamento Seguro -->',
@@ -53,7 +53,7 @@ class CheckoutScreen extends StatelessWidget {
                         CustomTextButton(
                           text: screenWidth <= mobileBreakpoint ? '' : 'Dados seguros',
                           fontColor: Colors.yellow,
-                          style: ButtonStyle(
+                          buttonStyle: ButtonStyle(
                             padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero),
                           ),
                           imageAssetsTarget: RootAssets.iconPadlock,
@@ -65,7 +65,7 @@ class CheckoutScreen extends StatelessWidget {
                         CustomTextButton(
                           text: screenWidth <= mobileBreakpoint ? '' : 'Segurança Firebase',
                           fontColor: Colors.yellow,
-                          style: ButtonStyle(
+                          buttonStyle: ButtonStyle(
                             padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero),
                           ),
                           imageAssetsTarget: RootAssets.iconFirebaseLogo,
@@ -121,31 +121,7 @@ class CheckoutScreen extends StatelessWidget {
                 ),
 
                 // Loading overlay
-                if (checkoutManager.loading)
-                  Positioned.fill(
-                    child: Container(
-                      color: Colors.black54,
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation(Colors.white),
-                            ),
-                            SizedBox(height: 16),
-                            Text(
-                              'Processando seu pagamento...',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                if (checkoutManager.loading) CustomLoadingOverlay()
               ],
             ),
           ),

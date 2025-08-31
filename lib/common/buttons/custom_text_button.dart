@@ -7,7 +7,7 @@ class CustomTextButton extends StatelessWidget {
   final String? text;
   final String? imageAssetsTarget;
   final VoidCallback? onPressed;
-  final ButtonStyle? style;
+  final ButtonStyle? buttonStyle;
   final Color? fontColor;
   final double fontSize;
   final Icon? icon;
@@ -25,7 +25,7 @@ class CustomTextButton extends StatelessWidget {
   ///
   /// The parameter [onPressed] is required and is a function called when the button is pressed.
   ///
-  /// The parameter [style] sets the style of the button.
+  /// The parameter [buttonStyle] sets the style of the button.
   ///
   /// The parameter [fontColor] sets the color of the button's text.
   ///
@@ -50,7 +50,7 @@ class CustomTextButton extends StatelessWidget {
     this.fontSize = 14,
     this.fontWeight,
     this.icon,
-    this.style,
+    this.buttonStyle,
     this.imageAssetsTarget,
     this.imageWidth = 28,
     this.imageHeight = 28,
@@ -62,7 +62,7 @@ class CustomTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onPressed,
-      style: style,
+      style: buttonStyle,
       child: text == null && icon != null
           ? icon!
           : FittedBox(
