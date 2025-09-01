@@ -2,8 +2,8 @@ import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart' show RoutesNavigator;
+import 'package:brn_ecommerce/models/sections_home/home_manager.dart' show HomeManager;
 import 'package:brn_ecommerce/models/users/users_manager.dart' show UserManager;
-import 'package:brn_ecommerce/models/views/home_manager.dart' show HomeManager;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +47,7 @@ class ContentHomeAppBar extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CustomIconButton(
-                    iconData: FontAwesomeIcons.rankingStar,
+                    iconData: FontAwesomeIcons.heartPulse,
                     semanticLabel: 'Meus Desejos',
                     color: Colors.red,
                     size: iconsSize,

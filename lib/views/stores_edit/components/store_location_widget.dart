@@ -1,5 +1,5 @@
 import 'package:brn_ecommerce/common/miscellaneous/communications_utils.dart';
-import 'package:brn_ecommerce/models/views/stores.dart';
+import 'package:brn_ecommerce/models/stores/stores.dart';
 import 'package:flutter/material.dart';
 
 class StoreLocationWidget extends StatefulWidget {

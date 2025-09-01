@@ -1,12 +1,12 @@
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
+import 'package:brn_ecommerce/models/products/components/purchase_model.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
-import 'package:brn_ecommerce/models/products/components/purchase_model.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PurchaseSuggestionsWidget extends StatefulWidget {
   const PurchaseSuggestionsWidget({super.key});

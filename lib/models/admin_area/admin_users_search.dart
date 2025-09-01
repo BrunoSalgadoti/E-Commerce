@@ -1,3 +1,4 @@
+import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/communications_utils.dart';
@@ -161,7 +162,7 @@ class AdminUsersSearch extends ChangeNotifier {
             ),
             onTap: () {
               adminOrdersManager.setUserFilter(user);
-              pageManager.setPage(7);
+              pageManager.setPage(DrawerPages.adminOrders);
             },
           );
         },

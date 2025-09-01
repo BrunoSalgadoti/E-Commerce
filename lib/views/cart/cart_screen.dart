@@ -1,16 +1,17 @@
 import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
+import 'package:brn_ecommerce/common/advertising/info_marquee_widget.dart';
 import 'package:brn_ecommerce/common/advertising/purchase_suggestions_widget.dart';
 import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/common/cards/price_card.dart';
 import 'package:brn_ecommerce/common/cards/recently_added_products.dart';
 import 'package:brn_ecommerce/common/cards/sales_suggestion_visited_products.dart';
+import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/messengers/components/text_of_alerts_and_messengers.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
-import 'package:brn_ecommerce/common/advertising/info_marquee_widget.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
@@ -61,7 +62,7 @@ class CartScreen extends StatelessWidget {
                             ),
                             CustomTextButton(
                               onPressed: () {
-                                context.read<PageManager>().setPage(2);
+                                context.read<PageManager>().setPage(DrawerPages.categories);
                                 Navigator.of(context).pop();
                               },
                               text: 'Adicionar item ao carrinho',
@@ -94,7 +95,7 @@ class CartScreen extends StatelessWidget {
                               glowColor: Colors.orange,
                               marqueeWidth: tabletBreakpoint,
                               onPressed: () {
-                                context.read<PageManager>().setPage(2);
+                                context.read<PageManager>().setPage(DrawerPages.categories);
                                 Navigator.of(context).pop();
                               },
                               marqueeSpeed: MediaQuery.of(context).size.width >= 900 ? 24 : 22,

@@ -1,5 +1,5 @@
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
-import 'package:brn_ecommerce/models/views/policy_and_documents.dart';
+import 'package:brn_ecommerce/models/policy_documents/policy_and_documents.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

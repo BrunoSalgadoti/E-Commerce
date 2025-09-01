@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/models/views/section.dart';
+import 'package:brn_ecommerce/models/sections_home/section.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,9 +6,9 @@ import 'package:flutter/foundation.dart';
 
 /// # HomeManager (Folder: models/views)
 ///
-/// A class responsible for managing home page sections and their editing state.
+/// A class responsible for managing home page sections_home and their editing state.
 ///
-/// This class handles loading sections, adding, removing, moving sections, entering editing mode,
+/// This class handles loading sections_home, adding, removing, moving sections_home, entering editing mode,
 /// saving changes, and discarding edits for the home page.
 class HomeManager extends ChangeNotifier {
   // proprieties
@@ -21,7 +21,7 @@ class HomeManager extends ChangeNotifier {
 
   // Constructor
 
-  /// Initializes a [HomeManager] instance and loads home page sections.
+  /// Initializes a [HomeManager] instance and loads home page sections_home.
   HomeManager() {
     _loadSections();
   }
@@ -38,9 +38,9 @@ class HomeManager extends ChangeNotifier {
 
   // Methods
 
-  /// Loads home page sections from Firestore.
+  /// Loads home page sections_home from Firestore.
   Future<void> _loadSections() async {
-    PerformanceMonitoring().startTrace('load-sections', shouldStart: true);
+    PerformanceMonitoring().startTrace('load-sections_home', shouldStart: true);
     if (kDebugMode) {
       MonitoringLogger().logInfo('Info message: Starting listen Sections');
     }
@@ -52,25 +52,25 @@ class HomeManager extends ChangeNotifier {
       }
       notifyListeners();
     });
-    PerformanceMonitoring().stopTrace('load-sections');
+    PerformanceMonitoring().stopTrace('load-sections_home');
     if (kDebugMode) {
       MonitoringLogger().logInfo('Info message: Ending listen Sections');
     }
   }
 
-  /// Adds a new section to the list of editing sections.
+  /// Adds a new section to the list of editing sections_home.
   void addSection(Section section) {
     _editingSections.add(section);
     notifyListeners();
   }
 
-  /// Removes a section from the list of editing sections.
+  /// Removes a section from the list of editing sections_home.
   void removeSection(Section section) {
     _editingSections.remove(section);
     notifyListeners();
   }
 
-  /// Moves a section up in the list of editing sections.
+  /// Moves a section up in the list of editing sections_home.
   void moveSectionUp(Section section) {
     final int currentIndex = _editingSections.indexOf(section);
     if (currentIndex > 0) {
@@ -80,7 +80,7 @@ class HomeManager extends ChangeNotifier {
     }
   }
 
-  /// Moves a section down in the list of editing sections.
+  /// Moves a section down in the list of editing sections_home.
   void moveSectionDown(Section section) {
     final int currentIndex = _editingSections.indexOf(section);
     if (currentIndex < _editingSections.length - 1) {
@@ -90,7 +90,7 @@ class HomeManager extends ChangeNotifier {
     }
   }
 
-  /// Swaps the positions of two sections in the list of editing sections.
+  /// Swaps the positions of two sections_home in the list of editing sections_home.
   void _swapSections(Section section1, Section section2) {
     final int index1 = _editingSections.indexOf(section1);
     final int index2 = _editingSections.indexOf(section2);
@@ -101,7 +101,7 @@ class HomeManager extends ChangeNotifier {
     }
   }
 
-  /// Enters editing mode by cloning current sections for editing.
+  /// Enters editing mode by cloning current sections_home for editing.
   void enterEditing() {
     editing = true;
     _editingSections = _sections.map((s) => s.clone()).toList();

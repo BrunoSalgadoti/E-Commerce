@@ -6,7 +6,7 @@ description: Loja Virtual pertencente a empresa - BRN Info_Dev (CNPJ. 52.129.576
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.11+07
+version: 1.0.11+08
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
@@ -49,7 +49,6 @@ dependencies:
   image_gallery_saver_plus: ^4.0.1
   image_picker: ^1.2.0
   intl: ^0.20.2
-#  js_interop_utils: ^1.0.8
   keyboard_actions: ^4.2.0
   mailer: ^6.5.0
   map_launcher: ^4.4.1
@@ -125,6 +124,8 @@ flutter:
     - lib/views/checkout/
     - lib/views/checkout/components/
     - lib/views/products/
+    - lib/views/favorites/
+    - lib/views/wish_list/
     - lib/views/products/components/
     - lib/views/who_we_are/
     - lib/views/who_we_are/components/
@@ -159,7 +160,6 @@ flutter:
     - lib/common/sliding_up_panel/components/
     - lib/models/sales/
     - lib/models/users/
-    - lib/models/views/
     - lib/models/products/
     - lib/models/products/categories/
     - lib/models/admin_area/

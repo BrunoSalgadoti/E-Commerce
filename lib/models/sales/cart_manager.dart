@@ -1,17 +1,18 @@
 import 'package:brn_ecommerce/models/locations_services/viacep_map_api.dart';
-import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../users/users.dart';
-import '../users/users_manager.dart';
-import '../products/cart_product.dart';
-import '../products/product.dart';
-import '../products/details_products.dart';
-import '../locations_services/address.dart';
 import 'package:geolocator/geolocator.dart';
+
+import '../../services/cepaberto_api.dart';
 import '../../services/development_monitoring/monitoring_logger.dart';
 import '../../services/viacep_api.dart';
-import '../../services/cepaberto_api.dart';
+import '../locations_services/address.dart';
+import '../products/cart_product.dart';
+import '../products/details_products.dart';
+import '../products/product.dart';
+import '../users/users.dart';
+import '../users/users_manager.dart';
 
 /// # CartManager (Folder: models/sales)
 ///

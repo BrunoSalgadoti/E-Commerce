@@ -1,5 +1,5 @@
 import 'package:brn_ecommerce/helpers/extensions.dart';
-import 'package:brn_ecommerce/models/views/stores.dart';
+import 'package:brn_ecommerce/models/stores/stores.dart';
 
 import '../common/functions/common_functions.dart';
 

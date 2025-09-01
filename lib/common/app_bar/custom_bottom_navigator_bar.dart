@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../drawer/components/drawer_pages_enum.dart';
+
 Widget customBottomNavigatorBar({
   required BuildContext context,
   required bool withDrawer,
@@ -56,19 +58,21 @@ Widget customBottomNavigatorBar({
                   case 0:
                     withDrawer
                         ? Navigator.of(context).pop()
-                        : navigateToPageWithDrawer(context: context, pageIndex: 2);
+                        : navigateToPageWithDrawer(context: context, page: DrawerPages.categories,);
                     break;
                   case 1:
                     Navigator.of(context).pushNamed(RoutesNavigator.cartScreen);
                     break;
                   case 2:
-                    //TODO: Fazer rota
-                    () => {};
+                    withDrawer ?
+                    context.read<PageManager>().setPage(DrawerPages.favorites)
+                    : navigateToPageWithDrawer(context: context, page: DrawerPages.favorites,);
                     break;
                   case 3:
                     withDrawer
-                        ? context.read<PageManager>().setPage(0)
-                        : navigateToPageWithDrawer(context: context, pageIndex: 0);
+                        ? context.read<PageManager>().setPage(DrawerPages.home)
+
+                    : navigateToPageWithDrawer(context: context, page: DrawerPages.home);
                     break;
                   case 4:
                     //TODO: Fazer rota

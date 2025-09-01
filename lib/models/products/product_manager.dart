@@ -1,7 +1,8 @@
 import 'dart:async';
-import 'package:brn_ecommerce/models/products/product.dart';
+
 import 'package:brn_ecommerce/models/products/components/products_best_selling.dart';
 import 'package:brn_ecommerce/models/products/components/products_recently_added.dart';
+import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';

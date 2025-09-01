@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:brn_ecommerce/models/locations_services/address.dart';
-import 'package:brn_ecommerce/models/views/stores.dart';
+import 'package:brn_ecommerce/models/stores/stores.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

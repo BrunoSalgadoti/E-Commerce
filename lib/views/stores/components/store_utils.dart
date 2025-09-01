@@ -1,17 +1,17 @@
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
 import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/models/locations_services/address.dart';
-import 'package:brn_ecommerce/models/views/stores.dart';
+import 'package:brn_ecommerce/models/stores/stores.dart';
 import 'package:flutter/material.dart';
 
 class StoreUtils {
+  final Stores store;
+  final Address address;
+
   StoreUtils({
     required this.store,
     required this.address,
   });
-
-  final Stores store;
-  final Address address;
 
   void alertForDeleteStore(BuildContext context) {
     CustomAlertDialogAdaptive(

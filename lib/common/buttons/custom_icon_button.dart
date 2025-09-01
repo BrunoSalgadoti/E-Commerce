@@ -47,12 +47,15 @@ class CustomIconButton extends StatelessWidget {
           onTap: onTap,
           child: Padding(
             padding: padding,
-            child: Icon(
-              semanticLabel: semanticLabel,
-              weight: weight,
-              size: size,
-              iconData,
-              color: onTap != null ? color : Colors.grey[400],
+            child: Tooltip(
+              message: semanticLabel, // text that appears when hovering over
+              child: Icon(
+                semanticLabel: semanticLabel, // text for accessibility
+                weight: weight,
+                size: size,
+                iconData,
+                color: onTap != null ? color : Colors.grey[400],
+              ),
             ),
           ),
         ),

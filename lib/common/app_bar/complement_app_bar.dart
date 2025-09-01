@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart' show RootAssets;
 import 'package:brn_ecommerce/common/search/search_products_field.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class ComplementAppBar extends StatelessWidget {
   final bool asSliver;

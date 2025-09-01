@@ -1,3 +1,4 @@
+import 'package:alphabet_scroll_view/alphabet_scroll_view.dart';
 import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/search/search_clients.dart';
@@ -8,7 +9,6 @@ import 'package:brn_ecommerce/models/admin_area/admin_users_search.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:alphabet_scroll_view/alphabet_scroll_view.dart';
 
 class AdminUsersScreen extends StatelessWidget {
   const AdminUsersScreen({super.key});

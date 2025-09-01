@@ -1,5 +1,6 @@
 import 'package:brn_ecommerce/common/cards/login_card.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/models/sales/orders_manager.dart';
 import 'package:brn_ecommerce/views/orders/components/order_tile.dart';
@@ -26,10 +27,10 @@ class OrdersScreen extends StatelessWidget {
             return const LoginCard();
           }
           if (ordersManager.orders.isEmpty) {
-            return const EmptyPageIndicator(
+            return EmptyPageIndicator(
               title: 'Nenhuma compra encontrada!\n'
                   'Vamos a compra!',
-              image: "assets/images/waitingSales.gif",
+              image: RootAssets.waitingSalesGif,
               iconData: null,
               duration: null,
             );

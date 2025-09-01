@@ -2,7 +2,7 @@ import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/helpers/firebase_errors.dart';
 import 'package:brn_ecommerce/models/sales/delivery.dart';
 import 'package:brn_ecommerce/models/users/users.dart';
-import 'package:brn_ecommerce/services/db_api/config.dart';
+import 'package:brn_ecommerce/services/db_api/config_environment_variables.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,7 +10,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 
 /// # UserManager (Folder: models/users)
 ///
@@ -118,7 +117,7 @@ class UserManager extends ChangeNotifier {
     loading = true;
     try {
       final UserCredential result =
-      await _auth.signInWithEmailAndPassword(email: users.email, password: users.password!);
+          await _auth.signInWithEmailAndPassword(email: users.email, password: users.password!);
 
       await _loadCurrentUser(user: result.user);
 
@@ -152,16 +151,16 @@ class UserManager extends ChangeNotifier {
 
       switch (result.status) {
         case LoginStatus.success:
-        // Gets the user's access token
+          // Gets the user's access token
           final AccessToken accessToken = result.accessToken!;
 
           // Converte o token de acesso em uma credencial do Firebase
           final OAuthCredential credential =
-          FacebookAuthProvider.credential(accessToken.tokenString);
+              FacebookAuthProvider.credential(accessToken.tokenString);
 
           // Converts the access token to a Firebase credential
           final UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
+              await FirebaseAuth.instance.signInWithCredential(credential);
 
           // Get authenticated user
           final User? user = userCredential.user;
@@ -169,7 +168,7 @@ class UserManager extends ChangeNotifier {
           if (user != null) {
             // Check if the user document already exists in Firestore
             final DocumentSnapshot userSnapshot =
-            await firestore.collection("users").doc(user.uid).get();
+                await firestore.collection("users").doc(user.uid).get();
 
             // Capture user data and save to FirebaseFirestore
             if (userSnapshot.exists) {
@@ -233,17 +232,10 @@ class UserManager extends ChangeNotifier {
       await GoogleSignIn.instance.initialize();
 
       // Login do usuário
-      final GoogleSignInAccount? googleUser =
-      await GoogleSignIn.instance.authenticate();
-
-      if (googleUser == null) {
-        onFail?.call("Login cancelado pelo usuário!");
-        loadingGoogle = false;
-        return;
-      }
+      final GoogleSignInAccount googleUser = await GoogleSignIn.instance.authenticate();
 
       // Obter autenticação
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
 
       // Criar credencial para o Firebase
       final OAuthCredential credential = GoogleAuthProvider.credential(
@@ -251,13 +243,12 @@ class UserManager extends ChangeNotifier {
       );
 
       // Login no Firebase
-      final UserCredential userCredential =
-      await _auth.signInWithCredential(credential);
+      final UserCredential userCredential = await _auth.signInWithCredential(credential);
       final User? user = userCredential.user;
 
       if (user != null) {
         final DocumentSnapshot userSnapshot =
-        await firestore.collection("users").doc(user.uid).get();
+            await firestore.collection("users").doc(user.uid).get();
 
         if (userSnapshot.exists) {
           users = Users.fromDocument(userSnapshot);
@@ -374,7 +365,7 @@ class UserManager extends ChangeNotifier {
 
     try {
       final UserCredential result =
-      await _auth.createUserWithEmailAndPassword(email: users.email, password: users.password!);
+          await _auth.createUserWithEmailAndPassword(email: users.email, password: users.password!);
 
       users.id = result.user!.uid;
       users.policyAndTerms = true;
@@ -404,7 +395,7 @@ class UserManager extends ChangeNotifier {
       final User currentUser = user ?? _auth.currentUser!;
       if (currentUser.uid.isNotEmpty) {
         final DocumentSnapshot docUsers =
-        await firestore.collection("users").doc(currentUser.uid).get();
+            await firestore.collection("users").doc(currentUser.uid).get();
         users = Users.fromDocument(docUsers);
 
         final docAdmin = await firestore.collection("admins").doc(users?.id).get();

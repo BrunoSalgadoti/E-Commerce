@@ -5,8 +5,8 @@ import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dar
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/formatted_fields/time_input_formatter.dart';
 import 'package:brn_ecommerce/models/locations_services/address.dart';
-import 'package:brn_ecommerce/models/views/opening_stores.dart';
-import 'package:brn_ecommerce/models/views/stores.dart';
+import 'package:brn_ecommerce/models/stores/opening_stores.dart';
+import 'package:brn_ecommerce/models/stores/stores.dart';
 import 'package:brn_ecommerce/views/stores/components/store_utils.dart';
 import 'package:brn_ecommerce/views/stores_edit/components/store_image_widget.dart';
 import 'package:brn_ecommerce/views/stores_edit/components/store_location_widget.dart';

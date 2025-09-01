@@ -6,9 +6,9 @@ import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
-import 'package:brn_ecommerce/models/views/home_manager.dart';
-import 'package:brn_ecommerce/models/views/section.dart';
-import 'package:brn_ecommerce/models/views/section_item.dart';
+import 'package:brn_ecommerce/models/sections_home/home_manager.dart';
+import 'package:brn_ecommerce/models/sections_home/section.dart';
+import 'package:brn_ecommerce/models/sections_home/section_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';

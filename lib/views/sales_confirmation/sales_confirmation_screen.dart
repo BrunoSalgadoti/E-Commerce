@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart' show AutoSizeText;
 import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/app_bar/custom_bottom_navigator_bar.dart';
 import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
+import 'package:brn_ecommerce/common/cards/sales_suggestion_visited_products.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
@@ -11,8 +12,9 @@ import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/models/products/categories/product_sub_category.dart';
 import 'package:brn_ecommerce/models/sales/order_client.dart';
 import 'package:brn_ecommerce/views/orders/components/order_product_tile.dart';
-import 'package:brn_ecommerce/common/cards/sales_suggestion_visited_products.dart';
 import 'package:flutter/material.dart';
+
+import '../../common/drawer/components/drawer_pages_enum.dart';
 
 class SalesConfirmationScreen extends StatelessWidget {
   final OrderClient? orderClient;
@@ -76,7 +78,7 @@ class SalesConfirmationScreen extends StatelessWidget {
                           fontColor: getTextColor(),
                           fontWeight: FontWeight.w900,
                           fontSize: 20,
-                          onPressed: () => navigateToPageWithDrawer(context: context, pageIndex: 3),
+                          onPressed: () => navigateToPageWithDrawer(context: context, page: DrawerPages.orders, ),
                         ),
                       ],
                     ),

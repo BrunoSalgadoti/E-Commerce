@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/components/products_best_selling.dart';
+import 'package:brn_ecommerce/models/products/product.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PurchaseModel {
   final String userId;

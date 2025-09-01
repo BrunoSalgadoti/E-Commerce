@@ -3,7 +3,7 @@ import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/sales/order_client.dart';
-import 'package:brn_ecommerce/models/views/stores.dart';
+import 'package:brn_ecommerce/models/stores/stores.dart';
 import 'package:brn_ecommerce/views/address/address_screen.dart';
 import 'package:brn_ecommerce/views/cart/cart_screen.dart';
 import 'package:brn_ecommerce/views/checkout/checkout_screen.dart';

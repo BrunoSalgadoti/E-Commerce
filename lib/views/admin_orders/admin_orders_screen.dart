@@ -1,5 +1,6 @@
 import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
@@ -75,7 +76,7 @@ class AdminOrdersScreen extends StatelessWidget {
                                       color: getEspecialColor(),
                                       onTap: () {
                                         adminOrdersManager.setUserFilter(null);
-                                        context.read<PageManager>().setPage(6);
+                                        context.read<PageManager>().setPage(DrawerPages.adminUsers);
                                       },
                                       semanticLabel: 'Fechar',
                                     )
