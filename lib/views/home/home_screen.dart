@@ -1,7 +1,12 @@
 import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
+import 'package:brn_ecommerce/common/advertising/footer.dart';
+import 'package:brn_ecommerce/common/app_bar/complement_app_bar.dart';
+import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
-import 'package:brn_ecommerce/models/views/home_manager.dart';
+import 'package:brn_ecommerce/models/sections_home/home_manager.dart';
 import 'package:brn_ecommerce/views/home/components/add_section_widget.dart' show AddSectionWidget;
+import 'package:brn_ecommerce/views/home/components/content_home_app_bar.dart';
 import 'package:brn_ecommerce/views/home/components/section_header.dart';
 import 'package:brn_ecommerce/views/home/components/section_list.dart';
 import 'package:brn_ecommerce/views/home/components/section_staggered.dart';
@@ -9,10 +14,6 @@ import 'package:brn_ecommerce/views/who_we_are/who_we_are_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
-import 'package:brn_ecommerce/helpers/breakpoints.dart';
-import 'package:brn_ecommerce/common/app_bar/complement_app_bar.dart';
-import 'package:brn_ecommerce/views/home/components/content_home_app_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, this.sectionHeader});
@@ -92,6 +93,7 @@ class HomeScreen extends StatelessWidget {
                           : SliverList(delegate: SliverChildListDelegate(bodyHome));
                     },
                   ),
+                  CustomFooter(isSilver: true,)
                 ],
               ),
             ],
