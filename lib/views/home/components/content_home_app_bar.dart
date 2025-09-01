@@ -1,4 +1,6 @@
 import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
+import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart' show RoutesNavigator;
@@ -16,6 +18,7 @@ class ContentHomeAppBar extends StatelessWidget {
     final double iconsSize = 33;
     final userIsLoggedIn = context.watch<UserManager>().isLoggedIn;
     final getUsers = context.watch<UserManager>();
+    final goToPage = context.read<PageManager>();
 
     return SliverAppBar(
       primary: false,
@@ -47,23 +50,17 @@ class ContentHomeAppBar extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CustomIconButton(
-                    iconData: FontAwesomeIcons.heartPulse,
-                    semanticLabel: 'Meus Desejos',
-                    color: Colors.red,
-                    size: iconsSize,
-                    onTap: () {
-                      //TODO: rota, tela de meus desejos e lógica
-                    },
-                  ),
+                      iconData: FontAwesomeIcons.heartPulse,
+                      semanticLabel: 'Meus Desejos',
+                      color: Colors.red,
+                      size: iconsSize,
+                      onTap: () => goToPage.setPage(DrawerPages.wishlist)),
                   CustomIconButton(
-                    iconData: Icons.favorite,
-                    semanticLabel: 'Meus Favoritos',
-                    color: Colors.red,
-                    size: iconsSize,
-                    onTap: () {
-                      //TODO: rota, tela de meus favoritos e lógica
-                    },
-                  ),
+                      iconData: Icons.favorite,
+                      semanticLabel: 'Meus Favoritos',
+                      color: Colors.red,
+                      size: iconsSize,
+                      onTap: () => goToPage.setPage(DrawerPages.favorites)),
                   CustomIconButton(
                     iconData: userIsLoggedIn ? Icons.shopping_cart : Icons.account_circle,
                     size: iconsSize,
