@@ -1,3 +1,4 @@
+import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,7 @@ class SettingsDrawer extends StatelessWidget {
       ],
       onSelected: (String value) {
         if (value == 'Opção1') {
-          context.read<PageManager>().setPage(2);
+          context.read<PageManager>().setPage(DrawerPages.categories);
         }
       },
       // Add the conditions for the other selected options for ADM
@@ -47,7 +48,7 @@ class SettingsDrawer extends StatelessWidget {
             Flexible(
               fit: FlexFit.loose,
               child: Text(
-                'Configurações',
+                'Configurações:',
                 style: TextStyle(
                   fontSize: 16,
                 ),

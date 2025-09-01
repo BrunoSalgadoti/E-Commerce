@@ -1,132 +1,138 @@
 import 'package:brn_ecommerce/common/drawer/components/drawer_header.dart';
+import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
 import 'package:brn_ecommerce/common/drawer/components/drawer_title.dart';
 import 'package:brn_ecommerce/common/drawer/components/setting_drawer.dart';
-import 'package:brn_ecommerce/helpers/breakpoints.dart';
-import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../../helpers/themes/get_another_colors.dart' show getDrawerColorFirst, getDrawerColorSecond;
 import '../../models/users/users_manager.dart';
 
-/// # Widgets of the Custom Drawer reused in the project (Folder: common/drawer)
-/// ## CustomDrawer
-/// Widget that represents a custom drawer for navigation in the app.
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({
-    super.key,
-  });
+  const CustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return ConstrainedBox(
-        constraints: constraints.maxWidth <= mobileBreakpoint
-            ? BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.8)
-            : BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 10, 5, 10),
-          child: Drawer(
-            semanticLabel: "Menu de opções",
-            child: Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        getDrawerColorFirst(),
-                        getDrawerColorSecond(),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return ConstrainedBox(
+          constraints: constraints.maxWidth <= 600
+              ? BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.8)
+              : BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 10, 5, 10),
+            child: Drawer(
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          getDrawerColorFirst(),
+                          getDrawerColorSecond(),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
                     ),
                   ),
-                ),
-                ListView(
-                  children: [
-                    const CustomDrawerHeader(),
-                    const Divider(),
-                    const DrawerTitle(
-                      iconData: Icons.home,
-                      title: "Início",
-                      page: 0,
-                    ),
-                    const Divider(thickness: 2),
-                    const Text(
-                      'P R O D U T O S:',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                    ),
-                    const DrawerTitle(
-                      iconData: Icons.list,
-                      title: "Listar todos",
-                      page: 1,
-                    ),
-                    const DrawerTitle(
-                      iconData: Icons.list_alt_sharp,
-                      title: "Por Categorias",
-                      page: 2,
-                    ),
-                    const Divider(thickness: 2),
-                    const Text(
-                      'Seções do Cliente:',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                    ),
-                    const DrawerTitle(
-                      iconData: Icons.playlist_add_check,
-                      title: "Meus Pedidos",
-                      page: 3,
-                    ),
-                    const Divider(thickness: 2),
-                    const DrawerTitle(
-                      iconData: Icons.location_on,
-                      title: "Lojas",
-                      page: 4,
-                    ),
-                    const DrawerTitle(
-                      iconData: FontAwesomeIcons.peopleGroup,
-                      title: "Quem Somos?",
-                      page: 5,
-                    ),
+                  ListView(
+                    children: [
+                      const CustomDrawerHeader(),
+                      const Divider(),
+                      DrawerTitle(
+                        iconData: Icons.home,
+                        title: "Início",
+                        page: DrawerPages.home,
+                      ),
+                      const Divider(thickness: 2),
+                      const Text(
+                        'P R O D U T O S:',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                      ),
+                      DrawerTitle(
+                        iconData: Icons.list_alt_sharp,
+                        title: "Por Categorias",
+                        page: DrawerPages.categories,
+                      ),
+                      const Divider(thickness: 2),
+                      const Text(
+                        'SEÇÕES DO CLIENTE:',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                      ),
+                      DrawerTitle(
+                        iconData: Icons.playlist_add_check,
+                        title: "Meus pedidos",
+                        page: DrawerPages.orders
+                      ),
+                      DrawerTitle(
+                        iconData: Icons.favorite,
+                        title: "Meus favoritos",
+                        page: DrawerPages.favorites
+                      ),
+                      DrawerTitle(
+                        iconData: FontAwesomeIcons.heartPulse,
+                        title: "Meus de desejos",
+                        page: DrawerPages.wishlist,
+                      ),
+                      const Divider(thickness: 2),
+                      DrawerTitle(
+                        iconData: Icons.location_on,
+                        title: "Lojas",
+                        page: DrawerPages.stores,
+                      ),
+                      DrawerTitle(
+                        iconData: FontAwesomeIcons.peopleGroup,
+                        title: "Quem Somos?",
+                        page: DrawerPages.whoWeAre
+                      ),
 
-                    /// Start of the Drawer referring to users with administrative access only.
-                    Consumer<UserManager>(
-                      builder: (_, userManager, __) {
-                        if (userManager.adminEnable) {
-                          return const Column(
-                            children: [
-                              Divider(thickness: 3),
-                              Text(
-                                'Área Administrativa:',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                              ),
-                              DrawerTitle(
-                                iconData: Icons.supervised_user_circle,
-                                title: 'Clientes',
-                                page: 6,
-                              ),
-                              DrawerTitle(
-                                iconData: Icons.task_alt,
-                                title: 'Pedidos',
-                                page: 7,
-                              ),
-                              ...[SettingsDrawer()]
-                            ],
-                          );
-                        } else {
-                          return Container();
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                      /// Área administrativa
+                      Consumer<UserManager>(
+                        builder: (_, userManager, __) {
+                          if (userManager.adminEnable) {
+                            return Column(
+                              children: [
+                                const Divider(thickness: 3),
+                                const Text(
+                                  'ÁREA ADMINISTRATIVA:',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                                ),
+                                DrawerTitle(
+                                  iconData: Icons.supervised_user_circle,
+                                  title: 'Clientes',
+                                  page: DrawerPages.adminUsers
+                                ),
+                                DrawerTitle(
+                                  iconData: Icons.task_alt,
+                                  title: 'Pedidos',
+                                  page: DrawerPages.adminOrders
+                                ),
+                                DrawerTitle(
+                                  iconData: Icons.list,
+                                  title: "Listar todos",
+                                  page: DrawerPages.products
+                                ),
+                                const SettingsDrawer(),
+                              ],
+                            );
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

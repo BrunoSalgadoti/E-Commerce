@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
@@ -39,7 +40,7 @@ class CustomDrawerHeader extends StatelessWidget {
                       height: 90,
                       fit: BoxFit.scaleDown,
                     ),
-                    onTap: () => pageManager.setPage(0)),
+                    onTap: () => pageManager.setPage(DrawerPages.home)),
                 AutoSizeText(
                   'Bem-Vindo(a)! ${userManager.users?.userName ?? ''}',
                   overflow: TextOverflow.ellipsis,
@@ -53,7 +54,7 @@ class CustomDrawerHeader extends StatelessWidget {
                   onTap: () {
                     if (userManager.isLoggedIn) {
                       userManager.signOut();
-                      pageManager.setPage(0);
+                      pageManager.setPage(DrawerPages.home);
                     } else {
                       Navigator.pushNamed(context, RoutesNavigator.loginScreen);
                     }

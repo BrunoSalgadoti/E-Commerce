@@ -1,23 +1,24 @@
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
+import 'package:brn_ecommerce/models/favorites/favorites_manager.dart';
 import 'package:brn_ecommerce/models/admin_area/admin_orders_manager.dart';
 import 'package:brn_ecommerce/models/admin_area/admin_users_manager.dart';
 import 'package:brn_ecommerce/models/admin_area/admin_users_search.dart';
+import 'package:brn_ecommerce/models/policy_documents/policy_and_documents.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category_manager.dart';
+import 'package:brn_ecommerce/models/products/components/products_recently_added.dart';
 import 'package:brn_ecommerce/models/products/details_products.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
-import 'package:brn_ecommerce/models/products/components/products_recently_added.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:brn_ecommerce/models/sales/checkout_manager.dart';
 import 'package:brn_ecommerce/models/sales/orders_manager.dart';
+import 'package:brn_ecommerce/models/sections_home/home_manager.dart';
+import 'package:brn_ecommerce/models/stores/stores.dart';
+import 'package:brn_ecommerce/models/users/stores_manager.dart';
 import 'package:brn_ecommerce/models/users/users.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
-import 'package:brn_ecommerce/models/views/home_manager.dart';
-import 'package:brn_ecommerce/models/views/policy_and_documents.dart';
-import 'package:brn_ecommerce/models/views/stores.dart';
-import 'package:brn_ecommerce/models/views/stores_manager.dart';
-import 'package:brn_ecommerce/models/views/who_we_are_manager.dart';
+import 'package:brn_ecommerce/models/who_we_are/who_we_are_manager.dart';
 import 'package:brn_ecommerce/services/config/version_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +49,7 @@ class ProvidersApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProductManager(), lazy: false),
         ChangeNotifierProvider(create: (_) => ProductCategory()),
         ChangeNotifierProvider(create: (_) => DetailsProducts(stock: 0)),
+        ChangeNotifierProvider(create: (_) => FavoritesManager()),
         ChangeNotifierProvider<CartManager>.value(value: CartManager.instance),
 
         // Providers for App Data and Settings
