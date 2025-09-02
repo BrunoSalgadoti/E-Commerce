@@ -6,15 +6,29 @@ import 'package:brn_ecommerce/models/sales/orders_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final favoritosManager = Provider.of<FavoritesManager>(context);
-    final favoritos = favoritosManager.favoritos;
-    final ordersManager =  Provider.of<OrdersManager>(context);
+    final favoritesManager = Provider.of<FavoritesManager>(context);
+    final ordersManager = Provider.of<OrdersManager>(context);
+
+    // If the user is not logged in
+    if (ordersManager.users?.id == null) {
+      return Scaffold(
+        appBar: CustomAppBar(
+          title: 'Favoritos',
+          showDrawerIcon: true,
+          showSearchButton: true,
+        ),
+        drawer: const CustomDrawer(),
+        body: const LoginCard(),
+      );
+    }
+
+    // Logged in user's favorites list
+    final favoritos = favoritesManager.favoritos;
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -25,14 +39,13 @@ class FavoritesScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.add_box_outlined),
             onPressed: () {
-              // Criar lista de presentes
+              //TODO:  Criar lista de presentes
             },
           )
         ],
       ),
-      drawer: CustomDrawer(),
-      body: ordersManager.users!.id == null ? LoginCard()
-          : favoritos.isEmpty
+      drawer: const CustomDrawer(),
+      body: favoritos.isEmpty
           ? const Center(
               child: Text("Você ainda não tem favoritos."),
             )
@@ -48,20 +61,22 @@ class FavoritesScreen extends StatelessWidget {
                         ? Image.network(produto.images!.first, width: 50, height: 50)
                         : const SizedBox(width: 50, height: 50),
                     title: Text(produto.name ?? 'Sem nome'),
-                    subtitle: Text("R\$ ${produto.details?.price?.toStringAsFixed(2) ?? '----'}"),
+                    subtitle: Text(
+                      "R\$ ${produto.details?.price?.toStringAsFixed(2) ?? '----'}",
+                    ),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
                           icon: const Icon(Icons.playlist_add),
                           onPressed: () {
-                            // Adicionar à lista de presentes
+                            //TODO:  adicionar a lista de presentes
                           },
                         ),
                         IconButton(
                           icon: const Icon(Icons.delete),
                           onPressed: () {
-                            favoritosManager.removeFavorite(produto);
+                            favoritesManager.removeFavorite(produto);
                           },
                         ),
                       ],

@@ -20,6 +20,8 @@ class Users {
   bool? policyAndTerms;
   bool admin = false;
   Address? address;
+  List<String> favoriteProductIds = [];
+  List<String> wishlistProductIds = [];
 
   // Properties for Firestore references
   DocumentReference get firestoreRef => FirebaseFirestore.instance.doc("users/$id");
@@ -53,6 +55,9 @@ class Users {
 
     Map<String, dynamic> dataMap = document.data() as Map<String, dynamic>;
 
+    favoriteProductIds = List<String>.from(dataMap["favorites"] ?? []);
+    wishlistProductIds = List<String>.from(dataMap["wishlist"] ?? []);
+
     if (dataMap.containsKey("address")) {
       address = Address.fromMap(document.get("address") as Map<String, dynamic>);
     }
@@ -69,6 +74,8 @@ class Users {
       "phone": phoneNumber,
       "userPhoto": userPhotoURL ?? "",
       "policyAndTerms": policyAndTerms ?? false,
+      "favorites": favoriteProductIds,
+      "wishlist": wishlistProductIds,
       if (address != null) "address": address!.toMap(),
     };
   }

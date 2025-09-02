@@ -1,8 +1,8 @@
+import 'package:brn_ecommerce/models/stores/stores.dart';
+import 'package:brn_ecommerce/models/stores/stores_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/stores/stores.dart';
-import '../../models/users/stores_manager.dart';
 
 class CustomFooter extends StatelessWidget {
   final bool isSilver;
@@ -13,17 +13,17 @@ class CustomFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     final storesManager = Provider.of<StoresManager>(context);
     final Stores? currentStore =
-    storesManager.storesList.isNotEmpty ? storesManager.storesList.first : null;
+        storesManager.storesList.isNotEmpty ? storesManager.storesList.first : null;
 
-    // Aqui você define os callbacks dos links
+    // Here you define the link callbacks
     final footerLinks = <String, VoidCallback>{
-      "Site Oficial": () => debugPrint("Abrindo Site Oficial..."),
       "Comprar": () => debugPrint("Abrindo Comprar..."),
       "X": () => debugPrint("Abrindo Vender..."),
       "Facebook": () => debugPrint("Abrindo Facebook..."),
       "Instagram": () => debugPrint("Abrindo Instagram..."),
       "YouTube": () => debugPrint("Abrindo YouTube..."),
-      // Adicione outros links conforme necessário
+
+      // Add other links as needed
     };
 
     final footerContent = Container(
@@ -43,25 +43,17 @@ class CustomFooter extends StatelessWidget {
                   "Investor relations",
                   "Tendências",
                   "Sustentabilidade",
-                  "Site Oficial",
                 ],
                 onTapMap: footerLinks,
               ),
               _buildSection(
                 "Outros sites",
-                [
-                  "Desenvolvedores",
-                  "Mercado Pago",
-                  "Envios",
-                  "Mercado Shops",
-                  "Mercado Ads",
-                ],
+                ["Desenvolvedores", "Envios", "BRN Info_Dev"],
               ),
               _buildSection(
                 "Contato",
                 [
                   "Comprar",
-                  "Vender",
                   "Solução de problemas",
                   "Segurança",
                 ],
@@ -82,7 +74,7 @@ class CustomFooter extends StatelessWidget {
               ),
               _buildSection(
                 "Temporadas",
-                ["Dia do consumidor", "Dia das mães", "Black Friday", "Descontaço"],
+                ["Dia do consumidor", "Dia das mães", "Black Friday", "descontão"],
               ),
             ],
           ),
@@ -96,21 +88,21 @@ class CustomFooter extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             "Fale conosco | Termos e condições | Promoções | "
-                "Como cuidamos da sua privacidade | Acessibilidade | "
-                "Contato | Informações sobre seguros | Programa de Afiliados | Lista de presentes",
+            "Como cuidamos da sua privacidade | Acessibilidade | "
+            "Contato | Informações sobre seguros | Programa de Afiliados | Lista de presentes",
             style: const TextStyle(color: Colors.white54, fontSize: 11),
           ),
           const SizedBox(height: 8),
           Text(
             "CNPJ n.º 52.129.576/0001-57 / Centro, nº S/N, "
-                "Paulo Afonso-BA - CEP 48608-510 - produzido por: BRN Informática e Desenvolvimento.",
+            "Paulo Afonso-BA - CEP 48608-510 - produzido por: BRN Informática e Desenvolvimento.",
             style: const TextStyle(color: Colors.white54, fontSize: 11),
           ),
         ],
       ),
     );
 
-    // Muda a estrutura conforme isSilver
+    // Changes the structure according to isSilver
     if (isSilver) {
       return SliverToBoxAdapter(child: footerContent);
     } else {
@@ -118,7 +110,7 @@ class CustomFooter extends StatelessWidget {
     }
   }
 
-  // Widget que constrói cada seção
+  // Widget that builds each section
   Widget _buildSection(String title, List<String> items, {Map<String, VoidCallback>? onTapMap}) {
     return SizedBox(
       width: 180,

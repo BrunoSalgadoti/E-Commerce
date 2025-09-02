@@ -7,6 +7,7 @@ import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
+import 'package:brn_ecommerce/views/favorites/components/favorites_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,6 +19,7 @@ class FlexibleProductCard extends StatelessWidget {
   final bool isVertical;
   final Product? product;
   final VoidCallback? onTap;
+  final double iconsSize = 39;
 
   /// Creates a flexible product card.
   const FlexibleProductCard({
@@ -112,6 +114,9 @@ class FlexibleProductCard extends StatelessWidget {
                                     containerHeight: 80,
                                   ),
                                 ),
+                              ),
+                              FavoritesWidget(
+                                product: product!,
                               )
                             ],
                           ),
@@ -177,133 +182,110 @@ class FlexibleProductCard extends StatelessWidget {
                   clipBehavior: Clip.antiAlias,
                   elevation: 7,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  child: Stack(
-                    children: [
-                      Container(
-                        constraints: const BoxConstraints(maxHeight: 145, minWidth: 100),
-                        color: Colors.white,
-                        child: Row(
-                          children: [
-                            AspectRatio(
-                              aspectRatio: 1,
-                              child: imageNotAvailable
-                                  ? Image.asset(RootAssets.noImagePng, fit: BoxFit.fitHeight)
-                                  : Image(
-                                      image: NetworkImage(product?.images?.first ?? ""),
-                                      fit: BoxFit.cover,
-                                    ),
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Container(
+                    constraints: const BoxConstraints(maxHeight: 145, minWidth: 100),
+                    color: Colors.white,
+                    child: Row(
+                      children: [
+                        // Product Image
+                        AspectRatio(
+                          aspectRatio: 1,
+                          child: imageNotAvailable
+                              ? Image.asset(RootAssets.noImagePng, fit: BoxFit.fitHeight)
+                              : Image.network(product?.images?.first ?? "", fit: BoxFit.cover),
+                        ),
+
+                        // Card content (text, price, and favorite)
+                        Flexible(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Product name + favorite
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    AutoSizeText(
-                                      overflow: TextOverflow.ellipsis,
-                                      maxFontSize: 18,
-                                      maxLines: 2,
-                                      minFontSize: 15,
-                                      product!.name!,
-                                      style: const TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                    AutoSizeText(
-                                      overflow: TextOverflow.ellipsis,
-                                      maxFontSize: 16,
-                                      maxLines: 4,
-                                      minFontSize: 10,
-                                      product?.description ?? '',
-                                      style: const TextStyle(
-                                        fontSize: 13.0,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                    if (product?.brand != "")
-                                      AutoSizeText(
+                                    Expanded(
+                                      child: AutoSizeText(
+                                        product!.name!,
+                                        maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
-                                        maxFontSize: 16,
-                                        maxLines: 1,
-                                        minFontSize: 10,
-                                        'Marca: ${product!.brand}',
                                         style: const TextStyle(
-                                          fontSize: 13.0,
-                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w800,
                                         ),
                                       ),
-                                    Row(
-                                      children: [
-                                        product!.hasStock
-                                            ? Flexible(
-                                                child: AutoSizeText(
-                                                  overflow: TextOverflow.ellipsis,
-                                                  maxFontSize: 18,
-                                                  maxLines: 1,
-                                                  minFontSize: 10,
-                                                  'A partir de: ',
-                                                  style: TextStyle(
-                                                      fontSize: 15.0, color: Colors.grey[600]),
-                                                ),
-                                              )
-                                            : Flexible(
-                                                child: AutoSizeText(
-                                                  overflow: TextOverflow.ellipsis,
-                                                  maxFontSize: 17,
-                                                  maxLines: 2,
-                                                  minFontSize: 10,
-                                                  'Aguardando reposição de estoque... ',
-                                                  style: TextStyle(
-                                                      fontSize: 14.0, color: Colors.grey[600]),
-                                                ),
-                                              ),
-                                        product!.hasStock
-                                            ? Flexible(
-                                                child: AutoSizeText(
-                                                  overflow: TextOverflow.ellipsis,
-                                                  maxFontSize: 20,
-                                                  maxLines: 1,
-                                                  minFontSize: 10,
-                                                  formattedRealText(basePrice),
-                                                  style: TextStyle(
-                                                    fontSize: 17.0,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: primaryColor,
-                                                  ),
-                                                ),
-                                              )
-                                            : Flexible(
-                                                child: AutoSizeText(
-                                                  overflow: TextOverflow.ellipsis,
-                                                  maxFontSize: 18,
-                                                  maxLines: 2,
-                                                  minFontSize: 10,
-                                                  'Fora de estoque',
-                                                  style: TextStyle(
-                                                    fontSize: 15.0,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: primaryColor,
-                                                  ),
-                                                ),
-                                              ),
-                                      ],
                                     ),
+                                    FavoritesWidget(product: product ?? Product()),
                                   ],
                                 ),
-                              ),
+
+                                // Description
+                                AutoSizeText(
+                                  product?.description ?? '',
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+
+                                // Mark
+                                if (product?.brand != null && product!.brand.isNotEmpty)
+                                  AutoSizeText(
+                                    'Marca: ${product?.brand ?? ''}',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 13.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+
+                                // Price
+                                Row(
+                                  children: [
+                                    product!.hasStock
+                                        ? Text(
+                                            'A partir de: ',
+                                            style:
+                                                TextStyle(fontSize: 15.0, color: Colors.grey[600]),
+                                          )
+                                        : Text(
+                                            'Aguardando reposição de estoque...',
+                                            style:
+                                                TextStyle(fontSize: 14.0, color: Colors.grey[600]),
+                                          ),
+                                    const SizedBox(width: 5),
+                                    product!.hasStock
+                                        ? Text(
+                                            formattedRealText(basePrice),
+                                            style: TextStyle(
+                                              fontSize: 17.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: primaryColor,
+                                            ),
+                                          )
+                                        : Text(
+                                            'Fora de estoque',
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: primaryColor,
+                                            ),
+                                          ),
+                                  ],
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                      FreightLogo(
-                        product: product ?? Product(),
-                        positionedRight: 0,
-                        positionedBottom: 0,
-                      )
-                    ],
+                      ],
+                    ),
                   ),
                 )
           : Container(),

@@ -56,9 +56,12 @@ class StoresManager extends ChangeNotifier {
   void _startTime() async {
     PerformanceMonitoring().startTrace('start-time', shouldStart: true);
 
-    _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
-      _checkOpening();
-    });
+    _timer = Timer.periodic(
+      const Duration(minutes: 1),
+      (timer) {
+        _checkOpening();
+      },
+    );
 
     PerformanceMonitoring().stopTrace('start-time');
   }
@@ -79,10 +82,12 @@ class StoresManager extends ChangeNotifier {
     }
 
     // Configure a real-time update listener for store data changes
-    _storesListener = firestore.collection("stores").snapshots().listen((event) {
-      storesList = event.docs.map((s) => Stores.fromDocument(s)).toList();
-      notifyListeners();
-    });
+    _storesListener = firestore.collection("stores").snapshots().listen(
+      (event) {
+        storesList = event.docs.map((s) => Stores.fromDocument(s)).toList();
+        notifyListeners();
+      },
+    );
 
     PerformanceMonitoring().stopTrace('setup-rt-updates');
   }

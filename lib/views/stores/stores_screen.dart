@@ -1,7 +1,8 @@
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
-import 'package:brn_ecommerce/models/users/stores_manager.dart';
+import 'package:brn_ecommerce/models/stores/stores_manager.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:brn_ecommerce/views/stores/components/store_card.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class StoresScreen extends StatelessWidget {
           if (storesManager.storesList.isEmpty) {
             return const Center(
               child: EmptyPageIndicator(
-                image: 'assets/images/await.gif',
+                image: RootAssets.cartAwaitGif,
                 title: 'Carregando...',
                 iconData: null,
               ),
@@ -48,10 +49,11 @@ class StoresScreen extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.only(top: 8, bottom: 10),
             child: ListView.builder(
-                itemCount: storesManager.storesList.length,
-                itemBuilder: (_, index) {
-                  return StoreCard(storesManager.storesList[index]);
-                }),
+              itemCount: storesManager.storesList.length,
+              itemBuilder: (_, index) {
+                return StoreCard(storesManager.storesList[index]);
+              },
+            ),
           );
         },
       ),

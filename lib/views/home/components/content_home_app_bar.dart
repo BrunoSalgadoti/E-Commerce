@@ -16,9 +16,9 @@ class ContentHomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double iconsSize = 33;
+    final goToPage = context.read<PageManager>();
     final userIsLoggedIn = context.watch<UserManager>().isLoggedIn;
     final getUsers = context.watch<UserManager>();
-    final goToPage = context.read<PageManager>();
 
     return SliverAppBar(
       primary: false,
