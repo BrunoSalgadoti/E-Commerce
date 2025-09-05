@@ -113,7 +113,7 @@ flutter:
     - lib/views/cart/components/
     - lib/views/home/
     - lib/views/home/components/
-    - lib/views/login/
+    - lib/views/login_sing_up_screens/
     - lib/views/orders/
     - lib/views/orders/components/
     - lib/views/stores/

@@ -15,7 +15,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 /// UserManager is responsible for user authentication, profile loading, and state management.
-/// Handles email/password login, Google/Facebook login, sign-up, sign-out, and persistent login.
+/// Handles email/password login, Google/Facebook login, sign-up, sign-out, and persistent login_.
 class UserManager extends ChangeNotifier {
   // Proprieties
 
