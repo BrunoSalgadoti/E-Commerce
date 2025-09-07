@@ -47,12 +47,16 @@
 		<true />
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true />
+
+		<!-- 🔹 Permissões -->
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>Necessário acesso a galeria para buscar/salvar imagem</string>
 		<key>NSCameraUsageDescription</key>
 		<string>Necessário acesso a câmera para adicionar imagem</string>
 		<key>NSMicrophoneUsageDescription</key>
-		<string>Necessário acesso a câmera para adicionar imagem</string>
+		<string>Necessário acesso a microfone para gravar áudio</string>
+
+		<!-- 🔹 Login com Facebook e Google -->
 		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>
@@ -60,13 +64,15 @@
 				<string>Editor</string>
 				<key>CFBundleURLSchemes</key>
 				<array>
+					<!-- Facebook Login -->
 					<string>fb1956098281455470</string>
-					<!-- TODO Replace this value: -->
-					<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
+					<!-- Google OAuth: REVERSED_CLIENT_ID do GoogleService-Info.plist -->
 					<string>com.googleusercontent.apps.314834115857-hn7ir6jd1notia2cjqald79cbl4juc2s</string>
 				</array>
 			</dict>
 		</array>
+
+		<!-- Facebook config -->
 		<key>FacebookAppID</key>
 		<string>1956098281455470</string>
 		<key>FacebookClientToken</key>
@@ -77,18 +83,41 @@
 		<string>TRUE</string>
 		<key>FacebookAdvertiserIDCollectionEnabled</key>
 		<string>TRUE</string>
+
+		<!-- Schemes que o app pode consultar -->
 		<key>LSApplicationQueriesSchemes</key>
 		<array>
 			<string>fbapi</string>
 			<string>fb-messenger-share-api</string>
 			<string>fbauth2</string>
 			<string>fbshareextension</string>
-			<string>Necessário acesso a APP SMS</string>
-			<string>Necessário acesso ao telefone</string>
+			<string>sms</string>
+			<string>tel</string>
 			<string>comgooglemaps</string>
 			<string>iosamap</string>
 			<string>waze</string>
 		</array>
+
+		<!-- 🔹 Deep Links e OAuth para Firebase -->
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleURLName</key>
+				<string>brn-ecommerce</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>brn-ecommerce</string>
+				</array>
+			</dict>
+		</array>
+
+
+		<!-- 🔹 Associated Domains - Deep Links e Firebase Dynamic Links -->
+		<key>com.apple.developer.associated-domains</key>
+		<array>
+			<string>applinks:brn-ecommerce.web.app</string>
+		</array>
+
 
 	</dict>
 </plist>

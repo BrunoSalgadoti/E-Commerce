@@ -3,9 +3,9 @@ mixin RoutesNavigator {
   static const String signupScreen = '/sair';
   static const String cartScreen = '/carrinho';
   static const String categoryProductsScreen = '/categoria_selecionada';
-
-  // static const String categoryScreen = "/categorias";
-  // static const String productScreen = "/produtos";
+  static const String resetPasswordScreen = '/resetar_senha';
+  static const String recoverPasswordScreen = '/recover-password';
+  static const String verifyEmailScreen = '/verify-email';
   static const String productDetailsScreen = '/produto_detalhe';
   static const String shareProductScreen = '/compartilhar_produto';
   static const String editProductScreen = '/editar_produto';

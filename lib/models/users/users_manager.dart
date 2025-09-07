@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/helpers/firebase_errors.dart';
 import 'package:brn_ecommerce/models/favorites/favorites_manager.dart';
@@ -21,6 +23,7 @@ class UserManager extends ChangeNotifier {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   bool _loading = false;
   bool _newUserAccount = false;
   bool _editingCategories = false;
@@ -37,7 +40,7 @@ class UserManager extends ChangeNotifier {
     }
   }
 
-  // Getters and Setters
+  // Getters and setters
   bool get loading => _loading;
   bool get editingCategories => _editingCategories;
   bool get loadingFace => _loadingFace;
@@ -81,7 +84,7 @@ class UserManager extends ChangeNotifier {
   /// Loads the current user's data from Firestore.
   Future<void> _loadCurrentUser({BuildContext? context, User? user}) async {
     try {
-      final User currentUser = user ?? _auth.currentUser!;
+      final currentUser = user ?? _auth.currentUser!;
       if (currentUser.uid.isNotEmpty) {
         final docUsers = await firestore.collection("users").doc(currentUser.uid).get();
         users = Users.fromDocument(docUsers);
@@ -105,12 +108,11 @@ class UserManager extends ChangeNotifier {
       );
       MonitoringLogger().logError('Erro ao carregar CurrentUser: $error');
     }
-    notifyListeners();
   }
 
   /// Checks if necessary auxiliary documents and admin data exist in Firestore.
   Future<void> createAuxAndAdminsIfNotExists({required bool firstStart}) async {
-    if (kDebugMode && firstStart == true) {
+    if (kDebugMode && firstStart) {
       MonitoringLogger().logInfo('Info: Verifier createAuxAndAdminsIfNotExists');
 
       // Check if the "admins" collection is empty
@@ -118,68 +120,92 @@ class UserManager extends ChangeNotifier {
       final usersQuery = await firestore.collection("users").get();
       if (adminsQuery.docs.isEmpty && usersQuery.docs.isNotEmpty) {
         // Create document '{users.id}' in collection 'admins' with user id as admin
-        await firestore.collection("admins").doc(users!.id).set(
-          {
-            "user": users!.id,
-          },
-        );
+        await firestore.collection("admins").doc(users!.id).set({"user": users!.id});
         users!.admin = true; // Set user as administrator on first login
       }
 
       // Check if the "aux" collection contains the "delivery" document
       final deliveryDoc = firestore.collection("aux").doc("delivery");
       final doc = await deliveryDoc.get();
-      if (!doc.exists) {
-        final delivery = Delivery(); // Create a new instance of the Delivery class
-        await deliveryDoc.set(delivery.toMap());
-      }
+      if (!doc.exists)
+        await deliveryDoc.set(Delivery().toMap()); // Create a new instance of the Delivery class
 
       // Check if the "aux" collection contains the "orderCounter" document
       final orderCounterDoc = firestore.collection("aux").doc("orderCounter");
-      final orderCounterDocExists = await orderCounterDoc.get();
-      if (!orderCounterDocExists.exists) {
+      if (!(await orderCounterDoc.get()).exists) {
         // Create the "orderCounter" document with "current" field set to 1
         await orderCounterDoc.set({"current": 1});
       }
     }
   }
 
-  Future<void> _updateMonthlyNewUsers() async {
-    if (!_newUserAccount || users == null) return;
+  Future<void> verifyEmailWithCode(BuildContext context, String oobCode) async {
+    try {
+      await _auth.checkActionCode(oobCode);
+      await _auth.applyActionCode(oobCode);
 
-    final now = DateTime.now();
-    final monthKey = "${now.year}-${now.month.toString().padLeft(2, '0')}";
-    final docRef = firestore.collection('aux').doc('NewUsers').collection('monthly').doc(monthKey);
-
-    final doc = await docRef.get();
-    if (doc.exists) {
-      await docRef.update({
-        'count': FieldValue.increment(1),
-      });
-    } else {
-      await docRef.set({'count': 1});
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('E-mail verificado com sucesso!')),
+        );
+      }
+    } catch (e) {
+      debugPrint('Erro ao verificar e-mail: $e');
     }
-
-    // Marks that the user has already been counted
-    _newUserAccount = false;
   }
 
-  /// Initializes the UserManager at app startup.
-  /// If there is a persisted FirebaseAuth user, loads the user data automatically.
+  /// Send password reset email (send only)
+  Future<void> sendPasswordResetEmailRequest({
+    required String email,
+    required VoidCallback onSuccess,
+    required Function(String) onFail,
+  }) async {
+    try {
+      await _auth.sendPasswordResetEmail(
+        email: email,
+        actionCodeSettings: ActionCodeSettings(
+          url: AppConfigKey.linkRecoverPasswordInWeb,
+          handleCodeInApp: false,
+          iOSBundleId: null,
+          androidPackageName: null,
+          androidInstallApp: false,
+        ),
+      );
+      onSuccess();
+    } on FirebaseAuthException catch (e) {
+      onFail(e.message ?? "Erro desconhecido");
+    } catch (e) {
+      onFail("Erro inesperado: $e");
+    }
+  }
+
+  /// Confirm the new password using the oobCode
+  Future<void> confirmNewPassword({
+    required String oobCode,
+    required String newPassword,
+    required VoidCallback onSuccess,
+    required Function(String) onFail,
+  }) async {
+    try {
+      await _auth.confirmPasswordReset(code: oobCode, newPassword: newPassword);
+      onSuccess();
+    } on FirebaseAuthException catch (e) {
+      onFail(e.message ?? "Erro desconhecido");
+    } catch (e) {
+      onFail("Erro inesperado: $e");
+    }
+  }
+
+  /// Initializes user data
   Future<void> initializeUser({BuildContext? context}) async {
     final currentUser = _auth.currentUser;
     if (currentUser != null) {
-      if (context != null) {
-        await _loadCurrentUser(context: context, user: currentUser);
-        await _updateMonthlyNewUsers();
-      } else {
-        // If no context provided, load user without updating FavoritesManager
-        try {
-          final docUsers = await firestore.collection("users").doc(currentUser.uid).get();
-          users = Users.fromDocument(docUsers);
-        } catch (error) {
-          MonitoringLogger().logError('Error initializing user without context: $error');
-        }
+      try {
+        final docUsers = await firestore.collection("users").doc(currentUser.uid).get();
+        users = Users.fromDocument(docUsers);
+        notifyListeners();
+      } catch (error) {
+        debugPrint('Erro ao inicializar usuário: $error');
       }
     }
   }
@@ -194,9 +220,9 @@ class UserManager extends ChangeNotifier {
     PerformanceMonitoring().startTrace('sign-in-email', shouldStart: true);
     loading = true;
     try {
-      final UserCredential result =
+      final result =
           await _auth.signInWithEmailAndPassword(email: users.email, password: users.password!);
-      await _loadCurrentUser(user: result.user);
+      await _loadCurrentUser(user: result.user, context: context);
       onSuccess();
     } on FirebaseAuthException catch (error) {
       onFail(getErrorString(error.code));
@@ -216,7 +242,7 @@ class UserManager extends ChangeNotifier {
     loading = true;
 
     try {
-      final UserCredential result =
+      final result =
           await _auth.createUserWithEmailAndPassword(email: users.email, password: users.password!);
 
       users.id = result.user!.uid;
@@ -226,6 +252,7 @@ class UserManager extends ChangeNotifier {
       await users.saveUserData();
       _newUserAccount = true;
       await _updateMonthlyNewUsers();
+
       if (context != null) {
         final favoritesManager = Provider.of<FavoritesManager>(context, listen: false);
         favoritesManager.updateUser(users.id);
@@ -235,6 +262,7 @@ class UserManager extends ChangeNotifier {
     } on FirebaseAuthException catch (error) {
       onFail(getErrorString(error.code));
     }
+
     loading = false;
     PerformanceMonitoring().stopTrace('sing-up-email');
   }
@@ -260,32 +288,25 @@ class UserManager extends ChangeNotifier {
       }
 
       // Realize authentication for the Facebook
-      final LoginResult result = await FacebookAuth.instance.login();
+      final result = await FacebookAuth.instance.login();
 
       switch (result.status) {
         case LoginStatus.success:
           // Gets the user's access token
-          final AccessToken accessToken = result.accessToken!;
-
+          final accessToken = result.accessToken!;
           // Converte o token de acesso em uma credencial do Firebase
-          final OAuthCredential credential =
-              FacebookAuthProvider.credential(accessToken.tokenString);
-
+          final credential = FacebookAuthProvider.credential(accessToken.tokenString);
           // Converts the access token to a Firebase credential
-          final UserCredential userCredential =
-              await FirebaseAuth.instance.signInWithCredential(credential);
-
+          final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
           // Get authenticated user
-          final User? user = userCredential.user;
+          final user = userCredential.user;
 
           if (user != null) {
             // Check if the user document already exists in Firestore
-            final DocumentSnapshot userSnapshot =
-                await firestore.collection("users").doc(user.uid).get();
-
+            final doc = await firestore.collection("users").doc(user.uid).get();
             // Capture user data and save to FirebaseFirestore
-            if (userSnapshot.exists) {
-              users = Users.fromDocument(userSnapshot);
+            if (doc.exists) {
+              users = Users.fromDocument(doc);
               await users?.updateUserData();
             } else {
               users = Users(
@@ -301,8 +322,8 @@ class UserManager extends ChangeNotifier {
             }
 
             if (context != null) {
-              final favoritesManager = Provider.of<FavoritesManager>(context, listen: false);
-              favoritesManager.updateUser(users?.id);
+              final favManager = Provider.of<FavoritesManager>(context, listen: false);
+              favManager.updateUser(users?.id);
             }
 
             loadingFace = false;
@@ -325,6 +346,7 @@ class UserManager extends ChangeNotifier {
       onFail!(getErrorString(error.code));
       loadingFace = false;
     }
+
     PerformanceMonitoring().stopTrace('login-facebook');
   }
 
@@ -339,39 +361,33 @@ class UserManager extends ChangeNotifier {
       loadingGoogle = true;
 
       if (kIsWeb) {
-        final GoogleAuthProvider googleProvider = GoogleAuthProvider();
-        googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-        googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
+        final provider = GoogleAuthProvider();
+        provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+        provider.setCustomParameters({'login_hint': 'user@example.com'});
 
-        await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+        await FirebaseAuth.instance.signInWithRedirect(provider);
         return;
       }
 
       // Initializes GoogleSignIn (new v7+ format)
       await GoogleSignIn.instance.initialize();
-
-      // User Login
-      final GoogleSignInAccount googleUser = await GoogleSignIn.instance.authenticate();
-
       // Get authentication
-      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
-
+      final googleUser = await GoogleSignIn.instance.authenticate();
+      final googleAuth = googleUser.authentication;
       // Create credential for Firebase
-      final OAuthCredential credential = GoogleAuthProvider.credential(
+      final credential = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken,
         accessToken: googleAuth.idToken,
       );
 
       // Login to Firebase
-      final UserCredential userCredential = await _auth.signInWithCredential(credential);
-      final User? user = userCredential.user;
+      final userCredential = await _auth.signInWithCredential(credential);
+      final user = userCredential.user;
 
       if (user != null) {
-        final DocumentSnapshot userSnapshot =
-            await firestore.collection("users").doc(user.uid).get();
-
-        if (userSnapshot.exists) {
-          users = Users.fromDocument(userSnapshot);
+        final doc = await firestore.collection("users").doc(user.uid).get();
+        if (doc.exists) {
+          users = Users.fromDocument(doc);
           await users?.updateUserData();
         } else {
           users = Users(
@@ -387,8 +403,8 @@ class UserManager extends ChangeNotifier {
         }
 
         if (context != null) {
-          final favoritesManager = Provider.of<FavoritesManager>(context, listen: false);
-          favoritesManager.updateUser(users?.id);
+          final favManager = Provider.of<FavoritesManager>(context, listen: false);
+          favManager.updateUser(users?.id);
         }
 
         onSuccess?.call();
@@ -406,6 +422,23 @@ class UserManager extends ChangeNotifier {
     }
 
     PerformanceMonitoring().stopTrace('login-google');
+  }
+
+  Future<void> _updateMonthlyNewUsers() async {
+    if (!_newUserAccount || users == null) return;
+
+    final now = DateTime.now();
+    final monthKey = "${now.year}-${now.month.toString().padLeft(2, '0')}";
+    final docRef = firestore.collection('aux').doc('NewUsers').collection('monthly').doc(monthKey);
+
+    final doc = await docRef.get();
+    if (doc.exists) {
+      await docRef.update({'count': FieldValue.increment(1)});
+    } else {
+      await docRef.set({'count': 1});
+    }
+    // Marks that the user has already been counted
+    _newUserAccount = false;
   }
 //TODO: Criação de método para capturar cookies e dados do Analytics
 /* Future<void> _loadUserVisitor ({User? user}) async {

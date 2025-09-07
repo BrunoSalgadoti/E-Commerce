@@ -2,6 +2,7 @@ import 'package:brn_ecommerce/common/buttons/custom_button.dart';
 import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/common/buttons/custom_text_button_styles.dart';
 import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
+import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
@@ -87,9 +88,8 @@ class LoginScreen extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: MaterialButton(
-                      onPressed: () {
-                        //TODO: Recuperar senha
-                      },
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed(RoutesNavigator.recoverPasswordScreen),
                       padding: EdgeInsets.zero,
                       child: const Text('Esqueci minha Senha!'),
                     ),
@@ -97,9 +97,8 @@ class LoginScreen extends StatelessWidget {
                   Align(
                     alignment: Alignment.center,
                     child: MaterialButton(
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(context, RoutesNavigator.signupScreen);
-                      },
+                      onPressed: () =>
+                          Navigator.pushReplacementNamed(context, RoutesNavigator.signupScreen),
                       child: Text(
                         'Não tem conta? Cadastre-se!',
                         style: TextStyle(
@@ -118,17 +117,18 @@ class LoginScreen extends StatelessWidget {
                         : () {
                             if (formKey.currentState!.validate()) {
                               userManager.signInWithEmailAndPassword(
-                                  users: Users(
-                                    email: emailController.text,
-                                    password: passwordController.text,
-                                  ),
-                                  onFail: (error) {
-                                    CustomScaffoldMessenger(context: context, message: error)
-                                        .alertScaffold();
-                                  },
-                                  onSuccess: () {
-                                    Navigator.of(context).pop();
-                                  });
+                                users: Users(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                ),
+                                onFail: (error) {
+                                  CustomScaffoldMessenger(context: context, message: error)
+                                      .alertScaffold();
+                                },
+                                onSuccess: () {
+                                  Navigator.of(context).pop();
+                                },
+                              );
                             }
                           },
                   ),
@@ -173,7 +173,7 @@ class LoginScreen extends StatelessWidget {
                           child: loadingToButton
                               ? null
                               : CustomTextButton(
-                                  imageAssetsTarget: "assets/icons/googleLogo.svg",
+                                  imageAssetsTarget: RootAssets.iconGoogleLogo,
                                   text: '  Entrar com Google',
                                   isSvg: true,
                                   imageHeight: 20,

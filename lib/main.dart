@@ -5,6 +5,7 @@ import 'package:brn_ecommerce/services/config/debug_mode_and_first_start.dart';
 import 'package:brn_ecommerce/services/config/firebase_automated_maps_update.dart';
 import 'package:brn_ecommerce/services/db_api/firebase_options.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:dynamic_path_url_strategy/dynamic_path_url_strategy.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
@@ -45,9 +46,7 @@ Future<void> main() async {
     }
   }
 
-  /// configure routing based on "history-based routing"
-  /// TODO: Em fase de teste e nova implementação
-  // setPathUrlStrategy();
+  setPathUrlStrategy(); // this allows access to /#/reset-password
 
   /// Package configuration: Device Preview
   /// "Multiple Emulators in a single Emulator, Ios, Mac, Windows, Android, Linux"
