@@ -48,7 +48,7 @@
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true />
 
-		<!-- 🔹 Permissões -->
+		<!-- 🔹 Permissions -->
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>Necessário acesso a galeria para buscar/salvar imagem</string>
 		<key>NSCameraUsageDescription</key>
@@ -56,7 +56,7 @@
 		<key>NSMicrophoneUsageDescription</key>
 		<string>Necessário acesso a microfone para gravar áudio</string>
 
-		<!-- 🔹 Login com Facebook e Google -->
+		<!-- 🔹 Login with Facebook and Google -->
 		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>
@@ -84,7 +84,7 @@
 		<key>FacebookAdvertiserIDCollectionEnabled</key>
 		<string>TRUE</string>
 
-		<!-- Schemes que o app pode consultar -->
+		<!-- Schemes that the app can query -->
 		<key>LSApplicationQueriesSchemes</key>
 		<array>
 			<string>fbapi</string>
@@ -98,7 +98,7 @@
 			<string>waze</string>
 		</array>
 
-		<!-- 🔹 Deep Links e OAuth para Firebase -->
+		<!-- 🔹 Deep Links and OAuth for Firebase -->
 		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>
@@ -117,6 +117,14 @@
 		<array>
 			<string>applinks:brn-ecommerce.web.app</string>
 		</array>
+
+		<!-- 🔐 reCAPTCHA configured as environment variable -->
+		<key>RECAPTCHA_SITE_KEY</key>
+		<string>$(RECAPTCHA_KEY)</string>
+
+		<!-- Other utility values ​​-->
+		<key>DEBUG_WEB_TOKEN</key>
+		<string>$(DEBUG_WEB_TOKEN)</string>
 
 
 	</dict>

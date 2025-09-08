@@ -128,6 +128,31 @@
             </intent-filter>
         </activity>
 
+        <!-- ================================
+            Firebase / reCAPTCHA Settings
+            These values are injected by Gradle
+     ================================ -->
+
+        <meta-data
+            android:name="com.google.firebase.auth.RECAPTCHA_KEY"
+            android:value="${reCaptchaKey}" />
+
+        <meta-data
+            android:name="com.brn.debug.ANDROID_TOKEN"
+            android:value="${debugAndroidToken}" />
+
+        <meta-data
+            android:name="com.brn.debug.WEB_TOKEN"
+            android:value="${debugWebToken}" />
+
+        <meta-data
+            android:name="com.brn.fingerprints.DEBUG"
+            android:value="${fingerprintsDebug}" />
+
+        <meta-data
+            android:name="com.brn.fingerprints.RELEASE"
+            android:value="${fingerprintsRelease}" />
+
     </application>
 
 </manifest>

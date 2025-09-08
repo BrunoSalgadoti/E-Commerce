@@ -67,6 +67,17 @@ android {
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        //Read variables from gradle.properties (or CI)
+        def recaptchaKey = project.hasProperty('RECAPTCHA_KEY') ? RECAPTCHA_KEY : ""
+        def debugAndroidToken = project.hasProperty('DEBUG_ANDROID_TOKEN') ? DEBUG_ANDROID_TOKEN : ""
+        def debugWebToken = project.hasProperty('DEBUG_WEB_TOKEN') ? DEBUG_WEB_TOKEN : ""
+
+        manifestPlaceholders = [
+                reCaptchaKey     : recaptchaKey,
+                debugAndroidToken: debugAndroidToken,
+                debugWebToken    : debugWebToken
+        ]
     }
 
     buildTypes {
