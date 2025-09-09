@@ -74,10 +74,5 @@ app.*.map.json
 /.aiexclude
 /docs/
 
-# Android local gradle properties with secrets
-/gradle.properties
-/*.properties
-/android/local-*.properties
-
 # iOS config files with secrets (se for usar)
 ios/Config.xcconfig

@@ -118,14 +118,5 @@
 			<string>applinks:brn-ecommerce.web.app</string>
 		</array>
 
-		<!-- 🔐 reCAPTCHA configured as environment variable -->
-		<key>RECAPTCHA_SITE_KEY</key>
-		<string>$(RECAPTCHA_KEY)</string>
-
-		<!-- Other utility values ​​-->
-		<key>DEBUG_WEB_TOKEN</key>
-		<string>$(DEBUG_WEB_TOKEN)</string>
-
-
 	</dict>
 </plist>
