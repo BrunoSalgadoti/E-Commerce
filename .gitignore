@@ -73,6 +73,4 @@ app.*.map.json
 /lib/generated/assets.dart
 /.aiexclude
 /docs/
-
-# iOS config files with secrets (se for usar)
-ios/Config.xcconfig
+/web/.well-known/assetlinks.json
