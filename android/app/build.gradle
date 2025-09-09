@@ -60,24 +60,11 @@ android {
 
     defaultConfig {
         applicationId "br.com.brninfodev.brn_ecommerce"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion 27
-        targetSdkVersion 35
+        targetSdkVersion 36
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-
-        //Read variables from gradle.properties (or CI)
-        def recaptchaKey = project.hasProperty('RECAPTCHA_KEY') ? RECAPTCHA_KEY : ""
-        def debugAndroidToken = project.hasProperty('DEBUG_ANDROID_TOKEN') ? DEBUG_ANDROID_TOKEN : ""
-        def debugWebToken = project.hasProperty('DEBUG_WEB_TOKEN') ? DEBUG_WEB_TOKEN : ""
-
-        manifestPlaceholders = [
-                reCaptchaKey     : recaptchaKey,
-                debugAndroidToken: debugAndroidToken,
-                debugWebToken    : debugWebToken
-        ]
     }
 
     buildTypes {
