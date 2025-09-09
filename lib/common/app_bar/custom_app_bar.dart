@@ -39,10 +39,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final appBarContent = Center(
       child: Padding(
         padding: kIsWeb
-            ? EdgeInsets.only(top: 0)
-            : removePadding == null
-                ? MediaQuery.of(context).padding
-                : EdgeInsets.zero,
+            ? EdgeInsets.zero
+            : (removePadding == true
+            ? EdgeInsets.zero
+            : MediaQuery.of(context).padding),
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: wildBreakpoint),
           child: AppBar(
@@ -110,10 +110,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   /// Centralized TextStyle for AppBar titles
   TextStyle get _titleTextStyle => TextStyle(
-        color: titleColor ?? getCustomAppBarColorTitle(),
-        fontWeight: FontWeight.bold,
-        fontSize: 20,
-      );
+    color: titleColor ?? getCustomAppBarColorTitle(),
+    fontWeight: FontWeight.bold,
+    fontSize: 20,
+  );
 
   /// Builds dynamic title (regular or based on ProductManager search state)
   Widget _buildDynamicTitle(BuildContext context) {

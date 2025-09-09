@@ -131,31 +131,30 @@ class FlexibleProductCard extends StatelessWidget {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Align(
-                                  alignment: Alignment.center,
-                                  child: AutoSizeText(
-                                    overflow: TextOverflow.ellipsis,
-                                    maxFontSize: 17,
-                                    maxLines: 2,
-                                    minFontSize: 12,
-                                    product?.name ?? '',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold,
-                                        color: textColor),
-                                  )),
-                              //TODO: Implementar MarkdownText
+                                alignment: Alignment.center,
+                                child: AutoSizeText(
+                                  overflow: TextOverflow.ellipsis,
+                                  maxFontSize: 17,
+                                  maxLines: 2,
+                                  minFontSize: 12,
+                                  product?.name ?? '',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 17, fontWeight: FontWeight.bold, color: textColor),
+                                ),
+                              ),
                               Align(
-                                  alignment: Alignment.center,
-                                  child: AutoSizeText(
-                                    overflow: TextOverflow.ellipsis,
-                                    maxFontSize: 17,
-                                    maxLines: 3,
-                                    minFontSize: 10,
-                                    product?.description ?? '',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(fontSize: 15, color: textColor),
-                                  )),
+                                alignment: Alignment.center,
+                                child: AutoSizeText(
+                                  overflow: TextOverflow.ellipsis,
+                                  maxFontSize: 17,
+                                  maxLines: 3,
+                                  minFontSize: 10,
+                                  product?.description ?? '',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 15, color: textColor),
+                                ),
+                              ),
                               Align(
                                 alignment: Alignment.center,
                                 child: AutoSizeText(
@@ -200,9 +199,7 @@ class FlexibleProductCard extends StatelessWidget {
                           flex: 1,
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            child: ListView(
                               children: [
                                 // Product name + favorite
                                 Row(
