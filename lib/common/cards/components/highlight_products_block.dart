@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:flutter/material.dart';
@@ -163,6 +164,8 @@ class _HighlightProductCardAnimatedState
 
   @override
   Widget build(BuildContext context) {
+    final basePrice = widget.product.basePrice;
+    
     return Card(
       color: Colors.white,
       elevation: 4,
@@ -211,9 +214,12 @@ class _HighlightProductCardAnimatedState
           // Price
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'R\$ ${widget.product.basePrice.toStringAsFixed(2)}',
-              style: const TextStyle(color: Colors.orange, fontSize: 14),
+            child: Center(
+              child: Text(
+                'A partir: '
+                    '${formattedRealText(basePrice)}',
+                style: const TextStyle(color: Colors.redAccent, fontSize: 14),
+              ),
             ),
           ),
         ],
