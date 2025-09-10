@@ -64,6 +64,13 @@ class ProductManager extends ChangeNotifier {
   /// Returns the state of the selected product.
   StatusOfProducts? get selectedStatus => status;
 
+  /// Returns only products marked as featured
+  List<Product> get highlightedProducts {
+    return allProducts
+        .where((p) => (p.highlight ?? false) && !p.deleted && p.isValid == true && p.hasStock)
+        .toList();
+  }
+
   /// Sets the search query and notifies listeners.
   set search(String value) {
     _search = value;
@@ -147,6 +154,7 @@ class ProductManager extends ChangeNotifier {
             product.data().containsKey("images") &&
             product.data().containsKey("categoryOfProduct") &&
             product.data().containsKey("insertionDate") &&
+            product.data().containsKey("highlight") &&
             product.data().containsKey("details")) {
           allProducts.add(Product.fromDocument(product));
         }

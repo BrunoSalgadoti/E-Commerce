@@ -32,9 +32,11 @@ class Product extends ChangeNotifier {
   bool advertising = false;
   bool _loading = false;
   bool? isValid;
+  bool? highlight;
   List<String>? images;
   List<dynamic>? newImages;
   Timestamp? insertionDate;
+
 
   /// If you need to use only one detail (selected variation, for example)
   DetailsProducts? details;
@@ -62,6 +64,7 @@ class Product extends ChangeNotifier {
     this.freight,
     this.categoryOfProduct = "",
     this.insertionDate,
+    this.highlight = false,
   }) {
     images = images ?? [];
     itemProducts = itemProducts ?? [];
@@ -85,6 +88,7 @@ class Product extends ChangeNotifier {
     deleted = (document["deleted"] ?? false) as bool;
     advertising = (document["advertising"] ?? false) as bool;
     isValid = (document["isvalid"] ?? true) as bool;
+    highlight = (document["highlight"] ?? false) as bool;
     brand = document["brand"] as String? ?? "";
     freight = document["freight"] as bool;
     insertionDate = (document["insertionDate"] ?? Timestamp.now()) as Timestamp;
@@ -111,6 +115,7 @@ class Product extends ChangeNotifier {
       "deleted": deleted,
       "advertising": advertising,
       "isvalid": isValid,
+      "highlight" : highlight,
       "categoryOfProduct": categoryOfProduct,
       "insertionDate": Timestamp.now(),
     };
@@ -357,6 +362,8 @@ class Product extends ChangeNotifier {
       deleted: deleted,
       advertising: advertising,
       isValid: isValid,
+      highlight: highlight,
+      insertionDate: Timestamp.now(),
       categoryOfProduct: categoryOfProduct,
     );
   }

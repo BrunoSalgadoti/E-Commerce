@@ -1,9 +1,12 @@
 import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
 import 'package:brn_ecommerce/common/advertising/footer.dart';
 import 'package:brn_ecommerce/common/app_bar/complement_app_bar.dart';
+import 'package:brn_ecommerce/common/cards/components/highlight_products_block.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
+import 'package:brn_ecommerce/models/products/product.dart';
+import 'package:brn_ecommerce/models/products/product_manager.dart';
 import 'package:brn_ecommerce/models/sections_home/home_manager.dart';
 import 'package:brn_ecommerce/views/home/components/add_section_widget.dart' show AddSectionWidget;
 import 'package:brn_ecommerce/views/home/components/content_home_app_bar.dart';
@@ -82,6 +85,29 @@ class HomeScreen extends StatelessWidget {
 
                       final List<Widget> bodyHome = [
                         const AdvertisingWidget(),
+
+                        // --- FEATURED PRODUCTS BLOCK ---
+                        Consumer<ProductManager>(
+                          builder: (_, productManager, __) {
+                            final List<Product> featuredProducts =
+                                productManager.highlightedProducts;
+                            if (featuredProducts.isEmpty) return const SizedBox.shrink();
+
+                            // Pass isSilver = true because the HomeScreen is Silver
+                            return Center(
+                              child: Padding(
+                                  padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
+                                  child: ConstrainedBox(
+                                    constraints: BoxConstraints(maxWidth: tabletBreakpoint),
+                                    child: HighlightProductsBlock(
+                                      products: featuredProducts,
+                                      isSilver: true,
+                                    ),
+                                  ),),
+                            );
+                          },
+                        ),
+
                         ConstrainedBox(
                           constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
                           child: Column(children: [...children]),
@@ -93,7 +119,9 @@ class HomeScreen extends StatelessWidget {
                           : SliverList(delegate: SliverChildListDelegate(bodyHome));
                     },
                   ),
-                  CustomFooter(isSilver: true,)
+                  CustomFooter(
+                    isSilver: true,
+                  )
                 ],
               ),
             ],

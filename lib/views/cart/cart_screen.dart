@@ -1,4 +1,5 @@
 import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
+import 'package:brn_ecommerce/common/advertising/footer.dart';
 import 'package:brn_ecommerce/common/advertising/info_marquee_widget.dart';
 import 'package:brn_ecommerce/common/advertising/purchase_suggestions_widget.dart';
 import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
@@ -234,6 +235,7 @@ class CartScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 16),
+                          CustomFooter()
                         ],
                       ),
                     );

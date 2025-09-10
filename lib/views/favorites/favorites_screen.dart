@@ -45,46 +45,55 @@ class FavoritesScreen extends StatelessWidget {
         ],
       ),
       drawer: const CustomDrawer(),
-      body: favoritos.isEmpty
-          ? const Center(
-              child: Text("Você ainda não tem favoritos."),
-            )
-          : ListView.separated(
-              padding: const EdgeInsets.all(16),
-              itemCount: favoritos.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 16),
-              itemBuilder: (context, index) {
-                final produto = favoritos[index];
-                return Card(
-                  child: ListTile(
-                    leading: produto.images?.first != null
-                        ? Image.network(produto.images!.first, width: 50, height: 50)
-                        : const SizedBox(width: 50, height: 50),
-                    title: Text(produto.name ?? 'Sem nome'),
-                    subtitle: Text(
-                      "R\$ ${produto.details?.price?.toStringAsFixed(2) ?? '----'}",
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            favoritos.isEmpty
+                ? const Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 100),
+                      child: Text("Você ainda não tem favoritos."),
                     ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.playlist_add),
-                          onPressed: () {
-                            //TODO:  adicionar a lista de presentes
-                          },
+                  )
+                : ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(), // importante!
+                    shrinkWrap: true, // permite que o ListView fique dentro da coluna
+                    padding: const EdgeInsets.all(16),
+                    itemCount: favoritos.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 16),
+                    itemBuilder: (context, index) {
+                      final produto = favoritos[index];
+                      return Card(
+                        child: ListTile(
+                          leading: produto.images?.first != null
+                              ? Image.network(produto.images!.first, width: 50, height: 50)
+                              : const SizedBox(width: 50, height: 50),
+                          title: Text(produto.name ?? 'Sem nome'),
+                          subtitle: Text(
+                            "R\$ ${produto.details?.price?.toStringAsFixed(2) ?? '----'}",
+                          ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.playlist_add),
+                                onPressed: () {},
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () {
+                                  favoritesManager.removeFavorite(produto);
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () {
-                            favoritesManager.removeFavorite(produto);
-                          },
-                        ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
+          ],
+        ),
+      ),
     );
   }
 }
