@@ -31,7 +31,7 @@ class SectionList extends StatelessWidget {
               children: [
                 SectionHeader(section: section),
                 SizedBox(
-                    height: constraints.maxWidth <= mobileBreakpoint ? 160 : 280,
+                    height: constraints.maxWidth <= mobileBreakpoint ? 160 : 220,
                     child: Consumer<Section>(
                       builder: (_, section, __) {
                         return Scrollbar(
