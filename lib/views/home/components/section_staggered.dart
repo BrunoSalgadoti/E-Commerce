@@ -48,7 +48,7 @@ class SectionStaggered extends StatelessWidget {
                             }
                           },
                           staggeredTileBuilder: (index) => constraints.maxWidth > mobileBreakpoint
-                              ? StaggeredTile.count(1, index.isEven ? 1.1 :1.1)
+                              ? StaggeredTile.count(1, index.isEven ? 1.1 : 1.1)
                               : StaggeredTile.count(2, index.isEven ? 1.4 : 2.8),
                           mainAxisSpacing: 4,
                           crossAxisSpacing: 4,

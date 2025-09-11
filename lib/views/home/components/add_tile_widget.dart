@@ -92,10 +92,10 @@ class AddTileWidget extends StatelessWidget {
           }
         },
         child: Container(
-          color: Colors.white.withAlpha(30),
+          color: Colors.black.withAlpha(30),
           child: const Icon(
             Icons.add,
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
       ),

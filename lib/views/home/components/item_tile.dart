@@ -112,11 +112,11 @@ class ItemTile extends StatelessWidget {
                 ? FadeInImage.memoryNetwork(
                     placeholder: kTransparentImage,
                     image: item!.image as String,
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                   )
                 : Image.file(
                     item!.image as File,
-                    fit: BoxFit.fill,
-                  )));
+                    fit: BoxFit.cover,
+                  ),),);
   }
 }
