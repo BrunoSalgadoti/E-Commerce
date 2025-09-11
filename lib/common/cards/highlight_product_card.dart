@@ -1,18 +1,22 @@
 import 'dart:async';
-import 'package:brn_ecommerce/common/cards/components/animated_highlight_title.dart' show AnimatedHighlightTitle;
+import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
+import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:flutter/material.dart';
+import 'package:brn_ecommerce/common/cards/components/animated_highlight_title.dart';
 
 class HighlightProductCard extends StatefulWidget {
-  final List<String> images;
-  final String name;
-  final double price;
+  final Product? product;
+  final List<String>? images;
+  final String? name;
+  final double? price;
   final VoidCallback? onTap;
 
   const HighlightProductCard({
     super.key,
-    required this.images,
-    required this.name,
-    required this.price,
+    this.product,
+    this.images,
+    this.name,
+    this.price,
     this.onTap,
   });
 
@@ -22,17 +26,37 @@ class HighlightProductCard extends StatefulWidget {
 
 class _HighlightProductCardState extends State<HighlightProductCard> {
   late PageController _pageController;
-  late Timer _timer;
+  Timer? _timer;
   int _currentPage = 0;
+
+  List<String> get _images {
+    if (widget.product != null) return widget.product!.images ?? [];
+    return widget.images ?? [];
+  }
+
+  String get _name {
+    if (widget.product != null) return widget.product!.name ?? "";
+    return widget.name ?? "";
+  }
+
+  String get _priceText {
+    if (widget.product != null) {
+      return 'A partir: ${formattedRealText(widget.product!.basePrice)}';
+    }
+    if (widget.price != null) {
+      return 'R\$ ${widget.price!.toStringAsFixed(2)}';
+    }
+    return '';
+  }
 
   @override
   void initState() {
     super.initState();
-
     _pageController = PageController();
-    if (widget.images.length > 1) {
+
+    if (_images.length > 1) {
       _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
-        if (_currentPage < widget.images.length - 1 && _currentPage < 2) {
+        if (_currentPage < (_images.length > 3 ? 2 : _images.length - 1)) {
           _currentPage++;
         } else {
           _currentPage = 0;
@@ -48,9 +72,7 @@ class _HighlightProductCardState extends State<HighlightProductCard> {
 
   @override
   void dispose() {
-    if (widget.images.length > 1) {
-      _timer.cancel();
-    }
+    _timer?.cancel();
     _pageController.dispose();
     super.dispose();
   }
@@ -82,7 +104,7 @@ class _HighlightProductCardState extends State<HighlightProductCard> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  widget.name,
+                  _name,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -94,19 +116,19 @@ class _HighlightProductCardState extends State<HighlightProductCard> {
 
               // Product images carousel
               ClipRRect(
-                borderRadius:
-                const BorderRadius.vertical(bottom: Radius.circular(12)),
+                borderRadius: const BorderRadius.vertical(
+                  bottom: Radius.circular(12),
+                ),
                 child: SizedBox(
                   height: 160 * 1.07,
                   width: double.infinity,
                   child: PageView.builder(
                     controller: _pageController,
-                    itemCount:
-                    widget.images.length > 3 ? 3 : widget.images.length,
+                    itemCount: _images.length > 3 ? 3 : _images.length,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Image.network(
-                        widget.images[index],
+                        _images[index],
                         fit: BoxFit.fitHeight,
                       );
                     },
@@ -117,11 +139,13 @@ class _HighlightProductCardState extends State<HighlightProductCard> {
               // Price
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'R\$ ${widget.price.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    color: Colors.orange,
-                    fontSize: 14,
+                child: Center(
+                  child: Text(
+                    _priceText,
+                    style: const TextStyle(
+                      color: Colors.redAccent,
+                      fontSize: 14,
+                    ),
                   ),
                 ),
               ),
