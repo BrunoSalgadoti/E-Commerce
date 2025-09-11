@@ -1,3 +1,4 @@
+import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
@@ -222,8 +223,7 @@ class _PurchaseSuggestionsWidgetState extends State<PurchaseSuggestionsWidget> {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                "A partir de: R\$ "
-                                    "${product.details?.price?.toStringAsFixed(2) ?? '--'}",
+                                'A partir: ${formattedRealText(product.basePrice)}',
                                 style: const TextStyle(
                                   fontSize: 12,
                                   color: Colors.greenAccent,

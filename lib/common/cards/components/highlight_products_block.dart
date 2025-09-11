@@ -1,4 +1,5 @@
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:flutter/material.dart';
 import 'package:brn_ecommerce/common/cards/highlight_product_card.dart';
@@ -35,14 +36,13 @@ class _HighlightProductsBlockState extends State<HighlightProductsBlock> {
         double spacing = constraints.maxWidth < mobileBreakpoint
             ? 10
             : constraints.maxWidth < staggeredBreakpoint
-            ? 20
-            : constraints.maxWidth < tabletBreakpoint
-            ? 24
-            : 30;
+                ? 20
+                : constraints.maxWidth < tabletBreakpoint
+                    ? 24
+                    : 30;
 
         int visibleCards = (constraints.maxWidth / 180).floor();
-        double cardWidth =
-            (constraints.maxWidth - spacing * (visibleCards + 1)) / visibleCards;
+        double cardWidth = (constraints.maxWidth - spacing * (visibleCards + 1)) / visibleCards;
 
         return SizedBox(
           height: 320,
@@ -56,7 +56,14 @@ class _HighlightProductsBlockState extends State<HighlightProductsBlock> {
                 separatorBuilder: (_, __) => SizedBox(width: spacing),
                 itemBuilder: (context, index) {
                   final product = widget.products[index];
-                  return HighlightProductCard(product: product);
+                  return HighlightProductCard(
+                    product: product,
+                    onTap: () => Navigator.pushNamed(
+                      context,
+                      RoutesNavigator.productDetailsScreen,
+                      arguments: product,
+                    ),
+                  );
                 },
               ),
 

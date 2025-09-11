@@ -9,7 +9,7 @@ class HighlightProductCard extends StatefulWidget {
   final List<String>? images;
   final String? name;
   final double? price;
-  final VoidCallback? onTap;
+  final VoidCallback onTap;
 
   const HighlightProductCard({
     super.key,
@@ -17,7 +17,7 @@ class HighlightProductCard extends StatefulWidget {
     this.images,
     this.name,
     this.price,
-    this.onTap,
+    required this.onTap,
   });
 
   @override

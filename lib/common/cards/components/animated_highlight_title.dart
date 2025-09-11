@@ -51,12 +51,13 @@ class _AnimatedHighlightTitleState extends State<AnimatedHighlightTitle>
       child: ScaleTransition(
         scale: _scaleAnimation,
         child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
-            child: Center(
-              child: textForGoogleDecorations(
-                titleForDecorations: widget.title,
-              ),
-            )),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+          child: Center(
+            child: textForGoogleDecorations(
+              titleForDecorations: widget.title,
+            ),
+          ),
+        ),
       ),
     );
   }
