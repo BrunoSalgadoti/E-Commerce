@@ -1,7 +1,7 @@
-import 'package:brn_ecommerce/models/users/users_manager.dart';
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
+import 'package:brn_ecommerce/models/users/users_manager.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class FavoritesManager extends ChangeNotifier {
   final UserManager userManager;

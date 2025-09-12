@@ -15,15 +15,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-Widget logicPriceCard(
-    {required BuildContext context}) {
- return  Consumer4<CartManager, PolicyAndDocuments, VersionManager, UserManager>(
+Widget logicPriceCard({required BuildContext context}) {
+  return Consumer4<CartManager, PolicyAndDocuments, VersionManager, UserManager>(
     builder: (_, cartManager, policyAndDocuments, versionManager, userManager, __) {
       // Functions to remove context from async methods
       goToScreen() => Navigator.popAndPushNamed(context, RoutesNavigator.checkoutScreen);
       backScreen() => Navigator.of(context).pop();
       alertPolicyAndTerms() => CustomScaffoldMessenger(
-          context: context, message: AlertsMessengersText.policyAndTermsConfirmation)
+              context: context, message: AlertsMessengersText.policyAndTermsConfirmation)
           .alertScaffold();
 
       void checkPolicyAndTerms() {
@@ -113,11 +112,11 @@ Widget logicPriceCard(
         buttonText: 'Prosseguir para pagamento',
         onPressed: cartManager.isAddressValid
             ? () async {
-          userManager.loading = true;
-          await versionManager.checkVersion();
-          checkAndHandleVersion();
-          userManager.loading = false;
-        }
+                userManager.loading = true;
+                await versionManager.checkVersion();
+                checkAndHandleVersion();
+                userManager.loading = false;
+              }
             : null,
         showIcon: true,
       );

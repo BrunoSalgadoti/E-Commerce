@@ -39,8 +39,10 @@ class CartManager extends ChangeNotifier {
   // Getters and Setters
   /// Returns the total price of all products in the cart including delivery charges, if applicable.
   num get totalPrice => productsPrice + (deliveryPrice ?? 0);
+
   /// Indicates if the cart is currently loading data.
   bool get loading => _loading;
+
   /// Checks if the user's address is valid and delivery price is available.
   bool get isAddressValid => address != null && deliveryPrice != null;
 
@@ -51,7 +53,7 @@ class CartManager extends ChangeNotifier {
     }
     return true;
   }
-  
+
   /// Checks if the cart has any product eligible for free shipping.
   bool get hasFreeShippingProduct {
     return items.any((product) => product.freight == true);
@@ -65,7 +67,7 @@ class CartManager extends ChangeNotifier {
     }
     return quantity;
   }
-  
+
   /// Sets the loading state of the cart.
   set loading(bool value) {
     _loading = value;
@@ -102,9 +104,8 @@ class CartManager extends ChangeNotifier {
 
     final QuerySnapshot cartSnap = await users!.cartReference.get();
 
-    items = cartSnap.docs
-        .map((d) => CartProduct.fromDocument(d)..addListener(_onItemUpdate))
-        .toList();
+    items =
+        cartSnap.docs.map((d) => CartProduct.fromDocument(d)..addListener(_onItemUpdate)).toList();
     notifyListeners();
   }
 
@@ -123,7 +124,7 @@ class CartManager extends ChangeNotifier {
     if (kDebugMode) {
       MonitoringLogger().logInfo('Info message: Add to Cart');
     }
-    
+
     try {
       final sameEntity = items.firstWhere((p) => p.stackableSize(product));
       sameEntity.increment();
@@ -278,9 +279,8 @@ class CartManager extends ChangeNotifier {
 
       if (distanceClient > maximumDeliveryDistance) return false;
 
-      deliveryPrice = hasFreeShippingProduct
-          ? basePriceDelivery + distanceClient * kmForDelivery
-          : 0;
+      deliveryPrice =
+          hasFreeShippingProduct ? basePriceDelivery + distanceClient * kmForDelivery : 0;
       notifyListeners();
       return true;
     } catch (error) {
@@ -294,6 +294,5 @@ class CartManager extends ChangeNotifier {
       deliveryPrice = null;
       notifyListeners();
     });
-
   }
 }

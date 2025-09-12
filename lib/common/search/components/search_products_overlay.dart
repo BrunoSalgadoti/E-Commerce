@@ -5,15 +5,15 @@ import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:flutter/material.dart';
 
-OverlayEntry? _currentOverlayEntry; // referência global do overlay
+OverlayEntry? _currentOverlayEntry; // global overlay reference
 
 void searchProductsOverlay({
   required BuildContext context,
   required List<Product> products,
   required String query,
-  required VoidCallback clearSearch, // limpa o campo de busca
+  required VoidCallback clearSearch, // clears the search field
 }) {
-  // Remove overlay anterior se existir
+  // Remove previous overlay if exists
   _currentOverlayEntry?.remove();
   _currentOverlayEntry = null;
 
@@ -24,8 +24,8 @@ void searchProductsOverlay({
   late OverlayEntry overlayEntry;
 
   void closeOverlay(VoidCallback? clearSearch, OverlayEntry overlayEntry) {
-    overlayEntry.remove(); // fecha overlay
-    clearSearch?.call(); // limpa campo
+    overlayEntry.remove(); // closes overlay
+    clearSearch?.call(); // clean field
     _currentOverlayEntry = null;
   }
 
@@ -87,7 +87,7 @@ void searchProductsOverlay({
                 ),
               ),
 
-              // Botão X no canto superior direito
+              // X button in the upper right corner
               Positioned(
                 top: 8,
                 right: 8,
@@ -113,5 +113,5 @@ void searchProductsOverlay({
   );
 
   overlay.insert(overlayEntry);
-  _currentOverlayEntry = overlayEntry; // atualiza referência global
+  _currentOverlayEntry = overlayEntry; // updates global reference
 }

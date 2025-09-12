@@ -1,7 +1,7 @@
 import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
 import 'package:brn_ecommerce/common/advertising/footer.dart';
+import 'package:brn_ecommerce/common/advertising/highlight_products_block.dart';
 import 'package:brn_ecommerce/common/app_bar/complement_app_bar.dart';
-import 'package:brn_ecommerce/common/cards/components/highlight_products_block.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
@@ -96,14 +96,15 @@ class HomeScreen extends StatelessWidget {
                             // Pass isSilver = true because the HomeScreen is Silver
                             return Center(
                               child: Padding(
-                                  padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
-                                  child: ConstrainedBox(
-                                    constraints: BoxConstraints(maxWidth: tabletBreakpoint),
-                                    child: HighlightProductsBlock(
-                                      products: featuredProducts,
-                                      isSilver: true,
-                                    ),
-                                  ),),
+                                padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(maxWidth: tabletBreakpoint),
+                                  child: HighlightProductsBlock(
+                                    products: featuredProducts,
+                                    isSilver: true,
+                                  ),
+                                ),
+                              ),
                             );
                           },
                         ),

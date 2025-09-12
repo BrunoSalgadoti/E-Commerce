@@ -1,8 +1,8 @@
 import 'package:brn_ecommerce/helpers/route_generator.dart';
 import 'package:brn_ecommerce/helpers/themes/get_theme_data.dart';
 import 'package:brn_ecommerce/views/login_sing_up_screens/components/app_link_handler.dart';
-import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'models/users/users_manager.dart';

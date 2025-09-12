@@ -1,10 +1,10 @@
 import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:brn_ecommerce/models/users/users_manager.dart';
-import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
 import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
+import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
+import 'package:brn_ecommerce/models/users/users_manager.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RecoverPasswordScreen extends StatefulWidget {
   const RecoverPasswordScreen({super.key});
@@ -60,32 +60,32 @@ class _RecoverPasswordScreenState extends State<RecoverPasswordScreen> {
                 onPressed: loading
                     ? null
                     : () async {
-                  if (!_formKey.currentState!.validate()) return;
-                  setState(() => loading = true);
+                        if (!_formKey.currentState!.validate()) return;
+                        setState(() => loading = true);
 
-                  await userManager.sendPasswordResetEmailRequest(
-                    email: emailController.text.trim(),
-                    onSuccess: () {
-                      CustomScaffoldMessenger(
-                        context: context,
-                        message: 'E-mail enviado! Verifique caixa de entrada ou spam.',
-                        backgroundColor: Colors.green,
-                        iconColor: Colors.white,
-                      ).alertScaffold();
+                        await userManager.sendPasswordResetEmailRequest(
+                          email: emailController.text.trim(),
+                          onSuccess: () {
+                            CustomScaffoldMessenger(
+                              context: context,
+                              message: 'E-mail enviado! Verifique caixa de entrada ou spam.',
+                              backgroundColor: Colors.green,
+                              iconColor: Colors.white,
+                            ).alertScaffold();
 
-                      // Volta para a tela de login no app
-                      Navigator.of(context).pop();
-                    },
-                    onFail: (error) {
-                      CustomScaffoldMessenger(
-                        context: context,
-                        message: 'Erro: $error',
-                      ).alertScaffold();
-                    },
-                  );
+                            // Volta para a tela de login no app
+                            Navigator.of(context).pop();
+                          },
+                          onFail: (error) {
+                            CustomScaffoldMessenger(
+                              context: context,
+                              message: 'Erro: $error',
+                            ).alertScaffold();
+                          },
+                        );
 
-                  setState(() => loading = false);
-                },
+                        setState(() => loading = false);
+                      },
                 buttonColor: Colors.green,
                 textColor: Colors.white,
               ),

@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/models/products/components/purchase_model.dart';
+import 'package:brn_ecommerce/common/advertising/components/purchase_model.dart';
 import 'package:brn_ecommerce/models/products/product.dart' show Product;
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:brn_ecommerce/models/sales/order_client.dart';
@@ -142,9 +142,8 @@ class CheckoutManager extends ChangeNotifier {
           productsWithoutStock.add(product);
         } else {
           details.stock -= cartProduct.quantity!;
-          details.colorProducts
-              ?.firstWhere((color) => color.color == cartProduct.color)
-              .amount -= cartProduct.quantity!;
+          details.colorProducts?.firstWhere((color) => color.color == cartProduct.color).amount -=
+              cartProduct.quantity!;
           details.sellers += cartProduct.quantity!;
           productsToUpdate.add(product);
         }
@@ -169,8 +168,7 @@ class CheckoutManager extends ChangeNotifier {
   Future<void> _savePurchase() async {
     if (cartManager == null || cartManager!.items.isEmpty) return;
 
-    final productIds =
-    cartManager!.items.map((e) => e.productId).whereType<String>().toList();
+    final productIds = cartManager!.items.map((e) => e.productId).whereType<String>().toList();
 
     final purchase = PurchaseModel(
       userId: cartManager!.users!.id!,

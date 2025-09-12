@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../../helpers/themes/get_another_colors.dart' show getDrawerColorFirst, getDrawerColorSecond;
+import '../../helpers/themes/get_another_colors.dart'
+    show getDrawerColorFirst, getDrawerColorSecond;
 import '../../models/users/users_manager.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -64,15 +65,13 @@ class CustomDrawer extends StatelessWidget {
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                       ),
                       DrawerTitle(
-                        iconData: Icons.playlist_add_check,
-                        title: "Meus pedidos",
-                        page: DrawerPages.orders
-                      ),
+                          iconData: Icons.playlist_add_check,
+                          title: "Meus pedidos",
+                          page: DrawerPages.orders),
                       DrawerTitle(
-                        iconData: Icons.favorite,
-                        title: "Meus favoritos",
-                        page: DrawerPages.favorites
-                      ),
+                          iconData: Icons.favorite,
+                          title: "Meus favoritos",
+                          page: DrawerPages.favorites),
                       DrawerTitle(
                         iconData: FontAwesomeIcons.heartPulse,
                         title: "Meus de desejos",
@@ -85,10 +84,9 @@ class CustomDrawer extends StatelessWidget {
                         page: DrawerPages.stores,
                       ),
                       DrawerTitle(
-                        iconData: FontAwesomeIcons.peopleGroup,
-                        title: "Quem Somos?",
-                        page: DrawerPages.whoWeAre
-                      ),
+                          iconData: FontAwesomeIcons.peopleGroup,
+                          title: "Quem Somos?",
+                          page: DrawerPages.whoWeAre),
 
                       /// Área administrativa
                       Consumer<UserManager>(
@@ -103,20 +101,17 @@ class CustomDrawer extends StatelessWidget {
                                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                                 ),
                                 DrawerTitle(
-                                  iconData: Icons.supervised_user_circle,
-                                  title: 'Clientes',
-                                  page: DrawerPages.adminUsers
-                                ),
+                                    iconData: Icons.supervised_user_circle,
+                                    title: 'Clientes',
+                                    page: DrawerPages.adminUsers),
                                 DrawerTitle(
-                                  iconData: Icons.task_alt,
-                                  title: 'Pedidos',
-                                  page: DrawerPages.adminOrders
-                                ),
+                                    iconData: Icons.task_alt,
+                                    title: 'Pedidos',
+                                    page: DrawerPages.adminOrders),
                                 DrawerTitle(
-                                  iconData: Icons.list,
-                                  title: "Listar todos",
-                                  page: DrawerPages.products
-                                ),
+                                    iconData: Icons.list,
+                                    title: "Listar todos",
+                                    page: DrawerPages.products),
                                 const SettingsDrawer(),
                               ],
                             );

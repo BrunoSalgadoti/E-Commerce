@@ -37,7 +37,6 @@ class Product extends ChangeNotifier {
   List<dynamic>? newImages;
   Timestamp? insertionDate;
 
-
   /// If you need to use only one detail (selected variation, for example)
   DetailsProducts? details;
 
@@ -115,7 +114,7 @@ class Product extends ChangeNotifier {
       "deleted": deleted,
       "advertising": advertising,
       "isvalid": isValid,
-      "highlight" : highlight,
+      "highlight": highlight,
       "categoryOfProduct": categoryOfProduct,
       "insertionDate": Timestamp.now(),
     };

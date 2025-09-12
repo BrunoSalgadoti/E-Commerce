@@ -1,7 +1,7 @@
+import 'package:brn_ecommerce/common/advertising/recently_added_products.dart';
 import 'package:brn_ecommerce/common/app_bar/custom_bottom_navigator_bar.dart';
 import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/cards/flexible_product_card.dart';
-import 'package:brn_ecommerce/common/cards/recently_added_products.dart';
 import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';

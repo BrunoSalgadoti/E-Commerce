@@ -1,12 +1,12 @@
+import 'package:brn_ecommerce/common/advertising/components/products_recently_added.dart';
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
-import 'package:brn_ecommerce/models/favorites/favorites_manager.dart';
 import 'package:brn_ecommerce/models/admin_area/admin_orders_manager.dart';
 import 'package:brn_ecommerce/models/admin_area/admin_users_manager.dart';
 import 'package:brn_ecommerce/models/admin_area/admin_users_search.dart';
+import 'package:brn_ecommerce/models/favorites/favorites_manager.dart';
 import 'package:brn_ecommerce/models/policy_documents/policy_and_documents.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category_manager.dart';
-import 'package:brn_ecommerce/models/products/components/products_recently_added.dart';
 import 'package:brn_ecommerce/models/products/details_products.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';

@@ -15,7 +15,7 @@ class UtilsForCategory {
   // Load all products from the specific category
   List<Product> loadCategoryProducts() {
     List<Product> allCategoryProducts = productManager.filteredProducts
-    //TODO: Implementar uma função categoryHasProduct
+        //TODO: Implementar uma função categoryHasProduct
         .where((p) => p.categoryOfProduct == productCategory.categoryID)
         .toList();
 

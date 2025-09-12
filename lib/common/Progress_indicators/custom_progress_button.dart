@@ -26,8 +26,7 @@ class _CustomProgressButtonState extends State<CustomProgressButton>
       duration: const Duration(seconds: 2),
       vsync: this,
     )..repeat(); // fica em loop até você parar
-    _progressAnimation =
-        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
+    _progressAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
   }
 
   @override

@@ -1,8 +1,8 @@
+import 'package:brn_ecommerce/common/advertising/components/purchase_model.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
-import 'package:brn_ecommerce/models/products/components/purchase_model.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
 import 'package:brn_ecommerce/models/users/users_manager.dart';
@@ -29,13 +29,8 @@ class _PurchaseSuggestionsWidgetState extends State<PurchaseSuggestionsWidget> {
   }
 
   Future<void> _loadSuggestions() async {
-    final allProducts = context
-        .read<ProductManager>()
-        .allProducts;
-    final userId = context
-        .read<UserManager>()
-        .users
-        ?.id;
+    final allProducts = context.read<ProductManager>().allProducts;
+    final userId = context.read<UserManager>().users?.id;
 
     if (userId == null) {
       setState(() => loading = false);
@@ -59,7 +54,7 @@ class _PurchaseSuggestionsWidgetState extends State<PurchaseSuggestionsWidget> {
   List<Product> getCurrentPageProducts(int perPage) {
     final start = currentPage * perPage;
     final end =
-    (start + perPage) > suggestedProducts.length ? suggestedProducts.length : start + perPage;
+        (start + perPage) > suggestedProducts.length ? suggestedProducts.length : start + perPage;
     return suggestedProducts.sublist(start, end);
   }
 
@@ -80,10 +75,7 @@ class _PurchaseSuggestionsWidgetState extends State<PurchaseSuggestionsWidget> {
     if (loading) return const Center(child: CircularProgressIndicator());
     if (suggestedProducts.isEmpty) return const SizedBox.shrink();
 
-    final screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    final screenWidth = MediaQuery.of(context).size.width;
     int crossAxisCount;
     int perPage;
 
@@ -172,7 +164,7 @@ class _PurchaseSuggestionsWidgetState extends State<PurchaseSuggestionsWidget> {
                           product.images?.first ?? "",
                           fit: BoxFit.cover,
                           errorBuilder: (_, __, ___) =>
-                          const Icon(Icons.image_not_supported, size: 40),
+                              const Icon(Icons.image_not_supported, size: 40),
                         ),
                       ),
 

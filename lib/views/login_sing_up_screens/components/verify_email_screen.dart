@@ -2,7 +2,6 @@ import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
 class VerifyEmailScreen extends StatefulWidget {
   final String oobCode;
   const VerifyEmailScreen({super.key, required this.oobCode});

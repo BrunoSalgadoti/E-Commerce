@@ -58,21 +58,26 @@ Widget customBottomNavigatorBar({
                   case 0:
                     withDrawer
                         ? Navigator.of(context).pop()
-                        : navigateToPageWithDrawer(context: context, page: DrawerPages.categories,);
+                        : navigateToPageWithDrawer(
+                            context: context,
+                            page: DrawerPages.categories,
+                          );
                     break;
                   case 1:
                     Navigator.of(context).pushNamed(RoutesNavigator.cartScreen);
                     break;
                   case 2:
-                    withDrawer ?
-                    context.read<PageManager>().setPage(DrawerPages.favorites)
-                    : navigateToPageWithDrawer(context: context, page: DrawerPages.favorites,);
+                    withDrawer
+                        ? context.read<PageManager>().setPage(DrawerPages.favorites)
+                        : navigateToPageWithDrawer(
+                            context: context,
+                            page: DrawerPages.favorites,
+                          );
                     break;
                   case 3:
                     withDrawer
                         ? context.read<PageManager>().setPage(DrawerPages.home)
-
-                    : navigateToPageWithDrawer(context: context, page: DrawerPages.home);
+                        : navigateToPageWithDrawer(context: context, page: DrawerPages.home);
                     break;
                   case 4:
                     //TODO: Fazer rota

@@ -1,12 +1,13 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'package:audioplayers/audioplayers.dart';
-import 'package:brn_ecommerce/models/products/product_manager.dart';
-import 'package:brn_ecommerce/models/sections_home/home_manager.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
+import 'package:brn_ecommerce/models/products/product_manager.dart';
+import 'package:brn_ecommerce/models/sections_home/home_manager.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

@@ -48,6 +48,7 @@ mixin AlertsMessengersText {
   /// ## message Info-marquee in [SalesSuggestionsWidget]
   //
   /// ### [sales_confirmation_screen.dart]
-  static const String salesSuggestionMessage = 'Seu pedido foi realizado, agradecemos a preferência, '
+  static const String salesSuggestionMessage =
+      'Seu pedido foi realizado, agradecemos a preferência, '
       'acompanhe o status do seu pedidos em:\n';
 }

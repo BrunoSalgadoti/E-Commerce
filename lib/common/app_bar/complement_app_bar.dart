@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class ComplementAppBar extends StatelessWidget {
   final bool asSliver;
-  final EdgeInsets?  padding;
+  final EdgeInsets? padding;
 
   const ComplementAppBar({
     super.key,

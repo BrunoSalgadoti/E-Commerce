@@ -73,7 +73,7 @@ class CustomFooter extends StatelessWidget {
                 children: sections
                     .map((s) => SizedBox(
                           width: constraints.maxWidth / crossAxisCount - 32, // distributes width
-                  child: s,
+                          child: s,
                         ))
                     .toList(),
               )),

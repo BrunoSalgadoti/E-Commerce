@@ -45,7 +45,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget> {
         KeyboardActionsItem(
           focusNode: nameFocus,
           toolbarButtons: [
-                (_) {
+            (_) {
               return GestureDetector(
                 onTap: toggleCard,
                 child: const Padding(
@@ -71,8 +71,9 @@ class _CreditCardWidgetState extends State<CreditCardWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              ConstrainedBox(constraints: BoxConstraints(maxWidth: 450, minWidth: 350),
-              child: FlipCard(
+              ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 450, minWidth: 350),
+                child: FlipCard(
                   key: cardKey,
                   direction: FlipDirection.HORIZONTAL,
                   speed: 700,
@@ -83,10 +84,8 @@ class _CreditCardWidgetState extends State<CreditCardWidget> {
                     nameFocus: nameFocus,
                     finishedFront: toggleCard,
                   ),
-                back: CardBack(cvvFocus: cvvFocus),
-              ),
-
-
+                  back: CardBack(cvvFocus: cvvFocus),
+                ),
               ),
               const SizedBox(height: 5),
               CustomTextButton(

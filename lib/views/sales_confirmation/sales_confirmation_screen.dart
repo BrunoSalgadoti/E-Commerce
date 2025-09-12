@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart' show AutoSizeText;
+import 'package:brn_ecommerce/common/advertising/sales_suggestion_visited_products.dart';
 import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/app_bar/custom_bottom_navigator_bar.dart';
 import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
-import 'package:brn_ecommerce/common/cards/sales_suggestion_visited_products.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
@@ -78,7 +78,10 @@ class SalesConfirmationScreen extends StatelessWidget {
                           fontColor: getTextColor(),
                           fontWeight: FontWeight.w900,
                           fontSize: 20,
-                          onPressed: () => navigateToPageWithDrawer(context: context, page: DrawerPages.orders, ),
+                          onPressed: () => navigateToPageWithDrawer(
+                            context: context,
+                            page: DrawerPages.orders,
+                          ),
                         ),
                       ],
                     ),

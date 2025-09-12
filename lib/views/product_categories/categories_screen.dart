@@ -26,55 +26,54 @@ class CategoriesScreen extends StatelessWidget {
                   : 'Produtos por Categorias',
               showDrawerIcon: true,
               showSearchButton: false,
-                actions: [
-                  userManager.adminEnable && userManager.editingCategories == false
-                      ? CustomIconButton(
-                          padding: const EdgeInsets.only(right: 15, left: 15),
-                          iconData: Icons.edit,
-                          color: getCustomAppBarColorIcons(),
-                          onTap: () {
-                            userManager.editingCategories = true;
-                          },
-                          semanticLabel: 'Editar categorias',
-                        )
-                      : userManager.adminEnable && userManager.editingCategories == true
-                          ? CustomIconButton(
-                              padding: const EdgeInsets.only(right: 15, left: 15),
-                              iconData: Icons.check,
-                              color: Colors.white,
-                              size: 38,
-                              onTap: () {
-                                showMenu(
-                                  context: context,
-                                  position: const RelativeRect.fromLTRB(80, 80, 0, 0),
-                                  items: [
-                                    const PopupMenuItem(
-                                      value: 'Salvar',
-                                      child: Text('Salvar'),
-                                    ),
-                                    const PopupMenuItem(
-                                      value: 'Descartar',
-                                      child: Text('Descartar'),
-                                    ),
-                                  ],
-                                  elevation: 8.0,
-                                ).then((value) async {
-                                  if (value == 'Salvar') {
-                                    await productCategoryManager.updateCategory();
-                                    productCategoryManager.filterCategoriesActivated(
-                                        userManager.adminEnable, false);
-                                    userManager.editingCategories = false;
-                                  } else {
-                                    userManager.editingCategories = false;
-                                  }
-                                });
-                              },
-                              semanticLabel: 'Salvar categorias',
-                            )
-                          : const SizedBox(width: 25),
-                ],
-
-        ),
+              actions: [
+                userManager.adminEnable && userManager.editingCategories == false
+                    ? CustomIconButton(
+                        padding: const EdgeInsets.only(right: 15, left: 15),
+                        iconData: Icons.edit,
+                        color: getCustomAppBarColorIcons(),
+                        onTap: () {
+                          userManager.editingCategories = true;
+                        },
+                        semanticLabel: 'Editar categorias',
+                      )
+                    : userManager.adminEnable && userManager.editingCategories == true
+                        ? CustomIconButton(
+                            padding: const EdgeInsets.only(right: 15, left: 15),
+                            iconData: Icons.check,
+                            color: Colors.white,
+                            size: 38,
+                            onTap: () {
+                              showMenu(
+                                context: context,
+                                position: const RelativeRect.fromLTRB(80, 80, 0, 0),
+                                items: [
+                                  const PopupMenuItem(
+                                    value: 'Salvar',
+                                    child: Text('Salvar'),
+                                  ),
+                                  const PopupMenuItem(
+                                    value: 'Descartar',
+                                    child: Text('Descartar'),
+                                  ),
+                                ],
+                                elevation: 8.0,
+                              ).then((value) async {
+                                if (value == 'Salvar') {
+                                  await productCategoryManager.updateCategory();
+                                  productCategoryManager.filterCategoriesActivated(
+                                      userManager.adminEnable, false);
+                                  userManager.editingCategories = false;
+                                } else {
+                                  userManager.editingCategories = false;
+                                }
+                              });
+                            },
+                            semanticLabel: 'Salvar categorias',
+                          )
+                        : const SizedBox(width: 25),
+              ],
+            ),
             body: productCategoryManager.verifyCategoriesList()
                 ? const EmptyPageIndicator(
                     title: 'Carregando...',

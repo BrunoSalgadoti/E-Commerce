@@ -38,7 +38,8 @@ class DrawerTitle extends StatelessWidget {
                     title!,
                     style: TextStyle(
                       fontSize: 16,
-                      color: pageManager.currentPage == page ? getEspecialColor() : Colors.grey[700],
+                      color:
+                          pageManager.currentPage == page ? getEspecialColor() : Colors.grey[700],
                     ),
                   ),
                 )

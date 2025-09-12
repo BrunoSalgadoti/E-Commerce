@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 ///
 /// This class encapsulates the gradient color scheme used on the home screen for Android, iOS, and Web platforms.
 class AnotherColors {
-
   final Color drawerCollorFirstAndroid;
 
   final Color drawerCollorSecondAndroid;

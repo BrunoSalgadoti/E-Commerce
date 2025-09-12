@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:brn_ecommerce/common/advertising/components/advertising_card.dart';
-import 'package:brn_ecommerce/common/advertising/components/content_type.dart';
-import 'package:brn_ecommerce/common/advertising/components/utils_for_advertising.dart';
+import 'package:brn_ecommerce/common/advertising/components/advertising/advertising_card.dart';
+import 'package:brn_ecommerce/common/advertising/components/advertising/content_type.dart';
+import 'package:brn_ecommerce/common/advertising/components/advertising/utils_for_advertising.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/models/products/product.dart';

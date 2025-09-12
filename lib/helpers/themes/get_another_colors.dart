@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 
 import 'factory_colors/web_factory_colors.dart';
 
-
 Color getComplementAppBarCollor([BuildContext? context]) {
   if (kIsWeb) {
     return const AnotherColors().complementHomeAppBarCollorWeb;
@@ -20,6 +19,7 @@ Color getComplementAppBarCollor([BuildContext? context]) {
     return Colors.lightBlueAccent;
   }
 }
+
 Color getDrawerColorSecond([BuildContext? context]) {
   if (kIsWeb) {
     return const AnotherColors().drawerCollorSecondWeb;
@@ -43,6 +43,7 @@ Color getDrawerColorFirst([BuildContext? context]) {
     return Colors.lightBlueAccent;
   }
 }
+
 /// ## Color Helper Functions  (Folder: helpers/themes/factory_colors)
 /// ### getEspecialColor
 /// Returns a special color based on the platform or device type.

@@ -1,8 +1,8 @@
+import 'package:brn_ecommerce/common/cards/highlight_product_card.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:flutter/material.dart';
-import 'package:brn_ecommerce/common/cards/highlight_product_card.dart';
 
 class HighlightProductsBlock extends StatefulWidget {
   final List<Product> products; // products already filtered with highlight and stock

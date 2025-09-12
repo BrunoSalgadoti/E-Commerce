@@ -27,96 +27,97 @@ class ItemTile extends StatelessWidget {
     void backScreen() => Navigator.of(context).pop();
 
     return GestureDetector(
-        onTap: () {
-          if (item?.product != null) {
-            if (product != null && product.isValid!) {
-              Navigator.pushNamed(context, RoutesNavigator.productDetailsScreen,
-                  arguments: product);
-            }
+      onTap: () {
+        if (item?.product != null) {
+          if (product != null && product.isValid!) {
+            Navigator.pushNamed(context, RoutesNavigator.productDetailsScreen, arguments: product);
           }
-        },
-        onLongPress: () => homeManager.editing
-            ? CustomAlertDialogAdaptive(
-                titleText: 'Editar Item',
-                titleColor: Colors.black,
-                titleSize: 18,
-                titleWeight: FontWeight.normal,
-                bodyText: '',
-                content: product != null
-                    ? ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        leading: Image.network(product.images!.first),
-                        title: Text(product.name!),
-                        subtitle: !product.hasStock
-                            ? const Text(
-                                'Fora de Estoque...',
-                                style: TextStyle(color: Colors.red),
-                              )
-                            : Text(formattedRealText(product.basePrice)),
-                      )
-                    : const Text('Nenhum Item Vinculado'
-                        ' a Imagem!'),
-                actions: [
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CustomButton(
-                              text: 'Excluir',
-                              widthButton: 100,
-                              heightButton: 40,
-                              buttonColor: Colors.transparent,
-                              textColor: Colors.red,
-                              elevation: 0,
-                              onPressed: () {
-                                context.read<Section>().removeItem(item!);
+        }
+      },
+      onLongPress: () => homeManager.editing
+          ? CustomAlertDialogAdaptive(
+              titleText: 'Editar Item',
+              titleColor: Colors.black,
+              titleSize: 18,
+              titleWeight: FontWeight.normal,
+              bodyText: '',
+              content: product != null
+                  ? ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: Image.network(product.images!.first),
+                      title: Text(product.name!),
+                      subtitle: !product.hasStock
+                          ? const Text(
+                              'Fora de Estoque...',
+                              style: TextStyle(color: Colors.red),
+                            )
+                          : Text(formattedRealText(product.basePrice)),
+                    )
+                  : const Text('Nenhum Item Vinculado'
+                      ' a Imagem!'),
+              actions: [
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CustomButton(
+                            text: 'Excluir',
+                            widthButton: 100,
+                            heightButton: 40,
+                            buttonColor: Colors.transparent,
+                            textColor: Colors.red,
+                            elevation: 0,
+                            onPressed: () {
+                              context.read<Section>().removeItem(item!);
+                              backScreen();
+                            }),
+                        CustomButton(
+                            text: product != null ? 'Desvincular' : 'Vincular',
+                            widthButton: 120,
+                            heightButton: 40,
+                            buttonColor: Colors.transparent,
+                            textColor: Colors.blue,
+                            elevation: 0,
+                            onPressed: () async {
+                              if (product != null) {
+                                item?.product = null;
                                 backScreen();
-                              }),
-                          CustomButton(
-                              text: product != null ? 'Desvincular' : 'Vincular',
-                              widthButton: 120,
-                              heightButton: 40,
-                              buttonColor: Colors.transparent,
-                              textColor: Colors.blue,
-                              elevation: 0,
-                              onPressed: () async {
-                                if (product != null) {
-                                  item?.product = null;
-                                  backScreen();
-                                } else {
-                                  final Product product = await Navigator.pushNamed(
-                                      context, RoutesNavigator.selectProductScreen,
-                                      arguments: Product()) as Product;
-                                  item?.product = product.id;
-                                  backScreen();
-                                }
-                              }),
-                          CustomButton(
-                              text: 'Voltar',
-                              widthButton: 100,
-                              heightButton: 40,
-                              buttonColor: Colors.transparent,
-                              textColor: Colors.blue,
-                              elevation: 0,
-                              onPressed: () => backScreen())
-                        ]),
-                  )
-                ],
-              ).alertContent(context)
-            : null,
-        child: AspectRatio(
-            aspectRatio: 1,
-            child: item!.image is String
-                ? FadeInImage.memoryNetwork(
-                    placeholder: kTransparentImage,
-                    image: item!.image as String,
-                    fit: BoxFit.cover,
-                  )
-                : Image.file(
-                    item!.image as File,
-                    fit: BoxFit.cover,
-                  ),),);
+                              } else {
+                                final Product product = await Navigator.pushNamed(
+                                    context, RoutesNavigator.selectProductScreen,
+                                    arguments: Product()) as Product;
+                                item?.product = product.id;
+                                backScreen();
+                              }
+                            }),
+                        CustomButton(
+                            text: 'Voltar',
+                            widthButton: 100,
+                            heightButton: 40,
+                            buttonColor: Colors.transparent,
+                            textColor: Colors.blue,
+                            elevation: 0,
+                            onPressed: () => backScreen())
+                      ]),
+                )
+              ],
+            ).alertContent(context)
+          : null,
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: item!.image is String
+            ? FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: item!.image as String,
+                fit: BoxFit.cover,
+              )
+            : Image.file(
+                item!.image as File,
+                fit: BoxFit.cover,
+              ),
+      ),
+    );
   }
 }
