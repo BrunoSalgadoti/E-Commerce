@@ -1,7 +1,7 @@
+import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
+import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:brn_ecommerce/models/users/users_manager.dart';
-import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 
 class RecoverPasswordCard extends StatefulWidget {
   final String? oobCode;
