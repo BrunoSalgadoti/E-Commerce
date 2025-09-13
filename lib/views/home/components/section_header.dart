@@ -20,6 +20,13 @@ class SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeManager = context.watch<HomeManager>();
 
+    // Ensures that the BestSelling section is always in the edit list
+    if (homeManager.editing &&
+        !homeManager.sections.contains(section) &&
+        section.type == 'BestSelling') {
+      homeManager.enterEditing();
+    }
+
     if (homeManager.editing) {
       final int sectionIndex = homeManager.sections.indexOf(section);
       final bool isFirstSection = sectionIndex == 0;
@@ -31,24 +38,25 @@ class SectionHeader extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                  child: CustomTextFormField(
-                initialValue: section.name,
-                hintText: 'Adicionar Título',
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                textFormFieldColor: getCustomAppBarColorIcons().withAlpha(90),
-                textFormFieldBold: true,
-                textFormFieldSize: 18,
-                onChanged: (text) => section.name = text,
-              )),
+                child: CustomTextFormField(
+                  initialValue: section.name,
+                  hintText: 'Adicionar Título',
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  textFormFieldColor: getCustomAppBarColorIcons().withAlpha(90),
+                  textFormFieldBold: true,
+                  textFormFieldSize: 18,
+                  onChanged: (text) => section.name = text,
+                ),
+              ),
               CustomIconButton(
                 iconData: Icons.move_up,
                 color: getCustomAppBarColorIcons(),
                 onTap: isFirstSection
                     ? null
                     : () {
-                        homeManager.moveSectionUp(section);
-                      },
+                  homeManager.moveSectionUp(section);
+                },
                 semanticLabel: 'Mover para cima',
               ),
               CustomIconButton(
@@ -57,21 +65,22 @@ class SectionHeader extends StatelessWidget {
                 onTap: isLastSection
                     ? null
                     : () {
-                        homeManager.moveSectionDown(section);
-                      },
+                  homeManager.moveSectionDown(section);
+                },
                 semanticLabel: 'Mover para baixo',
               ),
-              const SizedBox(
-                width: 20,
-              ),
-              CustomIconButton(
-                iconData: Icons.remove,
-                color: getCustomAppBarColorIcons(),
-                onTap: () {
-                  homeManager.removeSection(section);
-                },
-                semanticLabel: 'Remover seção',
-              ),
+              const SizedBox(width: 20),
+
+              // 🔥 Only show the remove button if it is NOT BestSelling
+              if (section.type != "BestSelling")
+                CustomIconButton(
+                  iconData: Icons.remove,
+                  color: getCustomAppBarColorIcons(),
+                  onTap: () {
+                    homeManager.removeSection(section);
+                  },
+                  semanticLabel: 'Remover seção',
+                ),
             ],
           ),
           if (section.error != null)

@@ -14,109 +14,125 @@ import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class ItemTile extends StatelessWidget {
-  const ItemTile({super.key, this.item});
-
   final SectionItem? item;
+  final Product? product;
+
+  /// Permite passar um SectionItem ou diretamente um Product
+  const ItemTile({super.key, this.item, this.product});
 
   @override
   Widget build(BuildContext context) {
     final homeManager = context.watch<HomeManager>();
-    final product =
-        context.read<ProductManager>().findProductById(item?.product != null ? item!.product! : '');
-    // Function to remove context from async methods
+    final prod = product ??
+        (item?.product != null
+            ? context.read<ProductManager>().findProductById(item!.product!)
+            : null);
+
     void backScreen() => Navigator.of(context).pop();
 
     return GestureDetector(
       onTap: () {
-        if (item?.product != null) {
-          if (product != null && product.isValid!) {
-            Navigator.pushNamed(context, RoutesNavigator.productDetailsScreen, arguments: product);
-          }
+        if (prod != null && prod.isValid!) {
+          Navigator.pushNamed(
+            context,
+            RoutesNavigator.productDetailsScreen,
+            arguments: prod,
+          );
         }
       },
-      onLongPress: () => homeManager.editing
-          ? CustomAlertDialogAdaptive(
-              titleText: 'Editar Item',
-              titleColor: Colors.black,
-              titleSize: 18,
-              titleWeight: FontWeight.normal,
-              bodyText: '',
-              content: product != null
-                  ? ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: Image.network(product.images!.first),
-                      title: Text(product.name!),
-                      subtitle: !product.hasStock
-                          ? const Text(
-                              'Fora de Estoque...',
-                              style: TextStyle(color: Colors.red),
-                            )
-                          : Text(formattedRealText(product.basePrice)),
-                    )
-                  : const Text('Nenhum Item Vinculado'
-                      ' a Imagem!'),
-              actions: [
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        CustomButton(
-                            text: 'Excluir',
-                            widthButton: 100,
-                            heightButton: 40,
-                            buttonColor: Colors.transparent,
-                            textColor: Colors.red,
-                            elevation: 0,
-                            onPressed: () {
-                              context.read<Section>().removeItem(item!);
-                              backScreen();
-                            }),
-                        CustomButton(
-                            text: product != null ? 'Desvincular' : 'Vincular',
-                            widthButton: 120,
-                            heightButton: 40,
-                            buttonColor: Colors.transparent,
-                            textColor: Colors.blue,
-                            elevation: 0,
-                            onPressed: () async {
-                              if (product != null) {
-                                item?.product = null;
-                                backScreen();
-                              } else {
-                                final Product product = await Navigator.pushNamed(
-                                    context, RoutesNavigator.selectProductScreen,
-                                    arguments: Product()) as Product;
-                                item?.product = product.id;
-                                backScreen();
-                              }
-                            }),
-                        CustomButton(
-                            text: 'Voltar',
-                            widthButton: 100,
-                            heightButton: 40,
-                            buttonColor: Colors.transparent,
-                            textColor: Colors.blue,
-                            elevation: 0,
-                            onPressed: () => backScreen())
-                      ]),
-                )
-              ],
-            ).alertContent(context)
-          : null,
+      onLongPress: () {
+        if (homeManager.editing) {
+          CustomAlertDialogAdaptive(
+            titleText: 'Editar Item',
+            titleColor: Colors.black,
+            titleSize: 18,
+            titleWeight: FontWeight.normal,
+            bodyText: '',
+            content: prod != null
+                ? ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Image.network(prod.images!.first),
+              title: Text(prod.name!),
+              subtitle: !prod.hasStock
+                  ? const Text(
+                'Fora de Estoque...',
+                style: TextStyle(color: Colors.red),
+              )
+                  : Text(formattedRealText(prod.basePrice)),
+            )
+                : const Text('Nenhum Item Vinculado a Imagem!'),
+            actions: [
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CustomButton(
+                        text: 'Excluir',
+                        widthButton: 100,
+                        heightButton: 40,
+                        buttonColor: Colors.transparent,
+                        textColor: Colors.red,
+                        elevation: 0,
+                        onPressed: () {
+                          if (item != null) {
+                            context.read<Section>().removeItem(item!);
+                          }
+                          backScreen();
+                        }),
+                    CustomButton(
+                        text: prod != null ? 'Desvincular' : 'Vincular',
+                        widthButton: 120,
+                        heightButton: 40,
+                        buttonColor: Colors.transparent,
+                        textColor: Colors.blue,
+                        elevation: 0,
+                        onPressed: () async {
+                          if (prod != null && item != null) {
+                            item?.product = null;
+                            backScreen();
+                          } else if (item != null) {
+                            final Product selectedProduct =
+                            await Navigator.pushNamed(
+                                context,
+                                RoutesNavigator.selectProductScreen,
+                                arguments: Product()) as Product;
+                            item?.product = selectedProduct.id;
+                            backScreen();
+                          }
+                        }),
+                    CustomButton(
+                        text: 'Voltar',
+                        widthButton: 100,
+                        heightButton: 40,
+                        buttonColor: Colors.transparent,
+                        textColor: Colors.blue,
+                        elevation: 0,
+                        onPressed: backScreen),
+                  ],
+                ),
+              )
+            ],
+          ).alertContent(context);
+        }
+      },
       child: AspectRatio(
         aspectRatio: 1,
-        child: item!.image is String
+        child: item?.image != null
+            ? (item!.image is String
             ? FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
-                image: item!.image as String,
-                fit: BoxFit.cover,
-              )
+          placeholder: kTransparentImage,
+          image: item!.image as String,
+          fit: BoxFit.cover,
+        )
             : Image.file(
-                item!.image as File,
-                fit: BoxFit.cover,
-              ),
+          item!.image as File,
+          fit: BoxFit.cover,
+        ))
+            : prod != null && prod.images!.isNotEmpty
+            ? Image.network(prod.images!.first, fit: BoxFit.fitHeight)
+            : Container(color: Colors.grey[200]),
       ),
     );
   }

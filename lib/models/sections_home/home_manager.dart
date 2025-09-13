@@ -28,33 +28,36 @@ class HomeManager extends ChangeNotifier {
 
   // Getters
 
-  List<Section> get sections {
-    if (editing) {
-      return _editingSections;
-    } else {
-      return _sections;
-    }
-  }
+  List<Section> get sections => editing ? _editingSections : _sections;
 
   // Methods
-
   /// Loads home page sections_home from Firestore.
   Future<void> _loadSections() async {
     PerformanceMonitoring().startTrace('load-sections_home', shouldStart: true);
-    if (kDebugMode) {
-      MonitoringLogger().logInfo('Info message: Starting listen Sections');
-    }
+    if (kDebugMode) MonitoringLogger().logInfo('Starting listen Sections');
 
     firestore.collection("home").orderBy("position").snapshots().listen((snapshot) {
       _sections.clear();
-      for (final DocumentSnapshot document in snapshot.docs) {
-        _sections.add(Section.fromDocument(document));
+      for (final doc in snapshot.docs) {
+        _sections.add(Section.fromDocument(doc));
       }
+
+      _ensureLocalBestSellingSection();
       notifyListeners();
     });
+
     PerformanceMonitoring().stopTrace('load-sections_home');
-    if (kDebugMode) {
-      MonitoringLogger().logInfo('Info message: Ending listen Sections');
+    if (kDebugMode) MonitoringLogger().logInfo('Ending listen Sections');
+  }
+
+  void _ensureLocalBestSellingSection() {
+    final exists = _sections.any((s) => s.type == 'BestSelling');
+    if (!exists) {
+      final indexToInsert = _sections.indexWhere((s) => s.type == 'List');
+      _sections.insert(
+        indexToInsert >= 0 ? indexToInsert + 1 : 0,
+        Section(type: 'BestSelling', name: 'Mais Vendidos'),
+      );
     }
   }
 
@@ -66,45 +69,58 @@ class HomeManager extends ChangeNotifier {
 
   /// Removes a section from the list of editing sections_home.
   void removeSection(Section section) {
+    if (section.type == "BestSelling") return;
     _editingSections.remove(section);
     notifyListeners();
   }
 
   /// Moves a section up in the list of editing sections_home.
   void moveSectionUp(Section section) {
-    final int currentIndex = _editingSections.indexOf(section);
-    if (currentIndex > 0) {
-      final Section previousSection = _editingSections[currentIndex - 1];
-      _swapSections(section, previousSection);
+    final idx = _editingSections.indexOf(section);
+    if (idx > 0) {
+      _swapSections(section, _editingSections[idx - 1]);
       notifyListeners();
     }
   }
 
   /// Moves a section down in the list of editing sections_home.
   void moveSectionDown(Section section) {
-    final int currentIndex = _editingSections.indexOf(section);
-    if (currentIndex < _editingSections.length - 1) {
-      final Section nextSection = _editingSections[currentIndex + 1];
-      _swapSections(section, nextSection);
+    final idx = _editingSections.indexOf(section);
+    if (idx < _editingSections.length - 1) {
+      _swapSections(section, _editingSections[idx + 1]);
       notifyListeners();
     }
   }
 
   /// Swaps the positions of two sections_home in the list of editing sections_home.
-  void _swapSections(Section section1, Section section2) {
-    final int index1 = _editingSections.indexOf(section1);
-    final int index2 = _editingSections.indexOf(section2);
-    if (index1 != -1 && index2 != -1) {
-      final Section temp = _editingSections[index1];
-      _editingSections[index1] = _editingSections[index2];
-      _editingSections[index2] = temp;
+  void _swapSections(Section s1, Section s2) {
+    final idx1 = _editingSections.indexOf(s1);
+    final idx2 = _editingSections.indexOf(s2);
+    if (idx1 != -1 && idx2 != -1) {
+      final Section temp = _editingSections[idx1];
+      _editingSections[idx1] = _editingSections[idx2];
+      _editingSections[idx2] = temp;
     }
   }
 
   /// Enters editing mode by cloning current sections_home for editing.
   void enterEditing() {
     editing = true;
+
+    // Clone all existing sections
     _editingSections = _sections.map((s) => s.clone()).toList();
+
+    // Ensures that BestSelling exists in the edit list
+    final exists = _editingSections.any((s) => s.type == 'BestSelling');
+    if (!exists) {
+      // Place after the first section of type 'List' or at the beginning
+      final indexToInsert = _editingSections.indexWhere((s) => s.type == 'List');
+      _editingSections.insert(
+        indexToInsert >= 0 ? indexToInsert + 1 : 0,
+        Section(type: 'BestSelling', name: 'Mais Vendidos'),
+      );
+    }
+
     notifyListeners();
   }
 
@@ -112,25 +128,28 @@ class HomeManager extends ChangeNotifier {
   Future<void> saveEditing() async {
     bool valid = true;
     for (final section in _editingSections) {
-      if (!section.valid()) {
-        valid = false;
-        notifyListeners();
-      }
+      if (!section.valid()) valid = false;
     }
-    if (!valid) return;
+    if (!valid) {
+      notifyListeners();
+      return;
+    }
 
     loading = true;
     notifyListeners();
 
     int position = 0;
     for (final section in _editingSections) {
-      await section.saveSection(position);
+      if (section.type != "BestSelling") {
+        await section.saveSection(position);
+      }
       position++;
     }
 
-    for (final sections in List.from(_sections)) {
-      if (!_editingSections.any((element) => element.id == sections.id)) {
-        await sections.delete();
+    for (final section in List.from(_sections)) {
+      if (section.type == "BestSelling") continue;
+      if (!_editingSections.any((e) => e.id == section.id)) {
+        await section.delete();
       }
     }
 

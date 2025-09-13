@@ -22,6 +22,7 @@ class Section extends ChangeNotifier {
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseStorage storage = FirebaseStorage.instance;
+
   String? id;
   String? name;
   String? type;
@@ -31,7 +32,6 @@ class Section extends ChangeNotifier {
   List<SectionItem>? originalItems;
 
   // Constructors
-
   Section({this.id, this.name, this.type, this.items, this.position}) {
     items = items ?? [];
     originalItems = List.from(items!);
@@ -47,15 +47,14 @@ class Section extends ChangeNotifier {
       items = (document["items"] as List<dynamic>)
           .map((i) => SectionItem.fromMap(i as Map<String, dynamic>))
           .toList();
-    } catch (await) {
+      originalItems = List.from(items!);
+    } catch (_) {
       return;
     }
   }
 
-  /// Getter for Firestore Document Reference
+  /// Getter for Firestore
   DocumentReference get firestoreRef => firestore.doc("home/$id");
-
-  /// Getter for Firebase Storage Reference
   Reference get storageRef => storage.ref().child("home").child(id!);
 
   /// Getter for error message
@@ -104,27 +103,23 @@ class Section extends ChangeNotifier {
         const String validCharacters =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
         final trimmedString = base64String.replaceAll(RegExp("[^$validCharacters]"), "");
-        if (base64String is String && base64String.isNotEmpty && base64String.length % 4 == 0) {
+        if (trimmedString.isNotEmpty && trimmedString.length % 4 == 0) {
           try {
             final List<int> bytes = base64.decode(trimmedString);
             final Uint8List uint8ListBytes = Uint8List.fromList(bytes);
             final metadata = SettableMetadata(contentType: "image/jpeg");
             final task = storageRef.child(const Uuid().v4()).putData(uint8ListBytes, metadata);
             final snapshot = await task.whenComplete(() {});
-            final url = await snapshot.ref.getDownloadURL();
-            item.image = url;
+            item.image = await snapshot.ref.getDownloadURL();
           } catch (e) {
-            if (kDebugMode) {
-              //TODO: tratar erro
-              print('Erro ao decodificar o base64String: $e');
-            }
+            //TODO: tratar erro
+            if (kDebugMode) print('Erro ao decodificar base64String: $e');
           }
         }
       } else if (item.image is File) {
-        final UploadTask task = storageRef.child(const Uuid().v4()).putFile(item.image as File);
-        final TaskSnapshot snapshot = await task.whenComplete(() {});
-        final String url = await snapshot.ref.getDownloadURL();
-        item.image = url;
+        final task = storageRef.child(const Uuid().v4()).putFile(item.image as File);
+        final snapshot = await task.whenComplete(() {});
+        item.image = await snapshot.ref.getDownloadURL();
       }
     }
 
@@ -140,9 +135,7 @@ class Section extends ChangeNotifier {
       }
     }
 
-    final Map<String, dynamic> itemsData = {
-      "items": items?.map((e) => e.toMap()).toList(),
-    };
+    final itemsData = {"items": items?.map((e) => e.toMap()).toList()};
     await firestoreRef.update(itemsData);
 
     PerformanceMonitoring().stopTrace('save-section');
@@ -156,16 +149,17 @@ class Section extends ChangeNotifier {
         try {
           final ref = storage.refFromURL(item.image as String);
           await ref.delete();
-          // ignore: empty_catches
-        } catch (error) {
+        } catch (_) {
           //TODO: tratar erro
         }
       }
     }
   }
 
-  /// Method to check if the section is valid
+  /// Validation now ignores BestSelling section
   bool valid() {
+    if (type == "BestSelling") return true;
+
     if (name == null || name!.isEmpty) {
       error = 'Título Inválido';
     } else if (items!.isEmpty) {
@@ -179,15 +173,14 @@ class Section extends ChangeNotifier {
   /// Method to clone the section
   Section clone() {
     return Section(
-        id: id,
-        name: name,
-        type: type,
-        position: position,
-        items: items?.map((e) => e.clone()).toList());
+      id: id,
+      name: name,
+      type: type,
+      position: position,
+      items: items?.map((e) => e.clone()).toList(),
+    );
   }
 
   @override
-  String toString() {
-    return 'Section{name: $name, type: $type, items: $items}';
-  }
+  String toString() => 'Section{name: $name, type: $type, items: $items}';
 }

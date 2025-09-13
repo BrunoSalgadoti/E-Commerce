@@ -11,8 +11,11 @@ class AddSectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Expanded(
+        Container(
+          constraints: BoxConstraints(maxWidth: 300),
             child: CustomButton(
           text: 'Adicionar Lista',
           onPressed: () {
@@ -22,7 +25,8 @@ class AddSectionWidget extends StatelessWidget {
         const SizedBox(
           width: 20,
         ),
-        Expanded(
+        Container(
+            constraints: BoxConstraints(maxWidth: 300),
             child: CustomButton(
           text: 'Adicionar Grade',
           onPressed: () {

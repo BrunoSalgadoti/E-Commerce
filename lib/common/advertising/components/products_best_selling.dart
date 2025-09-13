@@ -22,7 +22,7 @@ class ProductsBestSelling extends ChangeNotifier {
   /// and the optional [salesThreshold] parameter sets the minimum sales margin for a product to be considered best-selling.
   ProductsBestSelling({
     required this.allProducts,
-    this.salesThreshold = 10,
+    this.salesThreshold = 15,
   });
 
   // Getters
@@ -33,18 +33,19 @@ class ProductsBestSelling extends ChangeNotifier {
   // Methods
 
   /// Retrieves the specified number of best-selling products.
-  ///
   /// The [count] parameter determines the number of best-selling products to retrieve.
   List<Product> getBestSellingProducts(int count) {
-    final sortedProducts = allProducts.toList()
-      ..sort((a, b) => b.totalSellers.compareTo(a.totalSellers));
+    // Filter only products with stock
+    final filtered = allProducts.where((p) => p.hasStock).toList();
 
-    return sortedProducts.take(count).toList();
+    // Sort from largest to smallest by totalSellers
+    filtered.sort((a, b) => b.totalSellers.compareTo(a.totalSellers));
+
+    // Returns only the first 'count' products
+    return filtered.take(count).toList();
   }
 
-  /// Checks and updates the list of best-selling products if needed.
-  ///
-  /// Call this method periodically to ensure the list of best-selling products is up to date.
+  /// Updates the list of best-selling products if needed.
   void updateBestSellingProductsIfNeeded() {
     final updatedProducts = getBestSellingProducts(allProducts.length);
 
@@ -61,14 +62,10 @@ class ProductsBestSelling extends ChangeNotifier {
   /// The [list1] and [list2] parameters represent the lists of products to compare.
   /// Returns true if the lists are equal, false otherwise.
   bool _areListsEqual(List<Product> list1, List<Product> list2) {
-    if (list1.length != list2.length) {
-      return false;
-    }
+    if (list1.length != list2.length) return false;
 
     for (int i = 0; i < list1.length; i++) {
-      if (list1[i].id != list2[i].id) {
-        return false;
-      }
+      if (list1[i].id != list2[i].id) return false;
     }
     return true;
   }

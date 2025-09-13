@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:brn_ecommerce/common/advertising/components/products_recently_added.dart';
-import 'package:brn_ecommerce/common/advertising/products_best_selling.dart';
+import 'package:brn_ecommerce/common/advertising/components/products_best_selling.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -51,7 +51,7 @@ class ProductManager extends ChangeNotifier {
 
     bestSellingProductsManager = ProductsBestSelling(
       allProducts: allProducts,
-      salesThreshold: 10, // Set the appropriate sales margin
+      salesThreshold: 15, // Set the appropriate sales margin
     );
 
     recentlyAddedProducts = ProductsRecentlyAdded(
