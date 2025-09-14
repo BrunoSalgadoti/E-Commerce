@@ -1,10 +1,13 @@
 import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
 import 'package:brn_ecommerce/common/advertising/best_selling_card.dart';
 import 'package:brn_ecommerce/common/advertising/categories_showcase.dart';
+import 'package:brn_ecommerce/common/advertising/finds_lowest_selling_showcase.dart';
 import 'package:brn_ecommerce/common/advertising/footer.dart';
 import 'package:brn_ecommerce/common/advertising/highlight_products_block.dart';
+import 'package:brn_ecommerce/common/advertising/recently_added_products.dart';
 import 'package:brn_ecommerce/common/app_bar/complement_app_bar.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
@@ -102,12 +105,13 @@ class HomeScreen extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
                                 child: ConstrainedBox(
-                                  constraints: BoxConstraints(maxWidth: tabletBreakpoint),
-                                  child: HighlightProductsBlock(
-                                    products: featuredProducts,
-                                    isSilver: true,
-                                  ),
-                                ),
+                                    constraints: BoxConstraints(maxWidth: tabletBreakpoint),
+                                    child: Column(children: [
+                                      HighlightProductsBlock(
+                                        products: featuredProducts,
+                                        isSilver: true,
+                                      ),
+                                    ])),
                               ),
                             );
                           },
@@ -116,7 +120,14 @@ class HomeScreen extends StatelessWidget {
                           constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
                           child: Column(children: [...children]),
                         ),
-                            const CategoriesShowcase()
+
+                        const CategoriesShowcase(),
+                        const FindsLowestSellingShowcase(),
+                        Center(
+                          child: textForGoogleDecorations(
+                              titleForDecorations: 'Adicionados recentemente...'),
+                        ),
+                        const RecentlyAddedProducts(carrossel: true)
                       ];
 
                       return children.isEmpty

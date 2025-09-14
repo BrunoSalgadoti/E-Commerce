@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:brn_ecommerce/common/advertising/components/products_lowest_selling.dart';
 import 'package:brn_ecommerce/common/advertising/components/products_recently_added.dart';
 import 'package:brn_ecommerce/common/advertising/components/products_best_selling.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
@@ -16,6 +17,7 @@ import '../../services/development_monitoring/monitoring_logger.dart';
 /// This enum defines the possible product states that can be used to filter products.
 enum StatusOfProducts {
   bestSellers,
+  lowestSellers,
   recentlyAdded,
   lowestPrice,
   brand,
@@ -40,6 +42,7 @@ class ProductManager extends ChangeNotifier {
   List<Product> allProducts = [];
   StatusOfProducts? status;
   ProductsBestSelling? bestSellingProductsManager;
+  ProductsLowestSelling? lowestSellingProductsManager;
   ProductsRecentlyAdded? recentlyAddedProducts;
   StreamSubscription<dynamic>? _subscription;
 
@@ -55,6 +58,10 @@ class ProductManager extends ChangeNotifier {
     );
 
     recentlyAddedProducts = ProductsRecentlyAdded(
+      allProducts: allProducts,
+    );
+
+    lowestSellingProductsManager = ProductsLowestSelling(
       allProducts: allProducts,
     );
   }
@@ -94,6 +101,12 @@ class ProductManager extends ChangeNotifier {
       List<Product> bestSellingProducts = bestSellingProductsManager!.getBestSellingProducts(15);
       filteredProducts =
           filteredProducts.where((product) => bestSellingProducts.contains(product)).toList();
+    }
+
+    if (statusFilter.contains(StatusOfProducts.lowestSellers)) {
+      List<Product> lowestSelling = lowestSellingProductsManager!.getLowestSellingProducts(count: 15);
+      filteredProducts =
+          filteredProducts.where((product) => lowestSelling.contains(product)).toList();
     }
 
     if (statusFilter.contains(StatusOfProducts.recentlyAdded)) {
@@ -228,6 +241,8 @@ class ProductManager extends ChangeNotifier {
     switch (status) {
       case StatusOfProducts.bestSellers:
         return 'Mais Vendidos';
+      case StatusOfProducts.lowestSellers:
+        return 'Pensando em você';
       case StatusOfProducts.lowestPrice:
         return 'Menor Preço';
       case StatusOfProducts.recentlyAdded:

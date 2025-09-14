@@ -32,7 +32,6 @@ class RecentlyAddedProducts extends StatelessWidget {
             child: ConstrainedBox(
               constraints: BoxConstraints(maxWidth: tabletBreakpoint),
               child: SizedBox(
-                height: 150,
                 child: carouselForProducts(
                   context: context,
                   productsForCarousel: recentProducts,

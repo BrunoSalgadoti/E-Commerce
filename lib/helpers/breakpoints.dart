@@ -9,6 +9,7 @@
 /// - `staggeredBreakpoint`: Breakpoint for layouts with staggered design.
 /// - `wildBreakpoint`: Breakpoint for high-resolution monitors.
 const double mobileBreakpoint = 600;
+const double intermediateBreakpoint = 800;
 const double tabletBreakpoint = 1240;
 const double staggeredBreakpoint = 980;
 const double wildBreakpoint = 1920;

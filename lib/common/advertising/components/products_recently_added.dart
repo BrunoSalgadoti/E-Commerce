@@ -53,14 +53,14 @@ class ProductsRecentlyAdded extends ChangeNotifier {
       return bInsertion.compareTo(aInsertion);
     });
 
-    return sortedProducts.take(10).toList();
+    return sortedProducts.take(15).toList();
   }
 
   /// Updates the internal list of recently added products and notifies listeners if changed.
   ///
   /// Optional parameters [withCategory] and [productCategory] filter by category if needed.
   void updateRecentProducts({
-    int count = 10,
+    int count = 15,
     ProductCategory? productCategory,
   }) {
     final updatedProducts = getRecentProducts(
