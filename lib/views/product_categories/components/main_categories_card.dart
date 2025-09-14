@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
-import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
@@ -18,12 +17,12 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
 
 class MainCategoriesCard extends StatefulWidget {
+  final ProductCategory? productCategory;
+
   const MainCategoriesCard({
     super.key,
     this.productCategory,
   });
-
-  final ProductCategory? productCategory;
 
   @override
   State<MainCategoriesCard> createState() => _MainCategoriesCardState();
@@ -71,19 +70,6 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
           );
         },
       );
-    }
-
-    Widget buildCategoryImage() {
-      if (widget.productCategory?.categoryImg != null &&
-          widget.productCategory?.categoryImg != "") {
-        if (widget.productCategory!.categoryImg is File) {
-          return Image.file(widget.productCategory!.categoryImg as File, fit: BoxFit.cover);
-        } else {
-          return Image.network(widget.productCategory!.categoryImg!, fit: BoxFit.cover);
-        }
-      } else {
-        return Image.asset(RootAssets.imageForEmptyBackgroundsJpg, fit: BoxFit.cover);
-      }
     }
 
     void onImageSelected(File file) {
@@ -134,11 +120,12 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
     }
 
     return Card(
-        clipBehavior: Clip.antiAlias,
-        color: selectedColor ?? backgroundColor,
-        elevation: 7,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
-        child: Consumer<UserManager>(builder: (_, userManager, __) {
+      clipBehavior: Clip.antiAlias,
+      color: selectedColor ?? backgroundColor,
+      elevation: 7,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
+      child: Consumer<UserManager>(
+        builder: (_, userManager, __) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -151,7 +138,7 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
                       decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
+                            color: Colors.black.withAlpha(51),
                             spreadRadius: 2,
                             blurRadius: 5,
                             offset: const Offset(0, 2),
@@ -160,7 +147,7 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
                       ),
                       width: double.infinity,
                       height: 167,
-                      child: buildCategoryImage()),
+                      child: buildCategoryImage(productCategory: widget.productCategory!)),
                   Positioned(
                     bottom: 20,
                     left: 14,
@@ -305,6 +292,8 @@ class _MainCategoriesCardState extends State<MainCategoriesCard> {
               ),
             ],
           );
-        }));
+        },
+      ),
+    );
   }
 }

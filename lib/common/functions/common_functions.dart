@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
+import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
+import 'package:brn_ecommerce/models/products/categories/product_category.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:decorated_text/decorated_text.dart' show DecoratedGoogleFontText;
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -29,7 +33,7 @@ Color getColorFromString(String color) {
 
   try {
     final int value = int.parse(color.substring(1, 7), radix: 16);
-    return Color(value).withOpacity(1.0);
+    return Color(value).withAlpha(255);
   } catch (error) {
     // If an exception occurs when trying to parse the color, return a default color or null.
     return Colors.transparent;
@@ -250,5 +254,38 @@ Widget textForGoogleDecorations(
       fontWeight: fontWeight ?? FontWeight.w800,
       borderWidth: borderWidth ?? 0.8,
     ),
+  );
+}
+
+Widget buildCategoryImage({required ProductCategory productCategory}) {
+  final img = productCategory.categoryImg;
+
+  if (img != null && img != "") {
+    if (img is File) {
+      return Image.file(img, fit: BoxFit.cover);
+    } else if (img is String) {
+      return Image.network(
+        img,
+        fit: BoxFit.cover,
+        loadingBuilder: (context, child, progress) {
+          if (progress == null) return child;
+          return const Center(
+            child: CircularProgressIndicator(strokeWidth: 2),
+          );
+        },
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+            color: Colors.grey[300],
+            alignment: Alignment.center,
+            child: const Icon(Icons.broken_image, size: 30, color: Colors.grey),
+          );
+        },
+      );
+    }
+  }
+
+  return Image.asset(
+    RootAssets.imageForEmptyBackgroundsJpg,
+    fit: BoxFit.cover,
   );
 }

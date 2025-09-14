@@ -1,5 +1,6 @@
 import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
 import 'package:brn_ecommerce/common/advertising/best_selling_card.dart';
+import 'package:brn_ecommerce/common/advertising/categories_showcase.dart';
 import 'package:brn_ecommerce/common/advertising/footer.dart';
 import 'package:brn_ecommerce/common/advertising/highlight_products_block.dart';
 import 'package:brn_ecommerce/common/app_bar/complement_app_bar.dart';
@@ -115,6 +116,7 @@ class HomeScreen extends StatelessWidget {
                           constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
                           child: Column(children: [...children]),
                         ),
+                            const CategoriesShowcase()
                       ];
 
                       return children.isEmpty

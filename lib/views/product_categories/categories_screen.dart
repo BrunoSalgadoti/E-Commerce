@@ -19,113 +19,113 @@ class CategoriesScreen extends StatelessWidget {
     return Consumer2<ProductCategoryManager, UserManager>(
       builder: (_, productCategoryManager, userManager, __) {
         return Scaffold(
-            drawer: const CustomDrawer(),
-            appBar: CustomAppBar(
-              title: userManager.editingCategories
-                  ? 'Editando Categorias!'
-                  : 'Produtos por Categorias',
-              showDrawerIcon: true,
-              showSearchButton: false,
-              actions: [
-                userManager.adminEnable && userManager.editingCategories == false
-                    ? CustomIconButton(
-                        padding: const EdgeInsets.only(right: 15, left: 15),
-                        iconData: Icons.edit,
-                        color: getCustomAppBarColorIcons(),
-                        onTap: () {
-                          userManager.editingCategories = true;
-                        },
-                        semanticLabel: 'Editar categorias',
-                      )
-                    : userManager.adminEnable && userManager.editingCategories == true
-                        ? CustomIconButton(
-                            padding: const EdgeInsets.only(right: 15, left: 15),
-                            iconData: Icons.check,
-                            color: Colors.white,
-                            size: 38,
-                            onTap: () {
-                              showMenu(
-                                context: context,
-                                position: const RelativeRect.fromLTRB(80, 80, 0, 0),
-                                items: [
-                                  const PopupMenuItem(
-                                    value: 'Salvar',
-                                    child: Text('Salvar'),
-                                  ),
-                                  const PopupMenuItem(
-                                    value: 'Descartar',
-                                    child: Text('Descartar'),
-                                  ),
-                                ],
-                                elevation: 8.0,
-                              ).then((value) async {
-                                if (value == 'Salvar') {
-                                  await productCategoryManager.updateCategory();
-                                  productCategoryManager.filterCategoriesActivated(
-                                      userManager.adminEnable, false);
-                                  userManager.editingCategories = false;
-                                } else {
-                                  userManager.editingCategories = false;
-                                }
-                              });
-                            },
-                            semanticLabel: 'Salvar categorias',
-                          )
-                        : const SizedBox(width: 25),
-              ],
-            ),
-            body: productCategoryManager.verifyCategoriesList()
-                ? const EmptyPageIndicator(
-                    title: 'Carregando...',
-                    image: "assets/images/await.gif",
-                    iconData: null,
-                  )
-                : Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
-                        child: GridView.builder(
-                          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            maxCrossAxisExtent: 255,
-                            mainAxisExtent: 230,
-                          ),
-                          itemCount: productCategoryManager
-                              .filterCategoriesActivated(
-                                  userManager.adminEnable, userManager.editingCategories)
-                              .length,
-                          itemBuilder: (context, index) {
-                            final category = productCategoryManager.filterCategoriesActivated(
-                                userManager.adminEnable, userManager.editingCategories)[index];
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushNamed(
-                                  RoutesNavigator.categoryProductsScreen,
-                                  arguments: category,
-                                );
-
-                                if (userManager.users?.id == null) {
-                                  debugPrint('Usuário não logado');
-                                  return;
-                                }
-
-                                productCategoryManager.visitCategory(
-                                  category.categoryID!,
-                                  userManager.users!,
-                                );
-
-                                debugPrint(category.categoryID!.toString());
-                              },
-                              child: MainCategoriesCard(productCategory: category),
-                            );
+          drawer: const CustomDrawer(),
+          appBar: CustomAppBar(
+            title:
+                userManager.editingCategories ? 'Editando Categorias!' : 'Produtos por Categorias',
+            showDrawerIcon: true,
+            showSearchButton: false,
+            actions: [
+              userManager.adminEnable && userManager.editingCategories == false
+                  ? CustomIconButton(
+                      padding: const EdgeInsets.only(right: 15, left: 15),
+                      iconData: Icons.edit,
+                      color: getCustomAppBarColorIcons(),
+                      onTap: () {
+                        userManager.editingCategories = true;
+                      },
+                      semanticLabel: 'Editar categorias',
+                    )
+                  : userManager.adminEnable && userManager.editingCategories == true
+                      ? CustomIconButton(
+                          padding: const EdgeInsets.only(right: 15, left: 15),
+                          iconData: Icons.check,
+                          color: getCustomAppBarColorIcons(),
+                          size: 38,
+                          onTap: () {
+                            showMenu(
+                              context: context,
+                              position: const RelativeRect.fromLTRB(80, 80, 0, 0),
+                              items: [
+                                const PopupMenuItem(
+                                  value: 'Salvar',
+                                  child: Text('Salvar'),
+                                ),
+                                const PopupMenuItem(
+                                  value: 'Descartar',
+                                  child: Text('Descartar'),
+                                ),
+                              ],
+                              elevation: 8.0,
+                            ).then((value) async {
+                              if (value == 'Salvar') {
+                                await productCategoryManager.updateCategory();
+                                productCategoryManager.filterCategoriesActivated(
+                                    userManager.adminEnable, false);
+                                userManager.editingCategories = false;
+                              } else {
+                                userManager.editingCategories = false;
+                              }
+                            });
                           },
+                          semanticLabel: 'Salvar categorias',
+                        )
+                      : const SizedBox(width: 25),
+            ],
+          ),
+          body: productCategoryManager.verifyCategoriesList()
+              ? const EmptyPageIndicator(
+                  title: 'Carregando...',
+                  image: "assets/images/await.gif",
+                  iconData: null,
+                )
+              : Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
+                      child: GridView.builder(
+                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          maxCrossAxisExtent: 255,
+                          mainAxisExtent: 230,
                         ),
+                        itemCount: productCategoryManager
+                            .filterCategoriesActivated(
+                                userManager.adminEnable, userManager.editingCategories)
+                            .length,
+                        itemBuilder: (context, index) {
+                          final category = productCategoryManager.filterCategoriesActivated(
+                              userManager.adminEnable, userManager.editingCategories)[index];
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                RoutesNavigator.categoryProductsScreen,
+                                arguments: category,
+                              );
+
+                              if (userManager.users?.id == null) {
+                                debugPrint('Usuário não logado');
+                                return;
+                              }
+
+                              productCategoryManager.visitCategory(
+                                category.categoryID!,
+                                userManager.users!,
+                              );
+
+                              debugPrint(category.categoryID!.toString());
+                            },
+                            child: MainCategoriesCard(productCategory: category),
+                          );
+                        },
                       ),
                     ),
-                  ));
+                  ),
+                ),
+        );
       },
     );
   }
