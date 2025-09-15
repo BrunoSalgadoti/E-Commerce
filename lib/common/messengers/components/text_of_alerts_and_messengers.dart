@@ -41,7 +41,7 @@ mixin AlertsMessengersText {
   /// ## message Info-marquee in [CartScreen]
   //
   /// ### [cart_screen.dart]
-  static const String infoMarqueeOfCartScreen = 'Continue comprando em nossa loja!! Contamos com '
+  static const String infoMarqueeMessage = 'Continue comprando em nossa loja!! Contamos com '
       'diversos produtos em promoção, confira! Clique aqui! E boas compras!';
 
   /// # [SALES_SUGGESTIONS_WIDGET]

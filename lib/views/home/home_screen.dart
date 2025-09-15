@@ -4,8 +4,10 @@ import 'package:brn_ecommerce/common/advertising/categories_showcase.dart';
 import 'package:brn_ecommerce/common/advertising/finds_lowest_selling_showcase.dart';
 import 'package:brn_ecommerce/common/advertising/footer.dart';
 import 'package:brn_ecommerce/common/advertising/highlight_products_block.dart';
+import 'package:brn_ecommerce/common/advertising/info_marquee_widget.dart';
 import 'package:brn_ecommerce/common/advertising/recently_added_products.dart';
 import 'package:brn_ecommerce/common/app_bar/complement_app_bar.dart';
+import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
@@ -22,6 +24,9 @@ import 'package:brn_ecommerce/views/who_we_are/who_we_are_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../common/drawer/components/page_manager.dart' show PageManager;
+import '../../common/messengers/components/text_of_alerts_and_messengers.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, this.sectionHeader});
@@ -127,7 +132,25 @@ class HomeScreen extends StatelessWidget {
                           child: textForGoogleDecorations(
                               titleForDecorations: 'Adicionados recentemente...'),
                         ),
-                        const RecentlyAddedProducts(carrossel: true)
+                        const RecentlyAddedProducts(carrossel: true),
+                        //Info Marquee
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+                          child: InfoMarqueeWidget(
+                            text: AlertsMessengersText.infoMarqueeMessage,
+                            color: getCustomAppBarColorBackground(),
+                            fontWeight: FontWeight.w800,
+                            glowColor: Colors.orange,
+                            marqueeWidth: tabletBreakpoint,
+                            onPressed: () {
+                              context.read<PageManager>().setPage(DrawerPages.categories);
+                              Navigator.of(context).pop();
+                            },
+                            marqueeSpeed: MediaQuery.of(context).size.width >= 900 ? 24 : 22,
+                            marqueeStart: MediaQuery.of(context).size.width >= 900 ? 1.0 : 1.7,
+                            marqueeEnd: MediaQuery.of(context).size.width >= 900 ? -1.0 : -1.5,
+                          ),
+                        ),
                       ];
 
                       return children.isEmpty

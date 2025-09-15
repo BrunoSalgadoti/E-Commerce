@@ -90,7 +90,7 @@ class CartScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             child: InfoMarqueeWidget(
-                              text: AlertsMessengersText.infoMarqueeOfCartScreen,
+                              text: AlertsMessengersText.infoMarqueeMessage,
                               color: getCustomAppBarColorBackground(),
                               fontWeight: FontWeight.w800,
                               glowColor: Colors.orange,
