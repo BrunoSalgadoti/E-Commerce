@@ -31,14 +31,14 @@ class _SalesSuggestionVisitedProductsState extends State<SalesSuggestionVisitedP
       context.read<ProductCategoryManager>().loadSuggestionsBasedOnVisitGalleryProducts(context);
     });
 
-    // Auto scroll a cada 3s
+    // Auto scroll every 3s
     autoScrollTimer = Timer.periodic(const Duration(seconds: 3), (_) {
       if (!mounted || !scrollController.hasClients) return;
       final maxScroll = scrollController.position.maxScrollExtent;
       double nextScroll = scrollController.offset + itemWidth + itemSpacing;
 
       if (nextScroll > maxScroll) {
-        nextScroll = 0; // volta pro início
+        nextScroll = 0; // go back to the beginning
       }
 
       scrollController.animateTo(
@@ -156,7 +156,7 @@ class _SalesSuggestionVisitedProductsState extends State<SalesSuggestionVisitedP
                   },
                 ),
 
-                // Botões laterais apenas no Web
+                // Side buttons only on Web
                 if (kIsWeb)
                   Positioned.fill(
                     child: Row(
