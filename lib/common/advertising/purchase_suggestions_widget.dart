@@ -10,7 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PurchaseSuggestionsWidget extends StatefulWidget {
-  const PurchaseSuggestionsWidget({super.key});
+  final String titleText;
+  final double? fontSize;
+
+  const PurchaseSuggestionsWidget(
+      {super.key, this.titleText = 'Quem comprou este produto, também levaram estes...', this.fontSize});
 
   @override
   State<PurchaseSuggestionsWidget> createState() => _PurchaseSuggestionsWidgetState();
@@ -99,149 +103,152 @@ class _PurchaseSuggestionsWidgetState extends State<PurchaseSuggestionsWidget> {
 
     final currentProducts = getCurrentPageProducts(perPage);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        textForGoogleDecorations(
-            titleForDecorations: 'Quem comprou este produto, também levaram estes...',
-            fontSize: 18,
-            fontWeight: FontWeight.normal),
-        const SizedBox(height: 12),
+    return Center(
+       child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          textForGoogleDecorations(
+              titleForDecorations: widget.titleText, fontSize: widget.fontSize ?? 18, fontWeight: FontWeight.normal),
+          const SizedBox(height: 12),
 
-        // Page navigation (whenever there is more than one page)
-        if (suggestedProducts.length > perPage)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: previousPage,
-              ),
-              Text("${currentPage + 1} / $totalPages"),
-              IconButton(
-                icon: const Icon(Icons.arrow_forward),
-                onPressed: () => nextPage(perPage),
-              ),
-            ],
-          ),
-
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: crossAxisCount,
-            mainAxisSpacing: 4,
-            crossAxisSpacing: 4,
-            childAspectRatio: 400 / 440,
-          ),
-          itemCount: currentProducts.length,
-          itemBuilder: (context, index) {
-            final product = currentProducts[index];
-            return ConstrainedBox(
-              constraints: const BoxConstraints(
-                maxHeight: 80, // max card height
-              ),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+          // Page navigation (whenever there is more than one page)
+          if (suggestedProducts.length > perPage)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: previousPage,
                 ),
-                elevation: 4,
-                clipBehavior: Clip.antiAlias,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(16),
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      RoutesNavigator.productDetailsScreen,
-                      arguments: product,
-                    );
-                  },
-                  child: Stack(
-                    children: [
-                      // Background image
-                      Positioned.fill(
-                        child: Image.network(
-                          product.images?.first ?? "",
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) =>
-                              const Icon(Icons.image_not_supported, size: 40),
-                        ),
-                      ),
+                Text("${currentPage + 1} / $totalPages"),
+                IconButton(
+                  icon: const Icon(Icons.arrow_forward),
+                  onPressed: () => nextPage(perPage),
+                ),
+              ],
+            ),
 
-                      // Subtle gradient to improve contrast
-                      Positioned.fill(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.center,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.transparent,
-                                Colors.black.withOpacity(0.6),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: crossAxisCount,
+              mainAxisSpacing: 4,
+              crossAxisSpacing: 4,
+              childAspectRatio: 400 / 440,
+            ),
+            itemCount: currentProducts.length,
+            itemBuilder: (context, index) {
+              final product = currentProducts[index];
+              return ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxHeight: 80, // max card height
+                ),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  elevation: 4,
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(16),
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        RoutesNavigator.productDetailsScreen,
+                        arguments: product,
+                      );
+                    },
+                    child: Stack(
+                      children: [
+                        // Background image
+                        Positioned.fill(
+                          child: Image.network(
+                            product.images?.first ?? "",
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) =>
+                                const Icon(Icons.image_not_supported, size: 40),
+                          ),
+                        ),
+
+                        // Subtle gradient to improve contrast
+                        Positioned.fill(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.center,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Colors.transparent,
+                                  Colors.black.withOpacity(0.6),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        // Information at the bottom
+                        Positioned(
+                          left: 0,
+                          right: 0,
+                          bottom: 0,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  product.name ?? "Sem nome",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13,
+                                    color: Colors.white,
+                                    shadows: [
+                                      Shadow(
+                                        blurRadius: 2,
+                                        color: Colors.black,
+                                        offset: Offset(0.5, 0.5),
+                                      ),
+                                    ],
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  'A partir: ${formattedRealText(product.basePrice)}',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.greenAccent,
+                                    fontWeight: FontWeight.bold,
+                                    shadows: [
+                                      Shadow(
+                                        blurRadius: 2,
+                                        color: Colors.black,
+                                        offset: Offset(0.5, 0.5),
+                                      ),
+                                    ],
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                               ],
                             ),
                           ),
                         ),
-                      ),
-
-                      // Information at the bottom
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                product.name ?? "Sem nome",
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 13,
-                                  color: Colors.white,
-                                  shadows: [
-                                    Shadow(
-                                      blurRadius: 2,
-                                      color: Colors.black,
-                                      offset: Offset(0.5, 0.5),
-                                    ),
-                                  ],
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'A partir: ${formattedRealText(product.basePrice)}',
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.greenAccent,
-                                  fontWeight: FontWeight.bold,
-                                  shadows: [
-                                    Shadow(
-                                      blurRadius: 2,
-                                      color: Colors.black,
-                                      offset: Offset(0.5, 0.5),
-                                    ),
-                                  ],
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
-        ),
-      ],
+              );
+            },
+          ),
+        ],
+      ),
+    ),
     );
   }
 }
