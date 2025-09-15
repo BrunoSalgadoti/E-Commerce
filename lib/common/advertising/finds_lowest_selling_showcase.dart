@@ -17,9 +17,8 @@ class FindsLowestSellingShowcase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productManager = Provider.of<ProductManager>(context);
-    final products = productManager.lowestSellingProductsManager
-        ?.getLowestSellingProducts(count: 15) ??
-        [];
+    final products =
+        productManager.lowestSellingProductsManager?.getLowestSellingProducts(count: 15) ?? [];
 
     if (products.isEmpty) return const SizedBox.shrink();
 
@@ -37,9 +36,24 @@ class FindsLowestSellingShowcase extends StatelessWidget {
               runSpacing: 13,
               alignment: WrapAlignment.center,
               children: products.map((product) {
-                return _FindsItem(
-                  product: product,
-                  isSilver: isSilver,
+                final screenWidth = MediaQuery.of(context).size.width;
+
+                // calcula largura mínima por breakpoint
+                double minWidth;
+                if (screenWidth <= mobileBreakpoint) {
+                  minWidth = (screenWidth / 2) - 26; // garante 2 lado a lado
+                } else if (screenWidth <= intermediateBreakpoint) {
+                  minWidth = (screenWidth / 3) - 26; // até 3
+                } else {
+                  minWidth = (screenWidth / 4) - 26; // tablets e desktops
+                }
+
+                return SizedBox(
+                  width: minWidth.clamp(150, 230), // sempre entre 150 e 230
+                  child: _FindsItem(
+                    product: product,
+                    isSilver: isSilver,
+                  ),
                 );
               }).toList(),
             ),
@@ -72,7 +86,7 @@ class _FindsItemState extends State<_FindsItem> {
     final bgColor = widget.isSilver ? Colors.grey[200]! : Colors.white;
     final borderColor = widget.isSilver ? Colors.grey[400]! : Colors.orange;
 
-    final double width = 190 * 1.1;
+    // final double width = 190 * 1.1;
 
     return MouseRegion(
       onEnter: (_) => setState(() => _hovered = true),
@@ -83,7 +97,7 @@ class _FindsItemState extends State<_FindsItem> {
           AnimatedContainer(
             duration: const Duration(milliseconds: 250),
             curve: Curves.easeOut,
-            width: width,
+            width: double.infinity,
             height: 80,
             decoration: BoxDecoration(
               color: bgColor,
@@ -142,9 +156,9 @@ class _FindsItemState extends State<_FindsItem> {
                     child: AutoSizeText(
                       widget.product.name ?? '',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                            fontWeight: FontWeight.w600,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                       maxLines: 2,
                       maxFontSize: 18,
                       minFontSize: 11,
