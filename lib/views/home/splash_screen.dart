@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
+import 'package:brn_ecommerce/models/home_sections/home_manager.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
-import 'package:brn_ecommerce/models/sections_home/home_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

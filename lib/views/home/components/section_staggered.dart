@@ -1,6 +1,6 @@
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
-import 'package:brn_ecommerce/models/sections_home/home_manager.dart';
-import 'package:brn_ecommerce/models/sections_home/section.dart';
+import 'package:brn_ecommerce/models/home_sections/home_manager.dart';
+import 'package:brn_ecommerce/models/home_sections/section.dart';
 import 'package:brn_ecommerce/views/home/components/add_tile_widget.dart';
 import 'package:brn_ecommerce/views/home/components/item_tile.dart';
 import 'package:brn_ecommerce/views/home/components/section_header.dart';
@@ -43,14 +43,14 @@ class SectionStaggered extends StatelessWidget {
 
                         return Column(
                           children: [
-                            if (!hasMinItems)
+                            if (!hasMinItems && homeManager.editing)
                               Container(
                                 padding: const EdgeInsets.all(12),
                                 alignment: Alignment.centerLeft,
                                 child: const Text(
-                                  'Adicione pelo menos 10 imagens para esta seção.',
+                                  'Recomendado 10 imagens para esta seção.',
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 25,
                                     color: Colors.redAccent,
                                     fontWeight: FontWeight.bold,
                                   ),

@@ -2,8 +2,8 @@ import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
-import 'package:brn_ecommerce/models/sections_home/home_manager.dart';
-import 'package:brn_ecommerce/models/sections_home/section.dart';
+import 'package:brn_ecommerce/models/home_sections/home_manager.dart';
+import 'package:brn_ecommerce/models/home_sections/section.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -19,13 +19,6 @@ class SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeManager = context.watch<HomeManager>();
-
-    // Ensures that the BestSelling section is always in the edit list
-    if (homeManager.editing &&
-        !homeManager.sections.contains(section) &&
-        section.type == 'BestSelling') {
-      homeManager.enterEditing();
-    }
 
     if (homeManager.editing) {
       final int sectionIndex = homeManager.sections.indexOf(section);
@@ -55,8 +48,8 @@ class SectionHeader extends StatelessWidget {
                 onTap: isFirstSection
                     ? null
                     : () {
-                  homeManager.moveSectionUp(section);
-                },
+                        homeManager.moveSectionUp(section);
+                      },
                 semanticLabel: 'Mover para cima',
               ),
               CustomIconButton(
@@ -65,22 +58,19 @@ class SectionHeader extends StatelessWidget {
                 onTap: isLastSection
                     ? null
                     : () {
-                  homeManager.moveSectionDown(section);
-                },
+                        homeManager.moveSectionDown(section);
+                      },
                 semanticLabel: 'Mover para baixo',
               ),
               const SizedBox(width: 20),
-
-              // 🔥 Only show the remove button if it is NOT BestSelling
-              if (section.type != "BestSelling")
-                CustomIconButton(
-                  iconData: Icons.remove,
-                  color: getCustomAppBarColorIcons(),
-                  onTap: () {
-                    homeManager.removeSection(section);
-                  },
-                  semanticLabel: 'Remover seção',
-                ),
+              CustomIconButton(
+                iconData: Icons.remove,
+                color: getCustomAppBarColorIcons(),
+                onTap: () {
+                  homeManager.removeSection(section);
+                },
+                semanticLabel: 'Remover seção',
+              ),
             ],
           ),
           if (section.error != null)

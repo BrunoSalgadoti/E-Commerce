@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
-import 'package:brn_ecommerce/models/sections_home/section.dart';
-import 'package:brn_ecommerce/models/sections_home/section_item.dart';
+import 'package:brn_ecommerce/models/home_sections/section.dart';
+import 'package:brn_ecommerce/models/home_sections/section_item.dart';
 import 'package:brn_ecommerce/views/product_edit/components/image_source_sheet.dart';
 import 'package:brn_ecommerce/views/product_edit/components/image_source_web.dart';
 import 'package:custom_universal_html/html.dart' as html;

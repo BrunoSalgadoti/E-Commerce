@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:brn_ecommerce/models/sections_home/section_item.dart';
+import 'package:brn_ecommerce/models/home_sections/section_item.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -158,7 +158,7 @@ class Section extends ChangeNotifier {
 
   /// Validation now ignores BestSelling section
   bool valid() {
-    if (type == "BestSelling") return true;
+    if (type == "BestSelling" || type == "RecentlyAdded") return true;
 
     if (name == null || name!.isEmpty) {
       error = 'Título Inválido';

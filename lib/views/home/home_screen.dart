@@ -5,16 +5,20 @@ import 'package:brn_ecommerce/common/advertising/finds_lowest_selling_showcase.d
 import 'package:brn_ecommerce/common/advertising/footer.dart';
 import 'package:brn_ecommerce/common/advertising/highlight_products_block.dart';
 import 'package:brn_ecommerce/common/advertising/info_marquee_widget.dart';
+import 'package:brn_ecommerce/common/advertising/purchase_suggestions_widget.dart';
 import 'package:brn_ecommerce/common/advertising/recently_added_products.dart';
+import 'package:brn_ecommerce/common/advertising/sales_suggestion_visited_products.dart';
 import 'package:brn_ecommerce/common/app_bar/complement_app_bar.dart';
 import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
+import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
+import 'package:brn_ecommerce/common/messengers/components/text_of_alerts_and_messengers.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
+import 'package:brn_ecommerce/models/home_sections/home_manager.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
-import 'package:brn_ecommerce/models/sections_home/home_manager.dart';
 import 'package:brn_ecommerce/views/home/components/add_section_widget.dart' show AddSectionWidget;
 import 'package:brn_ecommerce/views/home/components/content_home_app_bar.dart';
 import 'package:brn_ecommerce/views/home/components/section_header.dart';
@@ -25,9 +29,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../common/drawer/components/page_manager.dart' show PageManager;
-import '../../common/messengers/components/text_of_alerts_and_messengers.dart';
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, this.sectionHeader});
 
@@ -35,6 +36,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Widget heightSpaceBetweenWidgets = SizedBox(height: 48);
+
     return Center(
       child: Padding(
         padding: kIsWeb ? const EdgeInsets.only(top: 0) : MediaQuery.of(context).padding,
@@ -79,11 +82,39 @@ class HomeScreen extends StatelessWidget {
                       final List<Widget> children = homeManager.sections.map<Widget>((section) {
                         switch (section.type) {
                           case 'List':
-                            return SectionList(section: section);
+                            return Column(
+                              children: [
+                                SectionList(section: section),
+                                heightSpaceBetweenWidgets,
+                              ],
+                            );
                           case 'Staggered':
-                            return SectionStaggered(section: section);
+                            return Column(
+                              children: [
+                                SectionStaggered(section: section),
+                                heightSpaceBetweenWidgets
+                              ],
+                            );
                           case 'BestSelling':
-                            return const BestSellingCard();
+                            return Column(
+                              children: [const BestSellingCard(), heightSpaceBetweenWidgets],
+                            );
+                          case 'RecentlyAdded':
+                            return ConstrainedBox(
+                              constraints: BoxConstraints(maxWidth: tabletBreakpoint),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  textForGoogleDecorations(
+                                      titleForDecorations: 'Adicionados recentemente!'),
+                                  const RecentlyAddedProducts(carrossel: true),
+                                  heightSpaceBetweenWidgets
+                                ],
+                              ),
+                            );
+
                           default:
                             return Container();
                         }
@@ -93,11 +124,8 @@ class HomeScreen extends StatelessWidget {
                         children.add(AddSectionWidget(homeManager: homeManager));
                       }
 
-                      //TODO: Inserir outros widgets no layout antes do children e depois.
-
                       final List<Widget> bodyHome = [
                         const AdvertisingWidget(),
-
                         // --- FEATURED PRODUCTS BLOCK ---
                         Consumer<ProductManager>(
                           builder: (_, productManager, __) {
@@ -110,30 +138,42 @@ class HomeScreen extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
                                 child: ConstrainedBox(
-                                    constraints: BoxConstraints(maxWidth: tabletBreakpoint),
-                                    child: Column(children: [
+                                  constraints: BoxConstraints(maxWidth: tabletBreakpoint),
+                                  child: Column(
+                                    children: [
                                       HighlightProductsBlock(
                                         products: featuredProducts,
                                         isSilver: true,
                                       ),
-                                    ])),
+                                    ],
+                                  ),
+                                ),
                               ),
                             );
                           },
                         ),
+                        heightSpaceBetweenWidgets,
                         ConstrainedBox(
                           constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
                           child: Column(children: [...children]),
                         ),
-
-                        const CategoriesShowcase(),
-                        const FindsLowestSellingShowcase(),
+                        heightSpaceBetweenWidgets,
                         Center(
-                          child: textForGoogleDecorations(
-                              titleForDecorations: 'Adicionados recentemente...'),
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(maxWidth: tabletBreakpoint),
+                            child: SalesSuggestionVisitedProducts(),
+                          ),
                         ),
-                        const RecentlyAddedProducts(carrossel: true),
-                        //Info Marquee
+                        heightSpaceBetweenWidgets,
+                        const CategoriesShowcase(),
+                        heightSpaceBetweenWidgets,
+                        const FindsLowestSellingShowcase(),
+                        heightSpaceBetweenWidgets,
+                        PurchaseSuggestionsWidget(
+                          titleText: 'Queridos entre os clientes!',
+                        ),
+                        heightSpaceBetweenWidgets,
+                        // Positioned in the last hierarchy of home widgets
                         Padding(
                           padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
                           child: InfoMarqueeWidget(
@@ -144,7 +184,6 @@ class HomeScreen extends StatelessWidget {
                             marqueeWidth: tabletBreakpoint,
                             onPressed: () {
                               context.read<PageManager>().setPage(DrawerPages.categories);
-                              Navigator.of(context).pop();
                             },
                             marqueeSpeed: MediaQuery.of(context).size.width >= 900 ? 24 : 22,
                             marqueeStart: MediaQuery.of(context).size.width >= 900 ? 1.0 : 1.7,
