@@ -38,18 +38,18 @@ class FindsLowestSellingShowcase extends StatelessWidget {
               children: products.map((product) {
                 final screenWidth = MediaQuery.of(context).size.width;
 
-                // calcula largura mínima por breakpoint
+                // calculates minimum width per breakpoint
                 double minWidth;
                 if (screenWidth <= mobileBreakpoint) {
-                  minWidth = (screenWidth / 2) - 26; // garante 2 lado a lado
+                  minWidth = (screenWidth / 2) - 26; // guarantees 2 side by side
                 } else if (screenWidth <= intermediateBreakpoint) {
-                  minWidth = (screenWidth / 3) - 26; // até 3
+                  minWidth = (screenWidth / 3) - 26; // up to 3
                 } else {
-                  minWidth = (screenWidth / 4) - 26; // tablets e desktops
+                  minWidth = (screenWidth / 4) - 26; // tablets and desktops
                 }
 
                 return SizedBox(
-                  width: minWidth.clamp(150, 230), // sempre entre 150 e 230
+                  width: minWidth.clamp(150, 230), // always between 150 and 230
                   child: _FindsItem(
                     product: product,
                     isSilver: isSilver,
@@ -85,8 +85,6 @@ class _FindsItemState extends State<_FindsItem> {
   Widget build(BuildContext context) {
     final bgColor = widget.isSilver ? Colors.grey[200]! : Colors.white;
     final borderColor = widget.isSilver ? Colors.grey[400]! : Colors.orange;
-
-    // final double width = 190 * 1.1;
 
     return MouseRegion(
       onEnter: (_) => setState(() => _hovered = true),
