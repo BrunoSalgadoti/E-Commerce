@@ -4,6 +4,7 @@ import 'package:brn_ecommerce/models/products/categories/product_category.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/sales/order_client.dart';
 import 'package:brn_ecommerce/models/stores/stores.dart';
+import 'package:brn_ecommerce/services/development_monitoring/mapper_view.dart';
 import 'package:brn_ecommerce/views/address/address_screen.dart';
 import 'package:brn_ecommerce/views/cart/cart_screen.dart';
 import 'package:brn_ecommerce/views/checkout/checkout_screen.dart';
@@ -27,9 +28,15 @@ import 'package:flutter/material.dart';
 
 class RouteGenerator {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
-    //TODO: Rotas ativas em fase de transição:
 
     switch (settings.name) {
+    // ------------------Only for devs -----------------------------------
+      case RoutesNavigator.mapeamentoView:
+        if (!kDebugMode) return null; // em release, a rota não existe
+        final view = getMapperView();
+        if (view == null) return null;
+        return MaterialPageRoute(builder: (_) => view);
+    // -------------------------------------------------------------------
       case RoutesNavigator.loginScreen:
         return MaterialPageRoute(builder: (_) => LoginScreen(), settings: settings);
       case RoutesNavigator.signupScreen:

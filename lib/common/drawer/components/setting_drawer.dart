@@ -1,5 +1,7 @@
 import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
+import 'package:brn_ecommerce/helpers/routes_navigator.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,12 +26,20 @@ class SettingsDrawer extends StatelessWidget {
           value: 'Opção2',
           child: Text('Configurações gerais'),
         ),
+        if (kDebugMode)
+        PopupMenuItem<String>(
+          value: 'Opção3',
+          child: Text('Mapeamento Estrutural'),
+        ),
 
         // Add other menu options as needed
       ],
       onSelected: (String value) {
         if (value == 'Opção1') {
           context.read<PageManager>().setPage(DrawerPages.categories);
+        }
+        if (value == 'Opção3' && kDebugMode) {
+          Navigator.of(context).pushNamed(RoutesNavigator.mapeamentoView);
         }
       },
       // Add the conditions for the other selected options for ADM

@@ -1,4 +1,7 @@
 mixin RoutesNavigator {
+  // ----------------------For only Devs -------------------------------
+  static const String mapeamentoView = '/mapeamento_estrutural';
+  // --------------------------------------------------------------------
   static const String loginScreen = '/logar';
   static const String signupScreen = '/sair';
   static const String cartScreen = '/carrinho';
