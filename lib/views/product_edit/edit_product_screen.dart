@@ -191,12 +191,9 @@ class EditProductScreen extends StatelessWidget {
                           MarkdownToolbar(
                             useIncludedTextField: false,
                             controller: controller,
-                            // focusNode: _focusNode,
-                            // You can customize the toolbar here as needed
-                            // For example:
-                            // backgroundColor: Colors.lightBlue,
-                            // iconColor: Colors.white,
-                            // iconSize: 30,
+                            backgroundColor: Colors.lightBlue,
+                            iconColor: Colors.white,
+                            iconSize: 30,
                           ),
                           const Divider(),
                           TextField(

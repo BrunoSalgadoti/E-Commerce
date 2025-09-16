@@ -6,7 +6,7 @@ description: Loja Virtual pertencente a empresa - BRN Info_Dev (CNPJ. 52.129.576
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.12+06
+version: 1.0.13+07
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
@@ -56,6 +56,8 @@ dependencies:
   markdown_toolbar: ^0.5.0
   package_info_plus: ^8.3.1
   path_provider: ^2.1.5
+  pdf: ^3.11.3
+  printing: ^5.11.0
   permission_handler: ^12.0.1
   provider: ^6.1.5+1
   screenshot: ^3.0.0

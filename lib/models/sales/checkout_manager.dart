@@ -70,7 +70,7 @@ class CheckoutManager extends ChangeNotifier {
     order.orderId = orderId.toString();
     await order.saveOrder();
 
-    // Salva compra no PurchaseModel
+    // Save purchase in PurchaseModel
     await _savePurchase();
 
     cartManager!.clearCart();
@@ -159,12 +159,12 @@ class CheckoutManager extends ChangeNotifier {
             firestore.doc("products/${product.id}"), {"details": product.exportDetailsList()});
       }
 
-      // MonitoringStockMin continua sendo chamado
+      // MonitoringStockMin
       MonitoringStockMin.checkMinimumStock(productsToUpdate, productsWithoutStock);
     });
   }
 
-  /// Apenas chama o método do PurchaseModel
+  /// Just calls the PurchaseModel method
   Future<void> _savePurchase() async {
     if (cartManager == null || cartManager!.items.isEmpty) return;
 
