@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:brn_ecommerce/common/buttons/custom_button.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
+import 'package:brn_ecommerce/common/images/shimmer_custom_image.dart';
 import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/home_sections/home_manager.dart';
@@ -11,7 +10,6 @@ import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class ItemTile extends StatelessWidget {
   final SectionItem? item;
@@ -117,20 +115,12 @@ class ItemTile extends StatelessWidget {
       },
       child: AspectRatio(
         aspectRatio: 1,
-        child: item?.image != null
-            ? (item!.image is String
-                ? FadeInImage.memoryNetwork(
-                    placeholder: kTransparentImage,
-                    image: item!.image as String,
-                    fit: BoxFit.cover,
-                  )
-                : Image.file(
-                    item!.image as File,
-                    fit: BoxFit.cover,
-                  ))
-            : prod != null && prod.images!.isNotEmpty
-                ? Image.network(prod.images!.first, fit: BoxFit.fitHeight)
-                : Container(color: Colors.grey[200]),
+        child: ShimmerCustomImage(
+          image:
+              item?.image ?? (prod != null && prod.images!.isNotEmpty ? prod.images!.first : null),
+          fit: BoxFit.cover,
+          borderRadius: 0,
+        ),
       ),
     );
   }

@@ -44,9 +44,9 @@ dependencies:
   font_awesome_flutter: ^10.10.0
   geolocator: ^14.0.2
   google_fonts: ^6.3.1
-  google_sign_in: ^7.1.1
+  google_sign_in: ^7.2.0
   http: ^1.5.0
-  image_cropper: ^9.1.0
+  image_cropper: ^10.0.0+1
   image_gallery_saver_plus: ^4.0.1
   image_picker: ^1.2.0
   intl: ^0.20.2
@@ -57,22 +57,23 @@ dependencies:
   package_info_plus: ^8.3.1
   path_provider: ^2.1.5
   pdf: ^3.11.3
-  printing: ^5.11.0
+  printing: ^5.14.2
   permission_handler: ^12.0.1
   provider: ^6.1.5+1
   screenshot: ^3.0.0
   shared_preferences: ^2.5.3
-  share_plus: ^11.1.0
+  share_plus: ^12.0.0
   sliding_up_panel: ^2.0.0+1
   staggered_grid_view_flutter: ^0.0.4
   url_launcher: ^6.3.2
   dynamic_path_url_strategy: ^1.0.0
   uuid: ^4.5.1
   youtube_player_iframe: ^5.2.2
-  transparent_image: ^2.0.1
+  shimmer: ^3.0.0
+#  transparent_image: ^2.0.1
   decorated_text: ^0.1.0
   collection: ^1.19.1
-  vibration: ^3.1.3
+  vibration: ^3.1.4
   device_preview: any
   logger: any
 
@@ -81,7 +82,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^2.8.0
-  build_web_compilers: ^4.2.3
+  build_web_compilers: ^4.2.4
   flutter_lints: ^6.0.0
   lint: ^2.8.0
 
