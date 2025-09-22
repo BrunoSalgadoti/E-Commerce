@@ -17,15 +17,15 @@ class CustomDrawerHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(15, 10, 15, 8),
-      height: 200,
+      padding: const EdgeInsets.fromLTRB(15, 12, 15, 8),
+      height: 220,
       child: Consumer2<UserManager, PageManager>(
         builder: (_, userManager, pageManager, __) {
           return ListView(
             children: [
               Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   const AutoSizeText(
                     overflow: TextOverflow.ellipsis,
@@ -43,11 +43,11 @@ class CustomDrawerHeader extends StatelessWidget {
                       ),
                       onTap: () => pageManager.setPage(DrawerPages.home)),
                   AutoSizeText(
-                    'Bem-Vindo(a)! ${userManager.users?.userName ?? ''}',
+                    'Bem-Vindo(a)! \n ${userManager.users?.userName ?? ''}',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     minFontSize: 10,
-                    maxFontSize: 18,
+                    maxFontSize: 20,
                     style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 5),

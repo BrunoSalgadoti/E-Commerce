@@ -295,7 +295,7 @@ Widget carouselForProducts({
                   icon: const Icon(
                     Icons.open_in_new,
                     semanticLabel: 'Visualizar Produto',
-                    size: 30,
+                    size: 36,
                   ),
                   onPressed: () {
                     Navigator.pushNamed(

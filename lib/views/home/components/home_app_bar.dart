@@ -1,18 +1,19 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
+import 'package:brn_ecommerce/models/home_sections/home_manager.dart';
+import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart' show RoutesNavigator;
-import 'package:brn_ecommerce/models/home_sections/home_manager.dart';
 
-import 'package:brn_ecommerce/models/users/users_manager.dart' show UserManager;
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
+class HomeAppBar extends StatelessWidget {
+  final VoidCallback? onMenuPressed;
 
-class ContentHomeAppBar extends StatelessWidget {
-  const ContentHomeAppBar({super.key});
+  const HomeAppBar({super.key, this.onMenuPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -28,25 +29,28 @@ class ContentHomeAppBar extends StatelessWidget {
       elevation: 10,
       shadowColor: Colors.yellow,
       backgroundColor: Colors.yellow.withAlpha(20),
-
-      // prevents Scaffold from creating the default icon
       automaticallyImplyLeading: false,
-
       flexibleSpace: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: tabletBreakpoint),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Manually created Drawer icon
+              // Manual menu: uses callback when provided (web), otherwise opens Scaffold drawer (mobile)
               CustomIconButton(
                 iconData: Icons.menu,
                 semanticLabel: 'Ícone do Drawer',
                 size: iconsSize,
                 onTap: () {
-                  Scaffold.of(context).openDrawer();
+                  if (onMenuPressed != null) {
+                    onMenuPressed!();
+                  } else {
+                    Scaffold.of(context).openDrawer();
+                  }
                 },
               ),
+
+              // other icons/avatars
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -103,11 +107,8 @@ class ContentHomeAppBar extends StatelessWidget {
                     },
                   ),
                   userIsLoggedIn
-                      ? // User avatar
-                      getUsers.users?.userPhotoURL == null || getUsers.users?.userPhotoURL == ''
-                          ? CircleAvatar(
-                              backgroundImage: AssetImage(RootAssets.iconUserNoImage),
-                            )
+                      ? (getUsers.users?.userPhotoURL == null || getUsers.users?.userPhotoURL == '')
+                          ? CircleAvatar(backgroundImage: AssetImage(RootAssets.iconUserNoImage))
                           : CircleAvatar(
                               backgroundImage: NetworkImage(getUsers.users?.userPhotoURL ?? ''))
                       : Container()

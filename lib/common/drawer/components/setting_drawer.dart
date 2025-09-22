@@ -48,7 +48,7 @@ class SettingsDrawer extends StatelessWidget {
         child: Row(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 32),
+              padding: EdgeInsets.only(left: 8),
               child: Icon(
                 Icons.settings,
                 size: 33,
