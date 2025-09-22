@@ -80,7 +80,10 @@ class ResponsivePageWrapperState extends State<ResponsivePageWrapper> {
                           onPressed: toggleDrawer,
                         ),
                       ),
-                body: content,
+                body: Padding(
+                  padding: EdgeInsets.only(top: topPadding),
+                  child: content,
+                ),
               ),
             ),
           ),
@@ -90,7 +93,10 @@ class ResponsivePageWrapperState extends State<ResponsivePageWrapper> {
       return Scaffold(
         drawer: const CustomDrawer(),
         appBar: isHome ? null : AppBar(title: Text(widget.appBarTitle ?? '')),
-        body: content,
+        body: Padding(
+          padding: EdgeInsets.only(top: topPadding),
+          child: content,
+        ),
       );
     }
   }
