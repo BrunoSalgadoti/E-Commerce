@@ -32,7 +32,6 @@ class _OutdoorWidgetState extends State<OutdoorWidget>
   final Map<String, ui.Image> _imageCache = {};
 
   @override
-  @override
   void initState() {
     super.initState();
     _pageController = PageController();
@@ -76,19 +75,19 @@ class _OutdoorWidgetState extends State<OutdoorWidget>
 
     // Ajusta a duração da animação proporcional ao número de fatias
     final sliceCount = widget.slices;
-    final durationPerSlice = 200; // ms por fatia, ajuste conforme necessidade
+    final durationPerSlice = 200; // ms por fatia
     _animController.duration = Duration(milliseconds: durationPerSlice * sliceCount);
+
+    // ⚡ Atualiza o índice logo no início
+    setState(() {
+      _currentIndex = nextIndex;
+    });
 
     // Inicia animação das fatias
     _animController.forward(from: 0).whenComplete(() {
       if (!mounted) return;
 
-      // Atualiza índice atual somente depois da animação
-      setState(() {
-        _currentIndex = nextIndex;
-      });
-
-      // Garante que o PageController está montado
+      // Avança no PageController (opcional, só pra manter sincronizado)
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (_pageController.hasClients) {
           _pageController.animateToPage(
@@ -103,6 +102,7 @@ class _OutdoorWidgetState extends State<OutdoorWidget>
       _startAutoPlay();
     });
   }
+
 
 
   @override
@@ -189,50 +189,50 @@ class _SlicePainter extends CustomPainter {
     for (int i = 0; i < slices; i++) {
       final left = i * sliceWidth;
 
-      // Progresso da fatia
+      // Progresso individual de cada fatia
       final t = ((progress * slices) - i).clamp(0.0, 1.0);
-      if (t <= 0) continue; // ainda não começou a girar
+      if (t <= 0) continue;
 
-      // Angulo de flip da fatia
-      final angle = ui.lerpDouble(0, pi, Curves.easeInOut.transform(t))!;
-      final centerX = left + sliceWidth / 2;
-
-      canvas.save();
-
-      // Posiciona o centro da fatia
-      canvas.translate(centerX, size.height / 2);
-
-      // Matriz de perspectiva 3D
-      final perspective = 0.003;
-      final matrix4 = Matrix4.identity()
-        ..setEntry(3, 2, perspective)
-        ..rotateY(angle);
-      canvas.transform(matrix4.storage);
-
-      canvas.translate(-centerX, -size.height / 2);
-
-      // Primeiro desenha a próxima imagem atrás, sempre na posição correta
+      final currentSrc = Rect.fromLTWH(
+        i * (currentImage.width / slices),
+        0,
+        currentImage.width / slices,
+        currentImage.height.toDouble(),
+      );
       final nextSrc = Rect.fromLTWH(
         i * (nextImage.width / slices),
         0,
         nextImage.width / slices,
         nextImage.height.toDouble(),
       );
-      final dst = Rect.fromLTWH(left, 0, sliceWidth, size.height);
-      canvas.drawImageRect(nextImage, nextSrc, dst, paint);
 
-      // Depois desenha a fatia atual, girando
-      if (angle <= pi / 2) {
-        final currentSrc = Rect.fromLTWH(
-          i * (currentImage.width / slices),
-          0,
-          currentImage.width / slices,
-          currentImage.height.toDouble(),
-        );
+      final dst = Rect.fromLTWH(left, 0, sliceWidth, size.height);
+
+      // Centro da fatia
+      final centerX = left + sliceWidth / 2;
+      final centerY = size.height / 2;
+
+      // === Desenha a imagem atual (saindo) ===
+      if (t < 1) {
+        final scaleX = 1 - t; // vai de 1 -> 0
+        canvas.save();
+        canvas.translate(centerX, centerY);
+        canvas.scale(scaleX, 1);
+        canvas.translate(-centerX, -centerY);
         canvas.drawImageRect(currentImage, currentSrc, dst, paint);
+        canvas.restore();
       }
 
-      canvas.restore();
+      // === Desenha a nova imagem (entrando) ===
+      if (t > 0) {
+        final scaleX = (t >= 1.0) ? 1.0 : t; // garante fixa no final
+        canvas.save();
+        canvas.translate(centerX, centerY);
+        canvas.scale(scaleX, 1);
+        canvas.translate(-centerX, -centerY);
+        canvas.drawImageRect(nextImage, nextSrc, dst, paint);
+        canvas.restore();
+      }
     }
   }
 
