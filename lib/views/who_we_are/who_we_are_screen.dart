@@ -1,7 +1,10 @@
+import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
+import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/views/outdoor/outdoor_widget.dart';
 import 'package:brn_ecommerce/views/who_we_are/components/footer_description_widget.dart';
 import 'package:brn_ecommerce/views/who_we_are/components/top_description_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class WhoWeAreScreen extends StatefulWidget {
   const WhoWeAreScreen({super.key});
@@ -17,58 +20,71 @@ class WhoWeAreScreenState extends State<WhoWeAreScreen> {
   void initState() {
     super.initState();
 
-    _controller = YoutubePlayerController.fromVideoId(
-      videoId: "5UarsHuiwuQ",
-      autoPlay: false,
-      params: const YoutubePlayerParams(
-        showFullscreenButton: true,
+    _controller = YoutubePlayerController(
+      initialVideoId: "5UarsHuiwuQ",
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
         mute: false,
-        showControls: true,
-        enableJavaScript: true,
+        loop: false,
+        forceHD: true,
       ),
     );
   }
 
   @override
   void dispose() {
-    _controller.stopVideo();
+    _controller.pause(); // pausa antes de descartar
+    _controller.dispose(); // libera memória
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          ...[const TopDescriptionWidget()],
-          Padding(
-            padding: const EdgeInsets.only(top: 16, left: 30, right: 30, bottom: 16),
-            child: Center(
-              // Embed do vídeo do YouTube
-              child: FutureBuilder<void>(
-                future: Future.delayed(const Duration(seconds: 6)),
-                builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Text('Carregando...');
-                  } else {
-                    return SizedBox(
-                      width: 400,
-                      height: 250,
-                      child: YoutubePlayer(
-                        controller: _controller,
-                        aspectRatio: Checkbox.width,
-                      ),
-                    );
-                  }
+    return Scaffold(
+      drawer: CustomDrawer(),
+      appBar: CustomAppBar(title: 'Quem Somos', showDrawerIcon: true, showSearchButton: false),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const TopDescriptionWidget(),
+              const SizedBox(height: 20),
+
+
+
+              OutdoorWidget(isSilver: false,),
+
+
+
+              // Vídeo centralizado responsivo
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final width = constraints.maxWidth < 400
+                      ? constraints.maxWidth
+                      : 400.0; // limita largura
+                  final height = width * 9 / 16; // mantém aspect ratio 16:9
+                  return Center(
+                    child: YoutubePlayer(
+                      controller: _controller,
+                      showVideoProgressIndicator: true,
+                      progressIndicatorColor: Colors.red,
+                      width: width,
+                      bottomActions: const [
+                        CurrentPosition(),
+                        ProgressBar(isExpanded: true),
+                        FullScreenButton(),
+                      ],
+                    ),
+                  );
                 },
               ),
-            ),
+              const SizedBox(height: 30),
+              const FooterDescriptionWidget(),
+            ],
           ),
-          ...[const FooterDescriptionWidget()]
-        ],
+        ),
       ),
     );
   }

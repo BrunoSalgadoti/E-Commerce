@@ -40,113 +40,91 @@ class _FooterDescriptionWidgetState extends State<FooterDescriptionWidget> {
         "da sua Empresa como CNPJ, Telefone, Endereço, etc..."
         "\n Clique no ícone da vassoura e comece!";
 
-    return Consumer2<WhoWeAreManager, UserManager>(builder: (_, whoWeAreManager, userManager, __) {
-      return Center(
+    return Consumer2<WhoWeAreManager, UserManager>(
+      builder: (_, whoWeAreManager, userManager, __) {
+        return Center(
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-            if (userManager.adminEnable)
-              Padding(
-                padding: const EdgeInsets.only(left: 5, right: 5, bottom: 0),
-                child: MarkdownToolbar(
-                  useIncludedTextField: false,
-                  controller: controllerText,
-                  // focusNode: _focusNode,
-                  // You can customize the toolbar here as needed
-                  // For example:
-                  // backgroundColor: Colors.lightBlue,
-                  // iconColor: Colors.white,
-                  // iconSize: 30,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              if (userManager.adminEnable)
+                Padding(
+                  padding: const EdgeInsets.only(left: 5, right: 5, bottom: 0),
+                  child: MarkdownToolbar(
+                    useIncludedTextField: false,
+                    controller: controllerText,
+                  ),
                 ),
-
-                // MarkdownTextInput(
-                //   (customText) => whoWeAreManager.footerDescription = customText,
-                //   whoWeAreManager.footerDescription ?? adminCustomText,
-                //   label: "Dados da Loja: Endereço, CNPJ, tel ...",
-                //   maxLines: null,
-                //   actions: const [
-                //     MarkdownType.bold,
-                //     MarkdownType.italic,
-                //     MarkdownType.title,
-                //     MarkdownType.separator,
-                //     MarkdownType.strikethrough,
-                //     MarkdownType.code,
-                //     MarkdownType.link,
-                //     MarkdownType.list,
-                //     MarkdownType.blockquote,
-                //   ],
-                //   controller: controllerText,
-                //   textStyle: const TextStyle(fontSize: 16),
-                // ),
+              const Divider(),
+              if (userManager.adminEnable)
+                CustomTextFormField(
+                title: whoWeAreManager.footerDescription ?? adminCustomText,
+                labelText: "Dados da Loja: Endereço, CNPJ, tel ...",
+                controller: controllerText,
+                titleSize: 16,
+                maxLength: null,
+                onChanged: (customText) => whoWeAreManager.footerDescription = customText,
               ),
-            const Divider(),
-            CustomTextFormField(
-              title: whoWeAreManager.footerDescription ?? adminCustomText,
-              labelText: "Dados da Loja: Endereço, CNPJ, tel ...",
-              controller: controllerText,
-              titleSize: 16,
-              maxLength: null,
-              onChanged: (customText) => whoWeAreManager.footerDescription = customText,
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (userManager.adminEnable)
-                  CustomTextButton(
-                    text: null,
-                    icon: const Icon(FontAwesomeIcons.broom),
-                    onPressed: () => controllerText.clear(),
-                  ),
-                if (userManager.adminEnable)
-                  CustomTextButton(
-                    text: null,
-                    icon: const Icon(
-                      FontAwesomeIcons.check,
+              if (userManager.adminEnable)
+                Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                    CustomTextButton(
+                      text: null,
+                      icon: const Icon(FontAwesomeIcons.broom),
+                      onPressed: () => controllerText.clear(),
                     ),
-                    onPressed: () async {
-                      await whoWeAreManager.saveDescriptions();
-                    },
-                  ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 80),
-              child: FutureBuilder<void>(
-                future: Future.delayed(const Duration(seconds: 1)),
-                builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Text('Carregando...');
-                  } else {
-                    return Align(
-                      alignment: Alignment.center,
-                      child: Column(
-                        children: [
-                          Container(
-                            color: const Color.fromARGB(155, 132, 178, 239),
-                            child: Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: MarkdownBody(
-                                data: whoWeAreManager.footerDescription ??
-                                    "Parabéns! Você adquiriu um produto "
-                                        "com a qualidade BRN Info_Dev",
-                                styleSheet: MarkdownStyleSheet(
-                                  p: const TextStyle(color: Colors.white),
-                                  pPadding: const EdgeInsets.all(4),
+                    CustomTextButton(
+                      text: null,
+                      icon: const Icon(
+                        FontAwesomeIcons.check,
+                      ),
+                      onPressed: () async {
+                        await whoWeAreManager.saveDescriptions();
+                      },
+                    ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 80),
+                child: FutureBuilder<void>(
+                  future: Future.delayed(const Duration(seconds: 1)),
+                  builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Text('Carregando...');
+                    } else {
+                      return Align(
+                        alignment: Alignment.center,
+                        child: Column(
+                          children: [
+                            Container(
+                              color: const Color.fromARGB(155, 132, 178, 239),
+                              child: Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: MarkdownBody(
+                                  data: whoWeAreManager.footerDescription ??
+                                      "Parabéns! Você adquiriu um produto "
+                                          "com a qualidade BRN Info_Dev",
+                                  styleSheet: MarkdownStyleSheet(
+                                    p: const TextStyle(color: Colors.black),
+                                    pPadding: const EdgeInsets.all(4),
+                                  ),
+                                  shrinkWrap: true,
                                 ),
-                                shrinkWrap: true,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-                },
+                          ],
+                        ),
+                      );
+                    }
+                  },
+                ),
               ),
-            ),
-          ]));
-    });
+            ],
+          ),
+        );
+      },
+    );
   }
 }
