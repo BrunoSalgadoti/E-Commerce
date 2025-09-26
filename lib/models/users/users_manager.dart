@@ -127,8 +127,9 @@ class UserManager extends ChangeNotifier {
       // Check if the "aux" collection contains the "delivery" document
       final deliveryDoc = firestore.collection("aux").doc("delivery");
       final doc = await deliveryDoc.get();
-      if (!doc.exists)
+      if (!doc.exists) {
         await deliveryDoc.set(Delivery().toMap()); // Create a new instance of the Delivery class
+      }
 
       // Check if the "aux" collection contains the "orderCounter" document
       final orderCounterDoc = firestore.collection("aux").doc("orderCounter");

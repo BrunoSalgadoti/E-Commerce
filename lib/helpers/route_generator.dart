@@ -31,7 +31,7 @@ class RouteGenerator {
 
     switch (settings.name) {
     // ------------------Only for devs -----------------------------------
-      case RoutesNavigator.mapeamentoView:
+      case RoutesNavigator.structuralMapping:
         if (!kDebugMode) return null; // em release, a rota não existe
         final view = getMapperView();
         if (view == null) return null;

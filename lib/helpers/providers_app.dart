@@ -6,6 +6,9 @@ import 'package:brn_ecommerce/models/admin_area/admin_users_manager.dart';
 import 'package:brn_ecommerce/models/admin_area/admin_users_search.dart';
 import 'package:brn_ecommerce/models/favorites/favorites_manager.dart';
 import 'package:brn_ecommerce/models/home_sections/home_manager.dart';
+import 'package:brn_ecommerce/models/outdoor/components/outdoor_controller.dart';
+import 'package:brn_ecommerce/models/outdoor/components/outdoor_service.dart';
+import 'package:brn_ecommerce/models/outdoor/outdoor_repository.dart';
 import 'package:brn_ecommerce/models/policy_documents/policy_and_documents.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category_manager.dart';
@@ -65,6 +68,15 @@ class ProvidersApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AdminUsersSearch()),
         ChangeNotifierProvider(create: (_) => Stores()),
         ChangeNotifierProvider(create: (_) => StoresManager()),
+        ChangeNotifierProvider<OutdoorController>(
+          create: (_) {
+            final controller = OutdoorController(
+              OutdoorRepository(FirebaseService()),
+            );
+            controller.loadOutdoors();
+            return controller;
+          },
+        ),
 
         // Proxy Providers for managing dependencies between providers
         ChangeNotifierProxyProvider<UserManager, ProductCategoryManager>(

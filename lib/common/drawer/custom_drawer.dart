@@ -46,18 +46,19 @@ class CustomDrawer extends StatelessWidget {
     return const [
       DrawerItem(icon: Icons.location_on, title: "Lojas", page: DrawerPages.stores),
       DrawerItem(
-          icon: FontAwesomeIcons.peopleGroup, title: "Quem Somos?", page: DrawerPages.whoWeAre),
+          icon: FontAwesomeIcons.peopleGroup, title: "Quem Somos", page: DrawerPages.whoWeAreScreen),
     ];
   }
 
   List<DrawerItem> adminItemsAdm(BuildContext context) {
-    final userManager = Provider.of<UserManager>(context, listen: false);
+    final userManager = context.watch<UserManager>();
     if (!userManager.adminEnable) return [];
     return const [
       DrawerItem(
           icon: Icons.supervised_user_circle, title: "Clientes", page: DrawerPages.adminUsers),
       DrawerItem(icon: Icons.task_alt, title: "Pedidos", page: DrawerPages.adminOrders),
       DrawerItem(icon: Icons.list, title: "Listar todos", page: DrawerPages.products),
+      DrawerItem(icon: Icons.airplay_outlined, title: "Configurar Outdoor", page: DrawerPages.outdoorAdmScreen),
     ];
   }
 

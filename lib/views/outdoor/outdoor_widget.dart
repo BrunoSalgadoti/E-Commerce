@@ -1,23 +1,27 @@
 import 'dart:math';
 import 'dart:ui' as ui;
+import 'dart:ui' show lerpDouble;
+import 'package:vector_math/vector_math_64.dart' show Vector3;
+import 'package:brn_ecommerce/models/outdoor/components/outdoor_controller.dart';
+import 'package:brn_ecommerce/models/outdoor/components/outdoor_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import '../../models/outdoor/components/outdoor_controller.dart';
-import '../../models/outdoor/components/outdoor_item.dart';
 
 class OutdoorWidget extends StatefulWidget {
   final int slices;
   final bool isSilver;
   final OutdoorController? controller;
+  final int durationPerSliceMs;
 
   const OutdoorWidget({
-    Key? key,
+    super.key,
     required this.isSilver,
     this.controller,
     this.slices = 6,
-  }) : super(key: key);
+    this.durationPerSliceMs = 500,
+  });
 
   @override
   State<OutdoorWidget> createState() => _OutdoorWidgetState();
@@ -40,12 +44,10 @@ class _OutdoorWidgetState extends State<OutdoorWidget>
       duration: const Duration(milliseconds: 900),
     );
 
-    // Aguarda montagem do widget
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _startAutoPlay();
     });
   }
-
 
   void _startAutoPlay() {
     Future.delayed(const Duration(seconds: 6), _nextPage);
@@ -70,24 +72,19 @@ class _OutdoorWidgetState extends State<OutdoorWidget>
 
     final nextIndex = (_currentIndex + 1) % controller.items.length;
 
-    // Pré-carrega a próxima imagem
     await _loadImage(controller.items[nextIndex]);
 
-    // Ajusta a duração da animação proporcional ao número de fatias
     final sliceCount = widget.slices;
-    final durationPerSlice = 200; // ms por fatia
+    final durationPerSlice = widget.durationPerSliceMs;
     _animController.duration = Duration(milliseconds: durationPerSlice * sliceCount);
 
-    // ⚡ Atualiza o índice logo no início
     setState(() {
       _currentIndex = nextIndex;
     });
 
-    // Inicia animação das fatias
     _animController.forward(from: 0).whenComplete(() {
       if (!mounted) return;
 
-      // Avança no PageController (opcional, só pra manter sincronizado)
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (_pageController.hasClients) {
           _pageController.animateToPage(
@@ -98,12 +95,9 @@ class _OutdoorWidgetState extends State<OutdoorWidget>
         }
       });
 
-      // Inicia o próximo autoplay
       _startAutoPlay();
     });
   }
-
-
 
   @override
   void dispose() {
@@ -127,7 +121,7 @@ class _OutdoorWidgetState extends State<OutdoorWidget>
         child: Stack(
           fit: StackFit.expand,
           children: [
-            _buildItem(items[_currentIndex]), // imagem atual
+            _buildItem(items[_currentIndex]),
             AnimatedBuilder(
               animation: _animController,
               builder: (context, child) {
@@ -169,10 +163,10 @@ class _OutdoorWidgetState extends State<OutdoorWidget>
 }
 
 class _SlicePainter extends CustomPainter {
-  final double progress; // progresso da animação (0 a 1)
-  final int slices; // número de fatias
-  final ui.Image currentImage; // imagem atual
-  final ui.Image nextImage; // próxima imagem
+  final double progress;
+  final int slices;
+  final ui.Image currentImage;
+  final ui.Image nextImage;
 
   _SlicePainter({
     required this.progress,
@@ -189,7 +183,6 @@ class _SlicePainter extends CustomPainter {
     for (int i = 0; i < slices; i++) {
       final left = i * sliceWidth;
 
-      // Progresso individual de cada fatia
       final t = ((progress * slices) - i).clamp(0.0, 1.0);
       if (t <= 0) continue;
 
@@ -199,6 +192,7 @@ class _SlicePainter extends CustomPainter {
         currentImage.width / slices,
         currentImage.height.toDouble(),
       );
+
       final nextSrc = Rect.fromLTWH(
         i * (nextImage.width / slices),
         0,
@@ -208,31 +202,38 @@ class _SlicePainter extends CustomPainter {
 
       final dst = Rect.fromLTWH(left, 0, sliceWidth, size.height);
 
-      // Centro da fatia
+      final angle = lerpDouble(0, pi, Curves.easeInOut.transform(t))!;
       final centerX = left + sliceWidth / 2;
       final centerY = size.height / 2;
 
-      // === Desenha a imagem atual (saindo) ===
-      if (t < 1) {
-        final scaleX = 1 - t; // vai de 1 -> 0
-        canvas.save();
-        canvas.translate(centerX, centerY);
-        canvas.scale(scaleX, 1);
-        canvas.translate(-centerX, -centerY);
-        canvas.drawImageRect(currentImage, currentSrc, dst, paint);
-        canvas.restore();
-      }
+      canvas.save();
+      canvas.clipRect(dst);
 
-      // === Desenha a nova imagem (entrando) ===
-      if (t > 0) {
-        final scaleX = (t >= 1.0) ? 1.0 : t; // garante fixa no final
+      // Matriz principal para rotacionar a fatia
+      final matrix = Matrix4.identity();
+      matrix.translateByVector3(Vector3(centerX, centerY, 0.0));
+      matrix.setEntry(3, 2, 0.0015); // perspectiva
+      matrix.rotateY(angle);
+      matrix.translateByVector3(Vector3(-centerX, -centerY, 0.0));
+
+      canvas.transform(matrix.storage);
+
+      if (angle <= (pi / 2)) {
+        canvas.drawImageRect(currentImage, currentSrc, dst, paint);
+      } else {
+        // Matriz do lado “back” da fatia
+        final backMatrix = Matrix4.identity();
+        backMatrix.translateByVector3(Vector3(centerX, centerY, 0.0));
+        backMatrix.scaleByVector3(Vector3(-1.0, 1.0, 1.0)); // corrige o espelhamento
+        backMatrix.translateByVector3(Vector3(-centerX, -centerY, 0.0));
+
         canvas.save();
-        canvas.translate(centerX, centerY);
-        canvas.scale(scaleX, 1);
-        canvas.translate(-centerX, -centerY);
+        canvas.transform(backMatrix.storage);
         canvas.drawImageRect(nextImage, nextSrc, dst, paint);
         canvas.restore();
       }
+
+      canvas.restore();
     }
   }
 

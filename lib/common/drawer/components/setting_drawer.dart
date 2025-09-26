@@ -31,6 +31,10 @@ class SettingsDrawer extends StatelessWidget {
           value: 'Opção3',
           child: Text('Mapeamento Estrutural'),
         ),
+        PopupMenuItem<String>(
+          value: 'Opção4',
+          child: Text('Configurar Outdoor'),
+        ),
 
         // Add other menu options as needed
       ],
@@ -39,7 +43,10 @@ class SettingsDrawer extends StatelessWidget {
           context.read<PageManager>().setPage(DrawerPages.categories);
         }
         if (value == 'Opção3' && kDebugMode) {
-          Navigator.of(context).pushNamed(RoutesNavigator.mapeamentoView);
+          Navigator.of(context).pushNamed(RoutesNavigator.structuralMapping);
+        }
+        if (value == 'Opção4') {
+          context.read<PageManager>().setPage(DrawerPages.outdoorAdmScreen);
         }
       },
       // Add the conditions for the other selected options for ADM

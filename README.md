@@ -16,7 +16,7 @@ avançadas.
 
 ## Funcionalidades Principais
 
-- Compra de produtos utilizando cartão de crédito.
+- Compra de produtos utilizando cartão de crédito / PIX.
 - Lista de usuários e filtros de produtos por cliente.
 - Envio de e-mails para todos os clientes ou seleção específica por parte do administrador.
 - Área administrativa com informações de status de pedidos (entregue, em andamento, cancelado, etc.)

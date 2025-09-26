@@ -5,8 +5,9 @@ enum DrawerPages {
   favorites,
   wishlist,
   stores,
-  whoWeAre,
+  whoWeAreScreen,
   adminUsers,
   adminOrders,
   products,
+  outdoorAdmScreen
 }

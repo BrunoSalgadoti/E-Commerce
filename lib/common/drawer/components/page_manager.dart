@@ -43,7 +43,7 @@ class PageManager extends ChangeNotifier {
         return 4;
       case DrawerPages.stores:
         return 5;
-      case DrawerPages.whoWeAre:
+      case DrawerPages.whoWeAreScreen:
         return 6;
       case DrawerPages.adminUsers:
         return 7;
@@ -51,6 +51,8 @@ class PageManager extends ChangeNotifier {
         return 8;
       case DrawerPages.products:
         return 9;
+      case DrawerPages.outdoorAdmScreen:
+        return 10;
     }
   }
 }
