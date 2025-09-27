@@ -13,6 +13,10 @@ mixin RootAssets {
   static const String underConstructionPng = "assets/images/emConstrucaoGitHub.png";
   static const String noImagePng = "assets/images/noImage.png";
   static const String userWithoutImagePng = "assets/images/userWithoutImage.png";
+  static const String outdoorImage1Jpg = "assets/outdoor/outdoor_bg1.jpg";
+  static const String outdoorImage2Jpg = "assets/outdoor/outdoor_bg2.jpg";
+  static const String outdoorImage3Jpg = "assets/outdoor/outdoor_bg3.jpg";
+
 
   // SVG - Icons Assets (Credit Card Banners)
   static const String cardBannerAmex = "assets/icons/amex.svg";
