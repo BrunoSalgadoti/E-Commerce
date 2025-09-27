@@ -5,7 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 
-class FirebaseService {
+class OutdoorService {
   final _firestore = FirebaseFirestore.instance;
   final _storage = FirebaseStorage.instance;
 

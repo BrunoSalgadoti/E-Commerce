@@ -4,7 +4,7 @@ import 'package:brn_ecommerce/models/outdoor/components/outdoor_item.dart';
 import 'package:brn_ecommerce/models/outdoor/components/outdoor_service.dart';
 
 class OutdoorRepository {
-  final FirebaseService _service;
+  final OutdoorService _service;
 
   OutdoorRepository(this._service);
 

@@ -4,17 +4,20 @@ class OutdoorItem {
   final String id;
   final String url;
   final OutdoorType type;
+  final String? productId; // novo campo, opcional
 
   OutdoorItem({
     required this.id,
     required this.url,
     required this.type,
+    this.productId,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'url': url,
       'type': type.name,
+      'productId': productId, // adiciona ao map
     };
   }
 
@@ -26,6 +29,7 @@ class OutdoorItem {
             (e) => e.name == map['type'],
         orElse: () => OutdoorType.image,
       ),
+      productId: map['productId'], // recupera do map
     );
   }
 }

@@ -1,13 +1,16 @@
 import 'dart:math';
 import 'dart:ui' as ui;
 import 'dart:ui' show lerpDouble;
+import 'package:brn_ecommerce/common/Progress_indicators/custom_loading_overlay.dart';
+import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 import 'package:brn_ecommerce/models/outdoor/components/outdoor_controller.dart';
 import 'package:brn_ecommerce/models/outdoor/components/outdoor_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:provider/provider.dart';
+import 'dart:async';
 
 class OutdoorWidget extends StatefulWidget {
   final int slices;
@@ -27,12 +30,12 @@ class OutdoorWidget extends StatefulWidget {
   State<OutdoorWidget> createState() => _OutdoorWidgetState();
 }
 
-class _OutdoorWidgetState extends State<OutdoorWidget>
-    with SingleTickerProviderStateMixin {
+class _OutdoorWidgetState extends State<OutdoorWidget> with SingleTickerProviderStateMixin {
   late final AnimationController _animController;
   late final PageController _pageController;
-  int _currentIndex = 0;
+  YoutubePlayerController? _ytController;
 
+  int _currentIndex = 0;
   final Map<String, ui.Image> _imageCache = {};
 
   @override
@@ -50,20 +53,79 @@ class _OutdoorWidgetState extends State<OutdoorWidget>
   }
 
   void _startAutoPlay() {
-    Future.delayed(const Duration(seconds: 6), _nextPage);
+    final controller = widget.controller ?? context.read<OutdoorController>();
+    if (controller.items.isEmpty) return;
+
+    final item = controller.items[_currentIndex];
+    if (item.type == OutdoorType.youtube) {
+      // não inicia autoplay para vídeo
+      return;
+    }
+
+    Future.delayed(const Duration(seconds: 3), _nextPage);
   }
 
-  Future<ui.Image> _loadImage(OutdoorItem item) async {
+  Future<ui.Image> _composeImage(OutdoorItem item) async {
     if (_imageCache.containsKey(item.url)) return _imageCache[item.url]!;
 
-    final data = item.type == OutdoorType.asset
+    // Fundo
+    final ByteData data = item.type == OutdoorType.asset
         ? await rootBundle.load(item.url)
         : await NetworkAssetBundle(Uri.parse(item.url)).load("");
-
     final codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
     final frame = await codec.getNextFrame();
-    _imageCache[item.url] = frame.image;
-    return frame.image;
+    ui.Image background = frame.image;
+
+    // Se tiver produto, compõe por cima
+    if (item.productId != null) {
+      final controller = widget.controller ?? context.read<OutdoorController>();
+      final Product? product = controller.getProductById(item.productId!);
+
+      if (product != null && product.images!.isNotEmpty) {
+        final recorder = ui.PictureRecorder();
+        final canvas = Canvas(recorder);
+        final paint = Paint();
+
+        // desenha fundo
+        canvas.drawImageRect(
+          background,
+          Rect.fromLTWH(0, 0, background.width.toDouble(), background.height.toDouble()),
+          Rect.fromLTWH(0, 0, background.width.toDouble(), background.height.toDouble()),
+          paint,
+        );
+
+        // desenha produto (simplesmente centralizado)
+        final productImageData =
+            await NetworkAssetBundle(Uri.parse(product.images!.first)).load("");
+        final productCodec = await ui.instantiateImageCodec(productImageData.buffer.asUint8List());
+        final productFrame = await productCodec.getNextFrame();
+        final productImage = productFrame.image;
+
+        final scale = background.height / 2 / productImage.height;
+        final productWidth = productImage.width * scale;
+        final productHeight = productImage.height * scale;
+        final offsetX = (background.width - productWidth) / 2;
+        final offsetY = (background.height - productHeight) / 2;
+
+        canvas.drawImageRect(
+          productImage,
+          Rect.fromLTWH(0, 0, productImage.width.toDouble(), productImage.height.toDouble()),
+          Rect.fromLTWH(offsetX, offsetY, productWidth, productHeight),
+          paint,
+        );
+
+        final composed = await recorder.endRecording().toImage(
+              background.width,
+              background.height,
+            );
+
+        _imageCache[item.url] = composed;
+        return composed;
+      }
+    }
+
+    _imageCache[item.url] = background;
+    return background;
   }
 
   void _nextPage() async {
@@ -71,36 +133,40 @@ class _OutdoorWidgetState extends State<OutdoorWidget>
     if (!mounted || controller.items.isEmpty) return;
 
     final nextIndex = (_currentIndex + 1) % controller.items.length;
+    final nextItem = controller.items[nextIndex];
 
-    await _loadImage(controller.items[nextIndex]);
+    if (nextItem.type != OutdoorType.youtube) {
+      await _composeImage(nextItem);
 
-    final sliceCount = widget.slices;
-    final durationPerSlice = widget.durationPerSliceMs;
-    _animController.duration = Duration(milliseconds: durationPerSlice * sliceCount);
+      final sliceCount = widget.slices;
+      final durationPerSlice = widget.durationPerSliceMs;
+      _animController.duration = Duration(milliseconds: durationPerSlice * sliceCount);
+    }
 
     setState(() {
       _currentIndex = nextIndex;
     });
 
-    _animController.forward(from: 0).whenComplete(() {
-      if (!mounted) return;
-
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (_pageController.hasClients) {
-          _pageController.animateToPage(
-            _currentIndex,
-            duration: const Duration(milliseconds: 900),
-            curve: Curves.easeInOut,
-          );
-        }
+    if (nextItem.type != OutdoorType.youtube) {
+      _animController.forward(from: 0).whenComplete(() {
+        if (!mounted) return;
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (_pageController.hasClients) {
+            _pageController.animateToPage(
+              _currentIndex,
+              duration: const Duration(milliseconds: 900),
+              curve: Curves.easeInOut,
+            );
+          }
+        });
+        _startAutoPlay();
       });
-
-      _startAutoPlay();
-    });
+    }
   }
 
   @override
   void dispose() {
+    _ytController?.dispose();
     _animController.dispose();
     _pageController.dispose();
     super.dispose();
@@ -110,7 +176,7 @@ class _OutdoorWidgetState extends State<OutdoorWidget>
   Widget build(BuildContext context) {
     final controller = widget.controller ?? context.watch<OutdoorController>();
     final items = controller.items;
-    if (items.isEmpty) return const Center(child: Text("Nenhum outdoor disponível"));
+    if (items.isEmpty) return const Center(child: CustomLoadingOverlay());
 
     final nextIndex = (_currentIndex + 1) % items.length;
 
@@ -144,20 +210,60 @@ class _OutdoorWidgetState extends State<OutdoorWidget>
       ),
     );
   }
-
   Widget _buildItem(OutdoorItem item) {
     switch (item.type) {
       case OutdoorType.asset:
-        return Image.asset(item.url, fit: BoxFit.cover);
       case OutdoorType.image:
-        return Image.network(item.url, fit: BoxFit.cover);
+        return FutureBuilder<ui.Image>(
+          future: _composeImage(item),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
+            return RawImage(image: snapshot.data, fit: BoxFit.cover);
+          },
+        );
+
       case OutdoorType.youtube:
         final vid = YoutubePlayer.convertUrlToId(item.url) ?? '';
-        final youtubeController = YoutubePlayerController(
+
+        // Descarta controller anterior
+        _ytController?.pause();
+        _ytController?.dispose();
+
+        _ytController = YoutubePlayerController(
           initialVideoId: vid,
-          flags: const YoutubePlayerFlags(autoPlay: true, mute: true, loop: true),
+          flags: const YoutubePlayerFlags(
+            autoPlay: true,
+            endAt: 30,
+            mute: false,
+            loop: false,
+          ),
         );
-        return YoutubePlayer(controller: youtubeController);
+
+        // Pausa autoplay das imagens
+        _animController.stop();
+
+        // Timer de fallback para passar para o próximo outdoor
+        Timer(const Duration(seconds: 30), () {
+          if (!mounted) return;
+          _nextPage();
+        });
+
+        // Listener para quando o vídeo termina
+        _ytController!.addListener(() {
+          if (_ytController!.value.playerState == PlayerState.ended) {
+            if (!mounted) return;
+            _nextPage();
+          }
+        });
+
+        return YoutubePlayer(
+          controller: _ytController!,
+          showVideoProgressIndicator: true,
+          progressColors: const ProgressBarColors(
+            playedColor: Colors.red,
+            handleColor: Colors.redAccent,
+          ),
+        );
     }
   }
 }
@@ -209,10 +315,9 @@ class _SlicePainter extends CustomPainter {
       canvas.save();
       canvas.clipRect(dst);
 
-      // Matriz principal para rotacionar a fatia
       final matrix = Matrix4.identity();
       matrix.translateByVector3(Vector3(centerX, centerY, 0.0));
-      matrix.setEntry(3, 2, 0.0015); // perspectiva
+      matrix.setEntry(3, 2, 0.0015);
       matrix.rotateY(angle);
       matrix.translateByVector3(Vector3(-centerX, -centerY, 0.0));
 
@@ -221,10 +326,9 @@ class _SlicePainter extends CustomPainter {
       if (angle <= (pi / 2)) {
         canvas.drawImageRect(currentImage, currentSrc, dst, paint);
       } else {
-        // Matriz do lado “back” da fatia
         final backMatrix = Matrix4.identity();
         backMatrix.translateByVector3(Vector3(centerX, centerY, 0.0));
-        backMatrix.scaleByVector3(Vector3(-1.0, 1.0, 1.0)); // corrige o espelhamento
+        backMatrix.scaleByVector3(Vector3(-1.0, 1.0, 1.0));
         backMatrix.translateByVector3(Vector3(-centerX, -centerY, 0.0));
 
         canvas.save();

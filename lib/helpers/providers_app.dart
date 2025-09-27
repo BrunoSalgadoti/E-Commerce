@@ -69,9 +69,10 @@ class ProvidersApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => Stores()),
         ChangeNotifierProvider(create: (_) => StoresManager()),
         ChangeNotifierProvider<OutdoorController>(
-          create: (_) {
+          create: (context) {
             final controller = OutdoorController(
-              OutdoorRepository(FirebaseService()),
+              OutdoorRepository(OutdoorService()),
+              context.read<ProductManager>(),
             );
             controller.loadOutdoors();
             return controller;
