@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 /// ----------------------HOW TO RUN ----------------------
 /// flutter pub run tool/mapper.dart
 /// -------------------------------------------------------
@@ -61,7 +63,7 @@ void main() async {
   // Create JSON
   final jsonFile = File('mapeamento_validacoes.json');
   await jsonFile.writeAsString(json.encode({'entries': entries}));
-  print('JSON gerado com ${entries.length} entries.');
+  debugPrint('JSON gerado com ${entries.length} entries.');
 
   // Create MD
   final mdFile = File('mapeamento_validacoes.md');
@@ -76,5 +78,5 @@ void main() async {
   }
 
   await mdFile.writeAsString(buffer.toString());
-  print('Arquivo MD gerado: mapeamento_validacoes.md');
+  debugPrint('Arquivo MD gerado: mapeamento_validacoes.md');
 }

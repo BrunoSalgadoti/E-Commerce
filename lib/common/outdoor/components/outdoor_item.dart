@@ -26,7 +26,7 @@ class OutdoorItem {
       id: id,
       url: map['url'] ?? '',
       type: OutdoorType.values.firstWhere(
-            (e) => e.name == map['type'],
+        (e) => e.name == map['type'],
         orElse: () => OutdoorType.image,
       ),
       productId: map['productId'], // recupera do map

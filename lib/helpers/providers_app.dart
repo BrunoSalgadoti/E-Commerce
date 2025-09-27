@@ -1,14 +1,14 @@
-import 'package:brn_ecommerce/common/advertising/components/products_recently_added.dart';
 import 'package:brn_ecommerce/common/advertising/components/products_best_selling.dart';
+import 'package:brn_ecommerce/common/advertising/components/products_recently_added.dart';
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
+import 'package:brn_ecommerce/common/outdoor/components/outdoor_controller.dart';
+import 'package:brn_ecommerce/common/outdoor/components/outdoor_repository.dart';
+import 'package:brn_ecommerce/common/outdoor/components/outdoor_service.dart';
 import 'package:brn_ecommerce/models/admin_area/admin_orders_manager.dart';
 import 'package:brn_ecommerce/models/admin_area/admin_users_manager.dart';
 import 'package:brn_ecommerce/models/admin_area/admin_users_search.dart';
 import 'package:brn_ecommerce/models/favorites/favorites_manager.dart';
 import 'package:brn_ecommerce/models/home_sections/home_manager.dart';
-import 'package:brn_ecommerce/models/outdoor/components/outdoor_controller.dart';
-import 'package:brn_ecommerce/models/outdoor/components/outdoor_service.dart';
-import 'package:brn_ecommerce/models/outdoor/outdoor_repository.dart';
 import 'package:brn_ecommerce/models/policy_documents/policy_and_documents.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category_manager.dart';
@@ -71,9 +71,7 @@ class ProvidersApp extends StatelessWidget {
         ChangeNotifierProvider<OutdoorController>(
           create: (context) {
             final controller = OutdoorController(
-              OutdoorRepository(OutdoorService()),
-              context.read<ProductManager>(),
-            );
+                OutdoorRepository(OutdoorService()), context.read<ProductManager>());
             controller.loadOutdoors();
             return controller;
           },

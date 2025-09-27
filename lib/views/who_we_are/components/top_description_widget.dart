@@ -88,18 +88,18 @@ class _TopDescriptionWidgetState extends State<TopDescriptionWidget> {
                 ),
               const Divider(),
               if (userManager.adminEnable)
-              CustomTextFormField(
-                title: whoWeAreManager.topDescription ?? adminCustomText,
-                labelText: 'Apresentação: Quem somos?',
-                controller: controllerText,
-                titleSize: 16,
-                maxLength: null,
-                onChanged: (customText) => whoWeAreManager.topDescription = customText,
-              ),
+                CustomTextFormField(
+                  title: whoWeAreManager.topDescription ?? adminCustomText,
+                  labelText: 'Apresentação: Quem somos?',
+                  controller: controllerText,
+                  titleSize: 16,
+                  maxLength: null,
+                  onChanged: (customText) => whoWeAreManager.topDescription = customText,
+                ),
               if (userManager.adminEnable)
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
                     CustomTextButton(
                       text: null,
                       icon: const Icon(FontAwesomeIcons.broom),
@@ -114,8 +114,8 @@ class _TopDescriptionWidgetState extends State<TopDescriptionWidget> {
                         await whoWeAreManager.saveDescriptions();
                       },
                     ),
-                ],
-              )
+                  ],
+                )
             ],
           ),
         );

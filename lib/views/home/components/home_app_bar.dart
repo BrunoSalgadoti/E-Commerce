@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
-import 'package:brn_ecommerce/models/home_sections/home_manager.dart';
-import 'package:brn_ecommerce/models/users/users_manager.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart' show RoutesNavigator;
+import 'package:brn_ecommerce/models/home_sections/home_manager.dart';
+import 'package:brn_ecommerce/models/users/users_manager.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class HomeAppBar extends StatelessWidget {
   final VoidCallback? onMenuPressed;

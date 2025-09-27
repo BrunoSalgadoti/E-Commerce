@@ -28,15 +28,14 @@ import 'package:flutter/material.dart';
 
 class RouteGenerator {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
-
     switch (settings.name) {
-    // ------------------Only for devs -----------------------------------
+      // ------------------Only for devs -----------------------------------
       case RoutesNavigator.structuralMapping:
         if (!kDebugMode) return null; // em release, a rota não existe
         final view = getMapperView();
         if (view == null) return null;
         return MaterialPageRoute(builder: (_) => view);
-    // -------------------------------------------------------------------
+      // -------------------------------------------------------------------
       case RoutesNavigator.loginScreen:
         return MaterialPageRoute(builder: (_) => LoginScreen(), settings: settings);
       case RoutesNavigator.signupScreen:

@@ -1,12 +1,12 @@
 import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
+import 'package:brn_ecommerce/common/outdoor/components/outdoor_controller.dart';
+import 'package:brn_ecommerce/common/outdoor/components/outdoor_item.dart';
+import 'package:brn_ecommerce/common/outdoor/outdoor_widget.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
-import 'package:brn_ecommerce/models/outdoor/components/outdoor_controller.dart';
-import 'package:brn_ecommerce/models/outdoor/components/outdoor_item.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
-import 'package:brn_ecommerce/views/outdoor/outdoor_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -61,7 +61,6 @@ class _OutdoorAdminScreenState extends State<OutdoorAdminScreen> {
               },
               child: const Text("Selecionar Produto"),
             ),
-
           ],
         );
       },
@@ -172,13 +171,13 @@ class _OutdoorAdminScreenState extends State<OutdoorAdminScreen> {
                   const Text("Outdoors Atuais:"),
                   const SizedBox(height: 10),
                   ...controller.items.map(
-                        (item) => ListTile(
+                    (item) => ListTile(
                       leading: Icon(
                         item.type == OutdoorType.image
                             ? Icons.image
                             : item.type == OutdoorType.asset
-                            ? Icons.photo_album
-                            : Icons.play_circle,
+                                ? Icons.photo_album
+                                : Icons.play_circle,
                       ),
                       title: Text(item.url),
                       trailing: IconButton(

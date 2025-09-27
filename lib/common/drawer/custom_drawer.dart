@@ -46,7 +46,9 @@ class CustomDrawer extends StatelessWidget {
     return const [
       DrawerItem(icon: Icons.location_on, title: "Lojas", page: DrawerPages.stores),
       DrawerItem(
-          icon: FontAwesomeIcons.peopleGroup, title: "Quem Somos", page: DrawerPages.whoWeAreScreen),
+          icon: FontAwesomeIcons.peopleGroup,
+          title: "Quem Somos",
+          page: DrawerPages.whoWeAreScreen),
     ];
   }
 
@@ -58,7 +60,10 @@ class CustomDrawer extends StatelessWidget {
           icon: Icons.supervised_user_circle, title: "Clientes", page: DrawerPages.adminUsers),
       DrawerItem(icon: Icons.task_alt, title: "Pedidos", page: DrawerPages.adminOrders),
       DrawerItem(icon: Icons.list, title: "Listar todos", page: DrawerPages.products),
-      DrawerItem(icon: Icons.airplay_outlined, title: "Configurar Outdoor", page: DrawerPages.outdoorAdmScreen),
+      DrawerItem(
+          icon: Icons.airplay_outlined,
+          title: "Configurar Outdoor",
+          page: DrawerPages.outdoorAdmScreen),
     ];
   }
 
@@ -74,92 +79,92 @@ class CustomDrawer extends StatelessWidget {
           constraints: constraints.maxWidth <= mobileBreakpoint
               ? BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7)
               : BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
-            child: Drawer(
-              child: Stack(
-                children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [getDrawerColorFirst(), getDrawerColorSecond()],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                      ),
+          child: Drawer(
+            child: Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [getDrawerColorFirst(), getDrawerColorSecond()],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
                     ),
-                  ListView(
-                    children: [
-                      const CustomDrawerHeader(),
-                      const Divider(),
-                      DrawerTitle(
-                          iconData: itemsClient[0].icon,
-                          title: itemsClient[0].title,
-                          page: itemsClient[0].page),
-                      const Divider(thickness: 2),
-                      const AutoSizeText(
-                        'P r o d u t o s:',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                        softWrap: true,
-                        minFontSize: 2,
-                        maxFontSize: 18,
-                      ),
-                      DrawerTitle(
-                        iconData: itemsClient[1].icon,
-                        title: itemsClient[1].title,
-                        page: itemsClient[1].page,
-                      ),
-                      const Divider(thickness: 2),
-                      const AutoSizeText(
-                        'Seções do Cliente:',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                        softWrap: true,
-                        minFontSize: 2,
-                        maxFontSize: 18,
-                      ),
-                      ...itemsClient.sublist(2).map((item) => DrawerTitle(
-                            iconData: item.icon,
-                            title: item.title,
-                            page: item.page,
-                          )),
-                      const Divider(thickness: 2),
-                      AutoSizeText(
-                        'Nossa Loja:',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                        softWrap: true,
-                        minFontSize: 2,
-                        maxFontSize: 18,
-                      ),
-                      ...itemsStores.map((item) => DrawerTitle(
-                            iconData: item.icon,
-                            title: item.title,
-                            page: item.page,
-                          )),
-                      if (admin.isNotEmpty) ...[
-                        const Divider(thickness: 3),
-                        const AutoSizeText(
-                          'ÁREA ADMINISTRATIVA:',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                          softWrap: true,
-                          minFontSize: 2,
-                          maxFontSize: 18,
-                        ),
-                        ...admin.map(
-                          (item) => DrawerTitle(
-                            iconData: item.icon,
-                            title: item.title,
-                            page: item.page,
-                          ),
-                        ),
-                        const SettingsDrawer(),
-                      ],
-                    ],
                   ),
-                ],
-              ),
+                ),
+                ListView(
+                  children: [
+                    const CustomDrawerHeader(),
+                    const Divider(),
+                    DrawerTitle(
+                        iconData: itemsClient[0].icon,
+                        title: itemsClient[0].title,
+                        page: itemsClient[0].page),
+                    const Divider(thickness: 2),
+                    const AutoSizeText(
+                      'P r o d u t o s:',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                      softWrap: true,
+                      minFontSize: 2,
+                      maxFontSize: 18,
+                    ),
+                    DrawerTitle(
+                      iconData: itemsClient[1].icon,
+                      title: itemsClient[1].title,
+                      page: itemsClient[1].page,
+                    ),
+                    const Divider(thickness: 2),
+                    const AutoSizeText(
+                      'Seções do Cliente:',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                      softWrap: true,
+                      minFontSize: 2,
+                      maxFontSize: 18,
+                    ),
+                    ...itemsClient.sublist(2).map((item) => DrawerTitle(
+                          iconData: item.icon,
+                          title: item.title,
+                          page: item.page,
+                        )),
+                    const Divider(thickness: 2),
+                    AutoSizeText(
+                      'Nossa Loja:',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                      softWrap: true,
+                      minFontSize: 2,
+                      maxFontSize: 18,
+                    ),
+                    ...itemsStores.map((item) => DrawerTitle(
+                          iconData: item.icon,
+                          title: item.title,
+                          page: item.page,
+                        )),
+                    if (admin.isNotEmpty) ...[
+                      const Divider(thickness: 3),
+                      const AutoSizeText(
+                        'ÁREA ADMINISTRATIVA:',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                        softWrap: true,
+                        minFontSize: 2,
+                        maxFontSize: 18,
+                      ),
+                      ...admin.map(
+                        (item) => DrawerTitle(
+                          iconData: item.icon,
+                          title: item.title,
+                          page: item.page,
+                        ),
+                      ),
+                      const SettingsDrawer(),
+                    ],
+                  ],
+                ),
+              ],
             ),
+          ),
         );
       },
     );

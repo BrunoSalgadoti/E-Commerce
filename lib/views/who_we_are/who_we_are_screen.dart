@@ -1,6 +1,6 @@
 import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
-import 'package:brn_ecommerce/views/outdoor/outdoor_widget.dart';
+import 'package:brn_ecommerce/common/outdoor/outdoor_widget.dart';
 import 'package:brn_ecommerce/views/who_we_are/components/footer_description_widget.dart';
 import 'package:brn_ecommerce/views/who_we_are/components/top_description_widget.dart';
 import 'package:flutter/material.dart';
@@ -51,20 +51,11 @@ class WhoWeAreScreenState extends State<WhoWeAreScreen> {
             children: [
               const TopDescriptionWidget(),
               const SizedBox(height: 20),
-
-
-
-              OutdoorWidget(isSilver: false,),
-
-
-
-              // Vídeo centralizado responsivo
+             // Vídeo centralizado responsivo
               LayoutBuilder(
                 builder: (context, constraints) {
-                  final width = constraints.maxWidth < 400
-                      ? constraints.maxWidth
-                      : 400.0; // limita largura
-                  final height = width * 9 / 16; // mantém aspect ratio 16:9
+                  final width =
+                      constraints.maxWidth < 400 ? constraints.maxWidth : 400.0; // limita largura
                   return Center(
                     child: YoutubePlayer(
                       controller: _controller,

@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   final AudioPlayer _audioPlayer = AudioPlayer();
 
   double _opacityBackground = 1.0;
-  bool _homeReady = false;
+  bool homeReady = false;
   List<Product> _highlightedProducts = [];
 
   @override
@@ -82,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     while (productManager.highlightedProducts.isEmpty || homeManager.sections.isEmpty) {
       await Future.delayed(const Duration(milliseconds: 200));
     }
-    _homeReady = true;
+    homeReady = true;
   }
 
   Future<void> _prefetchAllImages(List<Product> products) async {

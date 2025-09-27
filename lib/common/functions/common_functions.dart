@@ -116,32 +116,6 @@ Future<void> reportNoFatalErrorToCrashlytics(
 ///
 /// Returns a [Widget] representing the custom progress indicator based on the provided parameters.
 
-//TODO: customProgressIndicator - Implementar testar e Substituir outros indicators
-Widget customProgressIndicator(
-    {Color? color,
-    double? strokeWidth,
-    Color? stopAnimationColor,
-    Color? linearBackgroundColor,
-    required bool isCircular,
-    required bool isLoading}) {
-  if (isCircular == true && isLoading == true) {
-    return Center(
-      child: CircularProgressIndicator(
-        color: color ?? Colors.blue,
-        strokeWidth: strokeWidth ?? 6,
-        valueColor: AlwaysStoppedAnimation(stopAnimationColor ?? Colors.blue),
-      ),
-    );
-  } else if (isCircular == false && isLoading == true) {
-    return LinearProgressIndicator(
-      valueColor: AlwaysStoppedAnimation(color ?? Colors.blue),
-      backgroundColor: linearBackgroundColor ?? Colors.transparent,
-    );
-  } else {
-    return const SizedBox.shrink();
-  }
-}
-
 void navigateToPageWithDrawer({
   required BuildContext context,
   required DrawerPages page,
@@ -203,21 +177,21 @@ Widget carouselForProducts({
   }
 
   return CarouselSlider(
-    carouselController: carouselController,
-    options: CarouselOptions(
-      aspectRatio: 1 / 1,
-      initialPage: 0,
-      height: height,
-      viewportFraction: viewportFraction,
-      disableCenter: disableCenter,
-      enlargeCenterPage: true,
-      enlargeFactor: enlargeFactor,
-      enableInfiniteScroll: true,
-      scrollDirection: Axis.horizontal,
-      autoPlay: true,
-      autoPlayInterval: const Duration(seconds: 4),
-      autoPlayAnimationDuration: const Duration(milliseconds: 800),
-    ),
+      carouselController: carouselController,
+      options: CarouselOptions(
+        aspectRatio: 1 / 1,
+        initialPage: 0,
+        height: height,
+        viewportFraction: viewportFraction,
+        disableCenter: disableCenter,
+        enlargeCenterPage: true,
+        enlargeFactor: enlargeFactor,
+        enableInfiniteScroll: true,
+        scrollDirection: Axis.horizontal,
+        autoPlay: true,
+        autoPlayInterval: const Duration(seconds: 4),
+        autoPlayAnimationDuration: const Duration(milliseconds: 800),
+      ),
       items: productsForCarousel.map<Widget>((product) {
         return Stack(
           fit: StackFit.expand,
@@ -309,8 +283,7 @@ Widget carouselForProducts({
             ),
           ],
         );
-      }).toList()
-  );
+      }).toList());
 }
 
 Widget textForGoogleDecorations(

@@ -4,6 +4,7 @@ import 'package:brn_ecommerce/common/drawer/components/page_manager.dart' show P
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'drawer_pages_enum.dart';
 
 class DrawerTitle extends StatelessWidget {
@@ -25,16 +26,16 @@ class DrawerTitle extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                    Flexible(
-                      child: CustomIconButton(
-                        iconData: iconData!,
-                        size: 32,
-                        color:
-                            pageManager.currentPage == page ? getEspecialColor() : Colors.grey[700],
-                        semanticLabel: '',
-                        onTap: () {},
-                      ),
+                  Flexible(
+                    child: CustomIconButton(
+                      iconData: iconData!,
+                      size: 32,
+                      color:
+                          pageManager.currentPage == page ? getEspecialColor() : Colors.grey[700],
+                      semanticLabel: '',
+                      onTap: () {},
                     ),
+                  ),
                   SizedBox(width: 10),
                   Expanded(
                     child: AutoSizeText(

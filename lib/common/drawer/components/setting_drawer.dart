@@ -27,10 +27,10 @@ class SettingsDrawer extends StatelessWidget {
           child: Text('Configurações gerais'),
         ),
         if (kDebugMode)
-        PopupMenuItem<String>(
-          value: 'Opção3',
-          child: Text('Mapeamento Estrutural'),
-        ),
+          PopupMenuItem<String>(
+            value: 'Opção3',
+            child: Text('Mapeamento Estrutural'),
+          ),
         PopupMenuItem<String>(
           value: 'Opção4',
           child: Text('Configurar Outdoor'),

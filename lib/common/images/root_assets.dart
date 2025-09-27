@@ -17,7 +17,6 @@ mixin RootAssets {
   static const String outdoorImage2Jpg = "assets/outdoor/outdoor_bg2.jpg";
   static const String outdoorImage3Jpg = "assets/outdoor/outdoor_bg3.jpg";
 
-
   // SVG - Icons Assets (Credit Card Banners)
   static const String cardBannerAmex = "assets/icons/amex.svg";
   static const String cardBannerDiscover = "assets/icons/discover.svg";

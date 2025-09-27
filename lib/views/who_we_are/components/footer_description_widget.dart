@@ -59,17 +59,17 @@ class _FooterDescriptionWidgetState extends State<FooterDescriptionWidget> {
               const Divider(),
               if (userManager.adminEnable)
                 CustomTextFormField(
-                title: whoWeAreManager.footerDescription ?? adminCustomText,
-                labelText: "Dados da Loja: Endereço, CNPJ, tel ...",
-                controller: controllerText,
-                titleSize: 16,
-                maxLength: null,
-                onChanged: (customText) => whoWeAreManager.footerDescription = customText,
-              ),
+                  title: whoWeAreManager.footerDescription ?? adminCustomText,
+                  labelText: "Dados da Loja: Endereço, CNPJ, tel ...",
+                  controller: controllerText,
+                  titleSize: 16,
+                  maxLength: null,
+                  onChanged: (customText) => whoWeAreManager.footerDescription = customText,
+                ),
               if (userManager.adminEnable)
                 Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
                     CustomTextButton(
                       text: null,
                       icon: const Icon(FontAwesomeIcons.broom),
@@ -84,8 +84,8 @@ class _FooterDescriptionWidgetState extends State<FooterDescriptionWidget> {
                         await whoWeAreManager.saveDescriptions();
                       },
                     ),
-                ],
-              ),
+                  ],
+                ),
               Padding(
                 padding: const EdgeInsets.only(top: 80),
                 child: FutureBuilder<void>(

@@ -1,9 +1,8 @@
-// outdoor_controller.dart
-import 'package:brn_ecommerce/models/outdoor/outdoor_repository.dart';
-import 'package:brn_ecommerce/models/outdoor/components/outdoor_item.dart';
+import 'package:brn_ecommerce/common/outdoor/components/outdoor_item.dart';
+import 'package:brn_ecommerce/common/outdoor/components/outdoor_repository.dart';
+import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:brn_ecommerce/models/products/product.dart';
 
 class OutdoorController extends ChangeNotifier {
   final OutdoorRepository _repository;

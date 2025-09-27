@@ -1,7 +1,5 @@
-
-
-import 'package:brn_ecommerce/models/outdoor/components/outdoor_item.dart';
-import 'package:brn_ecommerce/models/outdoor/components/outdoor_service.dart';
+import 'package:brn_ecommerce/common/outdoor/components/outdoor_item.dart';
+import 'package:brn_ecommerce/common/outdoor/components/outdoor_service.dart';
 
 class OutdoorRepository {
   final OutdoorService _service;

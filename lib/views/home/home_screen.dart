@@ -1,30 +1,31 @@
-import 'package:brn_ecommerce/common/advertising/info_marquee_widget.dart';
-import 'package:brn_ecommerce/common/functions/common_functions.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:brn_ecommerce/common/responsiveness/responsive_page_wrapper.dart';
-import 'package:brn_ecommerce/views/home/components/home_app_bar.dart';
-import 'package:brn_ecommerce/common/app_bar/complement_app_bar.dart';
-import 'package:brn_ecommerce/models/home_sections/home_manager.dart';
-import 'package:brn_ecommerce/models/products/product_manager.dart';
-import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
-import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
-import 'package:brn_ecommerce/common/messengers/components/text_of_alerts_and_messengers.dart';
-import 'package:brn_ecommerce/helpers/breakpoints.dart';
-import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/common/advertising/advertising_widget.dart';
-import 'package:brn_ecommerce/common/advertising/highlight_products_block.dart';
-import 'package:brn_ecommerce/common/advertising/recently_added_products.dart';
+import 'package:brn_ecommerce/common/advertising/best_selling_card.dart';
 import 'package:brn_ecommerce/common/advertising/categories_showcase.dart';
 import 'package:brn_ecommerce/common/advertising/finds_lowest_selling_showcase.dart';
+import 'package:brn_ecommerce/common/advertising/footer.dart';
+import 'package:brn_ecommerce/common/advertising/highlight_products_block.dart';
+import 'package:brn_ecommerce/common/advertising/info_marquee_widget.dart';
 import 'package:brn_ecommerce/common/advertising/purchase_suggestions_widget.dart';
+import 'package:brn_ecommerce/common/advertising/recently_added_products.dart';
 import 'package:brn_ecommerce/common/advertising/sales_suggestion_visited_products.dart';
+import 'package:brn_ecommerce/common/app_bar/complement_app_bar.dart';
+import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
+import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
+import 'package:brn_ecommerce/common/functions/common_functions.dart';
+import 'package:brn_ecommerce/common/messengers/components/text_of_alerts_and_messengers.dart';
+import 'package:brn_ecommerce/common/outdoor/outdoor_widget.dart';
+import 'package:brn_ecommerce/common/responsiveness/responsive_page_wrapper.dart';
+import 'package:brn_ecommerce/helpers/breakpoints.dart';
+import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
+import 'package:brn_ecommerce/models/home_sections/home_manager.dart';
+import 'package:brn_ecommerce/models/products/product_manager.dart';
+import 'package:brn_ecommerce/views/home/components/add_section_widget.dart';
+import 'package:brn_ecommerce/views/home/components/home_app_bar.dart';
 import 'package:brn_ecommerce/views/home/components/section_list.dart';
 import 'package:brn_ecommerce/views/home/components/section_staggered.dart';
-import 'package:brn_ecommerce/views/home/components/add_section_widget.dart';
-import 'package:brn_ecommerce/common/advertising/best_selling_card.dart';
 import 'package:brn_ecommerce/views/who_we_are/who_we_are_screen.dart';
-import 'package:brn_ecommerce/common/advertising/footer.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -153,6 +154,7 @@ class HomeScreen extends StatelessWidget {
                       const CategoriesShowcase(),
                       heightSpaceBetweenWidgets,
                       const FindsLowestSellingShowcase(),
+                      const OutdoorWidget(isSilver: true),
                       heightSpaceBetweenWidgets,
                       Padding(
                         padding: const EdgeInsets.only(left: 10, right: 10),

@@ -1,9 +1,9 @@
 import 'dart:io';
-import 'package:brn_ecommerce/models/outdoor/components/outdoor_item.dart';
+
+import 'package:brn_ecommerce/common/outdoor/components/outdoor_item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
 
 class OutdoorService {
   final _firestore = FirebaseFirestore.instance;
@@ -15,8 +15,7 @@ class OutdoorService {
   Future<List<OutdoorItem>> fetchOutdoors() async {
     final snapshot = await _outdoorRef.get();
     return snapshot.docs
-        .map((doc) =>
-        OutdoorItem.fromMap(doc.id, doc.data() as Map<String, dynamic>))
+        .map((doc) => OutdoorItem.fromMap(doc.id, doc.data() as Map<String, dynamic>))
         .toList();
   }
 
@@ -48,8 +47,7 @@ class OutdoorService {
 
   // Adiciona link de YouTube ao Firestore
   Future<void> addYoutubeLink(String youtubeUrl) async {
-    final newItem =
-    OutdoorItem(id: '', url: youtubeUrl, type: OutdoorType.youtube);
+    final newItem = OutdoorItem(id: '', url: youtubeUrl, type: OutdoorType.youtube);
     await addOutdoor(newItem);
   }
 

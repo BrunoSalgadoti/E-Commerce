@@ -34,25 +34,17 @@ class DrawerPageView extends StatelessWidget {
       controller: pageManager.pageController,
       physics: const NeverScrollableScrollPhysics(),
       children: [
-        const HomeScreen(),             // 0
-        const CategoriesScreen(),       // 1
-        const OrdersScreen(),           // 2
-        const FavoritesScreen(),        // 3
-        const WishList(),               // 4
-        const StoresScreen(),           // 5
-        const WhoWeAreScreen(),         // 6
-        userManager.adminEnable
-            ? const AdminUsersScreen()
-            : const SizedBox.shrink(), // 7
-        userManager.adminEnable
-            ? const AdminOrdersScreen()
-            : const SizedBox.shrink(), // 8
-        userManager.adminEnable
-            ? const ProductsScreen()
-            : const SizedBox.shrink(), // 9
-        userManager.adminEnable
-            ? const OutdoorAdminScreen()
-            : const SizedBox.shrink(), // 10
+        const HomeScreen(), // 0
+        const CategoriesScreen(), // 1
+        const OrdersScreen(), // 2
+        const FavoritesScreen(), // 3
+        const WishList(), // 4
+        const StoresScreen(), // 5
+        const WhoWeAreScreen(), // 6
+        userManager.adminEnable ? const AdminUsersScreen() : const SizedBox.shrink(), // 7
+        userManager.adminEnable ? const AdminOrdersScreen() : const SizedBox.shrink(), // 8
+        userManager.adminEnable ? const ProductsScreen() : const SizedBox.shrink(), // 9
+        userManager.adminEnable ? const OutdoorAdminScreen() : const SizedBox.shrink(), // 10
       ],
     );
   }

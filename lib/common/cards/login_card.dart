@@ -5,7 +5,6 @@ import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 /// ## LoginCard
 /// Widget Card for areas of the APP that require user login and the user is not logged in.
 /// My orders area, among others.
