@@ -1,70 +1,69 @@
-# BRN Info_Dev eCommerce
-
-<img src="assets/images/brnInfoDev.png" alt="Em Construção" style="width: 400px; height: 300px;">
+# E-Commerce Application
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.35.2-blue)](https://flutter.dev/)
 [![Firebase](https://img.shields.io/badge/Firebase-14.11.1-yellow)](https://firebase.google.com/)
 
-**BRN Info_Dev Loja Virtual**
-*Android, IOS, WEB*
+## Overview
+This project is a mobile e-commerce application developed using Flutter, focused on demonstrating a complete product flow, including authentication, product listing, and data integration.
 
-Este projeto é um ponto de partida para um aplicativo Flutter de uma loja virtual completa, com
-funcionalidades de compra, integração com o Firebase como backend e várias outras características
-avançadas.
+The application is structured to simulate a real-world commerce environment, emphasizing usability, organization, and system architecture.
 
-<img src="assets/images/emConstrucaoGitHub.png" alt="Em Construção" style="width: 300px; height: 200px;">
+---
 
-## Funcionalidades Principais
+## Features
+- User authentication (Firebase Auth)
+- Product listing and visualization
+- Structured UI for navigation and interaction
+- Integration with backend services
+- Scalable architecture for future expansion
 
-- Compra de produtos utilizando cartão de crédito.
-- Lista de usuários e filtros de produtos por cliente.
-- Envio de e-mails para todos os clientes ou seleção específica por parte do administrador.
-- Área administrativa com informações de status de pedidos (entregue, em andamento, cancelado, etc.)
-  .
-- Compartilhamento de produtos nas redes sociais, como WhatsApp, Facebook, Instagram e e-mail.
-- Carrinho de compras personalizado para cada usuário.
+---
 
-## Como Começar
+## Tech Stack
+- Flutter (Dart)
+- Firebase (Authentication / Firestore)
+- REST API integration
+- Material UI components
 
-Este projeto utiliza o Flutter como framework de desenvolvimento. Caso seja a sua primeira
-experiência com o Flutter, recomendamos os seguintes recursos:
+---
 
-- [Laboratório: Crie seu primeiro aplicativo Flutter](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Amostras úteis do Flutter](https://docs.flutter.dev/cookbook)
+## Status
+Active Development
 
-Para obter ajuda com o desenvolvimento em Flutter, consulte a documentação online, que oferece
-tutoriais, exemplos, orientações sobre desenvolvimento móvel e uma referência completa da API.
+---
 
-## Pré-requisitos
+## Purpose
+Production System / Technical Demonstration
 
-Certifique-se de ter o Flutter instalado corretamente em seu ambiente de desenvolvimento. Você
-também precisará configurar um projeto no Firebase para habilitar as funcionalidades de backend.
+This project is designed both as a functional application and as a demonstration of mobile commerce architecture using Flutter and Firebase.
 
-## Instalação
+---
 
-1. Clone este repositório para o seu ambiente local.
-2. Abra o projeto no seu editor de código preferido.
-3. Execute o seguinte comando no terminal para obter as dependências do Flutter:
+## Screenshots
+*(Add screenshots here if available)*
 
+---
+
+## Installation
+
+1. Clone the repository:
+git clone https://github.com/BrunoSalgadoti/E-Commerce.git
+
+2. Navigate to the project folder:
+cd E-Commerce
+
+3. Install dependencies:
 flutter pub get
 
-4. Configure as credenciais do Firebase no projeto.
-5. Inicie o aplicativo executando o comando:
-
+4. Run the application:
 flutter run
 
-Certifique-se de que um dispositivo emulado ou um dispositivo físico esteja conectado.
-
-## Contribuição
-
-Contribuições são sempre bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull
-request.
+---
 
 ## Licença
 
-Este projeto está licenciado sob a Licença MIT - consulte o arquivo [LICENSE](./docs/LICENSE) para obter
-detalhes.
+This project is licensed under the MIT License - see the [LICENSE](./docs/LICENSE) file for details.
 
-## Desenvolvido pelo Analista e Dev. Bruno Salgado.
-### Contato: brunosalgadoti@gmail.com
+## Developed by Analyst and Developer Bruno Salgado.
+### Contact: brunosalgadoti@gmail.com
 ## Copyright 2024.
