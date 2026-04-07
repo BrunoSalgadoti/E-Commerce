@@ -40,7 +40,7 @@ This project is designed both as a functional application and as a demonstration
 ---
 
 ## Screenshots
-*(Add screenshots here if available)*
+*(Shortly)*
 
 ---
 
