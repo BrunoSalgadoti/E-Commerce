@@ -1,172 +1,175 @@
-import 'dart:convert';
-import 'dart:io';
+import 'dart:typed_data';
 
-import 'package:brn_ecommerce/common/functions/common_functions.dart';
-import 'package:brn_ecommerce/models/products/categories/product_sub_category.dart';
-import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
-import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:brn_ecommerce/core/control_center.dart';
+import 'package:brn_ecommerce/core/monitoring/monitoring_logger.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
-/// #Products Categories classes (Folder: models/products/product_category)
-/// ## ProductCategory Class
-///
-/// Represents a product category with detailed information such as ID, title, color,
-/// image, activation status, and sub-categories.
-///
-/// This class includes methods for mapping data to and from Firestore documents,
-/// updating category images, and exporting sub-categories.
-class ProductCategory extends ChangeNotifier {
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final FirebaseStorage storage = FirebaseStorage.instance;
-  String? categoryID;
-  String? categoryTitle;
-  String? categoryColor;
-  bool? categoryActivated;
-  dynamic categoryImg;
-  Color? categoryRealColor;
-  List<SubCategory>? subCategoryList;
+class StorageService {
+  StorageService._internal();
 
-  //Constructor
+  static final StorageService instance = StorageService._internal();
 
-  /// Creates a [ProductCategory] object with the specified parameters.
-  ProductCategory({
-    this.categoryID,
-    this.categoryTitle,
-    this.categoryRealColor,
-    this.categoryImg,
-    this.categoryActivated,
-    this.subCategoryList,
-    this.categoryColor,
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+
+  final ControlCenter _control = ControlCenter.instance;
+
+  final MonitoringLogger _logger = MonitoringLogger();
+
+  /// =========================
+  /// ⬆️ UPLOAD FILE
+  /// =========================
+  Future<String> uploadFile({
+    required String path,
+    required dynamic file,
+    int? sizeInBytes,
+    String? contentType,
+  }) async {
+    if (!_control.canExecute(OperationType.upload)) {
+      _logger.logWarning('UPLOAD BLOCKED → $path');
+
+      throw Exception('Upload blocked');
+    }
+
+    int fileSize = sizeInBytes ?? 0;
+
+    try {
+      fileSize = await file.length();
+    } catch (_) {
+      fileSize = sizeInBytes ?? 0;
+    }
+
+    // TODO(BRN): avaliar mover limite para config remota/global.
+    if (fileSize > 1024 * 1024) {
+      throw Exception('File too large');
+    }
+
+    final ref = _storage.ref().child(path);
+
+    final UploadTask task = ref.putFile(
+      file,
+      contentType != null
+          ? SettableMetadata(contentType: contentType)
+          : null,
+    );
+
+    final TaskSnapshot snapshot = await task.whenComplete(() {});
+
+    final String url = await snapshot.ref.getDownloadURL();
+
+    _control.registerUsage(OperationType.upload);
+
+    return url;
+  }
+
+  /// =========================
+  /// ⬆️ UPLOAD DATA (WEB / UINT8LIST)
+  /// =========================
+  Future<String> uploadData({
+    required String path,
+    required Uint8List data,
+    String? contentType,
+  }) async {
+    if (!_control.canExecute(OperationType.upload)) {
+      _logger.logWarning('UPLOAD DATA BLOCKED → $path');
+
+      throw Exception('Upload blocked');
+    }
+
+    final int fileSize = data.lengthInBytes;
+
+    // TODO(BRN): avaliar mover limite para config remota/global.
+    if (fileSize > 1024 * 1024) {
+      throw Exception('File too large');
+    }
+
+    final ref = _storage.ref().child(path);
+
+    final UploadTask task = ref.putData(
+      data,
+      contentType != null
+          ? SettableMetadata(contentType: contentType)
+          : null,
+    );
+
+    final TaskSnapshot snapshot = await task.whenComplete(() {});
+
+    final String url = await snapshot.ref.getDownloadURL();
+
+    _control.registerUsage(OperationType.upload);
+
+    return url;
+  }
+
+  /// =========================
+  /// ⬇️ DOWNLOAD URL
+  /// =========================
+  Future<String> getDownloadUrl({
+    required String path,
+  }) async {
+    if (!_control.canExecute(OperationType.download)) {
+      _logger.logWarning('DOWNLOAD BLOCKED → $path');
+
+      throw Exception('Download blocked');
+    }
+
+    final ref = _storage.ref().child(path);
+
+    final url = await ref.getDownloadURL();
+
+    _control.registerUsage(OperationType.download);
+
+    return url;
+  }
+
+  /// =========================
+  /// 🗑 DELETE BY URL
+  /// =========================
+  Future<void> deleteByUrl({
+    required String url,
+  }) async {
+    if (!_control.canExecute(OperationType.write)) {
+      _logger.logWarning('DELETE BLOCKED → $url');
+
+      throw Exception('Delete blocked');
+    }
+
+    final ref = _storage.refFromURL(url);
+
+    await ref.delete();
+
+    _control.registerUsage(OperationType.write);
+  }
+
+  /// =========================
+  /// 📁 GET STORAGE REFERENCE
+  /// =========================
+  Reference getReference({
+    required String path,
   }) {
-    subCategoryList = subCategoryList ?? [];
-  }
+    if (!_control.canExecute(OperationType.upload)) {
+      _logger.logWarning('REFERENCE BLOCKED → $path');
 
-  /// Creates a [ProductCategory] object from a Firestore document snapshot.
-  ProductCategory.fromDocument(DocumentSnapshot document) {
-    // Performance monitoring and logging...
-    PerformanceMonitoring().startTrace('categoryFromMap', shouldStart: true);
-    if (kDebugMode) {
-      MonitoringLogger().logInfo('Message: CategoryFromMap');
+      throw Exception('Reference blocked');
     }
 
-    categoryID = document["categoryID"] as String;
-    categoryTitle = document["categoryTitle"] as String? ?? "";
-    categoryColor = document["categoryColor"] as String? ?? "";
-    categoryRealColor = getColorFromString(categoryColor ?? "");
-    categoryImg = document["categoryImg"] as String? ?? "";
-    categoryActivated = (document["categoryActivated"] ?? false) as bool;
-    subCategoryList = (document["subCategoryList"] as List<dynamic>)
-        .map((d) => SubCategory.fromMap(d as Map<String, dynamic>))
-        .toList();
-
-    PerformanceMonitoring().stopTrace('categoryFromMap');
+    return _storage.ref().child(path);
   }
 
-  /// Converts the [ProductCategory] object to a map for serialization.
-  ///
-  /// Returns a map containing the category attributes as key-value pairs.
-  Map<String, dynamic> toMap() {
-    return {
-      "categoryID": categoryID,
-      "categoryTitle": categoryTitle,
-      "categoryColor": getHexColor(categoryRealColor ?? Colors.blueGrey),
-      "categoryImg": categoryImg,
-      "categoryActivated": categoryActivated,
-      "subCategoryList": exportSubCategories() ?? [],
-    };
-  }
+  /// =========================
+  /// 🌐 GET STORAGE REF FROM URL
+  /// =========================
+  Reference getReferenceFromUrl({
+    required String url,
+  }) {
+    if (!_control.canExecute(OperationType.download)) {
+      _logger.logWarning('REFERENCE URL BLOCKED');
 
-  DocumentReference get firestoreRef => firestore.doc("categories/$categoryID");
-
-  Reference get storageRef => storage.ref().child("categories").child("$categoryID!");
-
-  /// ## Method: exportSubCategories
-  /// Converts the list of sub-categories into a list of maps.
-  ///
-  /// This method is used to export the sub-categories of a product category into a list of maps,
-  /// which can then be serialized or stored in a database.
-  ///
-  /// Returns a list of maps containing the attributes of each sub-category.
-  ///
-  /// ```dart
-  /// List<Map<String, dynamic>>? exportSubCategories() {
-  ///   return subCategoryList?.map((sub) => sub.toMap()).toList();
-  /// }
-  /// ```
-  List<Map<String, dynamic>>? exportSubCategories() {
-    return subCategoryList?.map((sub) => sub.toMap()).toList();
-  }
-
-  /// ## Method: updateCategoryImage
-  /// Updates the image of the product category.
-  ///
-  /// This method is used to update the image of a product category. It handles different scenarios
-  /// based on the platform (web or mobile) and the type of image input (base64 string or file).
-  /// If the category already has an image, the old image is deleted before uploading the new one.
-  ///
-  /// The method performs base64 decoding for web platforms and directly uploads files for mobile platforms.
-  /// After updating the image, it triggers a database update and notifies listeners about the change.
-  ///
-  /// Parameters:
-  /// - `image`: The new image to be set for the category.
-  ///
-  // ignore: unintended_html_in_doc_comment
-  /// Returns: Future<void>
-  ///
-  /// ```dart
-  Future<void> updateCategoryImage(dynamic image) async {
-    PerformanceMonitoring().startTrace('update-category-image', shouldStart: true);
-    if (!kReleaseMode) {
-      MonitoringLogger().logInfo('Starting file upload Category');
+      throw Exception('Reference blocked');
     }
 
-    if (categoryImg != null && categoryImg != "") {
-      final oldImageRef = storage.refFromURL(categoryImg);
-      await oldImageRef.delete();
-    }
-
-    if (kIsWeb) {
-      final base64String = image?.split(',').last;
-      const String validCharacters =
-          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
-      final trimmedString = base64String?.replaceAll(RegExp("[^$validCharacters]"), "");
-      if (base64String is String && base64String.isNotEmpty && base64String.length % 4 == 0) {
-        try {
-          final List<int> bytes = base64.decode(trimmedString!);
-          final Uint8List uint8ListBytes = Uint8List.fromList(bytes);
-          final metadata = SettableMetadata(contentType: "image/jpeg");
-          final task = storageRef.child("$categoryID!").putData(uint8ListBytes, metadata);
-          final snapshot = await task.whenComplete(() {});
-          final url = await snapshot.ref.getDownloadURL();
-          image = url;
-        } catch (e) {
-          if (kDebugMode) {
-            print('Erro ao decodificar o base64String: $e');
-          }
-        }
-      }
-    } else if (image is File) {
-      final UploadTask task = storageRef.child("$categoryID!").putFile(image);
-      final TaskSnapshot snapshot = await task.whenComplete(() {});
-      final String url = await snapshot.ref.getDownloadURL();
-      image = url;
-    }
-
-    await firestoreRef.update({"categoryImg": image});
-
-    categoryImg = image;
-    notifyListeners();
-
-    PerformanceMonitoring().stopTrace('update-category-image');
+    return _storage.refFromURL(url);
   }
 
-  @override
-  String toString() {
-    return 'ProductCategory{categoryID: $categoryID, '
-        'categoryTitle: $categoryTitle, categoryColor: $categoryColor, '
-        'categoryImg: $categoryImg, categoryActivated: $categoryActivated}';
-  }
+// TODO(BRN): avaliar cache/local strategy
+// para evitar downloads repetidos.
 }

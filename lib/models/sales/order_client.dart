@@ -1,9 +1,9 @@
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
-import 'package:brn_ecommerce/models/locations_services/address.dart';
-import 'package:brn_ecommerce/models/products/cart_product.dart';
+import 'package:brn_ecommerce/core/monitoring/monitoring_logger.dart';
+import 'package:brn_ecommerce/data/models/location/address.dart';
+import 'package:brn_ecommerce/features/cart/models/cart_product.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
-import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 

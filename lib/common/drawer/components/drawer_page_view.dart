@@ -1,5 +1,5 @@
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
-import 'package:brn_ecommerce/models/users/users_manager.dart';
+import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
 import 'package:brn_ecommerce/views/admin_orders/admin_orders_screen.dart';
 import 'package:brn_ecommerce/views/admin_settings/components/outdoor_admin_screen.dart';
 import 'package:brn_ecommerce/views/admin_users/admin_users_screen.dart';

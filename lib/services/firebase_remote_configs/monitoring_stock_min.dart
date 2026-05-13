@@ -1,7 +1,7 @@
+import 'package:brn_ecommerce/core/monitoring/monitoring_logger.dart';
 import 'package:brn_ecommerce/helpers/handle_erros.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
-import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 

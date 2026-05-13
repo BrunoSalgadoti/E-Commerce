@@ -2,10 +2,10 @@ import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/communications_utils.dart';
+import 'package:brn_ecommerce/core/firestore_service.dart';
+import 'package:brn_ecommerce/data/repositories/admin_orders_manager.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
-import 'package:brn_ecommerce/models/admin_area/admin_orders_manager.dart';
 import 'package:brn_ecommerce/models/users/users.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -13,7 +13,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class AdminUsersSearch extends ChangeNotifier {
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirestoreService _firestoreService = FirestoreService.instance;
 
   final List<String> email = [];
   final List<Users> _favouriteUsers = [];
@@ -200,11 +200,17 @@ class AdminUsersSearch extends ChangeNotifier {
 
   Future<void> _favoringUser(String? userId) async {
     if (userId == null) return;
+
     try {
-      await firestore.collection('users').doc(userId).update({'favourite': true});
+      await _firestoreService.updateDocument(
+        collection: 'users',
+        docId: userId,
+        data: {'favourite': true},
+      );
     } catch (e) {
       if (kDebugMode) debugPrint('Erro ao favoritar: $e');
     }
+
     final idx = allUsers.indexWhere((u) => u.id == userId);
     if (idx != -1) {
       allUsers[idx].favourite = true;
@@ -214,11 +220,17 @@ class AdminUsersSearch extends ChangeNotifier {
 
   Future<void> _disfavoringUser(String? userId) async {
     if (userId == null) return;
+
     try {
-      await firestore.collection('users').doc(userId).update({'favourite': false});
+      await _firestoreService.updateDocument(
+        collection: 'users',
+        docId: userId,
+        data: {'favourite': false},
+      );
     } catch (e) {
       if (kDebugMode) debugPrint('Erro ao desfavoritar: $e');
     }
+
     final idx = allUsers.indexWhere((u) => u.id == userId);
     if (idx != -1) {
       allUsers[idx].favourite = false;

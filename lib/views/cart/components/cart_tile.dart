@@ -5,7 +5,7 @@ import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/common/miscellaneous/freight_logo.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
-import 'package:brn_ecommerce/models/products/cart_product.dart';
+import 'package:brn_ecommerce/features/cart/models/cart_product.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

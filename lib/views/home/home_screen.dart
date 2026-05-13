@@ -17,7 +17,7 @@ import 'package:brn_ecommerce/common/outdoor/outdoor_widget.dart';
 import 'package:brn_ecommerce/common/responsiveness/responsive_page_wrapper.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
-import 'package:brn_ecommerce/models/home_sections/home_manager.dart';
+import 'package:brn_ecommerce/features/home/managers/home_manager.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
 import 'package:brn_ecommerce/views/home/components/add_section_widget.dart';
 import 'package:brn_ecommerce/views/home/components/home_app_bar.dart';

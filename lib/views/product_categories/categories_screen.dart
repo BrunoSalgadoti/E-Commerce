@@ -6,7 +6,7 @@ import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category_manager.dart';
-import 'package:brn_ecommerce/models/users/users_manager.dart';
+import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
 import 'package:brn_ecommerce/views/product_categories/components/main_categories_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

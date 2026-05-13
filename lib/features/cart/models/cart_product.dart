@@ -1,19 +1,13 @@
 import 'package:brn_ecommerce/models/products/details_products.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../../common/functions/common_functions.dart';
+import '../../../common/functions/common_functions.dart';
 
-/// # Cart Product Model (Folder: models/products)
-/// ## CartProduct
-/// A class representing a product in the user's shopping cart.
-///
-/// This class manages the details of a product added to the cart, including its ID, brand, size, color,
-/// quantity, price, and freight information. It provides methods for incrementing and decrementing the quantity,
-/// checking stock availability, and managing stackable sizes.
 class CartProduct extends ChangeNotifier {
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+// =========================
+// 📦 DATA
+// =========================
   String? id;
   String? productId;
   String? brand;
@@ -23,15 +17,14 @@ class CartProduct extends ChangeNotifier {
   num? fixedPrice;
   bool? _freight;
   Color? realColorFromCart;
+
   Product? _product;
   DetailsProducts? _detailsProducts;
 
-  // Constructors
+// =========================
+// 🏗 CONSTRUCTORS
+// =========================
 
-  /// Creates a [CartProduct] from an existing [Product] and [DetailsProducts].
-  ///
-  /// The [product] parameter represents the main product details.
-  /// The [detailsProducts] parameter represents the details of the product, including size and color options.
   CartProduct.fromProduct(this._product, this._detailsProducts) {
     productId = product?.id;
     brand = product?.brand;
@@ -42,10 +35,7 @@ class CartProduct extends ChangeNotifier {
     realColorFromCart = getColorFromString(color!);
   }
 
-  /// Creates a [CartProduct] from a Firestore document snapshot.
-  ///
-  /// This constructor is used when retrieving a cart product from Firestore.
-  CartProduct.fromDocument(DocumentSnapshot document) {
+  CartProduct.fromDocument(document) {
     id = document.id;
     productId = document.get("pid") as String;
     brand = document.get("brand") as String? ?? "";
@@ -55,14 +45,9 @@ class CartProduct extends ChangeNotifier {
     color = document.get("color") as String? ?? "";
     realColorFromCart = getColorFromString(color!);
 
-    firestore.doc("products/$productId").get().then((doc) {
-      product = Product.fromDocument(doc);
-    });
+// 🔥 Product atualizado em tempo real via CartManager (controle centralizado pelo CORE)
   }
 
-  /// Creates a [CartProduct] from a map.
-  ///
-  /// This constructor is used when converting a map to a cart product object.
   CartProduct.fromMap(Map<String, dynamic> map) {
     productId = map["pid"] as String;
     brand = map["brand"] as String? ?? "";
@@ -72,17 +57,12 @@ class CartProduct extends ChangeNotifier {
     fixedPrice = map["fixedPrice"] as num;
     color = map["color"] as String;
     realColorFromCart = getColorFromString(color!);
-
-    firestore.doc("products/$productId").get().then((doc) {
-      product = Product.fromDocument(doc);
-    });
   }
 
-  // Methods
+// =========================
+// 🔁 MAPS (MANTIDOS)
+// =========================
 
-  /// Converts the cart product to a map for cart item representation.
-  ///
-  /// This method is used when preparing cart items for storage or transmission.
   Map<String, dynamic> toCartItemMap() {
     return {
       "pid": productId,
@@ -94,9 +74,6 @@ class CartProduct extends ChangeNotifier {
     };
   }
 
-  /// Converts the cart product to a map for order item representation.
-  ///
-  /// This method is used when preparing order items for storage or transmission.
   Map<String, dynamic> toOrderItemMap() {
     return {
       "pid": productId,
@@ -109,16 +86,16 @@ class CartProduct extends ChangeNotifier {
     };
   }
 
-  /// Checks if the cart product's stackable size matches the provided product's size and color.
-  ///
-  /// The [product] parameter represents the product to compare with.
+// =========================
+// 🧠 LOGIC
+// =========================
+
   bool stackableSize(Product product) {
     return product.id == productId &&
         product.selectedDetails!.size == size &&
         detailsProducts!.selectedColors!.color == color;
   }
 
-  /// Increases the quantity of the cart product by one unit.
   void increment() {
     dynamic count = quantity;
     count++;
@@ -126,7 +103,6 @@ class CartProduct extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Decreases the quantity of the cart product by one unit.
   void decrement() {
     dynamic count = quantity;
     count--;
@@ -134,7 +110,9 @@ class CartProduct extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Properties (getters and setters)
+// =========================
+// 🔐 GETTERS / SETTERS
+// =========================
 
   set product(Product? value) {
     _product = value;

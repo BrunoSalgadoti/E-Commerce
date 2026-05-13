@@ -6,7 +6,7 @@ import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/policy_documents/policy_and_documents.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
-import 'package:brn_ecommerce/models/users/users_manager.dart';
+import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
 import 'package:brn_ecommerce/services/config/version_manager.dart';
 import 'package:brn_ecommerce/views/policy_and_documents/components/privacy_policy_widget.dart';
 import 'package:brn_ecommerce/views/policy_and_documents/components/terms_of_service_widget.dart';

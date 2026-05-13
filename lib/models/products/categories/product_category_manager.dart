@@ -1,13 +1,13 @@
 import 'dart:async';
 
+import 'package:brn_ecommerce/core/monitoring/monitoring_logger.dart';
 import 'package:brn_ecommerce/helpers/product_categories_factory_lists/categories_factory.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
 import 'package:brn_ecommerce/models/users/users.dart';
-import 'package:brn_ecommerce/models/users/users_manager.dart';
+import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
-import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

@@ -4,7 +4,7 @@ import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/formatted_fields/time_input_formatter.dart';
-import 'package:brn_ecommerce/models/locations_services/address.dart';
+import 'package:brn_ecommerce/data/models/location/address.dart';
 import 'package:brn_ecommerce/models/stores/opening_stores.dart';
 import 'package:brn_ecommerce/models/stores/stores.dart';
 import 'package:brn_ecommerce/views/stores/components/store_utils.dart';

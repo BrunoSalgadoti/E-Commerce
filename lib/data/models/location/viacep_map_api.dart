@@ -1,22 +1,3 @@
-import 'package:geolocator/geolocator.dart';
-
-/// # Locations Services Classes (Folder: models/locations_services)
-/// ## LocationService n´ ViaCepAddress class
-/// A service class for retrieving device location information from the ViaCep API.
-///
-/// This class utilizes the Geolocator package to access the device's geolocation
-/// capabilities and obtain the current position.
-class LocationService {
-  GeolocatorPlatform geolocatorPlatform = GeolocatorPlatform.instance;
-
-  static Future<Position> getCurrentLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
-    return position;
-  }
-}
-
 class ViaCepAddress {
   final double? longitude;
   final double? latitude;
@@ -61,3 +42,25 @@ class ViaCepAddress {
         'city: $city, state: $state, ddd: $ddd, ibge: $ibge}';
   }
 }
+// TODO: Validar inconsistência entre ViaCEP (sem lat/long) e outras APIs
+
+// TODO: Implementar estratégia de fallback entre APIs de CEP (ViaCEP ↔ CepAberto)
+/* Objetivo:
+- Utilizar múltiplas APIs para evitar bloqueio por limite de requisições
+- Priorizar API gratuita (ViaCEP)
+- Utilizar API secundária (CepAberto) quando necessário
+
+Possível abordagem futura:
+- Criar um CepService no core
+- Centralizar lógica de escolha de API
+- Normalizar resposta em um único modelo (Address)
+
+Exemplo conceitual:
+CepService.getAddress(cep):
+  try ViaCEP
+  fallback CepAberto
+
+Avaliar:
+- Diferença de estrutura entre APIs
+- Tratamento de lat/long (nem todas fornecem)
+- Cache local para reduzir chamadas externas */

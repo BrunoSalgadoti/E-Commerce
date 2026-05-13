@@ -1,14 +1,18 @@
-import 'package:brn_ecommerce/models/locations_services/address.dart';
+import 'package:brn_ecommerce/core/firestore_service.dart';
+import 'package:brn_ecommerce/core/getters/core_getters_service.dart';
+import 'package:brn_ecommerce/data/models/location/address.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-/// # Users (Folder: models/users)
-///
-/// A class representing user information, including ID, username, email, password, phone number, and address.
-///
-/// This class contains properties and methods related to user data management.
 class Users {
-  // Proprieties
+// =========================
+// 🔧 CORE
+// =========================
+  final FirestoreService _firestoreService = FirestoreService.instance;
+  final CoreGettersService _getters = CoreGettersService.instance;
 
+// =========================
+// 📦 DATA
+// =========================
   String? id;
   String? userName;
   String email = "";
@@ -23,14 +27,26 @@ class Users {
   List<String> favoriteProductIds = [];
   List<String> wishlistProductIds = [];
 
-  // Properties for Firestore references
-  DocumentReference get firestoreRef => FirebaseFirestore.instance.doc("users/$id");
+// =========================
+// 🔥 GETTERS (CORE)
+// =========================
 
-  CollectionReference get cartReference => firestoreRef.collection("cart");
+// 🔁 MESMO NOME (compatibilidade total)
+  DocumentReference get firestoreRef =>
+      _getters.getDocumentRef(
+        collection: "users",
+        docId: id!,
+      );
 
-  // Constructors
+// 🔁 MESMO NOME (compatibilidade total)
+  CollectionReference get cartReference =>
+      _getters.getCollectionRef(
+        path: "users/$id/cart",
+      );
 
-  /// Initializes a [Users] instance with the specified parameters.
+// =========================
+// 🏗 CONSTRUCTORS
+// =========================
   Users({
     this.id,
     this.userName,
@@ -43,7 +59,6 @@ class Users {
     this.confirmPassword,
   });
 
-  /// Creates a [Users] instance from a Firestore document snapshot.
   Users.fromDocument(DocumentSnapshot document) {
     id = document.id;
     userName = document.get("name") as String;
@@ -53,19 +68,23 @@ class Users {
     userPhotoURL = document.get("userPhoto") as String? ?? "";
     policyAndTerms = document.get("policyAndTerms") as bool? ?? false;
 
-    Map<String, dynamic> dataMap = document.data() as Map<String, dynamic>;
+    final Map<String, dynamic> dataMap =
+    document.data() as Map<String, dynamic>;
 
     favoriteProductIds = List<String>.from(dataMap["favorites"] ?? []);
     wishlistProductIds = List<String>.from(dataMap["wishlist"] ?? []);
 
     if (dataMap.containsKey("address")) {
-      address = Address.fromMap(document.get("address") as Map<String, dynamic>);
+    address = Address.fromMap(
+    document.get("address") as Map<String, dynamic>,
+    );
     }
+
   }
 
-  // Methods
-
-  /// Converts user data to a map for Firestore storage.
+// =========================
+// 🔁 MAP
+// =========================
   Map<String, dynamic> toMap() {
     return {
       "name": userName,
@@ -80,19 +99,28 @@ class Users {
     };
   }
 
-  /// Saves user data to Firestore.
+// =========================
+// 🔥 FIRESTORE (CORE)
+// =========================
+
   Future<void> saveUserData() async {
-    await firestoreRef.set(toMap());
+    await _firestoreService.setDocument(
+      collection: "users",
+      docId: id!,
+      data: toMap(),
+    );
   }
 
-  /// Updates user data in Firestore.
   Future<void> updateUserData() async {
-    await firestoreRef.update(toMap());
+    await _firestoreService.updateDocument(
+      collection: "users",
+      docId: id!,
+      data: toMap(),
+    );
   }
 
-  /// Sets the user's address and saves the updated user data to Firestore.
   void setAddress(Address address) {
     this.address = address;
-    saveUserData();
+    saveUserData(); // 🔁 mantido
   }
 }

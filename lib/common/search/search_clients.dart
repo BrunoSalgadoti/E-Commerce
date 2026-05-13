@@ -1,5 +1,5 @@
 import 'package:brn_ecommerce/common/search/components/search_dialog.dart';
-import 'package:brn_ecommerce/models/admin_area/admin_users_search.dart';
+import 'package:brn_ecommerce/features/admin/users/admin_users_search.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

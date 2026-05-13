@@ -4,11 +4,11 @@ import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:brn_ecommerce/common/outdoor/components/outdoor_controller.dart';
 import 'package:brn_ecommerce/common/outdoor/components/outdoor_repository.dart';
 import 'package:brn_ecommerce/common/outdoor/components/outdoor_service.dart';
-import 'package:brn_ecommerce/models/admin_area/admin_orders_manager.dart';
-import 'package:brn_ecommerce/models/admin_area/admin_users_manager.dart';
-import 'package:brn_ecommerce/models/admin_area/admin_users_search.dart';
-import 'package:brn_ecommerce/models/favorites/favorites_manager.dart';
-import 'package:brn_ecommerce/models/home_sections/home_manager.dart';
+import 'package:brn_ecommerce/data/repositories/admin_orders_manager.dart';
+import 'package:brn_ecommerce/data/repositories/admin_users_manager.dart';
+import 'package:brn_ecommerce/features/admin/users/admin_users_search.dart';
+import 'package:brn_ecommerce/features/admin/users/favorites/favorites_manager.dart';
+import 'package:brn_ecommerce/features/home/managers/home_manager.dart';
 import 'package:brn_ecommerce/models/policy_documents/policy_and_documents.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category_manager.dart';
@@ -21,7 +21,7 @@ import 'package:brn_ecommerce/models/sales/orders_manager.dart';
 import 'package:brn_ecommerce/models/stores/stores.dart';
 import 'package:brn_ecommerce/models/stores/stores_manager.dart';
 import 'package:brn_ecommerce/models/users/users.dart';
-import 'package:brn_ecommerce/models/users/users_manager.dart';
+import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
 import 'package:brn_ecommerce/models/who_we_are/who_we_are_manager.dart';
 import 'package:brn_ecommerce/services/config/version_manager.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +53,6 @@ class ProvidersApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProductManager(), lazy: false),
         ChangeNotifierProvider(create: (_) => ProductCategory()),
         ChangeNotifierProvider(create: (_) => DetailsProducts(stock: 0)),
-        ChangeNotifierProvider<CartManager>.value(value: CartManager.instance),
         ChangeNotifierProvider(
           create: (context) => FavoritesManager(
             userManager: context.read<UserManager>(),

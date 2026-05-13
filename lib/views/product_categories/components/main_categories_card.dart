@@ -6,7 +6,7 @@ import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category.dart';
-import 'package:brn_ecommerce/models/users/users_manager.dart';
+import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
 import 'package:brn_ecommerce/views/product_edit/components/image_source_sheet.dart';
 import 'package:brn_ecommerce/views/product_edit/components/image_source_web.dart';
 import 'package:custom_universal_html/html.dart' as html;

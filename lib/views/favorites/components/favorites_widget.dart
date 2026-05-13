@@ -1,8 +1,8 @@
 import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/features/admin/users/favorites/favorites_manager.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
-import 'package:brn_ecommerce/models/favorites/favorites_manager.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
-import 'package:brn_ecommerce/models/users/users_manager.dart';
+import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

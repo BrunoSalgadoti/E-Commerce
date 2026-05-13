@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../../helpers/themes/get_another_colors.dart'
     show getDrawerColorFirst, getDrawerColorSecond;
-import '../../models/users/users_manager.dart';
+import '../../features/auth/managers/users_manager.dart';
 
 class DrawerItem {
   final IconData icon;

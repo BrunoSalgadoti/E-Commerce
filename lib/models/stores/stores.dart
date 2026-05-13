@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:brn_ecommerce/core/monitoring/monitoring_logger.dart' show MonitoringLogger;
 import 'package:brn_ecommerce/helpers/extensions.dart';
-import 'package:brn_ecommerce/models/locations_services/address.dart';
+import 'package:brn_ecommerce/data/models/location/address.dart';
 import 'package:brn_ecommerce/models/stores/opening_stores.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
-import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';

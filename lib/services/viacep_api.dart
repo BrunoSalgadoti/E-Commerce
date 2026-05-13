@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/models/locations_services/viacep_map_api.dart';
+import 'package:brn_ecommerce/data/models/location/viacep_map_api.dart';
 import 'package:dio/dio.dart';
 
 /// # ViaCepApi (Folder: services)

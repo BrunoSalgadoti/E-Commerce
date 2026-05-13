@@ -1,7 +1,7 @@
 import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/common/cards/login_card.dart';
 import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
-import 'package:brn_ecommerce/models/favorites/favorites_manager.dart';
+import 'package:brn_ecommerce/features/admin/users/favorites/favorites_manager.dart';
 import 'package:brn_ecommerce/models/sales/orders_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

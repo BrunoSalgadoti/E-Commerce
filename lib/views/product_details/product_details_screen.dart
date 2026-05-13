@@ -5,7 +5,7 @@ import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/details_products.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
-import 'package:brn_ecommerce/models/users/users_manager.dart';
+import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
 import 'package:brn_ecommerce/views/products/components/colors_widget.dart';
 import 'package:brn_ecommerce/views/products/components/products_widget.dart';
 import 'package:collection/collection.dart';

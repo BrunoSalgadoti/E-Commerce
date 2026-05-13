@@ -1,6 +1,6 @@
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
-import 'package:brn_ecommerce/models/home_sections/home_manager.dart';
-import 'package:brn_ecommerce/models/home_sections/section.dart';
+import 'package:brn_ecommerce/features/home/managers/home_manager.dart';
+import 'package:brn_ecommerce/data/models/home/section.dart';
 import 'package:brn_ecommerce/views/home/components/add_tile_widget.dart';
 import 'package:brn_ecommerce/views/home/components/item_tile.dart';
 import 'package:brn_ecommerce/views/home/components/section_header.dart';

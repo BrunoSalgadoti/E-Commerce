@@ -1,13 +1,15 @@
 import 'dart:async';
 
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
+import 'package:brn_ecommerce/core/auth_service.dart';
+import 'package:brn_ecommerce/core/firestore_service.dart';
+import 'package:brn_ecommerce/core/monitoring/monitoring_logger.dart';
+import 'package:brn_ecommerce/features/admin/users/favorites/favorites_manager.dart';
 import 'package:brn_ecommerce/helpers/firebase_errors.dart';
-import 'package:brn_ecommerce/models/favorites/favorites_manager.dart';
 import 'package:brn_ecommerce/models/sales/delivery.dart';
 import 'package:brn_ecommerce/models/users/users.dart';
 import 'package:brn_ecommerce/services/db_api/config_environment_variables.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
-import 'package:brn_ecommerce/services/development_monitoring/monitoring_logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -16,31 +18,26 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
-/// UserManager is responsible for user authentication, profile loading, and state management.
-/// Handles email/password login, Google/Facebook login, sign-up, sign-out, and persistent login_.
 class UserManager extends ChangeNotifier {
-  // Proprieties
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final AuthService _authService = AuthService.instance;
+  final FirestoreService _firestoreService = FirestoreService.instance;
 
   bool _loading = false;
   bool _newUserAccount = false;
   bool _editingCategories = false;
   bool _loadingFace = false;
   bool _loadingGoogle = false;
+
   Users? users;
 
-  /// Constructor
   UserManager() {
-    _auth.setLanguageCode('pt-BR');
-    // Attempt to load current user if already signed in
-    if (_auth.currentUser != null) {
+    _authService.setLanguageCode('pt-BR');
+
+    if (_authService.currentUser != null) {
       initializeUser();
     }
   }
 
-  // Getters and setters
   bool get loading => _loading;
   bool get editingCategories => _editingCategories;
   bool get loadingFace => _loadingFace;
@@ -68,33 +65,51 @@ class UserManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Methods
-
-  /// Signs out the current user.
   void signOut(BuildContext context) {
-    _auth.signOut();
+    _authService.signOut();
+
     users = null;
+
     notifyListeners();
 
-    // Update FavoritesManager to clear favorites when logging out
-    final favoritesManager = Provider.of<FavoritesManager>(context, listen: false);
+    final favoritesManager = Provider.of<FavoritesManager>(
+      context,
+      listen: false,
+    );
+
     favoritesManager.updateUser(null);
   }
 
-  /// Loads the current user's data from Firestore.
-  Future<void> _loadCurrentUser({BuildContext? context, User? user}) async {
+  Future<void> _loadCurrentUser({
+    BuildContext? context,
+    User? user,
+  }) async {
     try {
-      final currentUser = user ?? _auth.currentUser!;
-      if (currentUser.uid.isNotEmpty) {
-        final docUsers = await firestore.collection("users").doc(currentUser.uid).get();
+      final currentUser = user ?? _authService.currentUser;
+
+      if (currentUser != null && currentUser.uid.isNotEmpty) {
+        final docUsers = await _firestoreService.getDocument(
+          collection: "users",
+          docId: currentUser.uid,
+        );
+
         users = Users.fromDocument(docUsers);
 
-        final docAdmin = await firestore.collection("admins").doc(users?.id).get();
-        if (docAdmin.exists) users?.admin = true;
+        final docAdmin = await _firestoreService.getDocument(
+          collection: "admins",
+          docId: users?.id ?? '',
+        );
 
-        // Only updates favorites if context was passed
+        if (docAdmin.exists) {
+          users?.admin = true;
+        }
+
         if (context != null) {
-          final favoritesManager = Provider.of<FavoritesManager>(context, listen: false);
+          final favoritesManager = Provider.of<FavoritesManager>(
+            context,
+            listen: false,
+          );
+
           favoritesManager.updateUser(users?.id);
         }
 
@@ -104,50 +119,88 @@ class UserManager extends ChangeNotifier {
       reportNoFatalErrorToCrashlytics(
         error: "$error",
         stackTrace: StackTrace.current,
-        information: "Erro na Classe: UserManager no método _loadCurrentUser()",
+        information:
+        "Erro na Classe: UserManager no método _loadCurrentUser()",
       );
-      MonitoringLogger().logError('Erro ao carregar CurrentUser: $error');
+
+      MonitoringLogger().logError(
+        'Erro ao carregar CurrentUser: $error',
+      );
     }
   }
 
-  /// Checks if necessary auxiliary documents and admin data exist in Firestore.
-  Future<void> createAuxAndAdminsIfNotExists({required bool firstStart}) async {
+  Future<void> createAuxAndAdminsIfNotExists({
+    required bool firstStart,
+  }) async {
     if (kDebugMode && firstStart) {
-      MonitoringLogger().logInfo('Info: Verifier createAuxAndAdminsIfNotExists');
+      MonitoringLogger().logInfo(
+        'Info: Verifier createAuxAndAdminsIfNotExists',
+      );
 
-      // Check if the "admins" collection is empty
-      final adminsQuery = await firestore.collection("admins").limit(1).get();
-      final usersQuery = await firestore.collection("users").get();
+      final adminsQuery = await _firestoreService.getCollection(
+        collection: "admins",
+      );
+
+      final usersQuery = await _firestoreService.getCollection(
+        collection: "users",
+      );
+
       if (adminsQuery.docs.isEmpty && usersQuery.docs.isNotEmpty) {
-        // Create document '{users.id}' in collection 'admins' with user id as admin
-        await firestore.collection("admins").doc(users!.id).set({"user": users!.id});
-        users!.admin = true; // Set user as administrator on first login
+        await _firestoreService.setDocument(
+          collection: "admins",
+          docId: users!.id!,
+          data: {
+            "user": users!.id,
+          },
+        );
+
+        users!.admin = true;
       }
 
-      // Check if the "aux" collection contains the "delivery" document
-      final deliveryDoc = firestore.collection("aux").doc("delivery");
-      final doc = await deliveryDoc.get();
-      if (!doc.exists) {
-        await deliveryDoc.set(Delivery().toMap()); // Create a new instance of the Delivery class
+      final deliveryDoc = await _firestoreService.getDocument(
+        collection: "aux",
+        docId: "delivery",
+      );
+
+      if (!deliveryDoc.exists) {
+        await _firestoreService.setDocument(
+          collection: "aux",
+          docId: "delivery",
+          data: Delivery().toMap(),
+        );
       }
 
-      // Check if the "aux" collection contains the "orderCounter" document
-      final orderCounterDoc = firestore.collection("aux").doc("orderCounter");
-      if (!(await orderCounterDoc.get()).exists) {
-        // Create the "orderCounter" document with "current" field set to 1
-        await orderCounterDoc.set({"current": 1});
+      final orderCounterDoc = await _firestoreService.getDocument(
+        collection: "aux",
+        docId: "orderCounter",
+      );
+
+      if (!orderCounterDoc.exists) {
+        await _firestoreService.setDocument(
+          collection: "aux",
+          docId: "orderCounter",
+          data: {
+            "current": 1,
+          },
+        );
       }
     }
   }
 
-  Future<void> verifyEmailWithCode(BuildContext context, String oobCode) async {
+  Future<void> verifyEmailWithCode(
+      BuildContext context,
+      String oobCode,
+      ) async {
     try {
-      await _auth.checkActionCode(oobCode);
-      await _auth.applyActionCode(oobCode);
+      await _authService.checkActionCode(oobCode);
+
+      await _authService.applyActionCode(oobCode);
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('E-mail verificado com sucesso!')),
+          const SnackBar(
+            content: Text('E-mail verificado com sucesso!'),
+          ),
         );
       }
     } catch (e) {
@@ -155,14 +208,13 @@ class UserManager extends ChangeNotifier {
     }
   }
 
-  /// Send password reset email (send only)
   Future<void> sendPasswordResetEmailRequest({
     required String email,
     required VoidCallback onSuccess,
     required Function(String) onFail,
   }) async {
     try {
-      await _auth.sendPasswordResetEmail(
+      await _authService.sendPasswordReset(
         email: email,
         actionCodeSettings: ActionCodeSettings(
           url: AppConfigKey.linkRecoverPasswordInWeb,
@@ -172,6 +224,7 @@ class UserManager extends ChangeNotifier {
           androidInstallApp: false,
         ),
       );
+
       onSuccess();
     } on FirebaseAuthException catch (e) {
       onFail(e.message ?? "Erro desconhecido");
@@ -180,7 +233,6 @@ class UserManager extends ChangeNotifier {
     }
   }
 
-  /// Confirm the new password using the oobCode
   Future<void> confirmNewPassword({
     required String oobCode,
     required String newPassword,
@@ -188,7 +240,11 @@ class UserManager extends ChangeNotifier {
     required Function(String) onFail,
   }) async {
     try {
-      await _auth.confirmPasswordReset(code: oobCode, newPassword: newPassword);
+      await _authService.confirmPasswordReset(
+        code: oobCode,
+        newPassword: newPassword,
+      );
+
       onSuccess();
     } on FirebaseAuthException catch (e) {
       onFail(e.message ?? "Erro desconhecido");
@@ -197,13 +253,20 @@ class UserManager extends ChangeNotifier {
     }
   }
 
-  /// Initializes user data
-  Future<void> initializeUser({BuildContext? context}) async {
-    final currentUser = _auth.currentUser;
+  Future<void> initializeUser({
+    BuildContext? context,
+  }) async {
+    final currentUser = _authService.currentUser;
+
     if (currentUser != null) {
       try {
-        final docUsers = await firestore.collection("users").doc(currentUser.uid).get();
+        final docUsers = await _firestoreService.getDocument(
+          collection: "users",
+          docId: currentUser.uid,
+        );
+
         users = Users.fromDocument(docUsers);
+
         notifyListeners();
       } catch (error) {
         debugPrint('Erro ao inicializar usuário: $error');
@@ -211,51 +274,76 @@ class UserManager extends ChangeNotifier {
     }
   }
 
-  /// Signs in with email and password.
   Future<void> signInWithEmailAndPassword({
     required Users users,
     required Function onFail,
     required Function onSuccess,
     BuildContext? context,
   }) async {
-    PerformanceMonitoring().startTrace('sign-in-email', shouldStart: true);
+    PerformanceMonitoring().startTrace(
+      'sign-in-email',
+      shouldStart: true,
+    );
+
     loading = true;
+
     try {
-      final result =
-          await _auth.signInWithEmailAndPassword(email: users.email, password: users.password!);
-      await _loadCurrentUser(user: result.user, context: context);
+      final result = await _authService.signIn(
+        email: users.email,
+        password: users.password!,
+      );
+
+      await _loadCurrentUser(
+        user: result.user,
+        context: context,
+      );
+
       onSuccess();
     } on FirebaseAuthException catch (error) {
       onFail(getErrorString(error.code));
     }
+
     loading = false;
+
     PerformanceMonitoring().stopTrace('sign-in-email');
   }
 
-  /// Signs up with email and password.
   Future<void> singUpWithEmailAndPassword({
     required Users users,
     required Function onFail,
     required Function onSuccess,
     BuildContext? context,
   }) async {
-    PerformanceMonitoring().startTrace('sing-up-email', shouldStart: true);
+    PerformanceMonitoring().startTrace(
+      'sing-up-email',
+      shouldStart: true,
+    );
+
     loading = true;
 
     try {
-      final result =
-          await _auth.createUserWithEmailAndPassword(email: users.email, password: users.password!);
+      final result = await _authService.signUp(
+        email: users.email,
+        password: users.password!,
+      );
 
       users.id = result.user!.uid;
       users.policyAndTerms = true;
+
       this.users = users;
 
       await users.saveUserData();
+
       _newUserAccount = true;
+
       await _updateMonthlyNewUsers();
 
       if (context != null) {
-        final favoritesManager = Provider.of<FavoritesManager>(context, listen: false);
+        final favoritesManager = Provider.of<FavoritesManager>(
+          context,
+          listen: false,
+        );
+
         favoritesManager.updateUser(users.id);
       }
 
@@ -265,20 +353,23 @@ class UserManager extends ChangeNotifier {
     }
 
     loading = false;
+
     PerformanceMonitoring().stopTrace('sing-up-email');
   }
 
-  /// Signs in or signs up with Facebook authentication.
   Future<void> loginOrSingUpWithFacebook({
     required Function? onFail,
     required Function? onSuccess,
     BuildContext? context,
   }) async {
-    PerformanceMonitoring().startTrace('login-facebook', shouldStart: true);
+    PerformanceMonitoring().startTrace(
+      'login-facebook',
+      shouldStart: true,
+    );
+
     try {
       loadingFace = true;
 
-      // check if is running on Web
       if (kIsWeb) {
         await FacebookAuth.i.webAndDesktopInitialize(
           appId: Config.facebookAppId,
@@ -288,26 +379,32 @@ class UserManager extends ChangeNotifier {
         );
       }
 
-      // Realize authentication for the Facebook
       final result = await FacebookAuth.instance.login();
 
       switch (result.status) {
         case LoginStatus.success:
-          // Gets the user's access token
           final accessToken = result.accessToken!;
-          // Converte o token de acesso em uma credencial do Firebase
-          final credential = FacebookAuthProvider.credential(accessToken.tokenString);
-          // Converts the access token to a Firebase credential
-          final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-          // Get authenticated user
+
+          final credential = FacebookAuthProvider.credential(
+            accessToken.tokenString,
+          );
+
+          final userCredential =
+          await _authService.signInWithCredential(
+            credential,
+          );
+
           final user = userCredential.user;
 
           if (user != null) {
-            // Check if the user document already exists in Firestore
-            final doc = await firestore.collection("users").doc(user.uid).get();
-            // Capture user data and save to FirebaseFirestore
+            final doc = await _firestoreService.getDocument(
+              collection: "users",
+              docId: user.uid,
+            );
+
             if (doc.exists) {
               users = Users.fromDocument(doc);
+
               await users?.updateUserData();
             } else {
               users = Users(
@@ -317,78 +414,110 @@ class UserManager extends ChangeNotifier {
                 phoneNumber: user.phoneNumber ?? "",
                 userPhotoURL: user.photoURL ?? "",
               );
+
               await users?.saveUserData();
+
               _newUserAccount = true;
+
               await _updateMonthlyNewUsers();
             }
 
             if (context != null) {
-              final favManager = Provider.of<FavoritesManager>(context, listen: false);
+              final favManager = Provider.of<FavoritesManager>(
+                context,
+                listen: false,
+              );
+
               favManager.updateUser(users?.id);
             }
 
             loadingFace = false;
+
             onSuccess?.call();
           }
+
           break;
+
         case LoginStatus.failed:
           onFail!("Facebook login failed! ${result.status}");
           loadingFace = false;
           break;
+
         case LoginStatus.cancelled:
           onFail!("Login cancelled by user! ${result.status}");
           loadingFace = false;
           break;
+
         case LoginStatus.operationInProgress:
           loadingFace = true;
           break;
       }
     } on FirebaseAuthException catch (error) {
       onFail!(getErrorString(error.code));
+
       loadingFace = false;
     }
 
     PerformanceMonitoring().stopTrace('login-facebook');
   }
 
-  /// Signs in or signs up with Google authentication.
   Future<void> loginOrSingUpWithGoogle({
     required Function? onFail,
     required Function? onSuccess,
     BuildContext? context,
   }) async {
-    PerformanceMonitoring().startTrace('login-google', shouldStart: true);
+    PerformanceMonitoring().startTrace(
+      'login-google',
+      shouldStart: true,
+    );
+
     try {
       loadingGoogle = true;
 
       if (kIsWeb) {
         final provider = GoogleAuthProvider();
-        provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-        provider.setCustomParameters({'login_hint': 'user@example.com'});
 
-        await FirebaseAuth.instance.signInWithRedirect(provider);
+        provider.addScope(
+          'https://www.googleapis.com/auth/contacts.readonly',
+        );
+
+        provider.setCustomParameters({
+          'login_hint': 'user@example.com',
+        });
+
+        await _authService.signInWithRedirect(provider);
+
         return;
       }
 
-      // Initializes GoogleSignIn (new v7+ format)
       await GoogleSignIn.instance.initialize();
-      // Get authentication
-      final googleUser = await GoogleSignIn.instance.authenticate();
+
+      final googleUser =
+      await GoogleSignIn.instance.authenticate();
+
       final googleAuth = googleUser.authentication;
-      // Create credential for Firebase
+
       final credential = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken,
         accessToken: googleAuth.idToken,
       );
 
-      // Login to Firebase
-      final userCredential = await _auth.signInWithCredential(credential);
+      final userCredential =
+      await _authService.signInWithCredential(
+        credential,
+      );
+
       final user = userCredential.user;
 
       if (user != null) {
-        final doc = await firestore.collection("users").doc(user.uid).get();
+        final doc = await _firestoreService.getDocument(
+          collection: "users",
+          docId: user.uid,
+        );
+
         if (doc.exists) {
           users = Users.fromDocument(doc);
+
           await users?.updateUserData();
         } else {
           users = Users(
@@ -398,13 +527,20 @@ class UserManager extends ChangeNotifier {
             phoneNumber: user.phoneNumber ?? "",
             userPhotoURL: user.photoURL ?? "",
           );
+
           await users?.saveUserData();
+
           _newUserAccount = true;
+
           await _updateMonthlyNewUsers();
         }
 
         if (context != null) {
-          final favManager = Provider.of<FavoritesManager>(context, listen: false);
+          final favManager = Provider.of<FavoritesManager>(
+            context,
+            listen: false,
+          );
+
           favManager.updateUser(users?.id);
         }
 
@@ -416,9 +552,11 @@ class UserManager extends ChangeNotifier {
       loadingGoogle = false;
     } on FirebaseAuthException catch (error) {
       onFail?.call(getErrorString(error.code));
+
       loadingGoogle = false;
     } catch (e) {
       onFail?.call("Erro inesperado: $e");
+
       loadingGoogle = false;
     }
 
@@ -429,19 +567,40 @@ class UserManager extends ChangeNotifier {
     if (!_newUserAccount || users == null) return;
 
     final now = DateTime.now();
-    final monthKey = "${now.year}-${now.month.toString().padLeft(2, '0')}";
-    final docRef = firestore.collection('aux').doc('NewUsers').collection('monthly').doc(monthKey);
 
-    final doc = await docRef.get();
+    final monthKey =
+        "${now.year}-${now.month.toString().padLeft(2, '0')}";
+
+    final doc = await _firestoreService.getDocument(
+      collection: "monthly",
+      docId: monthKey,
+    );
+
     if (doc.exists) {
-      await docRef.update({'count': FieldValue.increment(1)});
+      await _firestoreService.updateDocument(
+        collection: "monthly",
+        docId: monthKey,
+        data: {
+          'count': FieldValue.increment(1),
+        },
+      );
     } else {
-      await docRef.set({'count': 1});
+      await _firestoreService.setDocument(
+        collection: "monthly",
+        docId: monthKey,
+        data: {
+          'count': 1,
+        },
+      );
     }
-    // Marks that the user has already been counted
+
     _newUserAccount = false;
   }
-//TODO: Criação de método para capturar cookies e dados do Analytics
+
+// TODO(BRN): UserManager ainda concentra autenticação,
+// estado do usuário e gerenciamento de perfil.
+
+// TODO: Criação de método para capturar cookies e dados do Analytics
 /* Future<void> _loadUserVisitor ({User? user}) async {
 
 } */

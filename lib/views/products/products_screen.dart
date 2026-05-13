@@ -11,7 +11,7 @@ import 'package:brn_ecommerce/common/sliding_up_panel/custom_sliding_up_painel.d
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
-import 'package:brn_ecommerce/models/users/users_manager.dart';
+import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

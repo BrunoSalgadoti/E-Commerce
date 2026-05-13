@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/models/locations_services/cepaberto_map_api.dart';
+import 'package:brn_ecommerce/data/models/location/cepaberto_map_api.dart';
 import 'package:brn_ecommerce/services/db_api/config_environment_variables.dart';
 import 'package:dio/dio.dart';
 
