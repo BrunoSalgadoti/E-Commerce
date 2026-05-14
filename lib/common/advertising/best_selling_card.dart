@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/common/advertising/components/products_best_selling.dart';
+import 'package:brn_ecommerce/data/services/products/products_best_selling.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';

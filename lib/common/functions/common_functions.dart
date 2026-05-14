@@ -8,7 +8,7 @@ import 'package:brn_ecommerce/common/images/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
-import 'package:brn_ecommerce/models/products/categories/product_category.dart';
+import 'package:brn_ecommerce/data/models/products/category/product_category.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:decorated_text/decorated_text.dart' show DecoratedGoogleFontText;
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';

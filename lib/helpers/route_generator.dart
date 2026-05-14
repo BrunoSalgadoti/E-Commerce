@@ -1,6 +1,6 @@
 import 'package:brn_ecommerce/common/drawer/components/drawer_page_view.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
-import 'package:brn_ecommerce/models/products/categories/product_category.dart';
+import 'package:brn_ecommerce/data/models/products/category/product_category.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/sales/order_client.dart';
 import 'package:brn_ecommerce/models/stores/stores.dart';

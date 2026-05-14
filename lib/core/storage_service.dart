@@ -1,10 +1,8 @@
 import 'dart:typed_data';
 
+import 'package:brn_ecommerce/core/control_center.dart';
 import 'package:brn_ecommerce/core/monitoring/monitoring_logger.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
-
-import 'control_center.dart';
 
 class StorageService {
   StorageService._internal();
@@ -12,68 +10,90 @@ class StorageService {
   static final StorageService instance = StorageService._internal();
 
   final FirebaseStorage _storage = FirebaseStorage.instance;
+
   final ControlCenter _control = ControlCenter.instance;
+
   final MonitoringLogger _logger = MonitoringLogger();
 
   /// =========================
-  /// ⬆️ UPLOAD
+  /// ⬆️ UPLOAD FILE
   /// =========================
   Future<String> uploadFile({
     required String path,
     required dynamic file,
     int? sizeInBytes,
-    String? contentType, // 🔥 NOVO (opcional)
+    String? contentType,
   }) async {
     if (!_control.canExecute(OperationType.upload)) {
       _logger.logWarning('UPLOAD BLOCKED → $path');
+
       throw Exception('Upload blocked');
     }
 
-// =========================
-// 📏 CALCULAR TAMANHO
-// =========================
     int fileSize = sizeInBytes ?? 0;
 
-    if (file is Uint8List) {
-      fileSize = file.lengthInBytes;
-    } else {
-      try {
-        fileSize = await file.length();
-      } catch (_) {
-        fileSize = sizeInBytes ?? 0;
-      }
+    try {
+      fileSize = await file.length();
+    } catch (_) {
+      fileSize = sizeInBytes ?? 0;
     }
 
-// =========================
-// 🚫 VALIDAÇÃO DE TAMANHO
-// =========================
+    // TODO(BRN): avaliar mover limite para config remota/global.
     if (fileSize > 1024 * 1024) {
       throw Exception('File too large');
     }
 
     final ref = _storage.ref().child(path);
 
-    UploadTask task;
+    final UploadTask task = ref.putFile(
+      file,
+      contentType != null
+          ? SettableMetadata(contentType: contentType)
+          : null,
+    );
 
-// =========================
-// 🌐 WEB (Uint8List)
-// =========================
-    if (file is Uint8List) {
-      task = ref.putData(
-        file,
-        contentType != null ? SettableMetadata(contentType: contentType) : null,
-      );
-    } else {
-      // 📱 MOBILE (File)
-      task = ref.putFile(
-        file,
-        contentType != null ? SettableMetadata(contentType: contentType) : null,
-      );
+    final TaskSnapshot snapshot = await task.whenComplete(() {});
+
+    final String url = await snapshot.ref.getDownloadURL();
+
+    _control.registerUsage(OperationType.upload);
+
+    return url;
+  }
+
+  /// =========================
+  /// ⬆️ UPLOAD DATA (WEB / UINT8LIST)
+  /// =========================
+  Future<String> uploadData({
+    required String path,
+    required Uint8List data,
+    String? contentType,
+  }) async {
+    if (!_control.canExecute(OperationType.upload)) {
+      _logger.logWarning('UPLOAD DATA BLOCKED → $path');
+
+      throw Exception('Upload blocked');
     }
 
-    final snapshot = await task;
+    final int fileSize = data.lengthInBytes;
 
-    final url = await snapshot.ref.getDownloadURL();
+    // TODO(BRN): avaliar mover limite para config remota/global.
+    if (fileSize > 1024 * 1024) {
+      throw Exception('File too large');
+    }
+
+    final ref = _storage.ref().child(path);
+
+    final UploadTask task = ref.putData(
+      data,
+      contentType != null
+          ? SettableMetadata(contentType: contentType)
+          : null,
+    );
+
+    final TaskSnapshot snapshot = await task.whenComplete(() {});
+
+    final String url = await snapshot.ref.getDownloadURL();
 
     _control.registerUsage(OperationType.upload);
 
@@ -83,13 +103,17 @@ class StorageService {
   /// =========================
   /// ⬇️ DOWNLOAD URL
   /// =========================
-  Future<String> getDownloadUrl(String path) async {
+  Future<String> getDownloadUrl({
+    required String path,
+  }) async {
     if (!_control.canExecute(OperationType.download)) {
       _logger.logWarning('DOWNLOAD BLOCKED → $path');
+
       throw Exception('Download blocked');
     }
 
     final ref = _storage.ref().child(path);
+
     final url = await ref.getDownloadURL();
 
     _control.registerUsage(OperationType.download);
@@ -98,11 +122,14 @@ class StorageService {
   }
 
   /// =========================
-  /// 🗑 DELETE POR URL
+  /// 🗑 DELETE BY URL
   /// =========================
-  Future<void> deleteByUrl(String url) async {
+  Future<void> deleteByUrl(
+      String url,
+      ) async {
     if (!_control.canExecute(OperationType.write)) {
       _logger.logWarning('DELETE BLOCKED → $url');
+
       throw Exception('Delete blocked');
     }
 
@@ -112,4 +139,37 @@ class StorageService {
 
     _control.registerUsage(OperationType.write);
   }
+
+  /// =========================
+  /// 📁 GET STORAGE REFERENCE
+  /// =========================
+  Reference getReference({
+    required String path,
+  }) {
+    if (!_control.canExecute(OperationType.upload)) {
+      _logger.logWarning('REFERENCE BLOCKED → $path');
+
+      throw Exception('Reference blocked');
+    }
+
+    return _storage.ref().child(path);
+  }
+
+  /// =========================
+  /// 🌐 GET STORAGE REF FROM URL
+  /// =========================
+  Reference getReferenceFromUrl({
+    required String url,
+  }) {
+    if (!_control.canExecute(OperationType.download)) {
+      _logger.logWarning('REFERENCE URL BLOCKED');
+
+      throw Exception('Reference blocked');
+    }
+
+    return _storage.refFromURL(url);
+  }
+
+// TODO(BRN): avaliar cache/local strategy
+// para evitar downloads repetidos.
 }

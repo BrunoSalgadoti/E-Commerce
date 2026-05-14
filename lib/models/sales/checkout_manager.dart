@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/common/advertising/components/purchase_model.dart';
+import 'package:brn_ecommerce/data/models/purchase_model.dart';
 import 'package:brn_ecommerce/models/products/product.dart' show Product;
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:brn_ecommerce/models/sales/order_client.dart';

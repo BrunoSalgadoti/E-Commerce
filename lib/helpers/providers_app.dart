@@ -1,5 +1,5 @@
-import 'package:brn_ecommerce/common/advertising/components/products_best_selling.dart';
-import 'package:brn_ecommerce/common/advertising/components/products_recently_added.dart';
+import 'package:brn_ecommerce/data/services/products/products_best_selling.dart';
+import 'package:brn_ecommerce/data/services/products/products_recently_added.dart';
 import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
 import 'package:brn_ecommerce/common/outdoor/components/outdoor_controller.dart';
 import 'package:brn_ecommerce/common/outdoor/components/outdoor_repository.dart';
@@ -10,7 +10,7 @@ import 'package:brn_ecommerce/features/admin/users/admin_users_search.dart';
 import 'package:brn_ecommerce/features/admin/users/favorites/favorites_manager.dart';
 import 'package:brn_ecommerce/features/home/managers/home_manager.dart';
 import 'package:brn_ecommerce/models/policy_documents/policy_and_documents.dart';
-import 'package:brn_ecommerce/models/products/categories/product_category.dart';
+import 'package:brn_ecommerce/data/models/products/category/product_category.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category_manager.dart';
 import 'package:brn_ecommerce/models/products/details_products.dart';
 import 'package:brn_ecommerce/models/products/product.dart';

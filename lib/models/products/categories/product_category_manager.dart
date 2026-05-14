@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:brn_ecommerce/core/monitoring/monitoring_logger.dart';
 import 'package:brn_ecommerce/helpers/product_categories_factory_lists/categories_factory.dart';
-import 'package:brn_ecommerce/models/products/categories/product_category.dart';
+import 'package:brn_ecommerce/data/models/products/category/product_category.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
 import 'package:brn_ecommerce/models/users/users.dart';

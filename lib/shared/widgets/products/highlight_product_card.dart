@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:brn_ecommerce/common/advertising/components/highlight/animated_highlight_title.dart';
+import 'package:brn_ecommerce/shared/widgets/advertising/animated_highlight_title.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:flutter/material.dart';

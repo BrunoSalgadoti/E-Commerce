@@ -2,7 +2,7 @@ import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart' show RoutesNavigator;
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
-import 'package:brn_ecommerce/models/products/categories/product_category.dart';
+import 'package:brn_ecommerce/data/models/products/category/product_category.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category_manager.dart';
 import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/models/products/categories/product_category.dart';
+import 'package:brn_ecommerce/data/models/products/category/product_category.dart';
 import 'package:brn_ecommerce/models/products/categories/product_sub_category.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

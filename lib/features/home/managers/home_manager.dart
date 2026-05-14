@@ -1,8 +1,8 @@
 import 'package:brn_ecommerce/core/firestore_service.dart';
+import 'package:brn_ecommerce/core/getters/core_getters_service.dart';
 import 'package:brn_ecommerce/core/monitoring/monitoring_logger.dart';
 import 'package:brn_ecommerce/data/models/home/section.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 class HomeManager extends ChangeNotifier {
@@ -41,8 +41,12 @@ class HomeManager extends ChangeNotifier {
       MonitoringLogger().logInfo('Starting listen Sections');
     }
 
-// 🔥 Query mantida (orderBy preservado)
-    final query = FirebaseFirestore.instance.collection("home").orderBy("position");
+// 🔥 Query modificada (orderBy preservado)
+    final query = CoreGettersService.instance
+        .getOrderedCollectionQuery(
+      collection: "home",
+      orderBy: "position",
+    );
 
 // 🔥 PASSA PELO CORE
     _firestoreService.listenWithQuery(

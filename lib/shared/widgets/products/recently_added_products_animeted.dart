@@ -137,4 +137,6 @@ class _RecentlyAddedProductsAnimatedState extends State<RecentlyAddedProductsAni
       ),
     );
   }
+// TODO(BRN): separar lógica de autoplay/carrossel
+// em controller/service reutilizável.
 }

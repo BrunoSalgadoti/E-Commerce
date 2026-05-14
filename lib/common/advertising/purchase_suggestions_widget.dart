@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/common/advertising/components/purchase_model.dart';
+import 'package:brn_ecommerce/data/models/purchase_model.dart';
 import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
 import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
