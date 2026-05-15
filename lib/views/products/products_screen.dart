@@ -1,17 +1,17 @@
-import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
-import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/cards/flexible_product_card.dart';
-import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
-import 'package:brn_ecommerce/common/images/root_assets.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/shared/components/cards/flexible_product_card.dart';
+import 'package:brn_ecommerce/shared/widgets/navigation/drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/shared/constants/assets/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/controller.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/filters_result.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/sliding_filters_products.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/custom_sliding_up_painel.dart';
+import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
-import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
+import 'package:brn_ecommerce/shared/widgets/layout/app_bar/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

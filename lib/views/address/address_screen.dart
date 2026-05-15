@@ -1,8 +1,8 @@
-import 'package:brn_ecommerce/common/advertising/recently_added_products.dart';
-import 'package:brn_ecommerce/common/app_bar/complement_app_bar.dart';
-import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
-import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
+import 'package:brn_ecommerce/shared/widgets/layout/app_bar/complement_app_bar.dart';
+import 'package:brn_ecommerce/shared/widgets/layout/app_bar/custom_app_bar.dart';
+import 'package:brn_ecommerce/shared/widgets/products/recently_added/recently_added_products.dart';
+import 'package:brn_ecommerce/shared/widgets/texts/decorated_google_text.dart';
 import 'package:brn_ecommerce/views/address/components/address_card.dart';
 import 'package:brn_ecommerce/views/address/components/logic_price_card.dart';
 import 'package:flutter/foundation.dart';

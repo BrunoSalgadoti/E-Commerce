@@ -1,5 +1,5 @@
-import 'package:brn_ecommerce/common/buttons/custom_button.dart';
-import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_button.dart';
+import 'package:brn_ecommerce/shared/components/form/custom_text_form_field.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
 import 'package:brn_ecommerce/services/db_api/config_environment_variables.dart';

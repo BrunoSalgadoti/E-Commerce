@@ -1,12 +1,12 @@
-import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
-import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
-import 'package:brn_ecommerce/common/images/root_assets.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_text_button.dart';
+import 'package:brn_ecommerce/shared/constants/assets/root_assets.dart';
 import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/common/miscellaneous/freight_logo.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/features/cart/models/cart_product.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
+import 'package:brn_ecommerce/shared/utils/formatters/format_values.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

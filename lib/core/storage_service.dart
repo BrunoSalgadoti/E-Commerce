@@ -47,9 +47,7 @@ class StorageService {
 
     final UploadTask task = ref.putFile(
       file,
-      contentType != null
-          ? SettableMetadata(contentType: contentType)
-          : null,
+      contentType != null ? SettableMetadata(contentType: contentType) : null,
     );
 
     final TaskSnapshot snapshot = await task.whenComplete(() {});
@@ -86,9 +84,7 @@ class StorageService {
 
     final UploadTask task = ref.putData(
       data,
-      contentType != null
-          ? SettableMetadata(contentType: contentType)
-          : null,
+      contentType != null ? SettableMetadata(contentType: contentType) : null,
     );
 
     final TaskSnapshot snapshot = await task.whenComplete(() {});
@@ -125,8 +121,8 @@ class StorageService {
   /// 🗑 DELETE BY URL
   /// =========================
   Future<void> deleteByUrl(
-      String url,
-      ) async {
+    String url,
+  ) async {
     if (!_control.canExecute(OperationType.write)) {
       _logger.logWarning('DELETE BLOCKED → $url');
 

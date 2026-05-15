@@ -1,12 +1,12 @@
-import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
-import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
-import 'package:brn_ecommerce/common/images/root_assets.dart';
+import 'package:brn_ecommerce/shared/widgets/navigation/drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/shared/constants/assets/root_assets.dart';
 import 'package:brn_ecommerce/common/outdoor/components/outdoor_controller.dart';
 import 'package:brn_ecommerce/common/outdoor/components/outdoor_item.dart';
 import 'package:brn_ecommerce/common/outdoor/outdoor_widget.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
+import 'package:brn_ecommerce/shared/widgets/layout/app_bar/custom_app_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

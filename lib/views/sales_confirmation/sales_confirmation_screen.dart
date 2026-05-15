@@ -1,20 +1,20 @@
 import 'package:auto_size_text/auto_size_text.dart' show AutoSizeText;
-import 'package:brn_ecommerce/common/advertising/sales_suggestion_visited_products.dart';
-import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
-import 'package:brn_ecommerce/common/app_bar/custom_bottom_navigator_bar.dart';
-import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
-import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
-import 'package:brn_ecommerce/common/functions/common_functions.dart';
-import 'package:brn_ecommerce/common/images/root_assets.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_text_button.dart';
+import 'package:brn_ecommerce/shared/constants/assets/root_assets.dart';
 import 'package:brn_ecommerce/common/messengers/components/text_of_alerts_and_messengers.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/models/products/categories/product_sub_category.dart';
 import 'package:brn_ecommerce/models/sales/order_client.dart';
+import 'package:brn_ecommerce/shared/utils/formatters/format_values.dart';
+import 'package:brn_ecommerce/shared/utils/navigation/navigation_helpers.dart';
+import 'package:brn_ecommerce/shared/widgets/layout/app_bar/custom_app_bar.dart';
+import 'package:brn_ecommerce/shared/widgets/navigation/bottom_navigation/custom_bottom_navigator_bar.dart';
+import 'package:brn_ecommerce/shared/widgets/products/sales_suggestion_visited_products.dart';
 import 'package:brn_ecommerce/views/orders/components/order_product_tile.dart';
 import 'package:flutter/material.dart';
 
-import '../../common/drawer/components/drawer_pages_enum.dart';
+import '../../shared/widgets/navigation/drawer/components/drawer_pages_enum.dart';
 
 class SalesConfirmationScreen extends StatelessWidget {
   final OrderClient? orderClient;

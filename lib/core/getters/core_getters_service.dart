@@ -21,20 +21,15 @@ import 'package:firebase_storage/firebase_storage.dart';
 class CoreGettersService {
   CoreGettersService._internal();
 
-  static final CoreGettersService instance =
-  CoreGettersService._internal();
+  static final CoreGettersService instance = CoreGettersService._internal();
 
-  final FirebaseFirestore _firestore =
-      FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  final FirebaseStorage _storage =
-      FirebaseStorage.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  final ControlCenter _control =
-      ControlCenter.instance;
+  final ControlCenter _control = ControlCenter.instance;
 
-  final MonitoringLogger _logger =
-  MonitoringLogger();
+  final MonitoringLogger _logger = MonitoringLogger();
 
   /// =========================================================
   /// 📄 DOCUMENT REFERENCE
@@ -53,16 +48,13 @@ class CoreGettersService {
       );
     }
 
-    return _firestore
-        .collection(collection)
-        .doc(docId);
+    return _firestore.collection(collection).doc(docId);
   }
 
   /// =========================================================
   /// 📁 COLLECTION REFERENCE
   /// =========================================================
-  CollectionReference<Map<String, dynamic>>
-  getCollectionRef({
+  CollectionReference<Map<String, dynamic>> getCollectionRef({
     required String path,
   }) {
     if (!_control.canExecute(OperationType.read)) {
@@ -138,8 +130,7 @@ class CoreGettersService {
   /// =========================================================
   /// 🧭 ROOT FIRESTORE COLLECTION
   /// =========================================================
-  CollectionReference<Map<String, dynamic>>
-  getRootCollection({
+  CollectionReference<Map<String, dynamic>> getRootCollection({
     required String collection,
   }) {
     if (!_control.canExecute(OperationType.read)) {
@@ -190,12 +181,10 @@ class CoreGettersService {
       );
     }
 
-    return _firestore
-        .collection(collection)
-        .orderBy(
-      orderBy,
-      descending: descending,
-    );
+    return _firestore.collection(collection).orderBy(
+          orderBy,
+          descending: descending,
+        );
   }
 
 // TODO(BRN): avaliar métricas específicas

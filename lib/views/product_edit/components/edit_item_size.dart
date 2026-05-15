@@ -1,12 +1,12 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/shared/components/form/custom_text_form_field.dart';
 import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/models/products/details_products.dart';
+import 'package:brn_ecommerce/shared/utils/formatters/format_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../common/formatted_fields/format_values.dart';
 
 class EditItemSize extends StatelessWidget {
   const EditItemSize({

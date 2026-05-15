@@ -1,12 +1,12 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:brn_ecommerce/common/buttons/custom_button.dart';
-import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
-import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
-import 'package:brn_ecommerce/common/formatted_fields/time_input_formatter.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_button.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/shared/components/form/custom_text_form_field.dart';
 import 'package:brn_ecommerce/data/models/location/address.dart';
 import 'package:brn_ecommerce/models/stores/opening_stores.dart';
 import 'package:brn_ecommerce/models/stores/stores.dart';
+import 'package:brn_ecommerce/shared/utils/formatters/format_values.dart';
+import 'package:brn_ecommerce/shared/utils/formatters/time_input_formatter.dart';
 import 'package:brn_ecommerce/views/stores/components/store_utils.dart';
 import 'package:brn_ecommerce/views/stores_edit/components/store_image_widget.dart';
 import 'package:brn_ecommerce/views/stores_edit/components/store_location_widget.dart';

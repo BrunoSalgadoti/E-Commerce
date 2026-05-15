@@ -1,6 +1,5 @@
-import 'package:brn_ecommerce/common/buttons/custom_button.dart';
-import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
-import 'package:brn_ecommerce/common/images/shimmer_custom_image.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_button.dart';
+import 'package:brn_ecommerce/shared/components/images/shimmer_custom_image.dart';
 import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/features/home/managers/home_manager.dart';
@@ -8,6 +7,7 @@ import 'package:brn_ecommerce/data/models/home/section.dart';
 import 'package:brn_ecommerce/data/models/home/section_item.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
+import 'package:brn_ecommerce/shared/utils/formatters/format_values.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

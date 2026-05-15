@@ -1,12 +1,12 @@
-import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
-import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/shared/widgets/navigation/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
+import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/models/products/categories/product_category_manager.dart';
-import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
+import 'package:brn_ecommerce/shared/widgets/layout/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/views/product_categories/components/main_categories_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

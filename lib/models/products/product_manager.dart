@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:brn_ecommerce/core/monitoring/monitoring_logger.dart';
 import 'package:brn_ecommerce/data/services/products/products_best_selling.dart';
 import 'package:brn_ecommerce/data/services/products/products_lowest_selling.dart';
 import 'package:brn_ecommerce/data/services/products/products_recently_added.dart';
-import 'package:brn_ecommerce/core/monitoring/monitoring_logger.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

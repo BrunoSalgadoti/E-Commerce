@@ -1,13 +1,13 @@
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
+import 'package:brn_ecommerce/common/miscellaneous/freight_logo.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/controller.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/sliding_filters_products.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/custom_sliding_up_painel.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
+import 'package:brn_ecommerce/shared/utils/formatters/format_values.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../common/formatted_fields/format_values.dart';
-import '../../common/miscellaneous/freight_logo.dart';
 
 class SelectProductScreen extends StatefulWidget {
   const SelectProductScreen({super.key, this.productManager});

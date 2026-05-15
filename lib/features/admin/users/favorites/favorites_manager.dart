@@ -1,7 +1,7 @@
-import 'package:brn_ecommerce/models/products/product.dart';
-import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
-import 'package:flutter/material.dart';
 import 'package:brn_ecommerce/core/firestore_service.dart';
+import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
+import 'package:brn_ecommerce/models/products/product.dart';
+import 'package:flutter/material.dart';
 
 class FavoritesManager extends ChangeNotifier {
   final UserManager userManager;
@@ -72,7 +72,7 @@ class FavoritesManager extends ChangeNotifier {
       // =========================
       futures.addAll(
         favoriteIds.map(
-              (id) async {
+          (id) async {
             final pDoc = await _firestoreService.getDocument(
               collection: 'products',
               docId: id,
@@ -92,7 +92,7 @@ class FavoritesManager extends ChangeNotifier {
       // =========================
       futures.addAll(
         wishlistIds.map(
-              (id) async {
+          (id) async {
             final pDoc = await _firestoreService.getDocument(
               collection: 'products',
               docId: id,
@@ -120,13 +120,10 @@ class FavoritesManager extends ChangeNotifier {
   // =========================
   // FAVORITES
   // =========================
-  bool isFavorite(Product product) =>
-      _favoritos.any((p) => p.id == product.id);
+  bool isFavorite(Product product) => _favoritos.any((p) => p.id == product.id);
 
   Future<void> addFavorite(Product product) async {
-    if (userId == null ||
-        isFavorite(product) ||
-        _favoritos.length >= maxFavorites) return;
+    if (userId == null || isFavorite(product) || _favoritos.length >= maxFavorites) return;
 
     _favoritos.add(product);
     notifyListeners();
@@ -146,13 +143,10 @@ class FavoritesManager extends ChangeNotifier {
   // =========================
   // WISHLIST
   // =========================
-  bool isInWishlist(Product product) =>
-      _wishlist.any((p) => p.id == product.id);
+  bool isInWishlist(Product product) => _wishlist.any((p) => p.id == product.id);
 
   Future<void> addWishlist(Product product) async {
-    if (userId == null ||
-        isInWishlist(product) ||
-        _wishlist.length >= maxWishlist) return;
+    if (userId == null || isInWishlist(product) || _wishlist.length >= maxWishlist) return;
 
     _wishlist.add(product);
     notifyListeners();

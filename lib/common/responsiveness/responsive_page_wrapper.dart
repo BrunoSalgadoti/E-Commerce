@@ -1,5 +1,5 @@
-import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
-import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/shared/widgets/navigation/drawer/components/page_manager.dart';
+import 'package:brn_ecommerce/shared/widgets/navigation/drawer/custom_drawer.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:flutter/foundation.dart';

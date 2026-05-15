@@ -60,8 +60,8 @@ class AuthService {
   }
 
   Future<UserCredential> signInWithCredential(
-      AuthCredential credential,
-      ) async {
+    AuthCredential credential,
+  ) async {
     if (!_control.canExecute(OperationType.auth)) {
       _logger.logWarning('AUTH BLOCKED → signInWithCredential');
 
@@ -78,8 +78,8 @@ class AuthService {
   }
 
   Future<void> signInWithRedirect(
-      AuthProvider provider,
-      ) async {
+    AuthProvider provider,
+  ) async {
     if (!_control.canExecute(OperationType.auth)) {
       _logger.logWarning('AUTH BLOCKED → signInWithRedirect');
 

@@ -42,8 +42,7 @@ class HomeManager extends ChangeNotifier {
     }
 
 // 🔥 Query modificada (orderBy preservado)
-    final query = CoreGettersService.instance
-        .getOrderedCollectionQuery(
+    final query = CoreGettersService.instance.getOrderedCollectionQuery(
       collection: "home",
       orderBy: "position",
     );

@@ -1,7 +1,7 @@
-import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
-import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
-import 'package:brn_ecommerce/common/images/root_assets.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/shared/widgets/navigation/drawer/components/drawer_pages_enum.dart';
+import 'package:brn_ecommerce/shared/widgets/navigation/drawer/components/page_manager.dart';
+import 'package:brn_ecommerce/shared/constants/assets/root_assets.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart' show RoutesNavigator;
 import 'package:brn_ecommerce/features/home/managers/home_manager.dart';

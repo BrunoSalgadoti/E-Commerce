@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/core/auth_service.dart';
 import 'package:brn_ecommerce/core/firestore_service.dart';
+import 'package:brn_ecommerce/core/monitoring/crashlytics_reporter.dart';
 import 'package:brn_ecommerce/core/monitoring/monitoring_logger.dart';
 import 'package:brn_ecommerce/features/admin/users/favorites/favorites_manager.dart';
 import 'package:brn_ecommerce/helpers/firebase_errors.dart';
@@ -119,8 +119,7 @@ class UserManager extends ChangeNotifier {
       reportNoFatalErrorToCrashlytics(
         error: "$error",
         stackTrace: StackTrace.current,
-        information:
-        "Erro na Classe: UserManager no método _loadCurrentUser()",
+        information: "Erro na Classe: UserManager no método _loadCurrentUser()",
       );
 
       MonitoringLogger().logError(
@@ -188,9 +187,9 @@ class UserManager extends ChangeNotifier {
   }
 
   Future<void> verifyEmailWithCode(
-      BuildContext context,
-      String oobCode,
-      ) async {
+    BuildContext context,
+    String oobCode,
+  ) async {
     try {
       await _authService.checkActionCode(oobCode);
 
@@ -389,8 +388,7 @@ class UserManager extends ChangeNotifier {
             accessToken.tokenString,
           );
 
-          final userCredential =
-          await _authService.signInWithCredential(
+          final userCredential = await _authService.signInWithCredential(
             credential,
           );
 
@@ -492,8 +490,7 @@ class UserManager extends ChangeNotifier {
 
       await GoogleSignIn.instance.initialize();
 
-      final googleUser =
-      await GoogleSignIn.instance.authenticate();
+      final googleUser = await GoogleSignIn.instance.authenticate();
 
       final googleAuth = googleUser.authentication;
 
@@ -502,8 +499,7 @@ class UserManager extends ChangeNotifier {
         accessToken: googleAuth.idToken,
       );
 
-      final userCredential =
-      await _authService.signInWithCredential(
+      final userCredential = await _authService.signInWithCredential(
         credential,
       );
 
@@ -568,8 +564,7 @@ class UserManager extends ChangeNotifier {
 
     final now = DateTime.now();
 
-    final monthKey =
-        "${now.year}-${now.month.toString().padLeft(2, '0')}";
+    final monthKey = "${now.year}-${now.month.toString().padLeft(2, '0')}";
 
     final doc = await _firestoreService.getDocument(
       collection: "monthly",

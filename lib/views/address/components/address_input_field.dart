@@ -1,9 +1,9 @@
-import 'package:brn_ecommerce/common/buttons/custom_button.dart';
-import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_button.dart';
+import 'package:brn_ecommerce/shared/components/form/custom_text_form_field.dart';
 import 'package:brn_ecommerce/common/messengers/components/text_of_alerts_and_messengers.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
-import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/data/models/location/address.dart';
+import 'package:brn_ecommerce/helpers/validators.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

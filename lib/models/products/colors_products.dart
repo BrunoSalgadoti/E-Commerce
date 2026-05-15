@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/common/functions/common_functions.dart';
+import 'package:brn_ecommerce/shared/utils/colors/color_parsers.dart';
 import 'package:flutter/material.dart';
 
 /// # Colors Products Model (Folder: models/products)

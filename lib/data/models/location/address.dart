@@ -1,4 +1,5 @@
-import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
+
+import 'package:brn_ecommerce/shared/utils/formatters/format_values.dart';
 
 class Address {
   String? street;

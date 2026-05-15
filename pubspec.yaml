@@ -1,8 +1,8 @@
 name: brn_ecommerce
 description: Loja Virtual pertencente a empresa - BRN Info_Dev (CNPJ. 52.129.576./0001-57)-
   Desenvolvida pelo Analista e Dev. Bruno Salgado.
-  Contato (82) 9 8178-8227
-  Copyright 2023 / 2025.
+  Contato brunosalgadoti@gmail.com
+  Copyright 2023 / 2026.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -101,11 +101,6 @@ flutter:
     - assets/icons/
     - lib/
     - lib/common/
-    - lib/common/cards/
-    - lib/common/buttons/
-    - lib/common/functions/
-    - lib/common/drawer/
-    - lib/common/drawer/components/
     - lib/models/
     - lib/helpers/
     - lib/helpers/themes/
@@ -152,10 +147,7 @@ flutter:
     - lib/views/product_categories/components/
     - lib/common/messengers/
     - lib/common/messengers/components/
-    - lib/common/advertising/
-    - lib/common/advertising/components/
     - lib/common/miscellaneous/
-    - lib/common/formatted_fields/
     - lib/common/sliding_up_panel/
     - lib/common/sliding_up_panel/components/
     - lib/models/sales/

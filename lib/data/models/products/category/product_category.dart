@@ -1,27 +1,24 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:brn_ecommerce/common/functions/common_functions.dart';
 import 'package:brn_ecommerce/core/firestore_service.dart';
 import 'package:brn_ecommerce/core/getters/core_getters_service.dart';
 import 'package:brn_ecommerce/core/monitoring/monitoring_logger.dart';
 import 'package:brn_ecommerce/core/storage_service.dart';
 import 'package:brn_ecommerce/models/products/categories/product_sub_category.dart';
 import 'package:brn_ecommerce/services/development_monitoring/firebase_performance.dart';
+import 'package:brn_ecommerce/shared/utils/colors/color_parsers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ProductCategory extends ChangeNotifier {
-  final FirestoreService _firestoreService =
-      FirestoreService.instance;
+  final FirestoreService _firestoreService = FirestoreService.instance;
 
-  final StorageService _storageService =
-      StorageService.instance;
+  final StorageService _storageService = StorageService.instance;
 
-  final CoreGettersService _getters =
-      CoreGettersService.instance;
+  final CoreGettersService _getters = CoreGettersService.instance;
 
   String? categoryID;
   String? categoryTitle;
@@ -44,8 +41,8 @@ class ProductCategory extends ChangeNotifier {
   }
 
   ProductCategory.fromDocument(
-      DocumentSnapshot document,
-      ) {
+    DocumentSnapshot document,
+  ) {
     PerformanceMonitoring().startTrace(
       'categoryFromMap',
       shouldStart: true,
@@ -59,30 +56,23 @@ class ProductCategory extends ChangeNotifier {
 
     categoryID = document["categoryID"] as String;
 
-    categoryTitle =
-        document["categoryTitle"] as String? ?? "";
+    categoryTitle = document["categoryTitle"] as String? ?? "";
 
-    categoryColor =
-        document["categoryColor"] as String? ?? "";
+    categoryColor = document["categoryColor"] as String? ?? "";
 
-    categoryRealColor =
-        getColorFromString(categoryColor ?? "");
+    categoryRealColor = getColorFromString(categoryColor ?? "");
 
-    categoryImg =
-        document["categoryImg"] as String? ?? "";
+    categoryImg = document["categoryImg"] as String? ?? "";
 
-    categoryActivated =
-    (document["categoryActivated"] ?? false)
-    as bool;
+    categoryActivated = (document["categoryActivated"] ?? false) as bool;
 
-    subCategoryList =
-        (document["subCategoryList"] as List<dynamic>)
-            .map(
-              (d) => SubCategory.fromMap(
+    subCategoryList = (document["subCategoryList"] as List<dynamic>)
+        .map(
+          (d) => SubCategory.fromMap(
             d as Map<String, dynamic>,
           ),
         )
-            .toList();
+        .toList();
 
     PerformanceMonitoring().stopTrace(
       'categoryFromMap',
@@ -98,13 +88,11 @@ class ProductCategory extends ChangeNotifier {
       ),
       "categoryImg": categoryImg,
       "categoryActivated": categoryActivated,
-      "subCategoryList":
-      exportSubCategories() ?? [],
+      "subCategoryList": exportSubCategories() ?? [],
     };
   }
 
-  DocumentReference<Map<String, dynamic>>
-  get firestoreRef {
+  DocumentReference<Map<String, dynamic>> get firestoreRef {
     return _getters.getDocumentRef(
       collection: "categories",
       docId: categoryID!,
@@ -117,16 +105,13 @@ class ProductCategory extends ChangeNotifier {
     );
   }
 
-  List<Map<String, dynamic>>?
-  exportSubCategories() {
-    return subCategoryList
-        ?.map((sub) => sub.toMap())
-        .toList();
+  List<Map<String, dynamic>>? exportSubCategories() {
+    return subCategoryList?.map((sub) => sub.toMap()).toList();
   }
 
   Future<void> updateCategoryImage(
-      dynamic image,
-      ) async {
+    dynamic image,
+  ) async {
     PerformanceMonitoring().startTrace(
       'update-category-image',
       shouldStart: true,
@@ -138,40 +123,31 @@ class ProductCategory extends ChangeNotifier {
       );
     }
 
-    if (categoryImg != null &&
-        categoryImg != "") {
+    if (categoryImg != null && categoryImg != "") {
       await _storageService.deleteByUrl(
         categoryImg as String,
       );
     }
 
     if (kIsWeb) {
-      final base64String =
-          image?.split(',').last;
+      final base64String = image?.split(',').last;
 
       const String validCharacters =
           "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
 
-      final trimmedString =
-      base64String?.replaceAll(
+      final trimmedString = base64String?.replaceAll(
         RegExp("[^$validCharacters]"),
         "",
       );
 
-      if (base64String is String &&
-          base64String.isNotEmpty &&
-          base64String.length % 4 == 0) {
+      if (base64String is String && base64String.isNotEmpty && base64String.length % 4 == 0) {
         try {
-          final List<int> bytes =
-          base64.decode(trimmedString!);
+          final List<int> bytes = base64.decode(trimmedString!);
 
-          final Uint8List uint8ListBytes =
-          Uint8List.fromList(bytes);
+          final Uint8List uint8ListBytes = Uint8List.fromList(bytes);
 
-          final String url =
-          await _storageService.uploadData(
-            path:
-            "categories/$categoryID!/$categoryID!",
+          final String url = await _storageService.uploadData(
+            path: "categories/$categoryID!/$categoryID!",
             data: uint8ListBytes,
             contentType: "image/jpeg",
           );
@@ -186,10 +162,8 @@ class ProductCategory extends ChangeNotifier {
         }
       }
     } else if (image is File) {
-      final String url =
-      await _storageService.uploadFile(
-        path:
-        "categories/$categoryID!/$categoryID!",
+      final String url = await _storageService.uploadFile(
+        path: "categories/$categoryID!/$categoryID!",
         file: image,
       );
 

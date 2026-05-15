@@ -1,8 +1,8 @@
 import 'package:brn_ecommerce/models/products/details_products.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
+import 'package:brn_ecommerce/shared/utils/colors/color_parsers.dart';
 import 'package:flutter/material.dart';
 
-import '../../../common/functions/common_functions.dart';
 
 class CartProduct extends ChangeNotifier {
 // =========================

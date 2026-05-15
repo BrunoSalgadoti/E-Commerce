@@ -1,11 +1,12 @@
-import 'package:brn_ecommerce/common/buttons/custom_button.dart';
-import 'package:brn_ecommerce/common/images/root_assets.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_button.dart';
+import 'package:brn_ecommerce/shared/constants/assets/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
+import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/products/details_products.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/sales/cart_manager.dart';
-import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
+import 'package:brn_ecommerce/shared/utils/formatters/format_values.dart';
 import 'package:brn_ecommerce/views/products/components/colors_widget.dart';
 import 'package:brn_ecommerce/views/products/components/products_widget.dart';
 import 'package:collection/collection.dart';
@@ -15,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 
-import '../../common/formatted_fields/format_values.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({

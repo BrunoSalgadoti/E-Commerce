@@ -5,14 +5,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
+import '../../data/models/location/address.dart';
+import '../../features/auth/managers/users_manager.dart';
+import '../../features/cart/models/cart_product.dart';
 import '../../services/cepaberto_api.dart';
 import '../../services/viacep_api.dart';
-import '../../data/models/location/address.dart';
-import '../../features/cart/models/cart_product.dart';
 import '../products/details_products.dart';
 import '../products/product.dart';
 import '../users/users.dart';
-import '../../features/auth/managers/users_manager.dart';
 
 /// # CartManager (Folder: models/sales)
 ///

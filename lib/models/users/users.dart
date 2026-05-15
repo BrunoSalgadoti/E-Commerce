@@ -32,15 +32,13 @@ class Users {
 // =========================
 
 // 🔁 MESMO NOME (compatibilidade total)
-  DocumentReference get firestoreRef =>
-      _getters.getDocumentRef(
+  DocumentReference get firestoreRef => _getters.getDocumentRef(
         collection: "users",
         docId: id!,
       );
 
 // 🔁 MESMO NOME (compatibilidade total)
-  CollectionReference get cartReference =>
-      _getters.getCollectionRef(
+  CollectionReference get cartReference => _getters.getCollectionRef(
         path: "users/$id/cart",
       );
 
@@ -68,18 +66,16 @@ class Users {
     userPhotoURL = document.get("userPhoto") as String? ?? "";
     policyAndTerms = document.get("policyAndTerms") as bool? ?? false;
 
-    final Map<String, dynamic> dataMap =
-    document.data() as Map<String, dynamic>;
+    final Map<String, dynamic> dataMap = document.data() as Map<String, dynamic>;
 
     favoriteProductIds = List<String>.from(dataMap["favorites"] ?? []);
     wishlistProductIds = List<String>.from(dataMap["wishlist"] ?? []);
 
     if (dataMap.containsKey("address")) {
-    address = Address.fromMap(
-    document.get("address") as Map<String, dynamic>,
-    );
+      address = Address.fromMap(
+        document.get("address") as Map<String, dynamic>,
+      );
     }
-
   }
 
 // =========================

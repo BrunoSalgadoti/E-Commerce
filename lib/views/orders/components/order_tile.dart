@@ -1,10 +1,11 @@
-import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
-import 'package:brn_ecommerce/common/formatted_fields/format_timestamp.dart';
-import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
+import 'package:brn_ecommerce/core/adapters/firestore/timestamp_adapter.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_text_button.dart';
+import 'package:brn_ecommerce/shared/utils/formatters/format_timestamp.dart';
 import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/models/sales/order_client.dart';
 import 'package:brn_ecommerce/shared/dialogs/export_address_dialog.dart';
+import 'package:brn_ecommerce/shared/utils/formatters/format_values.dart';
 import 'package:brn_ecommerce/views/orders/components/order_product_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,12 @@ class OrderTile extends StatelessWidget {
   final OrderClient? orderClient;
   final bool showControls;
 
-  String get formattedDateString => formatTimestamp(orderClient!.date!);
+  String get formattedDateString =>
+      formatTimestamp(
+        firestoreTimestampToDateTime(
+          orderClient!.date!,
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {

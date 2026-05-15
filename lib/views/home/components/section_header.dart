@@ -1,9 +1,9 @@
-import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
-import 'package:brn_ecommerce/common/functions/common_functions.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/shared/components/form/custom_text_form_field.dart';
 import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/features/home/managers/home_manager.dart';
 import 'package:brn_ecommerce/data/models/home/section.dart';
+import 'package:brn_ecommerce/shared/widgets/texts/decorated_google_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';

@@ -1,7 +1,7 @@
 import 'package:brn_ecommerce/helpers/extensions.dart';
 import 'package:brn_ecommerce/models/stores/stores.dart';
 
-import '../common/functions/common_functions.dart';
+import '../core/services/email/email_sender.dart';
 
 //TODO: Configure sending parameters after activating firebase functions EMAIL HANDLE ERROS
 /// # Handle Erros (Folder: helpers).

@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/common/functions/common_functions.dart';
+import 'package:brn_ecommerce/shared/widgets/texts/decorated_google_text.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedHighlightTitle extends StatefulWidget {

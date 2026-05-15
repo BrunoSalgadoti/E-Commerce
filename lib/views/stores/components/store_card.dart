@@ -1,9 +1,10 @@
-import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/formatted_fields/format_values.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/miscellaneous/communications_utils.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';
 import 'package:brn_ecommerce/models/stores/stores.dart';
 import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
+import 'package:brn_ecommerce/shared/constants/assets/root_assets.dart';
+import 'package:brn_ecommerce/shared/utils/formatters/format_values.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +19,7 @@ class StoreCard extends StatelessWidget {
     final primaryColor = Theme.of(context).primaryColor;
     final storeImage = store.imageStore != null && store.imageStore != ""
         ? Image.network(store.imageStore, fit: BoxFit.cover)
-        : Image.asset('assets/images/noImage.png', fit: BoxFit.cover);
+        : Image.asset(RootAssets.noImagePng, fit: BoxFit.cover);
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),

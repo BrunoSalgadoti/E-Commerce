@@ -1,8 +1,9 @@
 import 'dart:ui' as ui;
 
-import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
+import 'package:brn_ecommerce/shared/utils/formatters/format_values.dart';
 import 'package:brn_ecommerce/views/products_share/components/share_product.dart';
 import 'package:brn_ecommerce/views/products_share/components/share_product_web.dart';
 import 'package:flutter/foundation.dart';
@@ -10,8 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import '../../common/formatted_fields/format_values.dart';
 
 class ShareProductScreen extends StatefulWidget {
   ShareProductScreen({super.key, required this.product});

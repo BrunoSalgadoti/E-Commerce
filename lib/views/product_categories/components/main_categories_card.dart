@@ -1,12 +1,14 @@
 import 'dart:io';
 
-import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
-import 'package:brn_ecommerce/common/functions/common_functions.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_text_button.dart';
+import 'package:brn_ecommerce/core/services/email/email_sender.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/common/miscellaneous/tag_for_cards.dart';
-import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
 import 'package:brn_ecommerce/data/models/products/category/product_category.dart';
 import 'package:brn_ecommerce/features/auth/managers/users_manager.dart';
+import 'package:brn_ecommerce/helpers/themes/get_another_colors.dart';
+import 'package:brn_ecommerce/shared/utils/colors/color_parsers.dart';
+import 'package:brn_ecommerce/shared/widgets/images/category_image_builder.dart';
 import 'package:brn_ecommerce/views/product_edit/components/image_source_sheet.dart';
 import 'package:brn_ecommerce/views/product_edit/components/image_source_web.dart';
 import 'package:custom_universal_html/html.dart' as html;

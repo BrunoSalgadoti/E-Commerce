@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/common/cards/flexible_product_card.dart';
+import 'package:brn_ecommerce/shared/components/cards/flexible_product_card.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/helpers/breakpoints.dart';
 import 'package:brn_ecommerce/helpers/routes_navigator.dart';

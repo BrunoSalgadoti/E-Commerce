@@ -4,7 +4,6 @@ import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PurchaseModel {
-
   final String userId;
   final List<String> items;
   final DateTime createdAt;

@@ -1,6 +1,6 @@
-import 'package:brn_ecommerce/common/drawer/components/drawer_pages_enum.dart';
-import 'package:brn_ecommerce/common/drawer/components/page_manager.dart';
-import 'package:brn_ecommerce/common/images/root_assets.dart';
+import 'package:brn_ecommerce/shared/widgets/navigation/drawer/components/drawer_pages_enum.dart';
+import 'package:brn_ecommerce/shared/widgets/navigation/drawer/components/page_manager.dart';
+import 'package:brn_ecommerce/shared/constants/assets/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/communications_utils.dart';
 import 'package:brn_ecommerce/core/firestore_service.dart';
 import 'package:brn_ecommerce/data/repositories/admin_orders_manager.dart';

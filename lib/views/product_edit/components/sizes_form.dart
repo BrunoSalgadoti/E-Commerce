@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/models/products/details_products.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/views/product_edit/components/colors_form.dart';

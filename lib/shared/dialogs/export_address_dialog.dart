@@ -1,18 +1,17 @@
 import 'dart:io';
 
-import 'package:brn_ecommerce/common/buttons/custom_text_button.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_text_button.dart';
 import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/data/models/location/address.dart';
 import 'package:brn_ecommerce/models/sales/order_client.dart';
+import 'package:brn_ecommerce/shared/utils/formatters/format_values.dart';
 import 'package:custom_universal_html/html.dart' as html;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
-
-import '../../../common/formatted_fields/format_values.dart';
 
 class ExportAddressDialog {
   final Address? address;

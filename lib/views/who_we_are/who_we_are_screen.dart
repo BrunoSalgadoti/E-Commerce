@@ -1,5 +1,5 @@
-import 'package:brn_ecommerce/common/app_bar/custom_app_bar.dart';
-import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/shared/widgets/navigation/drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/shared/widgets/layout/app_bar/custom_app_bar.dart';
 import 'package:brn_ecommerce/views/who_we_are/components/footer_description_widget.dart';
 import 'package:brn_ecommerce/views/who_we_are/components/top_description_widget.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +50,7 @@ class WhoWeAreScreenState extends State<WhoWeAreScreen> {
             children: [
               const TopDescriptionWidget(),
               const SizedBox(height: 20),
-             // Vídeo centralizado responsivo
+              // Vídeo centralizado responsivo
               LayoutBuilder(
                 builder: (context, constraints) {
                   final width =

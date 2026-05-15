@@ -1,6 +1,6 @@
-import 'package:brn_ecommerce/shared/widgets/advertising/content_type.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
+import 'package:brn_ecommerce/shared/widgets/advertising/content_type.dart';
 
 /// ## UtilsForAdvertising (Folder: common/advertising/components)
 /// ### Components of Advertising Widget

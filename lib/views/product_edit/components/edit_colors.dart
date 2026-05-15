@@ -1,10 +1,10 @@
-import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/shared/components/form/custom_text_form_field.dart';
 import 'package:brn_ecommerce/models/products/colors_products.dart';
+import 'package:brn_ecommerce/shared/utils/colors/color_parsers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
-import '../../../common/functions/common_functions.dart';
 
 class EditColors extends StatefulWidget {
   const EditColors({

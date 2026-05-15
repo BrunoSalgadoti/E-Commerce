@@ -18,10 +18,7 @@ class AdminOrdersManager extends ChangeNotifier {
 
   Users? userFilter;
 
-  List<StatusOfOrders> statusFilter = [
-    StatusOfOrders.preparing,
-    StatusOfOrders.transporting
-  ];
+  List<StatusOfOrders> statusFilter = [StatusOfOrders.preparing, StatusOfOrders.transporting];
 
   StreamSubscription<dynamic>? _subscription;
 
@@ -35,8 +32,7 @@ class AdminOrdersManager extends ChangeNotifier {
       output = output.where((o) => o.userId == userFilter!.id).toList();
     }
 
-    return output =
-        output.where((o) => statusFilter.contains(o.status)).toList();
+    return output = output.where((o) => statusFilter.contains(o.status)).toList();
   }
 
   // =========================
@@ -61,7 +57,7 @@ class AdminOrdersManager extends ChangeNotifier {
 
             case DocumentChangeType.modified:
               final modOrder = _orders.firstWhere(
-                    (element) => element.orderId == change.doc.id,
+                (element) => element.orderId == change.doc.id,
               );
               modOrder.updateFromDocument(change.doc);
               break;

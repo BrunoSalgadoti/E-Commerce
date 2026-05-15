@@ -1,10 +1,7 @@
-import 'package:brn_ecommerce/common/advertising/recently_added_products.dart';
-import 'package:brn_ecommerce/common/app_bar/custom_bottom_navigator_bar.dart';
-import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
-import 'package:brn_ecommerce/common/cards/flexible_product_card.dart';
-import 'package:brn_ecommerce/common/formatted_fields/custom_text_form_field.dart';
-import 'package:brn_ecommerce/common/functions/common_functions.dart';
-import 'package:brn_ecommerce/common/images/root_assets.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/shared/components/cards/flexible_product_card.dart';
+import 'package:brn_ecommerce/shared/components/form/custom_text_form_field.dart';
+import 'package:brn_ecommerce/shared/constants/assets/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/controller.dart';
 import 'package:brn_ecommerce/common/sliding_up_panel/components/filters_result.dart';
@@ -13,6 +10,9 @@ import 'package:brn_ecommerce/common/sliding_up_panel/custom_sliding_up_painel.d
 import 'package:brn_ecommerce/data/models/products/category/product_category.dart';
 import 'package:brn_ecommerce/models/products/product.dart';
 import 'package:brn_ecommerce/models/products/product_manager.dart';
+import 'package:brn_ecommerce/shared/widgets/navigation/bottom_navigation/custom_bottom_navigator_bar.dart';
+import 'package:brn_ecommerce/shared/widgets/products/recently_added/recently_added_products.dart';
+import 'package:brn_ecommerce/shared/widgets/texts/decorated_google_text.dart';
 import 'package:brn_ecommerce/views/product_categories/components/sub_categories_widget.dart';
 import 'package:brn_ecommerce/views/product_categories/components/utils_for_category.dart';
 import 'package:flutter/material.dart';

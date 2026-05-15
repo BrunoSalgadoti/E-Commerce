@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:brn_ecommerce/common/buttons/custom_icon_button.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_icon_button.dart';
 import 'package:brn_ecommerce/common/messengers/custom_scaffold_messenger.dart';
 import 'package:brn_ecommerce/models/stores/stores.dart';
 import 'package:brn_ecommerce/views/product_edit/components/image_source_sheet.dart';

@@ -269,7 +269,6 @@ class _OutdoorWidgetState extends State<OutdoorWidget> with SingleTickerProvider
   }
 }
 
-
 //------- versão copiloto ------
 // class OutdoorWidget extends StatefulWidget {
 //   final int slices;

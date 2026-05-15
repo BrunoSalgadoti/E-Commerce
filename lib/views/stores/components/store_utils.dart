@@ -1,4 +1,4 @@
-import 'package:brn_ecommerce/common/buttons/custom_button.dart';
+import 'package:brn_ecommerce/shared/components/buttons/custom_button.dart';
 import 'package:brn_ecommerce/common/messengers/custom_alertdialog_adaptive.dart';
 import 'package:brn_ecommerce/data/models/location/address.dart';
 import 'package:brn_ecommerce/models/stores/stores.dart';

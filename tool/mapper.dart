@@ -46,7 +46,7 @@ void main() async {
           if (retorno.contains('bool')) type = 'bool';
           if (nome.startsWith('is') || nome.startsWith('has')) type = 'getter';
           if (nome.startsWith('validate') || nome.startsWith('isValid')) type = 'validation';
-          if (entity.path.endsWith('common_functions.dart')) type = 'common';
+          if (entity.path.endsWith('email_sender.dart')) type = 'common';
 
           entries.add({
             'signature': '$nome(${match.group(4)})',

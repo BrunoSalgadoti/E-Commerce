@@ -8,8 +8,6 @@ import 'package:flutter/foundation.dart';
 import 'package:brn_ecommerce/core/firestore_service.dart';
 
 class AdminUsersManager with ChangeNotifier {
-
-
   // ✅ CORE
   final FirestoreService _firestoreService = FirestoreService.instance;
 

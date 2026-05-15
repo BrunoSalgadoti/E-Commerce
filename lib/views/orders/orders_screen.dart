@@ -1,8 +1,8 @@
-import 'package:brn_ecommerce/common/cards/login_card.dart';
-import 'package:brn_ecommerce/common/drawer/custom_drawer.dart';
-import 'package:brn_ecommerce/common/images/root_assets.dart';
+import 'package:brn_ecommerce/shared/widgets/navigation/drawer/custom_drawer.dart';
+import 'package:brn_ecommerce/shared/constants/assets/root_assets.dart';
 import 'package:brn_ecommerce/common/miscellaneous/empty_page_indicator.dart';
 import 'package:brn_ecommerce/models/sales/orders_manager.dart';
+import 'package:brn_ecommerce/shared/components/cards/login_card.dart';
 import 'package:brn_ecommerce/views/orders/components/order_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
